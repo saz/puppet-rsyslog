@@ -1,0 +1,12 @@
+# file is managed by puppet
+
+# An "In-Memory Queue" is created for remote logging.
+$WorkDirectory /var/spool/rsyslog       # where to place spool files
+$ActionQueueFileName queue              # unique name prefix for spool files
+$ActionQueueMaxDiskSpace 1g     # 1gb space limit (use as much as possible)
+$ActionQueueSaveOnShutdown on   # save messages to disk on shutdown
+$ActionQueueType LinkedList     # run asynchronously
+$ActionResumeRetryCount -1      # infinety retries if host is down
+
+$ModLoad omrelp
+*.*     :omrelp:<%= scope.lookupvar('rsyslog::params::rsyslog_server') %>:2514;RSYSLOG_ForwardFormat
