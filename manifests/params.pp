@@ -6,7 +6,7 @@ class rsyslog::params {
 
     case $operatingsystem {
         /(Ubuntu|Debian)/: {
-            $rsyslog_package_name = 'rsyslogr'
+            $rsyslog_package_name = 'rsyslog'
             $relp_package_name = 'rsyslog-relp'
             $rsyslog_d = '/etc/rsyslog.d/'
             $rsyslog_conf = '/etc/rsyslog.conf'
