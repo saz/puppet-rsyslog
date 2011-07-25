@@ -1,0 +1,39 @@
+# File is managed by puppet
+
+$ModLoad imudp
+$UDPServerRun 514
+
+$ModLoad imtcp
+$TCPServerRun 514
+
+$ModLoad imrelp
+$InputRELPServerRun 2514
+
+$FileOwner root
+$FileGroup adm
+$FileCreateMode 0640
+$DirCreateMode 0750
+
+# Templates
+$Template dynAuthLog,"<%= scope.lookupvar('rsyslog::params::server_dir') %>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%/auth.log"
+$Template dynSyslog,"<%= scope.lookupvar('rsyslog::params::server_dir') %>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%/syslog"
+$Template dynCronLog,"<%= scope.lookupvar('rsyslog::params::server_dir') %>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%/cron.log"
+$Template dynDaemonLog,"<%= scope.lookupvar('rsyslog::params::server_dir') %>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%/daemon.log"
+$Template dynKernLog,"<%= scope.lookupvar('rsyslog::params::server_dir') %>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%/kern.log"
+$Template dynUserLog,"<%= scope.lookupvar('rsyslog::params::server_dir') %>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%/user.log"
+$Template dynMailLog,"<%= scope.lookupvar('rsyslog::params::server_dir') %>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%/mail.log"
+$Template dynDebug,"<%= scope.lookupvar('rsyslog::params::server_dir') %>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%/debug"
+$Template dynMessages,"<%= scope.lookupvar('rsyslog::params::server_dir') %>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%/messages"
+
+# Rules
+auth,authpriv.*         ?dynAuthLog
+*.*;auth,authpriv.none,mail.none,cron.none      -?dynSyslog
+cron.*              ?dynCronLog
+daemon.*            -?dynDaemonLog
+kern.*              -?dynKernLog
+mail.*              -?dynMailLog
+user.*              -?dynUserLog
+*.=info;*.=notice;*.=warn;\
+    auth.none,authpriv.none;\
+    cron.none,daemon.none;\
+    mail.none,news.none     -?dynMessages

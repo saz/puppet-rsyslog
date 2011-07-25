@@ -4,6 +4,11 @@ class rsyslog::params {
         default => $rsyslog_server,
     }
 
+    $server_dir = $rsyslog_server_dir ? {
+        ''      => '/srv/log/',
+        default => $rsyslog_server_dir,
+    }
+
     case $operatingsystem {
         /(Ubuntu|Debian)/: {
             $rsyslog_package_name = 'rsyslog'
