@@ -9,6 +9,8 @@ Manage rsyslog client and server via Puppet
     include rsyslog::client
 ```
 
+Default server name is set to 'log'
+
 #### Using a different server
 ```
     $rsyslog_server = 'another-server'
