@@ -1,23 +1,31 @@
 # puppet-rsyslog
-puppet-rsyslog is a module for puppet to manage rsyslog client and server
+
+Manage rsyslog client and server via Puppet
 
 ## How to use
-```include rsyslog::client```
 
-or
-
+### Client
 ```
-    $rsyslog_server_dir = "/path/to/target/directory/"
+    include rsyslog::client
+```
+
+#### Using a different server
+```
+    $rsyslog_server = 'another-server'
+    include rsyslog::client
+```
+
+### Server
+```
     include rsyslog::server
 ```
 
 Both can be installed at the same time.
 
-Default server name is 'log'.
-$rsyslog_server_dir defaults to '/srv/log/'
+#### Other variables
+* $rsyslog_server_dir = '/srv/log/'
 
-### Setting a different server
-```
-    $rsyslog_server = "another.server.domain.tld"
-    include rsyslog::client
-```
+### Other notes
+
+* rsyslog::client is logging through relp
+* rsyslog::server is running relp, udp and tcp
