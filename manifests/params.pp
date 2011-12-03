@@ -1,7 +1,7 @@
 class rsyslog::params {
     $high_precision_timestamps = $rsyslog_high_precision_timestamps ? {
         ''      => false,
-        default => true,
+        default => $rsyslog_high_precision_timestamps,
     }
 
     case $::operatingsystem {
