@@ -13,7 +13,7 @@ class rsyslog::config {
         owner   => root,
         group   => root,
         ensure  => file,
-        source  => "puppet:///modules/rsyslog/rsyslog.conf",
+        content => template("${module_name}/rsyslog.conf.erb"),
         require => Class["rsyslog::install"],
         notify  => Class["rsyslog::service"],
     }
