@@ -5,29 +5,40 @@ Manage rsyslog client and server via Puppet
 ## How to use
 
 ### Client
+#### Using default values
 ```
-    include rsyslog::client
+    class { 'rsyslog::client': }
 ```
 
-Default server name is set to 'log'
-
-#### Using a different server
+#### Variables and default values
 ```
-    $rsyslog_server = 'another-server'
-    include rsyslog::client
+    class { 'rsyslog::client':
+        log_local      => false,
+        log_auth_local => false,
+        custom_config  => undef,
+        server         => 'log',
+    }
 ```
 
 ### Server
+#### Using default values
 ```
-    include rsyslog::server
+    class { 'rsyslog::server': }
+```
+
+#### Variables and default values
+```
+    class { 'rsyslog::server':
+        enable_tcp                => true,
+        enable_udp                => true,
+        server_dir                => '/srv/log/',
+        custom_config             => undef,
+        high_precision_timestamps => false,
+    }
 ```
 
 Both can be installed at the same time.
 
-#### Other variables
-* $rsyslog_server_dir = '/srv/log/'
-
 ### Other notes
 
 * rsyslog::client is logging through relp
-* rsyslog::server is running relp, udp and tcp
