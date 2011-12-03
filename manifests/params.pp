@@ -1,9 +1,4 @@
 class rsyslog::params {
-    $high_precision_timestamps = $rsyslog_high_precision_timestamps ? {
-        ''      => false,
-        default => $rsyslog_high_precision_timestamps,
-    }
-
     case $::operatingsystem {
         /(Ubuntu|Debian)/: {
             $rsyslog_package_name = 'rsyslog'

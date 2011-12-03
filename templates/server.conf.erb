@@ -1,5 +1,13 @@
 # File is managed by puppet
 
+<% if scope.lookupvar('rsyslog::server::high_precision_timestamps') == false -%>
+#
+# Use traditional timestamp format.
+# To enable high precision timestamps, comment out the following line.
+#
+$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
+<% end -%>
+
 <% if scope.lookupvar('rsyslog::server::enable_udp') -%>
 $ModLoad imudp
 $UDPServerRun 514

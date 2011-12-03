@@ -1,4 +1,4 @@
-class rsyslog::server ($enable_tcp = true, $enable_udp = true, $server_dir = '/srv/log/', $custom_config = undef) inherits rsyslog {
+class rsyslog::server ($enable_tcp = true, $enable_udp = true, $server_dir = '/srv/log/', $custom_config = undef, $high_precision_timestamps = false) inherits rsyslog {
     file { $rsyslog::params::server_conf:
         ensure  => present,
         owner   => root,

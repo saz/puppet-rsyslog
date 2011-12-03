@@ -8,14 +8,6 @@ $ModLoad imuxsock # provides support for local system logging
 $ModLoad imklog   # provides kernel logging support (previously done by rklogd) 
 #$ModLoad immark  # provides --MARK-- message capability
 
-<% if scope.lookupvar('rsyslog::params::high_precision_timestamps') == false -%>
-#
-# Use traditional timestamp format.
-# To enable high precision timestamps, comment out the following line.
-#
-$ActionFileDefaultTemplate RSYSLOG_ForwardFormat
-<% end -%>
-
 ###########################
 #### GLOBAL DIRECTIVES ####
 ###########################
