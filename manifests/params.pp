@@ -1,15 +1,10 @@
 class rsyslog::params {
-    $rsyslog_server = $rsyslog_server ? {
-        ''      => 'log',
-        default => $rsyslog_server,
+    $high_precision_timestamps = $rsyslog_high_precision_timestamps ? {
+        ''      => false,
+        default => true,
     }
 
-    $server_dir = $rsyslog_server_dir ? {
-        ''      => '/srv/log/',
-        default => $rsyslog_server_dir,
-    }
-
-    case $operatingsystem {
+    case $::operatingsystem {
         /(Ubuntu|Debian)/: {
             $rsyslog_package_name = 'rsyslog'
             $relp_package_name = 'rsyslog-relp'
@@ -22,4 +17,16 @@ class rsyslog::params {
             $server_conf = "${rsyslog_d}server.conf"
         }
     }
+
+    #
+    # Internal variables
+    #
+
+    # Drop privileges to this user and group
+    $run_user = 'root'
+    $run_group = 'root'
+
+    # User and group of log files
+    $log_user = 'root'
+    $log_group = 'adm'
 }
