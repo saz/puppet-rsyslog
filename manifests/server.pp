@@ -1,10 +1,13 @@
-class rsyslog::server inherits rsyslog {
+class rsyslog::server ($enable_tcp = true, $enable_udp = true, $server_dir = '/srv/log/', $custom_config = undef) inherits rsyslog {
     file { $rsyslog::params::server_conf:
+        ensure  => present,
         owner   => root,
         group   => root,
-        ensure  => file,
-        content => template("${module_name}/server.conf.erb"),
-        require => Class['rsyslog::install'],
+        content => $custom_config ? {
+            ''      => template("${module_name}/server.conf.erb"),
+            default => template($custom_config),
+        },
+        require => Class['rsyslog::config'],
         notify  => Class['rsyslog::service'],
     }
 }
