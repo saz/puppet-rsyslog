@@ -14,10 +14,8 @@ $ActionFileDefaultTemplate RSYSLOG_ForwardFormat
 <% if scope.lookupvar('rsyslog::client::log_remote') -%>
 # Log to remote syslog server using <%= scope.lookupvar('rsyslog::client::remote_type') %>
 <% if scope.lookupvar('rsyslog::client::remote_type') == 'tcp' -%>
-$ModLoad omtcp
 *.* @@<%= scope.lookupvar('rsyslog::client::server') -%>:514
 <% else -%>
-$ModLoad omudp
 *.* @<%= scope.lookupvar('rsyslog::client::server') -%>:514
 <% end -%>
 <% end -%>
