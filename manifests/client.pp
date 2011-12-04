@@ -1,4 +1,4 @@
-class rsyslog::client ($log_local = false, $log_auth_local = false, $custom_config = undef, $server = 'log') inherits rsyslog {
+class rsyslog::client ($log_remote = true, $remote_type = 'tcp', $log_local = false, $log_auth_local = false, $custom_config = undef, $server = 'log') inherits rsyslog {
 	file { $rsyslog::params::client_conf:
 		ensure 	=> present,
 		owner 	=> root,

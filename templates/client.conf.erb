@@ -11,9 +11,16 @@ $ActionResumeRetryCount -1      # infinety retries if host is down
 # Use ForwardFormat for remote logging
 $ActionFileDefaultTemplate RSYSLOG_ForwardFormat
 
-# Log to remote syslog server using relp
-$ModLoad omrelp
-*.*     :omrelp:<%= scope.lookupvar('rsyslog::client::server') -%>:2514;RSYSLOG_ForwardFormat
+<% if scope.lookupvar('rsyslog::client::log_remote') -%>
+# Log to remote syslog server using <%= scope.lookupvar('rsyslog::client::remote_type') %>
+<% if scope.lookupvar('rsyslog::client::remote_type') == 'tcp' -%>
+$ModLoad omtcp
+*.* @@<%= scope.lookupvar('rsyslog::client::server') -%>:514
+<% else -%>
+$ModLoad omudp
+*.* @<%= scope.lookupvar('rsyslog::client::server') -%>:514
+<% end -%>
+<% end -%>
 
 <% if scope.lookupvar('rsyslog::client::log_auth_local') or scope.lookupvar('rsyslog::client::log_local') -%>
 # We log locally, restore to default format
