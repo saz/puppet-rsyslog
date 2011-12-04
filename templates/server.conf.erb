@@ -1,5 +1,15 @@
 # File is managed by puppet
 
+<% if scope.lookupvar('rsyslog::server::enable_udp') -%>
+# Load UDP module
+$ModLoad imudp
+<% end -%>
+
+<% if scope.lookupvar('rsyslog::server::enable_tcp') -%>
+# Load TCP module
+$ModLoad imtcp
+<% end -%>
+
 <% if scope.lookupvar('rsyslog::server::high_precision_timestamps') == false -%>
 #
 # Use traditional timestamp format.
@@ -8,18 +18,8 @@
 $ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
 <% end -%>
 
-<% if scope.lookupvar('rsyslog::server::enable_udp') -%>
-$ModLoad imudp
-$UDPServerRun 514
-<% end -%>
-
-<% if scope.lookupvar('rsyslog::server::enable_tcp') -%>
-$ModLoad imtcp
-$InputTCPServerRun 514
-<% end -%>
-
-$ModLoad imrelp
-$InputRELPServerRun 2514
+# Switch to remote ruleset
+$RuleSet remote
 
 # Templates
 $Template dynAuthLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%/auth.log"
@@ -44,3 +44,16 @@ user.*              -?dynUserLog
     auth.none,authpriv.none;\
     cron.none,daemon.none;\
     mail.none,news.none     -?dynMessages
+
+# Switch back to default ruleset
+$RuleSet RSYSLOG_DefaultRuleset
+
+<% if scope.lookupvar('rsyslog::server::enable_udp') -%>
+$InputUDPServerBindRuleset remote
+$UDPServerRun 514
+<% end -%>
+
+<% if scope.lookupvar('rsyslog::server::enable_tcp') -%>
+$InputTCPServerBindRuleset remote
+$InputTCPServerRun 514
+<% end -%>
