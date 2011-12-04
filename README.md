@@ -13,6 +13,8 @@ Manage rsyslog client and server via Puppet
 #### Variables and default values
 ```
     class { 'rsyslog::client':
+        log_remote     => true,
+        remote_type    => 'tcp',
         log_local      => false,
         log_auth_local => false,
         custom_config  => undef,
@@ -41,4 +43,6 @@ Both can be installed at the same time.
 
 ### Other notes
 
-* rsyslog::client is logging through relp
+Due to a missing feature in current RELP versions (InputRELPServerBindRuleset option),
+remote logging is using TCP. You can switch between TCP and UDP. As soon as there is
+a new RELP version which supports setting Rulesets, I will add support for relp back.
