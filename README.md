@@ -3,11 +3,14 @@
 
 Manage rsyslog client and server via Puppet
 
-## Usage
-========
+## REQUIREMENTS
+
+* Puppet >=2.6 if using parameterized classes
+* Currently supports Ubuntu >=11.04 & Debian running rsyslog >=4.5
+
+## USAGE
 
 ### Client
-----------
 
 #### Using default values
 ```
@@ -27,6 +30,7 @@ Manage rsyslog client and server via Puppet
 ```
 
 ### Server
+
 #### Using default values
 ```
     class { 'rsyslog::server': }
@@ -46,11 +50,11 @@ Manage rsyslog client and server via Puppet
 Both can be installed at the same time.
 
 
-### Parameters
-==============
+## PARAMETERS
+
 The following lists all the class parameters this module accepts.
 
-    RSYSLOG::SERVER CLASS PARAMETER     VALUES         DESCRIPTION
+    RSYSLOG::SERVER CLASS PARAMETERS    VALUES         DESCRIPTION
     --------------------------------------------------------------
     enable_tcp                          true,false     Enable TCP listener. Defaults to true.
     enable_udp                          true,false     Enable UDP listener. Defaults to true.
@@ -58,7 +62,7 @@ The following lists all the class parameters this module accepts.
     custom_config                       STRING         Specify your own template to use for server config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb'
     high_precision_timestamps           true,false     Whether or not to use high precision timestamps.
 
-    RSYSLOG::CLIENT CLASS PARAMETER     VALUES         DESCRIPTION
+    RSYSLOG::CLIENT CLASS PARAMETERS    VALUES         DESCRIPTION
     --------------------------------------------------------------
     log_remote                          true,false     Log Remotely. Defaults to true.
     remote_type                         'tcp','udp'    Which protocol to use when logging remotely. Defaults to 'tcp'.
