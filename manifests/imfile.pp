@@ -12,7 +12,7 @@ define rsyslog::imfile(
     ensure  => file,
     owner   => 'root',
     group   => 'root',
-    contet  => template('rsyslog/imfile.erb'),
+    content => template('rsyslog/imfile.erb'),
     require => Class['rsyslog::install'],
     notify  => Class['rsyslog::service'],
   }
