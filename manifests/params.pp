@@ -1,15 +1,15 @@
 class rsyslog::params {
   case $::operatingsystem {
     ubuntu, debian: {
-      $rsyslog_package_name = 'rsyslog'
-      $relp_package_name = 'rsyslog-relp'
-      $rsyslog_d = '/etc/rsyslog.d/'
-      $rsyslog_conf = '/etc/rsyslog.conf'
-      $rsyslog_default = '/etc/default/rsyslog'
-      $spool_dir = '/var/spool/rsyslog/'
-      $service_name = 'rsyslog'
-      $client_conf = "${rsyslog_d}client.conf"
-      $server_conf = "${rsyslog_d}server.conf"
+      $rsyslog_package_name   = 'rsyslog'
+      $relp_package_name      = 'rsyslog-relp'
+      $rsyslog_d              = '/etc/rsyslog.d/'
+      $rsyslog_conf           = '/etc/rsyslog.conf'
+      $rsyslog_default        = '/etc/default/rsyslog'
+      $spool_dir              = '/var/spool/rsyslog/'
+      $service_name           = 'rsyslog'
+      $client_conf            = "${rsyslog_d}client.conf"
+      $server_conf            = "${rsyslog_d}server.conf"
     }
     default: {
       fail("Unsupported platform: ${::operatingsystem}")
