@@ -32,6 +32,22 @@ class rsyslog::params {
       $client_conf            = "${rsyslog_d}client.conf"
       $server_conf            = "${rsyslog_d}server.conf"
     }
+    ubuntu, debian: {
+      $rsyslog_package_name   = 'rsyslog'
+      $relp_package_name      = 'rsyslog-relp'
+      $package_status         = 'latest'
+      $rsyslog_d              = '/etc/rsyslog.d/'
+      $rsyslog_conf           = '/etc/rsyslog.conf'
+      $rsyslog_default        = '/etc/default/rsyslog'
+      $run_user               = 'root'
+      $run_group              = 'root'
+      $log_user               = 'root'
+      $log_group              = 'root'
+      $spool_dir              = '/var/spool/rsyslog/'
+      $service_name           = 'rsyslog'
+      $client_conf            = "${rsyslog_d}client.conf"
+      $server_conf            = "${rsyslog_d}server.conf"
+    }
 
 
     default: {
