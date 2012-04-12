@@ -32,7 +32,7 @@ class rsyslog::params {
       $client_conf            = "${rsyslog_d}client.conf"
       $server_conf            = "${rsyslog_d}server.conf"
     }
-    ubuntu, debian: {
+    CentOS: {
       $rsyslog_package_name   = 'rsyslog'
       $relp_package_name      = 'rsyslog-relp'
       $package_status         = 'latest'
