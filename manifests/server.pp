@@ -9,7 +9,7 @@ class rsyslog::server (
     file { $rsyslog::params::server_conf:
         ensure  => present,
         owner   => root,
-        group   => root,
+        group   => $rsyslog::params::run_group,
         content => $custom_config ? {
             ''      => template("${module_name}/server.conf.erb"),
             default => template($custom_config),
