@@ -32,5 +32,6 @@ $IncludeConfig <%= scope.lookupvar('rsyslog::params::rsyslog_d') -%>*.conf
 #
 *.emerg				*
 
-# Use FQDN and not short server names
-$PreserveFQDN on 
+# This should tell rsyslog to use FQDN and not short server names
+# ...but seems to work inconsistantly
+# $PreserveFQDN on 
