@@ -8,6 +8,7 @@ Manage rsyslog client and server via Puppet.
 * Puppet >=2.6 if using parameterized classes
 * Currently supports:
     * Debian Squeeze
+    * Ubuntu Oneric Ocelot 11.10
     * CentOS 6.2
     * FreeBSD
 
