@@ -14,9 +14,11 @@ $ActionFileDefaultTemplate RSYSLOG_ForwardFormat
 <% if scope.lookupvar('rsyslog::client::log_remote') -%>
 # Log to remote syslog server using <%= scope.lookupvar('rsyslog::client::remote_type') %>
 <% if scope.lookupvar('rsyslog::client::remote_type') == 'tcp' -%>
-*.* @@<%= scope.lookupvar('rsyslog::client::server') -%>:514
+<% scope.lookupvar('rsyslog::client::servers').each do |server| -%>
+*.* @@<%= server -%>:514
 <% else -%>
-*.* @<%= scope.lookupvar('rsyslog::client::server') -%>:514
+*.* @<%= server -%>:514
+<% end -%>
 <% end -%>
 <% end -%>
 
@@ -26,8 +28,13 @@ $ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
 
 # Log auth messages locally
 auth,authpriv.*                 /var/log/auth.log
-<% end -%>
 
+<% end -%>
+<% if scope.lookupvar('rsyslog::client::preserve_fqdn') -%>
+# Tell rsyslog to use FQDN and not short server names
+$PreserveFQDN on 
+
+<% end -%>
 <% if scope.lookupvar('rsyslog::client::log_local') -%>
 # First some standard log files.  Log by facility.
 #

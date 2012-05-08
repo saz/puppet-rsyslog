@@ -31,9 +31,3 @@ $IncludeConfig <%= scope.lookupvar('rsyslog::params::rsyslog_d') -%>*.conf
 # Emergencies are sent to everybody logged in.
 #
 *.emerg				*
-
-<% if scope.lookupvar('rsyslog::client::preserve_fqdn') -%>
-# Tell rsyslog to use FQDN and not short server names
-$PreserveFQDN on 
-
-<% end -%>

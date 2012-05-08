@@ -1,7 +1,7 @@
 # puppet-rsyslog
 ================
 
-Manage rsyslog client and server via Puppet
+Manage rsyslog client and server via Puppet.
 
 ## REQUIREMENTS
 
@@ -29,7 +29,7 @@ Manage rsyslog client and server via Puppet
         log_local      => false,
         log_auth_local => false,
         custom_config  => undef,
-        server         => 'log',
+        servers         => ['log'],
     }
 ```
 
@@ -73,10 +73,18 @@ The following lists all the class parameters this module accepts.
     log_local                           true,false     Log locally. Defualts to false.
     log_auth_local                      true,false     Just log auth facility locally. Defaults to false.
     custom_config                       STRING         Specify your own template to use for client config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb
-    server                              STRING         Rsyslog server to log to. Will be used in the client configuration file.
+    preserve_fqdn                       true,false      Sets the rsyslog client to try and send logs with the FQDN rather than an abbreviated host name.
+    servers                             [STRING]        A list of rsyslog compatible servers to log to. Will be used in the client configuration file.
 
+*NOTE:* Currently the client only works with a list of logging servers that have identical configurations.
 
-### Other notes
+## Server Compatibility
+
+This puppet module has been confirmed to be compatible with the following logging services:
+* rsyslog
+* Graylog2 http://graylog2.org/
+
+## Other notes
 
 Due to a missing feature in current RELP versions (InputRELPServerBindRuleset option),
 remote logging is using TCP. You can switch between TCP and UDP. As soon as there is
