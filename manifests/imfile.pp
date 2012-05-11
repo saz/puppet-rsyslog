@@ -11,7 +11,7 @@ define rsyslog::imfile(
   file { "${rsyslog::params::rsyslog_d}${name}.conf":
     ensure  => file,
     owner   => 'root',
-    group   => 'root',
+    group   => $rsyslog::params::run_group,
     content => template('rsyslog/imfile.erb'),
     require => Class['rsyslog::install'],
     notify  => Class['rsyslog::service'],
