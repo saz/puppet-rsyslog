@@ -26,6 +26,7 @@ Manage rsyslog client and server via Puppet
         log_auth_local => false,
         custom_config  => undef,
         server         => 'log',
+        port           => '514',
     }
 ```
 
