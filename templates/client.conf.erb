@@ -15,9 +15,9 @@ $ActionFileDefaultTemplate RSYSLOG_ForwardFormat
 # Log to remote syslog server using <%= scope.lookupvar('rsyslog::client::remote_type') %>
 <% scope.lookupvar('rsyslog::client::servers').each do |server| -%>
 <% if scope.lookupvar('rsyslog::client::remote_type') == 'tcp' -%>
-*.* @@<%= server -%>:514
+*.* @@<%= server -%>:<%= scope.lookupvar('rsyslog::client::port') %>
 <% else -%>
-*.* @<%= server -%>:514
+*.* @<%= server -%>:<%= scope.lookupvar('rsyslog::client::port') %>
 <% end -%>
 <% end -%>
 <% end -%>
