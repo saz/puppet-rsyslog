@@ -5,18 +5,21 @@ class rsyslog::client (
   $log_auth_local = false,
   $custom_config  = undef,
   $servers        = ['log'],
+  $port           = '514'
   $preserve_fqdn  = false
 ) inherits rsyslog {
 
+  $content_real = $custom_config ? {
+    ''      => template("${module_name}/client.conf.erb"),
+    default => template($custom_config),
+  }
+
   file { $rsyslog::params::client_conf:
-    ensure 	=> present,
-    owner 	=> root,
-    group 	=> $rsyslog::params::run_group,
-    content => $custom_config ? {
-        ''      => template("${module_name}/client.conf.erb"),
-        default => template($custom_config),
-    },
+    ensure  => present,
+    owner   => root,
+    group   => $rsyslog::params::run_group,
+    content => $content_real,
     require => Class['rsyslog::config'],
-    notify 	=> Class['rsyslog::service'],
+    notify  => Class['rsyslog::service'],
   }
 }
