@@ -21,6 +21,13 @@ $ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
 # Switch to remote ruleset
 $RuleSet remote
 
+<% if scope.lookupvar('rsyslog::server::enable_onefile') -%>
+# Template
+$Template dynAllMessages,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%/messages"
+
+# Rule
+*.*		-?dynAllMessages
+<% else -%>
 # Templates
 $Template dynAuthLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%/auth.log"
 $Template dynSyslog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%/syslog"
@@ -44,6 +51,7 @@ user.*              -?dynUserLog
     auth.none,authpriv.none;\
     cron.none,daemon.none;\
     mail.none,news.none     -?dynMessages
+<% end -%>
 
 # Switch back to default ruleset
 $RuleSet RSYSLOG_DefaultRuleset
