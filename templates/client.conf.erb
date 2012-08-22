@@ -8,12 +8,17 @@ $ActionQueueSaveOnShutdown on   # save messages to disk on shutdown
 $ActionQueueType LinkedList     # run asynchronously
 $ActionResumeRetryCount -1      # infinety retries if host is down
 
+# Use ForwardFormat for remote logging
+$ActionFileDefaultTemplate RSYSLOG_ForwardFormat
+
 <% if scope.lookupvar('rsyslog::client::log_remote') -%>
 # Log to remote syslog server using <%= scope.lookupvar('rsyslog::client::remote_type') %>
+<% scope.lookupvar('rsyslog::client::servers').each do |server| -%>
 <% if scope.lookupvar('rsyslog::client::remote_type') == 'tcp' -%>
-*.* @@<%= scope.lookupvar('rsyslog::client::server') -%>:<%= scope.lookupvar('rsyslog::client::port') -%>;RSYSLOG_ForwardFormat
+*.* @@<%= server -%>:<%= scope.lookupvar('rsyslog::client::port') %>
 <% else -%>
-*.* @<%= scope.lookupvar('rsyslog::client::server') -%>:<%= scope.lookupvar('rsyslog::client::port') -%>;RSYSLOG_ForwardFormat
+*.* @<%= server -%>:<%= scope.lookupvar('rsyslog::client::port') %>
+<% end -%>
 <% end -%>
 <% end -%>
 
@@ -23,8 +28,13 @@ $ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
 
 # Log auth messages locally
 auth,authpriv.*                 /var/log/auth.log
-<% end -%>
 
+<% end -%>
+<% if scope.lookupvar('rsyslog::client::preserve_fqdn') -%>
+# Tell rsyslog to use FQDN and not short server names
+$PreserveFQDN on 
+
+<% end -%>
 <% if scope.lookupvar('rsyslog::client::log_local') -%>
 # First some standard log files.  Log by facility.
 #
