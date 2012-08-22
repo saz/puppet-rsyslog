@@ -4,8 +4,9 @@ class rsyslog::client (
   $log_local      = false,
   $log_auth_local = false,
   $custom_config  = undef,
-  $server         = 'log',
+  $servers        = ['log'],
   $port           = '514'
+  $preserve_fqdn  = false
 ) inherits rsyslog {
 
   $content_real = $custom_config ? {
