@@ -42,6 +42,7 @@ Manage rsyslog client and server via Puppet
     class { 'rsyslog::server':
         enable_tcp                => true,
         enable_udp                => true,
+        enable_onefile            => false,
         server_dir                => '/srv/log/',
         custom_config             => undef,
         high_precision_timestamps => false,
@@ -59,6 +60,7 @@ The following lists all the class parameters this module accepts.
     --------------------------------------------------------------
     enable_tcp                          true,false     Enable TCP listener. Defaults to true.
     enable_udp                          true,false     Enable UDP listener. Defaults to true.
+    enable_onefile                      true,false     Only one logfile per remote host. Defaults to false.
     server_dir                          STRING         Folder where logs will be stored on the server. Defaults to '/srv/log/'
     custom_config                       STRING         Specify your own template to use for server config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb'
     high_precision_timestamps           true,false     Whether or not to use high precision timestamps.
