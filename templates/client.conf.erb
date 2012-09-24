@@ -21,17 +21,17 @@ $ActionResumeRetryCount -1      # infinety retries if host is down
 # We log locally, restore to default format
 $ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
 
-<% if scope.lookupvar('rsyslog::client::log_style') == 'debian' -%>
+<% if scope.lookupvar('rsyslog::params::log_style') == 'debian' -%>
 # Log auth messages locally
 auth,authpriv.*                 /var/log/auth.log
-<% elsif scope.lookupvar('rsyslog::client::log_style') == 'redhat' -%>
+<% elsif scope.lookupvar('rsyslog::params::log_style') == 'redhat' -%>
 # Log auth messages locally
 auth,authpriv.*                 /var/log/secure
 <% end -%>
 <% end -%>
 
 <% if scope.lookupvar('rsyslog::client::log_local') -%>
-<% if scope.lookupvar('rsyslog::client::log_os_style') == 'debian' -%>
+<% if scope.lookupvar('rsyslog::params::log_style') == 'debian' -%>
 # First some standard log files.  Log by facility.
 #
 *.*;auth,authpriv.none         -/var/log/syslog
@@ -89,7 +89,7 @@ daemon.*;mail.*;\
         news.err;\
         *.=debug;*.=info;\
         *.=notice;*.=warn       |/dev/xconsole
-<% elsif scope.lookupvar('rsyslog::client::log_os_style') == 'redhat' -%>
+<% elsif scope.lookupvar('rsyslog::params::log_style') == 'redhat' -%>
 # Log all kernel messages to the console.
 # Logging much else clutters up the screen.
 #kern.*                                                 /dev/console

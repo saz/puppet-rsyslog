@@ -1,6 +1,6 @@
 class rsyslog::params {
-  case $::operatingsystem {
-    ubuntu, debian: {
+  case $::osfamily {
+    debian: {
       $rsyslog_package_name   = 'rsyslog'
       $relp_package_name      = 'rsyslog-relp'
       $package_status         = 'latest'
@@ -20,7 +20,7 @@ class rsyslog::params {
       $client_conf            = "${rsyslog_d}client.conf"
       $server_conf            = "${rsyslog_d}server.conf"
     }
-    redhat, centos, fedora: {
+    redhat: {
       $rsyslog_package_name   = 'rsyslog'
       $relp_package_name      = 'rsyslog-relp'
       $package_status         = 'latest'
@@ -60,11 +60,12 @@ class rsyslog::params {
       $client_conf            = "${rsyslog_d}client.conf"
       $server_conf            = "${rsyslog_d}server.conf"
     }
-
-
     default: {
-      fail("Unsupported platform: ${::operatingsystem}")
+      case $::operatingsystem {
+        default: {
+          fail("Unsupported platform: ${::operatingsystem}")
+        }
+      }
     }
   }
-
 }
