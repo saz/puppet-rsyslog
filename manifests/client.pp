@@ -1,5 +1,6 @@
 class rsyslog::client (
   $log_remote     = true,
+  $spool_size     = '1g',
   $remote_type    = 'tcp',
   $log_local      = false,
   $log_auth_local = false,
