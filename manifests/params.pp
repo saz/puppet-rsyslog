@@ -1,6 +1,6 @@
 class rsyslog::params {
-  case $::operatingsystem {
-    ubuntu, debian: {
+  case $::osfamily {
+    debian: {
       $rsyslog_package_name   = 'rsyslog'
       $relp_package_name      = 'rsyslog-relp'
       $package_status         = 'latest'
@@ -39,8 +39,8 @@ class rsyslog::params {
       $server_conf            = "${rsyslog_d}server.conf"
     }
     freebsd: {
-      $rsyslog_package_name   = 'rsyslog5'
-      $relp_package_name      = 'rsyslog5-relp'
+      $rsyslog_package_name   = 'sysutils/rsyslog5'
+      $relp_package_name      = 'sysutils/rsyslog5-relp'
       $package_status         = 'present'
       $rsyslog_d              = '/etc/syslog.d/'
       $rsyslog_conf           = '/etc/syslog.conf'
@@ -57,11 +57,12 @@ class rsyslog::params {
       $client_conf            = "${rsyslog_d}client.conf"
       $server_conf            = "${rsyslog_d}server.conf"
     }
-
-
     default: {
-      fail("Unsupported platform: ${::operatingsystem}")
+      case $::operatingsystem {
+        default: {
+          fail("Unsupported platform: ${::operatingsystem}")
+        }
+      }
     }
   }
-
 }
