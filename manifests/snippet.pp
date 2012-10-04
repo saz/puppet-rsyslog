@@ -4,11 +4,11 @@ define rsyslog::snippet(
 ) {
   include rsyslog
 
-  file { "${rsyslog::params::rsyslog_d}${name}":
+  file { "${rsyslog::params::rsyslog_d}${name}.conf":
     ensure  => $ensure,
     owner   => $rsyslog::params::run_user,
     group   => $rsyslog::params::run_group,
-    content => $content,
+    content => "${content}\n",
     require => Class['rsyslog::config'],
     notify  => Class['rsyslog::service'],
   }
