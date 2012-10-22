@@ -3,6 +3,8 @@ class rsyslog::params {
     debian: {
       $rsyslog_package_name   = 'rsyslog'
       $relp_package_name      = 'rsyslog-relp'
+      $mysql_package_name     = 'rsyslog-mysql'
+      $pgsql_package_name     = 'rsyslog-pgsql'
       $package_status         = 'latest'
       $rsyslog_d              = '/etc/rsyslog.d/'
       $rsyslog_conf           = '/etc/rsyslog.conf'
@@ -22,6 +24,8 @@ class rsyslog::params {
     redhat: {
       $rsyslog_package_name   = 'rsyslog'
       $relp_package_name      = 'rsyslog-relp'
+      $mysql_package_name     = 'rsyslog-mysql'
+      $pgsql_package_name     = 'rsyslog-pgsql'
       $package_status         = 'latest'
       $rsyslog_d              = '/etc/rsyslog.d/'
       $rsyslog_conf           = '/etc/rsyslog.conf'
@@ -41,6 +45,8 @@ class rsyslog::params {
     freebsd: {
       $rsyslog_package_name   = 'sysutils/rsyslog5'
       $relp_package_name      = 'sysutils/rsyslog5-relp'
+      $mysql_package_name     = 'sysutils/rsyslog5-mysql'
+      $pgsql_package_name     = 'sysutils/rsyslog5-pgsql'
       $package_status         = 'present'
       $rsyslog_d              = '/etc/syslog.d/'
       $rsyslog_conf           = '/etc/syslog.conf'

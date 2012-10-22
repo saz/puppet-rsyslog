@@ -1,0 +1,32 @@
+class rsyslog::database (
+  $backend,
+  $server,
+  $database,
+  $username,
+  $password,
+) inherits rsyslog {
+
+  $db_module = "om${backend}"
+  $db_conf = "${rsyslog::params::rsyslog_d}${backend}.conf"
+  
+  case $backend {
+    mysql: { $db_package = $rsyslog::params::mysql_package_name }
+    pgsql: { $db_package = $rsyslog::params::pgsql_package_name }
+    default: { fail("Unsupported backend: ${backend}. Only MySQL (mysql) and PostgreSQL (pgsql) are supported.") }
+  }
+  
+  package { $db_package:
+    ensure => $rsyslog::params::package_status,
+    before => File[$db_conf],
+  }
+
+  file { $db_conf:
+    ensure  => present,
+    owner   => root,
+    group   => $rsyslog::params::run_group,
+    mode    => '0600',
+    content => template("${module_name}/database.conf.erb"),
+    require => Class['rsyslog::config'],
+    notify  => Class['rsyslog::service'],
+  }
+}
