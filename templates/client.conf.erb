@@ -3,7 +3,7 @@
 # An "In-Memory Queue" is created for remote logging.
 $WorkDirectory <%= scope.lookupvar('rsyslog::params::spool_dir') -%>    # where to place spool files
 $ActionQueueFileName queue      # unique name prefix for spool files
-$ActionQueueMaxDiskSpace 1g     # 1gb space limit (use as much as possible)
+$ActionQueueMaxDiskSpace <%= scope.lookupvar('rsyslog::client::spool_size') -%>     # spool space limit (use as much as possible)
 $ActionQueueSaveOnShutdown on   # save messages to disk on shutdown
 $ActionQueueType LinkedList     # run asynchronously
 $ActionResumeRetryCount -1      # infinety retries if host is down
