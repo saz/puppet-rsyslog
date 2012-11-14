@@ -1,37 +1,49 @@
-class rsyslog::config {
+# == Class: rsyslog::config
+#
+# Full description of class role here.
+#
+# === Parameters
+#
+# === Variables
+#
+# === Examples
+#
+#  class { 'rsyslog::config': }
+#
+class rsyslog::config inherits rsyslog::params {
     file { $rsyslog::params::rsyslog_d:
+        ensure  => directory,
         owner   => root,
         group   => $rsyslog::params::run_group,
         purge   => true,
         recurse => true,
         force   => true,
-        require => Class["rsyslog::install"],
-        ensure  => directory,
+        require => Class['rsyslog::install'],
     }
 
     file { $rsyslog::params::rsyslog_conf:
+        ensure  => file,
         owner   => root,
         group   => $rsyslog::params::run_group,
-        ensure  => file,
         content => template("${module_name}/rsyslog.conf.erb"),
-        require => Class["rsyslog::install"],
-        notify  => Class["rsyslog::service"],
+        require => Class['rsyslog::install'],
+        notify  => Class['rsyslog::service'],
     }
 
     file { $rsyslog::params::rsyslog_default:
+        ensure  => file,
         owner   => root,
         group   => $rsyslog::params::run_group,
-        ensure  => file,
-        source  => "puppet:///modules/rsyslog/rsyslog_default",
-        require => Class["rsyslog::install"],
-        notify  => Class["rsyslog::service"],
+        source  => 'puppet:///modules/rsyslog/rsyslog_default',
+        require => Class['rsyslog::install'],
+        notify  => Class['rsyslog::service'],
     }
 
     file { $rsyslog::params::spool_dir:
+        ensure  => directory,
         owner   => root,
         group   => $rsyslog::params::run_group,
-        ensure  => directory,
-        require => Class["rsyslog::install"],
-        notify  => Class["rsyslog::service"],
+        require => Class['rsyslog::install'],
+        notify  => Class['rsyslog::service'],
     }
 }

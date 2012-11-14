@@ -1,3 +1,26 @@
+# == Define: rsyslog::imfile
+#
+# Full description of class role here.
+#
+# === Parameters
+#
+# [*file_name*]
+# [*file_tag*]
+# [*file_facility*]
+# [*polling_interval*]
+# [*file_severity*]
+# [*run_file_monitor*]
+#
+# === Variables
+#
+# === Examples
+#
+#  rsyslog::imfile { 'my-imfile':
+#    file_name     => '/some/file',
+#    file_tag      => 'mytag',
+#    file_facility => 'myfacility',
+#  }
+#
 define rsyslog::imfile(
   $file_name,
   $file_tag,
