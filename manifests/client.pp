@@ -1,3 +1,25 @@
+# == Class: rsyslog::client
+#
+# Full description of class role here.
+#
+# === Parameters
+#
+# [*sample_parameter*]
+# [*log_remote*]
+# [*spool_size*]
+# [*remote_type*]
+# [*log_local*]
+# [*log_auth_local*]
+# [*custom_config*]
+# [*server*]
+# [*port*]
+#
+# === Variables
+#
+# === Examples
+#
+#  class { 'rsyslog::client': }
+#
 class rsyslog::client (
   $log_remote     = true,
   $spool_size     = '1g',
