@@ -33,7 +33,7 @@ class rsyslog::server (
 
   file { $rsyslog::params::server_conf:
     ensure  => present,
-    owner   => root,
+    owner   => 'root',
     group   => $rsyslog::params::run_group,
     content => $real_content,
     require => Class['rsyslog::config'],
