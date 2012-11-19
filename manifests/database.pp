@@ -27,7 +27,7 @@ class rsyslog::database (
   $server,
   $database,
   $username,
-  $password,
+  $password
 ) inherits rsyslog {
 
   $db_module = "om${backend}"
