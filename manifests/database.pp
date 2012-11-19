@@ -1,3 +1,27 @@
+# == Class: rsyslog::database
+#
+# Full description of class role here.
+#
+# === Parameters
+#
+# [*backend*]  - Which backend server to use (mysql|pgsql)
+# [*server*]   - Server hostname
+# [*database*] - Database name
+# [*username*] - Database username
+# [*password*] - Database password
+#
+# === Variables
+#
+# === Examples
+#
+#  class { 'rsyslog::database':
+#    backend  => 'mysql',
+#    server   => 'localhost',
+#    database => 'mydb',
+#    username => 'myuser',
+#    password => 'mypass',
+#  }
+#
 class rsyslog::database (
   $backend,
   $server,
@@ -8,13 +32,13 @@ class rsyslog::database (
 
   $db_module = "om${backend}"
   $db_conf = "${rsyslog::params::rsyslog_d}${backend}.conf"
-  
+
   case $backend {
     mysql: { $db_package = $rsyslog::params::mysql_package_name }
     pgsql: { $db_package = $rsyslog::params::pgsql_package_name }
     default: { fail("Unsupported backend: ${backend}. Only MySQL (mysql) and PostgreSQL (pgsql) are supported.") }
   }
-  
+
   package { $db_package:
     ensure => $rsyslog::params::package_status,
     before => File[$db_conf],

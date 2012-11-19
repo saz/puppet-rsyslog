@@ -1,3 +1,15 @@
+# == Class: rsyslog::params
+#
+# This defines default configuration values for rsyslog.  You don't want to use it directly.
+#
+# === Parameters
+#
+# === Variables
+#
+# === Examples
+#
+#  class { 'rsyslog::params': }
+#
 class rsyslog::params {
   case $::osfamily {
     debian: {
