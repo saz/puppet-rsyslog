@@ -77,6 +77,7 @@ news.notice                     -/var/log/news/news.notice
 #       *.=debug;*.=info;\
 #       *.=notice;*.=warn       /dev/tty8
 
+<% if scope.lookupvar('rsyslog::params::log_local_console') -%>
 # The named pipe /dev/xconsole is for the `xconsole' utility.  To use it,
 # you must invoke `xconsole' with the `-file' option:
 # 
@@ -89,6 +90,7 @@ daemon.*;mail.*;\
         news.err;\
         *.=debug;*.=info;\
         *.=notice;*.=warn       |/dev/xconsole
+<% end -%>
 <% elsif scope.lookupvar('rsyslog::params::log_style') == 'redhat' -%>
 # Log all kernel messages to the console.
 # Logging much else clutters up the screen.
