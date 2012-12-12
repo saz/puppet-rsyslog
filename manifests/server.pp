@@ -6,7 +6,7 @@
 #
 # [*enable_tcp*]
 # [*enable_udp*]
-# [*enable_onfile*]
+# [*enable_onefile*]
 # [*server_dir*]
 # [*custom_config*]
 # [*high_precision_timestamps*]
@@ -20,7 +20,7 @@
 class rsyslog::server (
   $enable_tcp                = true,
   $enable_udp                = true,
-  $enable_onfile             = false,
+  $enable_onefile            = false,
   $server_dir                = '/srv/log/',
   $custom_config             = undef,
   $high_precision_timestamps = false
