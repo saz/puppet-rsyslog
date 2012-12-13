@@ -1,7 +1,7 @@
 # File is managed by puppet
 
 # Debian, Ubuntu
-RSYSLOGD_OPTIONS="-c4"
+RSYSLOGD_OPTIONS="-c5"
 
 # CentOS, RedHat, Fedora
 SYSLOGD_OPTIONS="${RSYSLOGD_OPTIONS}"
