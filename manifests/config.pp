@@ -15,7 +15,6 @@ class rsyslog::config inherits rsyslog::params {
     ensure  => directory,
     owner   => 'root',
     group   => $rsyslog::params::run_group,
-    purge   => true,
     recurse => true,
     force   => true,
     require => Class['rsyslog::install'],
