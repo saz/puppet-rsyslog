@@ -11,6 +11,7 @@
 #  class { 'rsyslog::config': }
 #
 class rsyslog::config inherits rsyslog::params {
+
   file { $rsyslog::params::rsyslog_d:
     ensure  => directory,
     owner   => 'root',
@@ -46,4 +47,5 @@ class rsyslog::config inherits rsyslog::params {
     require => Class['rsyslog::install'],
     notify  => Class['rsyslog::service'],
   }
+
 }
