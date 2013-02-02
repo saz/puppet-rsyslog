@@ -1,5 +1,5 @@
 name    'saz-rsyslog'
-version '1.1.4'
+version '2.0.0'
 source 'UNKNOWN'
 author 'saz'
 license 'Apache License, Version 2.0'
