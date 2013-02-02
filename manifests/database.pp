@@ -53,4 +53,5 @@ class rsyslog::database (
     require => Class['rsyslog::config'],
     notify  => Class['rsyslog::service'],
   }
+
 }

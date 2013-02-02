@@ -19,6 +19,7 @@ define rsyslog::snippet(
   $content,
   $ensure = 'present'
 ) {
+
   include rsyslog
 
   file { "${rsyslog::params::rsyslog_d}${name}.conf":
@@ -29,4 +30,5 @@ define rsyslog::snippet(
     require => Class['rsyslog::config'],
     notify  => Class['rsyslog::service'],
   }
+
 }

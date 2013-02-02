@@ -29,6 +29,7 @@ define rsyslog::imfile(
   $file_severity = 'notice',
   $run_file_monitor = true
 ) {
+
   include rsyslog::params
 
   file { "${rsyslog::params::rsyslog_d}${name}.conf":
@@ -39,4 +40,5 @@ define rsyslog::imfile(
     require => Class['rsyslog::install'],
     notify  => Class['rsyslog::service'],
   }
+
 }

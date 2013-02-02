@@ -39,4 +39,5 @@ class rsyslog::server (
     require => Class['rsyslog::config'],
     notify  => Class['rsyslog::service'],
   }
+
 }
