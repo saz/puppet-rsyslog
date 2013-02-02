@@ -11,6 +11,7 @@
 #  class { 'rsyslog::params': }
 #
 class rsyslog::params {
+
   case $::osfamily {
     debian: {
       $rsyslog_package_name   = 'rsyslog'
@@ -84,4 +85,5 @@ class rsyslog::params {
       }
     }
   }
+
 }
