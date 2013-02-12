@@ -87,7 +87,7 @@ The following lists all the class parameters this module accepts.
     -------------------------------------------------------------------
     log_remote                          true,false          Log Remotely. Defaults to true.
     remote_type                         'tcp','udp'         Which protocol to use when logging remotely. Defaults to 'tcp'.
-    log_local                           true,false          Log locally. Defualts to false.
+    log_local                           true,false          Log locally. Defaults to false.
     log_auth_local                      true,false          Just log auth facility locally. Defaults to false.
     custom_config                       STRING              Specify your own template to use for client config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb
     server                              STRING              Rsyslog server to log to. Will be used in the client configuration file.
