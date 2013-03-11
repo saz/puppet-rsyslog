@@ -1,37 +1,25 @@
 require 'spec_helper'
 
 describe 'rsyslog::server', :type => :class do
-  context "osfamily = RedHat" do
-    let :facts do
-      {
-        :osfamily        => 'RedHat',
-      }
-    end
 
-    context "default usage (osfamily = RedHat)" do
-      let(:title) { 'rsyslog-server-basic' }
-
-      it 'should compile' do
-        should contain_file('/etc/rsyslog.d/server.conf')
+  ['RedHat', 'Debian'].each do |osfamily|
+    context "osfamily = #{osfamily}" do
+      let :facts do
+        {
+          :osfamily        => osfamily,
+        }
       end
-    end
-  end
 
-  context "osfamily = Debian" do
-    let :facts do
-      {
-        :osfamily        => 'Debian',
-      }
-    end
+      context "default usage (osfamily = #{osfamily})" do
+        let(:title) { 'rsyslog-server-basic' }
 
-    context "default usage (osfamily = Debian)" do
-      let(:title) { 'rsyslog-server-basic' }
+        it 'should compile' do
+          should contain_file('/etc/rsyslog.d/server.conf')
+        end
 
-      it 'should compile' do
-        should contain_file('/etc/rsyslog.d/server.conf')
-      end
-    end
-  end
+      end 
+    end 
+  end 
 
   context "osfamily = FreeBSD" do
     let :facts do
@@ -48,4 +36,5 @@ describe 'rsyslog::server', :type => :class do
       end
     end
   end
-end
+
+end # describe 'rsyslog::server'
