@@ -1,0 +1,13 @@
+
+# Switch back to default ruleset
+$RuleSet RSYSLOG_DefaultRuleset
+
+<% if scope.lookupvar('rsyslog::server::enable_udp') -%>
+$InputUDPServerBindRuleset remote
+$UDPServerRun 514
+<% end -%>
+
+<% if scope.lookupvar('rsyslog::server::enable_tcp') -%>
+$InputTCPServerBindRuleset remote
+$InputTCPServerRun 514
+<% end -%>
