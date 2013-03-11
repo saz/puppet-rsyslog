@@ -15,7 +15,15 @@
 #
 # === Examples
 #
+#  Defaults
+#
 #  class { 'rsyslog::server': }
+#
+#  Create seperate directory per host
+#
+#  class { 'rsyslog::server':
+#    custom_config => 'rsyslog/server-hostname.conf.erb'
+#  }
 #
 class rsyslog::server (
   $enable_tcp                = true,
