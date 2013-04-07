@@ -105,3 +105,10 @@ The following lists all the class parameters this module accepts.
 Due to a missing feature in current RELP versions (InputRELPServerBindRuleset option),
 remote logging is using TCP. You can switch between TCP and UDP. As soon as there is
 a new RELP version which supports setting Rulesets, I will add support for relp back.
+
+By default, rsyslog::server will strip numbers from hostnames. This means the logs of 
+multiple servers with the same non-numerical name will be aggregrated in a single 
+directory. i.e. www01 www02 and www02 would all log to the www directory.
+
+To log each host to a seperate directory, set the custom_config parameter to 
+'rsyslog/server-hostname.conf.erb'

@@ -1,27 +1,12 @@
 # File is managed by puppet
 
-<% if scope.lookupvar('rsyslog::server::enable_udp') -%>
-# Load UDP module
-$ModLoad imudp
-<% end -%>
+<% # Common header across all templates -%>
+<%= scope.function_template(['rsyslog/server/_default-header.conf.erb']) %>
 
-<% if scope.lookupvar('rsyslog::server::enable_tcp') -%>
-# Load TCP module
-$ModLoad imtcp
-<% end -%>
-
-<% if scope.lookupvar('rsyslog::server::high_precision_timestamps') == false -%>
-#
-# Use traditional timestamp format.
-# To enable high precision timestamps, comment out the following line.
-#
-$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
-<% end -%>
-
-# Switch to remote ruleset
-$RuleSet remote
-
+# Log files are stored in directories matching the short hostname, excluding numbers
+# i.e. web01 web02 and web03 will all log to a the web directory
 <% if scope.lookupvar('rsyslog::server::enable_onefile') == false -%>
+
 # Templates
 $Template dynAuthLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%/auth.log"
 $Template dynSyslog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%/syslog"
@@ -53,15 +38,5 @@ $Template dynAllMessages,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>
 *.*                 -?dynAllMessages
 <% end -%>
 
-# Switch back to default ruleset
-$RuleSet RSYSLOG_DefaultRuleset
-
-<% if scope.lookupvar('rsyslog::server::enable_udp') -%>
-$InputUDPServerBindRuleset remote
-$UDPServerRun 514
-<% end -%>
-
-<% if scope.lookupvar('rsyslog::server::enable_tcp') -%>
-$InputTCPServerBindRuleset remote
-$InputTCPServerRun 514
-<% end -%>
+<% # Common footer across all templates -%>
+<%= scope.function_template(['rsyslog/server/_default-footer.conf.erb']) %>
