@@ -15,7 +15,15 @@
 #
 # === Examples
 #
+#  Defaults
+#
 #  class { 'rsyslog::server': }
+#
+#  Create seperate directory per host
+#
+#  class { 'rsyslog::server':
+#    custom_config => 'rsyslog/server-hostname.conf.erb'
+#  }
 #
 class rsyslog::server (
   $enable_tcp                = true,
@@ -27,7 +35,7 @@ class rsyslog::server (
 ) inherits rsyslog {
 
   $real_content = $custom_config ? {
-    ''      => template("${module_name}/server.conf.erb"),
+    ''      => template("${module_name}/server-default.conf.erb"),
     default => template($custom_config),
   }
 
