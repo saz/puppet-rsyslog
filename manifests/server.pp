@@ -10,6 +10,10 @@
 # [*server_dir*]
 # [*custom_config*]
 # [*high_precision_timestamps*]
+# [*ssl*]
+# [*ssl_ca*]
+# [*ssl_cert*]
+# [*ssl_key*]
 #
 # === Variables
 #
@@ -52,7 +56,7 @@ class rsyslog::server (
     notify  => Class['rsyslog::service'],
   }
 
-  if $ssl and (!defined($ssl_ca) or !defined($ssl_cert) or !defined($ssl_key)) {
-    fail('You need to define all the ssl options in order to use SSL.')
+  if $ssl and (!$enable_tcp or !defined($ssl_ca) or !defined($ssl_cert) or !defined($ssl_key)) {
+    fail('You need to define all the ssl options and enable tcp in order to use SSL.')
   }
 }
