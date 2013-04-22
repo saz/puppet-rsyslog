@@ -16,5 +16,18 @@ $ModLoad imtcp
 $ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
 <% end -%>
 
+<% if scope.lookupvar('rsyslog::server::ssl') -%>
+# Server side SSL.
+$DefaultNetstreamDriver gtls
+
+# Cert files.
+$DefaultNetstreamDriverCAFile <%= scope.lookupvar('rsyslog::server::ssl_ca') %>
+$DefaultNetstreamDriverCertFile <%= scope.lookupvar('rsyslog::server::ssl_cert') %>
+$DefaultNetstreamDriverKeyFile <%= scope.lookupvar('rsyslog::server::ssl_key') %>
+
+$InputTCPServerStreamDriverMode 1
+$InputTCPServerStreamDriverAuthMode anon
+<% end -%>
+
 # Switch to remote ruleset
 $RuleSet remote

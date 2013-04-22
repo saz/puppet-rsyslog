@@ -31,7 +31,11 @@ class rsyslog::server (
   $enable_onefile            = false,
   $server_dir                = '/srv/log',
   $custom_config             = undef,
-  $high_precision_timestamps = false
+  $high_precision_timestamps = false,
+  $ssl                       = false,
+  $ssl_ca                    = undef,
+  $ssl_cert                  = undef,
+  $ssl_key                   = undef,
 ) inherits rsyslog {
 
   $real_content = $custom_config ? {
@@ -46,5 +50,9 @@ class rsyslog::server (
     content => $real_content,
     require => Class['rsyslog::config'],
     notify  => Class['rsyslog::service'],
+  }
+
+  if $ssl and (!defined($ssl_ca) or !defined($ssl_cert) or !defined($ssl_key)) {
+    fail('You need to define all the ssl options in order to use SSL.')
   }
 }
