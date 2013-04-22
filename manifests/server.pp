@@ -10,6 +10,10 @@
 # [*server_dir*]
 # [*custom_config*]
 # [*high_precision_timestamps*]
+# [*ssl*]
+# [*ssl_ca*]
+# [*ssl_cert*]
+# [*ssl_key*]
 #
 # === Variables
 #
@@ -31,7 +35,11 @@ class rsyslog::server (
   $enable_onefile            = false,
   $server_dir                = '/srv/log',
   $custom_config             = undef,
-  $high_precision_timestamps = false
+  $high_precision_timestamps = false,
+  $ssl                       = false,
+  $ssl_ca                    = undef,
+  $ssl_cert                  = undef,
+  $ssl_key                   = undef,
 ) inherits rsyslog {
 
   $real_content = $custom_config ? {
