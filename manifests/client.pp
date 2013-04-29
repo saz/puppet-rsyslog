@@ -38,10 +38,10 @@ class rsyslog::client (
     default => template($custom_config),
   }
 
-  file { $rsyslog::params::client_conf:
+  file { $rsyslog::client_conf:
     ensure  => present,
     owner   => root,
-    group   => $rsyslog::params::run_group,
+    group   => $rsyslog::run_group,
     content => $content_real,
     require => Class['rsyslog::config'],
     notify  => Class['rsyslog::service'],
