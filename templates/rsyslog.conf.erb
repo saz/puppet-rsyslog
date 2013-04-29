@@ -18,6 +18,8 @@ $ModLoad imklog   # provides kernel logging support (previously done by rklogd)
 $FileOwner <%= scope.lookupvar('rsyslog::log_user') %>
 $FileGroup <%= scope.lookupvar('rsyslog::log_group') %>
 $FileCreateMode <%= scope.lookupvar('rsyslog::perm_file') %>
+$DirOwner <%= scope.lookupvar('rsyslog::log_user') %>
+$DirGroup <%= scope.lookupvar('rsyslog::log_group') %>
 $DirCreateMode <%= scope.lookupvar('rsyslog::perm_dir') %>
 $PrivDropToUser <%= scope.lookupvar('rsyslog::run_user') %>
 $PrivDropToGroup <%= scope.lookupvar('rsyslog::run_group') %>
