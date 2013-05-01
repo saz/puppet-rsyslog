@@ -23,4 +23,10 @@ class rsyslog::install {
     }
   }
 
+  if $rsyslog::gnutls_package_name != false {
+    package { $rsyslog::gnutls_package_name:
+      ensure => $rsyslog::package_status
+    }
+  }
+
 }

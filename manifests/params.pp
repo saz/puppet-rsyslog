@@ -18,6 +18,7 @@ class rsyslog::params {
       $relp_package_name      = 'rsyslog-relp'
       $mysql_package_name     = 'rsyslog-mysql'
       $pgsql_package_name     = 'rsyslog-pgsql'
+      $gnutls_package_name    = 'rsyslog-gnutls'
       $package_status         = 'latest'
       $rsyslog_d              = '/etc/rsyslog.d/'
       $purge_rsyslog_d        = false
@@ -34,6 +35,7 @@ class rsyslog::params {
       $service_name           = 'rsyslog'
       $client_conf            = "${rsyslog_d}client.conf"
       $server_conf            = "${rsyslog_d}server.conf"
+      $ssl                    = false
     }
     redhat: {
       $rsyslog_package_name   = 'rsyslog'
@@ -44,6 +46,7 @@ class rsyslog::params {
       }
       $mysql_package_name     = 'rsyslog-mysql'
       $pgsql_package_name     = 'rsyslog-pgsql'
+      $gnutls_package_name    = 'rsyslog-gnutls'
       $package_status         = 'latest'
       $rsyslog_d              = '/etc/rsyslog.d/'
       $rsyslog_conf           = '/etc/rsyslog.conf'
@@ -59,12 +62,14 @@ class rsyslog::params {
       $service_name           = 'rsyslog'
       $client_conf            = "${rsyslog_d}client.conf"
       $server_conf            = "${rsyslog_d}server.conf"
+      $ssl                    = false
     }
     freebsd: {
       $rsyslog_package_name   = 'sysutils/rsyslog5'
       $relp_package_name      = 'sysutils/rsyslog5-relp'
       $mysql_package_name     = 'sysutils/rsyslog5-mysql'
       $pgsql_package_name     = 'sysutils/rsyslog5-pgsql'
+      $gnutls_package_name    = 'sysutils/rsyslog5-gnutls'
       $package_status         = 'present'
       $rsyslog_d              = '/etc/syslog.d/'
       $rsyslog_conf           = '/etc/syslog.conf'
@@ -80,6 +85,7 @@ class rsyslog::params {
       $service_name           = 'syslogd'
       $client_conf            = "${rsyslog_d}client.conf"
       $server_conf            = "${rsyslog_d}server.conf"
+      $ssl                    = false
     }
     default: {
       case $::operatingsystem {

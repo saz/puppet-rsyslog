@@ -15,6 +15,7 @@ class rsyslog (
   $relp_package_name      = $rsyslog::params::relp_package_name,
   $mysql_package_name     = $rsyslog::params::mysql_package_name,
   $pgsql_package_name     = $rsyslog::params::pgsql_package_name,
+  $gnutls_package_name    = $rsyslog::params::gnutls_package_name,
   $package_status         = $rsyslog::params::package_status,
   $rsyslog_d              = $rsyslog::params::rsyslog_d,
   $purge_rsyslog_d        = $rsyslog::params::purge_rsyslog_d,
@@ -30,7 +31,8 @@ class rsyslog (
   $spool_dir              = $rsyslog::params::spool_dir,
   $service_name           = $rsyslog::params::service_name,
   $client_conf            = $rsyslog::params::client_conf,
-  $server_conf            = $rsyslog::params::server_conf
+  $server_conf            = $rsyslog::params::server_conf,
+  $ssl                    = $rsyslog::params::ssl,
 ) inherits rsyslog::params {
   class { 'rsyslog::install': }
   class { 'rsyslog::config': }
