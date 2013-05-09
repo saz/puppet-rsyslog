@@ -20,4 +20,8 @@ class rsyslog::install inherits rsyslog::params {
     ensure => $rsyslog::params::package_status
   }
 
+  package { 'rsyslog-gnutls':
+    ensure => present,
+  }
+
 }
