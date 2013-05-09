@@ -56,7 +56,7 @@ class rsyslog::server (
     notify  => Class['rsyslog::service'],
   }
 
-  if $ssl and $enable_tcp and $ssl_ca != undef and $ssl_cert != undef and $ssl_key != undef {
-    fail('You need to define all the ssl options and enable tcp in order to use SSL.')
-  }
+  #  if $ssl and $enable_tcp and $ssl_ca != undef and $ssl_cert != undef and $ssl_key != undef {
+  #  fail('You need to define all the ssl options and enable tcp in order to use SSL.')
+  #}
 }
