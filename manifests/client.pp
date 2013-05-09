@@ -26,7 +26,7 @@
 class rsyslog::client (
   $log_remote           = true,
   $spool_size           = '1g',
-  $custom_remote_type   = 'tcp',
+  $remote_type   = 'tcp',
   $log_local            = false,
   $log_auth_local       = false,
   $custom_config        = undef,
@@ -40,11 +40,6 @@ class rsyslog::client (
   $content_real = $custom_config ? {
     ''      => template("${module_name}/client.conf.erb"),
     default => template($custom_config),
-  }
-
-  $remote_type = $ssl ? {
-    true  => 'tcp',
-    false => $custom_remote_type,
   }
 
   file { $rsyslog::params::client_conf:
