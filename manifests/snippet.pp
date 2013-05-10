@@ -22,10 +22,10 @@ define rsyslog::snippet(
 
   include rsyslog
 
-  file { "${rsyslog::params::rsyslog_d}${name}.conf":
+  file { "${rsyslog::rsyslog_d}${name}.conf":
     ensure  => $ensure,
-    owner   => $rsyslog::params::run_user,
-    group   => $rsyslog::params::run_group,
+    owner   => $rsyslog::run_user,
+    group   => $rsyslog::run_group,
     content => "${content}\n",
     require => Class['rsyslog::config'],
     notify  => Class['rsyslog::service'],

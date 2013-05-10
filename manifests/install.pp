@@ -10,14 +10,17 @@
 #
 #  class { 'rsyslog::install': }
 #
-class rsyslog::install inherits rsyslog::params {
-
-  package { $rsyslog::params::rsyslog_package_name:
-    ensure => $rsyslog::params::package_status,
+class rsyslog::install {
+  if $rsyslog::rsyslog_package_name != false {
+    package { $rsyslog::rsyslog_package_name:
+      ensure => $rsyslog::package_status,
+    }
   }
 
-  package { $rsyslog::params::relp_package_name:
-    ensure => $rsyslog::params::package_status
+  if $rsyslog::relp_package_name != false {
+    package { $rsyslog::relp_package_name:
+      ensure => $rsyslog::package_status
+    }
   }
 
 }
