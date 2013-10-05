@@ -30,6 +30,8 @@ define rsyslog::imfile(
   $run_file_monitor = true
 ) {
 
+  include rsyslog
+
   file { "${rsyslog::rsyslog_d}${name}.conf":
     ensure  => file,
     owner   => 'root',
