@@ -30,7 +30,7 @@ class rsyslog (
   $spool_dir              = $rsyslog::params::spool_dir,
   $service_name           = $rsyslog::params::service_name,
   $client_conf            = $rsyslog::params::client_conf,
-  $server_conf            = $rsyslog::params::server_conf,
+  $server_conf            = $rsyslog::params::server_conf
 ) inherits rsyslog::params {
   class { 'rsyslog::install': }
   class { 'rsyslog::config': }
