@@ -1,15 +1,31 @@
 language: ruby
 rvm:
-  - 1.8.7
-  - 1.9.3
-  - 2.0.0
-  - ruby-head
+- 1.8.7
+- 1.9.3
+- 2.0.0
+before_script:
+after_script:
+script: rake spec SPEC_OPTS='--format documentation'
+after_success:
+- git clone -q git://github.com/puppetlabs/ghpublisher.git .forge-releng
+- .forge-releng/publish
+branches:
+  only:
+  - master
 env:
-  - PUPPET_GEM_VERSION=">= 3.0.0"
-matrix:
-  allow_failures:
-    - rvm: 2.0.0
-    - rvm: ruby-head
-  include:
-    - rvm: 1.8.7
-      env: PUPPET_GEM_VERSION="~> 2.7"
+  matrix:
+  - PUPPET_VERSION=2.6.9
+  - PUPPET_VERSION=2.7.6
+  - PUPPET_VERSION=2.7.13
+  - PUPPET_VERSION=3.0.0
+  - PUPPET_VERSION=3.1.0
+  - PUPPET_VERSION=3.3.0
+  global:
+  - PUBLISHER_LOGIN=saz
+  - secure: |-
+      EmipIx5A93xnHKwdHfuMPGNLjLz0M0wND0IyeucWhIHE+KtZ48oT+mO2XhnJSpu1DH
+      JaSoYgjQpCILvniWg76o+HY1bTDEP3AmUlxNFgfDAOAQfv0RHv2cEcgNxNrxsddx6S
+      Ks0FCvVkFgY703X+kBiYTpjP4SBzRe0y9OudSvk=
+notifications:
+  email: false
+gemfile: .gemfile
