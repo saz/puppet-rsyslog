@@ -1,2 +1,5 @@
 pkg/
 *.swp
+/metadata.json
+.forge-releng
+/spec/fixtures
