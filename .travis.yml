@@ -1,17 +1,18 @@
+---
 language: ruby
 rvm:
-- 1.8.7
-- 1.9.3
-- 2.0.0
+  - 1.8.7
+  - 1.9.3
+  - 2.0.0
 before_script:
 after_script:
 script: rake spec SPEC_OPTS='--format documentation'
 after_success:
-- git clone -q git://github.com/puppetlabs/ghpublisher.git .forge-releng
-- .forge-releng/publish
+  - git clone -q git://github.com/puppetlabs/ghpublisher.git .forge-releng
+  - .forge-releng/publish
 branches:
   only:
-  - master
+    - master
 env:
   matrix:
     - PUPPET_GEM_VERSION="~> 2.6.0"
