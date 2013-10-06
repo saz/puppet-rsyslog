@@ -1,7 +1,5 @@
-# puppet-rsyslog
+# puppet-rsyslog [![Build Status](https://secure.travis-ci.org/saz/puppet-rsyslog.png)](https://travis-ci.org/saz/puppet-rsyslog)
 ================
-
-[![Build Status](https://secure.travis-ci.org/saz/puppet-rsyslog.png?branch=master)](https://travis-ci.org/saz/puppet-rsyslog)
 
 Manage rsyslog client and server via Puppet
 
