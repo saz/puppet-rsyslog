@@ -6,7 +6,8 @@ describe 'rsyslog::server', :type => :class do
     context "osfamily = #{osfamily}" do
       let :facts do
         {
-          :osfamily        => osfamily,
+          :osfamily               => osfamily,
+          :operatingsystemrelease => 6.0,
         }
       end
 

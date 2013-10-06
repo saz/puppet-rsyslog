@@ -4,7 +4,8 @@ describe 'rsyslog::snippet', :type => :define do
   context "osfamily = RedHat" do
     let :facts do
       {
-        :osfamily        => 'RedHat',
+        :osfamily               => 'RedHat',
+        :operatingsystemrelease => 6.0,
       }
     end
 
