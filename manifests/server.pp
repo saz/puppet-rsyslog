@@ -31,7 +31,8 @@ class rsyslog::server (
   $enable_onefile            = false,
   $server_dir                = '/srv/log/',
   $custom_config             = undef,
-  $high_precision_timestamps = false
+  $port                      = '514',
+  $high_precision_timestamps = false,
 ) inherits rsyslog {
 
   $real_content = $custom_config ? {
