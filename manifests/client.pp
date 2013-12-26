@@ -14,6 +14,7 @@
 # [*custom_params*]
 # [*server*]
 # [*port*]
+# [*ssl_ca*]
 #
 # === Variables
 #
@@ -30,7 +31,8 @@ class rsyslog::client (
   $custom_config  = undef,
   $custom_params  = undef,
   $server         = 'log',
-  $port           = '514'
+  $port           = '514',
+  $ssl_ca         = undef,
 ) inherits rsyslog {
 
   $content_real = $custom_config ? {
@@ -41,6 +43,14 @@ class rsyslog::client (
   rsyslog::snippet {'client':
     ensure  => present,
     content => $content_real,
-  } 
+  }
+
+  if $rsyslog::ssl and $ssl_ca == undef {
+    fail('You need to define $ssl_ca in order to use SSL.')
+  }
+
+  if $rsyslog::ssl and $remote_type != 'tcp' {
+    fail('You need to enable tcp in order to use SSL.')
+  }
 
 }
