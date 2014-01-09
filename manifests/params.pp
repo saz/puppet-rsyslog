@@ -38,10 +38,11 @@ class rsyslog::params {
       $ssl                    = false
     }
     redhat: {
-      $rsyslog_package_name   = 'rsyslog'
       if $::operatingsystemrelease >= 6.0 {
+        $rsyslog_package_name   = 'rsyslog'
         $relp_package_name      = 'rsyslog-relp'
       } else {
+        $rsyslog_package_name   = 'rsyslog5'
         $relp_package_name      = 'librelp'
       }
       $mysql_package_name     = 'rsyslog-mysql'
