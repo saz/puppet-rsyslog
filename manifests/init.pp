@@ -21,6 +21,7 @@ class rsyslog (
   $purge_rsyslog_d        = $rsyslog::params::purge_rsyslog_d,
   $rsyslog_conf           = $rsyslog::params::rsyslog_conf,
   $rsyslog_default        = $rsyslog::params::rsyslog_default,
+  $rsyslog_default_file   = $rsyslog::params::default_config_file,
   $run_user               = $rsyslog::params::run_user,
   $run_group              = $rsyslog::params::run_group,
   $log_user               = $rsyslog::params::log_user,
