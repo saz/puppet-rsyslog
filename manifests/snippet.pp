@@ -24,8 +24,8 @@ define rsyslog::snippet(
 
   file { "${rsyslog::rsyslog_d}${name}.conf":
     ensure  => $ensure,
-    owner   => $rsyslog::run_user,
-    group   => $rsyslog::run_group,
+    owner   => 0,
+    group   => 0,
     content => "# file managed by puppet\n${content}\n",
     require => Class['rsyslog::config'],
     notify  => Class['rsyslog::service'],

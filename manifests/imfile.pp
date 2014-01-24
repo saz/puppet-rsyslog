@@ -34,8 +34,8 @@ define rsyslog::imfile(
 
   file { "${rsyslog::rsyslog_d}${name}.conf":
     ensure  => file,
-    owner   => 'root',
-    group   => $rsyslog::run_group,
+    owner   => 0,
+    group   => 0,
     content => template('rsyslog/imfile.erb'),
     require => Class['rsyslog::install'],
     notify  => Class['rsyslog::service'],
