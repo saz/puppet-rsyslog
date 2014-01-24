@@ -38,7 +38,7 @@ class rsyslog::server (
   $high_precision_timestamps = false,
   $ssl_ca                    = undef,
   $ssl_cert                  = undef,
-  $ssl_key                   = undef,
+  $ssl_key                   = undef
 ) inherits rsyslog {
 
   $real_content = $custom_config ? {

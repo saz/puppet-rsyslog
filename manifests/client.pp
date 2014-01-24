@@ -32,7 +32,7 @@ class rsyslog::client (
   $custom_params  = undef,
   $server         = 'log',
   $port           = '514',
-  $ssl_ca         = undef,
+  $ssl_ca         = undef
 ) inherits rsyslog {
 
   $content_real = $custom_config ? {
