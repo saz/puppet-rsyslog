@@ -4,9 +4,8 @@
 #### MODULES ####
 #################
 
-$ModLoad imuxsock # provides support for local system logging
-$ModLoad imklog   # provides kernel logging support (previously done by rklogd) 
-#$ModLoad immark  # provides --MARK-- message capability
+<% @modules.each do |module_row| %>
+<%= module_row %><% end %>
 
 ###########################
 #### GLOBAL DIRECTIVES ####

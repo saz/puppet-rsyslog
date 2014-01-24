@@ -36,6 +36,11 @@ class rsyslog::params {
       $client_conf            = "${rsyslog_d}client.conf"
       $server_conf            = "${rsyslog_d}server.conf"
       $ssl                    = false
+      $modules                = [
+        '$ModLoad imuxsock # provides support for local system logging',
+        '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
+        '#$ModLoad immark  # provides --MARK-- message capability',
+      ]
     }
     redhat: {
       $rsyslog_package_name   = 'rsyslog'
@@ -63,6 +68,11 @@ class rsyslog::params {
       $client_conf            = "${rsyslog_d}client.conf"
       $server_conf            = "${rsyslog_d}server.conf"
       $ssl                    = false
+      $modules                = [
+        '$ModLoad imuxsock # provides support for local system logging',
+        '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
+        '#$ModLoad immark  # provides --MARK-- message capability',
+      ]
     }
     freebsd: {
       $rsyslog_package_name   = 'sysutils/rsyslog5'
@@ -86,6 +96,11 @@ class rsyslog::params {
       $client_conf            = "${rsyslog_d}client.conf"
       $server_conf            = "${rsyslog_d}server.conf"
       $ssl                    = false
+      $modules                = [
+        '$ModLoad imuxsock # provides support for local system logging',
+        '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
+        '#$ModLoad immark  # provides --MARK-- message capability',
+      ]
     }
     default: {
       case $::operatingsystem {
