@@ -11,6 +11,8 @@
 #  class { 'rsyslog': }
 #
 class rsyslog (
+  $run_user               = 0,
+  $run_group              = 0,
   $rsyslog_package_name   = $rsyslog::params::rsyslog_package_name,
   $relp_package_name      = $rsyslog::params::relp_package_name,
   $mysql_package_name     = $rsyslog::params::mysql_package_name,
@@ -22,8 +24,6 @@ class rsyslog (
   $rsyslog_conf           = $rsyslog::params::rsyslog_conf,
   $rsyslog_default        = $rsyslog::params::rsyslog_default,
   $rsyslog_default_file   = $rsyslog::params::default_config_file,
-  $run_user               = $rsyslog::params::run_user,
-  $run_group              = $rsyslog::params::run_group,
   $log_user               = $rsyslog::params::log_user,
   $log_group              = $rsyslog::params::log_group,
   $log_style              = $rsyslog::params::log_style,
