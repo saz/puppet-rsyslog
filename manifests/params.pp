@@ -44,14 +44,17 @@ class rsyslog::params {
     redhat: {
       if $::operatingsystemrelease >= 6.0 {
         $rsyslog_package_name   = 'rsyslog'
+        $mysql_package_name     = 'rsyslog-mysql'
+        $pgsql_package_name     = 'rsyslog-pgsql'
+        $gnutls_package_name    = 'rsyslog-gnutls'
         $relp_package_name      = 'rsyslog-relp'
       } else {
         $rsyslog_package_name   = 'rsyslog5'
+        $mysql_package_name     = 'rsyslog5-mysql'
+        $pgsql_package_name     = 'rsyslog5-pgsql'
+        $gnutls_package_name    = 'rsyslog5-gnutls'
         $relp_package_name      = 'librelp'
       }
-      $mysql_package_name     = 'rsyslog-mysql'
-      $pgsql_package_name     = 'rsyslog-pgsql'
-      $gnutls_package_name    = 'rsyslog-gnutls'
       $package_status         = 'latest'
       $rsyslog_d              = '/etc/rsyslog.d/'
       $rsyslog_conf           = '/etc/rsyslog.conf'
