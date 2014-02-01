@@ -31,6 +31,7 @@
 class rsyslog::server (
   $enable_tcp                = true,
   $enable_udp                = true,
+  $enable_relp               = true,
   $enable_onefile            = false,
   $server_dir                = '/srv/log/',
   $custom_config             = undef,
