@@ -41,6 +41,11 @@ auth,authpriv.*                 /var/log/secure
 <% end -%>
 <% end -%>
 
+<% if scope.lookupvar('rsyslog::client::preserve_fqdn') -%>
+# Tell rsyslog to use FQDN and not short server names
+$PreserveFQDN on 
+<% end -%>
+
 <% if scope.lookupvar('rsyslog::client::log_local') -%>
 <% if scope.lookupvar('rsyslog::log_style') == 'debian' -%>
 # First some standard log files.  Log by facility.

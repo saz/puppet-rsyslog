@@ -15,6 +15,7 @@
 # [*server*]
 # [*port*]
 # [*ssl_ca*]
+# [*preserve_fqdn]
 #
 # === Variables
 #
@@ -32,7 +33,8 @@ class rsyslog::client (
   $custom_params  = undef,
   $server         = 'log',
   $port           = '514',
-  $ssl_ca         = undef
+  $ssl_ca         = undef,
+  $preserve_fqdn  = undef
 ) inherits rsyslog {
 
   $content_real = $custom_config ? {
