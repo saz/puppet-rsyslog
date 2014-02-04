@@ -90,6 +90,7 @@ The following lists all the class parameters this module accepts.
     custom_config                       STRING              Specify your own template to use for server config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb'
     high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
     preserve_fqdn                       true,false          Whether or not to preserve the fully qualified domain name when logging.
+    actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging..
 
     RSYSLOG::CLIENT CLASS PARAMETERS    VALUES              DESCRIPTION
     -------------------------------------------------------------------
