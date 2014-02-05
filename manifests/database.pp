@@ -46,8 +46,8 @@ class rsyslog::database (
 
   file { $db_conf:
     ensure  => present,
-    owner   => 0,
-    group   => 0,
+    owner   => 'root',
+    group   => $rsyslog::run_group,
     mode    => '0600',
     content => template("${module_name}/database.conf.erb"),
     require => Class['rsyslog::config'],
