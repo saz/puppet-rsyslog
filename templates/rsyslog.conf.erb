@@ -20,10 +20,8 @@ $FileCreateMode <%= scope.lookupvar('rsyslog::perm_file') %>
 $DirOwner <%= scope.lookupvar('rsyslog::log_user') %>
 $DirGroup <%= scope.lookupvar('rsyslog::log_group') %>
 $DirCreateMode <%= scope.lookupvar('rsyslog::perm_dir') %>
-<% if scope.lookupvar('osfamily') == 'redhat' and scope.lookupvar('operatingsystemrelease') >= 6.0 -%>
-$PrivDropToUserID <%= scope.lookupvar('rsyslog::run_user') %>
-$PrivDropToGroupID <%= scope.lookupvar('rsyslog::run_group') %>
-<% end -%>
+$PrivDropToUser <%= scope.lookupvar('rsyslog::run_user') %>
+$PrivDropToGroup <%= scope.lookupvar('rsyslog::run_group') %>
 
 #
 # Include all config files in <%= scope.lookupvar('rsyslog::rsyslog_d') %>

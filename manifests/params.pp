@@ -25,6 +25,8 @@ class rsyslog::params {
       $rsyslog_conf           = '/etc/rsyslog.conf'
       $rsyslog_default        = '/etc/default/rsyslog'
       $default_config_file    = 'rsyslog_default'
+      $run_user               = 'root'
+      $run_group              = 'root'
       $log_user               = 'root'
       $log_group              = 'adm'
       $log_style              = 'debian'
@@ -60,6 +62,8 @@ class rsyslog::params {
       $rsyslog_conf           = '/etc/rsyslog.conf'
       $rsyslog_default        = '/etc/sysconfig/rsyslog'
       $default_config_file    = 'rsyslog_default'
+      $run_user               = 'root'
+      $run_group              = 'root'
       $log_user               = 'root'
       $log_group              = 'root'
       $log_style              = 'redhat'
@@ -87,6 +91,8 @@ class rsyslog::params {
       $rsyslog_conf           = '/etc/syslog.conf'
       $rsyslog_default        = '/etc/defaults/syslogd'
       $default_config_file    = 'rsyslog_default'
+      $run_user               = 'root'
+      $run_group              = 'wheel'
       $log_user               = 'root'
       $log_group              = 'wheel'
       $log_style              = 'debian'
@@ -103,6 +109,7 @@ class rsyslog::params {
         '#$ModLoad immark  # provides --MARK-- message capability',
       ]
     }
+
     default: {
       case $::operatingsystem {
         gentoo: {
@@ -117,6 +124,8 @@ class rsyslog::params {
           $rsyslog_conf           = '/etc/rsyslog.conf'
           $rsyslog_default        = '/etc/conf.d/rsyslog'
           $default_config_file    = 'rsyslog_default_gentoo'
+          $run_user               = 'root'
+          $run_group              = 'root'
           $log_user               = 'root'
           $log_group              = 'adm'
           $log_style              = 'debian'
@@ -139,5 +148,4 @@ class rsyslog::params {
       }
     }
   }
-
 }
