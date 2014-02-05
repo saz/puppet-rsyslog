@@ -34,7 +34,7 @@ class rsyslog::config {
     ensure  => file,
     owner   => 'root',
     group   => $rsyslog::run_group,
-    source  => 'puppet:///modules/rsyslog/rsyslog_default',
+    source  => "puppet:///modules/rsyslog/${rsyslog::rsyslog_default_file}",
     require => Class['rsyslog::install'],
     notify  => Class['rsyslog::service'],
   }

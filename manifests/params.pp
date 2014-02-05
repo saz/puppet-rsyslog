@@ -24,6 +24,7 @@ class rsyslog::params {
       $purge_rsyslog_d        = false
       $rsyslog_conf           = '/etc/rsyslog.conf'
       $rsyslog_default        = '/etc/default/rsyslog'
+      $default_config_file    = 'rsyslog_default'
       $run_user               = 'root'
       $run_group              = 'root'
       $log_user               = 'root'
@@ -57,6 +58,7 @@ class rsyslog::params {
       $rsyslog_d              = '/etc/rsyslog.d/'
       $rsyslog_conf           = '/etc/rsyslog.conf'
       $rsyslog_default        = '/etc/sysconfig/rsyslog'
+      $default_config_file    = 'rsyslog_default'
       $run_user               = 'root'
       $run_group              = 'root'
       $log_user               = 'root'
@@ -85,6 +87,7 @@ class rsyslog::params {
       $rsyslog_d              = '/etc/syslog.d/'
       $rsyslog_conf           = '/etc/syslog.conf'
       $rsyslog_default        = '/etc/defaults/syslogd'
+      $default_config_file    = 'rsyslog_default'
       $run_user               = 'root'
       $run_group              = 'wheel'
       $log_user               = 'root'
