@@ -26,6 +26,7 @@ Manage rsyslog client and server via Puppet
         custom_config  => undef,
         server         => 'log',
         port           => '514',
+        preserve_fqdn  => undef,
     }
 ```
 for read from file
@@ -88,6 +89,7 @@ The following lists all the class parameters this module accepts.
     server_dir                          STRING              Folder where logs will be stored on the server. Defaults to '/srv/log/'
     custom_config                       STRING              Specify your own template to use for server config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb'
     high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
+    preserve_fqdn                       true,false          Whether or not to preserve the fully qualified domain name when logging.
 
     RSYSLOG::CLIENT CLASS PARAMETERS    VALUES              DESCRIPTION
     -------------------------------------------------------------------
