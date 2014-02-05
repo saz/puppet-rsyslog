@@ -13,8 +13,8 @@
 class rsyslog::config {
   file { $rsyslog::rsyslog_d:
     ensure  => directory,
-    owner   => 0,
-    group   => 0,
+    owner   => 'root',
+    group   => $rsyslog::run_group,
     purge   => $rsyslog::purge_rsyslog_d,
     recurse => true,
     force   => true,
@@ -23,8 +23,8 @@ class rsyslog::config {
 
   file { $rsyslog::rsyslog_conf:
     ensure  => file,
-    owner   => 0,
-    group   => 0,
+    owner   => 'root',
+    group   => $rsyslog::run_group,
     content => template("${module_name}/rsyslog.conf.erb"),
     require => Class['rsyslog::install'],
     notify  => Class['rsyslog::service'],
@@ -32,17 +32,17 @@ class rsyslog::config {
 
   file { $rsyslog::rsyslog_default:
     ensure  => file,
-    owner   => 0,
-    group   => 0,
-    source  => "puppet:///modules/rsyslog/${rsyslog::rsyslog_default_file}",
+    owner   => 'root',
+    group   => $rsyslog::run_group,
+    source  => 'puppet:///modules/rsyslog/rsyslog_default',
     require => Class['rsyslog::install'],
     notify  => Class['rsyslog::service'],
   }
 
   file { $rsyslog::spool_dir:
     ensure  => directory,
-    owner   => 0,
-    group   => 0,
+    owner   => 'root',
+    group   => $rsyslog::run_group,
     require => Class['rsyslog::install'],
     notify  => Class['rsyslog::service'],
   }
