@@ -39,6 +39,45 @@ for read from file
 
 ```
 
+#### Logging to multiple remote servers
+
+The `remote_servers` parameter can be used to set up logging to multiple remote servers which are supplied as a list of key value pairs for each remote. There is an example configuration provided in `./test/multiple_hosts.pp`
+
+Using the `remote_servers` parameter over-rides the other remote sever parameters, and they will not be used in the client configuration file:
+* `log_remote`
+* `remote_type`
+* `server`
+* `port`
+
+The following example sets up three remote logging hosts for the client:
+
+```puppet
+class{'rsyslog::client':
+  remote_servers => [
+    {
+      host => 'logs.example.org',
+    },
+    {
+      port => '55514',
+    },
+    {
+      host      => 'logs.somewhere.com',
+      port      => '555',
+      pattern   => '*.log',
+      protocol  => 'tcp',
+      format    => 'RFC3164fmt',
+    },
+  ]
+}
+```
+
+Each host has the following parameters:
+* *host*: Sets the address or hostname of the remote logging server. Defaults to `localhost`
+* *port*: Sets the port the host is listening on. Defaults to `514`
+* *pattern*: Sets the pattern to match logs. Defaults to `*.*`
+* *protocol*: Sets the protocol. Only recognises TCP and UDP. Defaults to UDP
+* *format*: Sets the log format. Defaults to not specifying log format, which defaults to the format set by `ActionFileDefaultTemplate` in the client configuration.
+
 #### Logging to a MySQL or PostgreSQL database
 
 Events can also be logged to a MySQL or PostgreSQL database. The database needs to be deployed separately, either locally or remotely. Schema are available from the `rsyslog` source:
@@ -91,6 +130,7 @@ The following lists all the class parameters this module accepts.
     high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
     preserve_fqdn                       true,false          Whether or not to preserve the fully qualified domain name when logging.
     actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging..
+    remote_servers                      HASH                Provides a hash of multiple remote logging servers. Check documentation.
 
     RSYSLOG::CLIENT CLASS PARAMETERS    VALUES              DESCRIPTION
     -------------------------------------------------------------------

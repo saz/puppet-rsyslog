@@ -5,15 +5,16 @@
 # === Parameters
 #
 # [*sample_parameter*]
-# [*log_remote*]
 # [*spool_size*]
-# [*remote_type*]
 # [*log_local*]
 # [*log_auth_local*]
 # [*custom_config*]
 # [*custom_params*]
+# [*log_remote*]
 # [*server*]
+# [*remote_type*]
 # [*port*]
+# [*remote_servers*]
 # [*ssl_ca*]
 # [*actionfiletemplate*]
 #
@@ -33,9 +34,10 @@ class rsyslog::client (
   $custom_params      = undef,
   $server             = 'log',
   $port               = '514',
+  $remote_servers     = false,
   $ssl_ca             = undef,
-  $actionfiletemplate = undef,
-  $preserve_fqdn      = undef
+  $actionfiletemplate = false,
+  $preserve_fqdn      = false
 ) inherits rsyslog {
 
   $content_real = $custom_config ? {
