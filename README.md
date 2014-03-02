@@ -128,7 +128,6 @@ The following lists all the class parameters this module accepts.
     server_dir                          STRING              Folder where logs will be stored on the server. Defaults to '/srv/log/'
     custom_config                       STRING              Specify your own template to use for server config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb'
     high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
-    preserve_fqdn                       true,false          Whether or not to preserve the fully qualified domain name when logging.
     actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging..
     remote_servers                      HASH                Provides a hash of multiple remote logging servers. Check documentation.
 
@@ -140,6 +139,7 @@ The following lists all the class parameters this module accepts.
     log_auth_local                      true,false          Just log auth facility locally. Defaults to false.
     custom_config                       STRING              Specify your own template to use for client config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb
     server                              STRING              Rsyslog server to log to. Will be used in the client configuration file.
+    preserve_fqdn                       true,false          Whether or not to preserve the fully qualified domain name when logging.
 
     RSYSLOG::DATABASE CLASS PARAMETERS  VALUES              DESCRIPTION
     -------------------------------------------------------------------
