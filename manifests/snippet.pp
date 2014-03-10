@@ -26,7 +26,7 @@ define rsyslog::snippet(
     ensure  => $ensure,
     owner   => $rsyslog::run_user,
     group   => $rsyslog::run_group,
-    content => "# file managed by puppet\n${content}\n",
+    content => "# This file is managed by Puppet, changes may be overwritten\n${content}\n",
     require => Class['rsyslog::config'],
     notify  => Class['rsyslog::service'],
   }

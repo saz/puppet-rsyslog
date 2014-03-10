@@ -39,6 +39,23 @@ for read from file
 
 ```
 
+#### Defining custom logging templates
+
+The `log_templates` parameter can be used to set up custom logging templates, which can be used for local and/or remote logging. More detail on template formats can be found in the [rsyslog documentation](http://www.rsyslog.com/doc/rsyslog_conf_templates.html).
+
+The following examples sets up a custom logging template as per [RFC3164fmt](https://www.ietf.org/rfc/rfc3164.txt):
+
+```puppet
+class{'rsyslog::client':
+  log_templates => [
+    {
+      name      => 'RFC3164fmt',
+      template  => '<%PRI%>%TIMESTAMP% %HOSTNAME% %syslogtag%%msg%',
+    },
+  ]
+}
+```
+
 #### Logging to multiple remote servers
 
 The `remote_servers` parameter can be used to set up logging to multiple remote servers which are supplied as a list of key value pairs for each remote. There is an example configuration provided in `./test/multiple_hosts.pp`
@@ -128,7 +145,6 @@ The following lists all the class parameters this module accepts.
     server_dir                          STRING              Folder where logs will be stored on the server. Defaults to '/srv/log/'
     custom_config                       STRING              Specify your own template to use for server config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb'
     high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
-    actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging..
     remote_servers                      HASH                Provides a hash of multiple remote logging servers. Check documentation.
 
     RSYSLOG::CLIENT CLASS PARAMETERS    VALUES              DESCRIPTION
@@ -140,6 +156,8 @@ The following lists all the class parameters this module accepts.
     custom_config                       STRING              Specify your own template to use for client config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb
     server                              STRING              Rsyslog server to log to. Will be used in the client configuration file.
     preserve_fqdn                       true,false          Whether or not to preserve the fully qualified domain name when logging.
+    log_templates                       HASH                Provides a has defining custom logging templates using the `$template` configuration parameter.
+    actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging.
 
     RSYSLOG::DATABASE CLASS PARAMETERS  VALUES              DESCRIPTION
     -------------------------------------------------------------------

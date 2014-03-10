@@ -1,4 +1,3 @@
-# file is managed by puppet
 
 # An "In-Memory Queue" is created for remote logging.
 $WorkDirectory <%= scope.lookupvar('rsyslog::spool_dir') -%>    # where to place spool files
@@ -7,14 +6,20 @@ $ActionQueueMaxDiskSpace <%= scope.lookupvar('rsyslog::client::spool_size') -%> 
 $ActionQueueSaveOnShutdown on   # save messages to disk on shutdown
 $ActionQueueType LinkedList     # run asynchronously
 $ActionResumeRetryCount -1      # infinety retries if host is down
+<% if scope.lookupvar('rsyslog::client::log_templates') and ! scope.lookupvar('rsyslog::client::log_templates').empty?-%>
+# Define custom logging templates
+<% scope.lookupvar('rsyslog::client::log_templates').flatten.compact.each do |log_template| -%>
+$template <%= log_template['name'] %>,"<%= log_template['template'] %>"
+<% end -%>
+<% end -%>
 <% if scope.lookupvar('rsyslog::client::actionfiletemplate') -%>
-# Using specified format for default logging fromat:
+# Using specified format for default logging format:
 $ActionFileDefaultTemplate <%= scope.lookupvar('rsyslog::client::actionfiletemplate') %>
 <% else -%>
-#Using default format for default logging fromat:
+#Using default format for default logging format:
 $ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
 <% end -%>
-<% if scope.lookupvar('rsyslog::client::remote_servers') and ! scope.lookupvar('rsyslog::client::remote_servers').empty? -%>
+<% if scope.lookupvar('rsyslog::client::remote_servers')  -%>
 <% scope.lookupvar('rsyslog::client::remote_servers').flatten.compact.each do |server| -%>
 <% if server['pattern'] and server['pattern'] != ''-%>
 <% pattern = server['pattern'] -%>
