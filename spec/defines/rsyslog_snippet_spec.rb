@@ -19,7 +19,7 @@ describe 'rsyslog::snippet', :type => :define do
       let(:title) { 'rsyslog-snippet-basic' }
 
       it 'should compile' do
-        should contain_file('/etc/rsyslog.d/rsyslog-snippet-basic.conf').with_content("# file managed by puppet\nRandom Content\n")
+        should contain_file('/etc/rsyslog.d/rsyslog-snippet-basic.conf').with_content("# This file is managed by Puppet, changes may be overwritten\nRandom Content\n")
       end
     end
   end
@@ -41,7 +41,7 @@ describe 'rsyslog::snippet', :type => :define do
       let(:title) { 'rsyslog-snippet-basic' }
 
       it 'should compile' do
-        should contain_file('/etc/rsyslog.d/rsyslog-snippet-basic.conf').with_content("# file managed by puppet\nRandom Content\n")
+        should contain_file('/etc/rsyslog.d/rsyslog-snippet-basic.conf').with_content("# This file is managed by Puppet, changes may be overwritten\nRandom Content\n")
       end
     end
   end
@@ -63,7 +63,7 @@ describe 'rsyslog::snippet', :type => :define do
       let(:title) { 'rsyslog-snippet-basic' }
 
       it 'should compile' do
-        should contain_file('/etc/syslog.d/rsyslog-snippet-basic.conf').with_content("# file managed by puppet\nRandom Content\n")
+        should contain_file('/etc/syslog.d/rsyslog-snippet-basic.conf').with_content("# This file is managed by Puppet, changes may be overwritten\nRandom Content\n")
       end
     end
   end

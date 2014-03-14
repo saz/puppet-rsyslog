@@ -16,6 +16,7 @@
 # [*port*]
 # [*remote_servers*]
 # [*ssl_ca*]
+# [*log_templates*]
 # [*actionfiletemplate*]
 #
 # === Variables
@@ -36,6 +37,7 @@ class rsyslog::client (
   $port               = '514',
   $remote_servers     = false,
   $ssl_ca             = undef,
+  $log_templates      = false,
   $actionfiletemplate = false,
   $preserve_fqdn      = false
 ) inherits rsyslog {
