@@ -38,8 +38,20 @@ class rsyslog::server (
   $high_precision_timestamps = false,
   $ssl_ca                    = undef,
   $ssl_cert                  = undef,
-  $ssl_key                   = undef
+  $ssl_key                   = undef,
+  $rotate                    = undef,
 ) inherits rsyslog {
+
+  ### Logrotate policy
+  $logpath = $rotate ? {
+    'year'   => '/%$YEAR%/',
+    'YEAR'   => '/%$YEAR%/',
+    'month'  => '/%$YEAR%/%$MONTH%/',
+    'MONTH'  => '/%$YEAR%/%$MONTH%/',
+    'day'    => '/%$YEAR%/%$MONTH%/%$DAY%/',
+    'DAY'    => '/%$YEAR%/%$MONTH%/%$DAY%/',
+    default  => '/',
+  }
 
   $real_content = $custom_config ? {
     ''      => template("${module_name}/server-default.conf.erb"),
