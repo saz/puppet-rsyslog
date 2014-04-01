@@ -35,7 +35,7 @@ class rsyslog::params {
       $spool_dir              = '/var/spool/rsyslog'
       $service_name           = 'rsyslog'
       $client_conf            = 'client'
-      $server_conf            = "${rsyslog_d}server.conf"
+      $server_conf            = 'server'
       $ssl                    = false
       $modules                = [
         '$ModLoad imuxsock # provides support for local system logging',
@@ -72,7 +72,7 @@ class rsyslog::params {
       $spool_dir              = '/var/lib/rsyslog'
       $service_name           = 'rsyslog'
       $client_conf            = 'client'
-      $server_conf            = "${rsyslog_d}server.conf"
+      $server_conf            = 'server'
       $ssl                    = false
       $modules                = [
         '$ModLoad imuxsock # provides support for local system logging',
@@ -101,7 +101,7 @@ class rsyslog::params {
       $spool_dir              = '/var/spool/syslog'
       $service_name           = 'syslogd'
       $client_conf            = 'client'
-      $server_conf            = "${rsyslog_d}server.conf"
+      $server_conf            = 'server'
       $ssl                    = false
       $modules                = [
         '$ModLoad imuxsock # provides support for local system logging',
@@ -134,7 +134,7 @@ class rsyslog::params {
           $spool_dir              = '/var/spool/rsyslog'
           $service_name           = 'rsyslog'
           $client_conf            = 'client'
-          $server_conf            = "${rsyslog_d}server.conf"
+          $server_conf            = 'server'
           $ssl                    = false
           $modules                = [
             '$ModLoad imuxsock # provides support for local system logging',

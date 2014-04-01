@@ -46,7 +46,7 @@ class rsyslog::server (
     default => template($custom_config),
   }
 
-  rsyslog::snippet {'server':
+  rsyslog::snippet { $rsyslog::server_conf:
     ensure  => present,
     content => $real_content,
   }
