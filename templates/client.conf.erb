@@ -33,11 +33,6 @@ $DefaultNetstreamDriver gtls
 $ActionSendStreamDriverMode 1
 $ActionSendStreamDriverAuthMode anon
 <% end -%>
-<% if scope.lookupvar('rsyslog::client::preserve_fqdn') -%>
-
-# Tell rsyslog to use FQDN and not short server names
-$PreserveFQDN on 
-<% end -%>
 <% if scope.lookupvar('rsyslog::client::remote_servers')  -%>
 
 <% scope.lookupvar('rsyslog::client::remote_servers').flatten.compact.each do |server| -%>
