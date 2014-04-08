@@ -59,6 +59,7 @@ class rsyslog::params {
       }
       $package_status         = 'latest'
       $rsyslog_d              = '/etc/rsyslog.d/'
+      $purge_rsyslog_d        = false
       $rsyslog_conf           = '/etc/rsyslog.conf'
       $rsyslog_default        = '/etc/sysconfig/rsyslog'
       $default_config_file    = 'rsyslog_default'
