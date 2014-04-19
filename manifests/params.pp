@@ -44,7 +44,14 @@ class rsyslog::params {
       ]
     }
     redhat: {
-      if $::operatingsystemrelease >= 6.0 {
+      if $::operatingsystem == 'Amazon' {
+        $rsyslog_package_name   = 'rsyslog'
+        $mysql_package_name     = 'rsyslog-mysql'
+        $pgsql_package_name     = 'rsyslog-pgsql'
+        $gnutls_package_name    = 'rsyslog-gnutls'
+        $relp_package_name      = false
+      }
+      elsif $::operatingsystemrelease >= 6.0 {
         $rsyslog_package_name   = 'rsyslog'
         $mysql_package_name     = 'rsyslog-mysql'
         $pgsql_package_name     = 'rsyslog-pgsql'
