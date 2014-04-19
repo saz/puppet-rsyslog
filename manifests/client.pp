@@ -47,7 +47,7 @@ class rsyslog::client (
     default => template($custom_config),
   }
 
-  rsyslog::snippet {'client':
+  rsyslog::snippet { $rsyslog::client_conf:
     ensure  => present,
     content => $content_real,
   }

@@ -34,8 +34,8 @@ class rsyslog::params {
       $perm_dir               = '0755'
       $spool_dir              = '/var/spool/rsyslog'
       $service_name           = 'rsyslog'
-      $client_conf            = "${rsyslog_d}client.conf"
-      $server_conf            = "${rsyslog_d}server.conf"
+      $client_conf            = 'client'
+      $server_conf            = 'server'
       $ssl                    = false
       $modules                = [
         '$ModLoad imuxsock # provides support for local system logging',
@@ -71,8 +71,8 @@ class rsyslog::params {
       $perm_dir               = '0750'
       $spool_dir              = '/var/lib/rsyslog'
       $service_name           = 'rsyslog'
-      $client_conf            = "${rsyslog_d}client.conf"
-      $server_conf            = "${rsyslog_d}server.conf"
+      $client_conf            = 'client'
+      $server_conf            = 'server'
       $ssl                    = false
       $modules                = [
         '$ModLoad imuxsock # provides support for local system logging',
@@ -100,8 +100,8 @@ class rsyslog::params {
       $perm_dir               = '0755'
       $spool_dir              = '/var/spool/syslog'
       $service_name           = 'syslogd'
-      $client_conf            = "${rsyslog_d}client.conf"
-      $server_conf            = "${rsyslog_d}server.conf"
+      $client_conf            = 'client'
+      $server_conf            = 'server'
       $ssl                    = false
       $modules                = [
         '$ModLoad imuxsock # provides support for local system logging',
@@ -133,8 +133,8 @@ class rsyslog::params {
           $perm_dir               = '0755'
           $spool_dir              = '/var/spool/rsyslog'
           $service_name           = 'rsyslog'
-          $client_conf            = "${rsyslog_d}client.conf"
-          $server_conf            = "${rsyslog_d}server.conf"
+          $client_conf            = 'client'
+          $server_conf            = 'server'
           $ssl                    = false
           $modules                = [
             '$ModLoad imuxsock # provides support for local system logging',
