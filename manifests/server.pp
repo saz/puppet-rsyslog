@@ -39,7 +39,7 @@ class rsyslog::server (
   $ssl_ca                    = undef,
   $ssl_cert                  = undef,
   $ssl_key                   = undef,
-  $rotate                    = undef,
+  $rotate                    = undef
 ) inherits rsyslog {
 
   ### Logrotate policy
