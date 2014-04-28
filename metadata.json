@@ -1,0 +1,55 @@
+{
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "RedHat"
+    },
+    {
+      "operatingsystem": "Amazon"
+    },
+    {
+      "operatingsystem": "CentOS"
+    },
+    {
+      "operatingsystem": "OracleLinux"
+    },
+    {
+      "operatingsystem": "Scientific"
+    },
+    {
+      "operatingsystem": "Debian"
+    },
+    {
+      "operatingsystem": "Ubuntu"
+    },
+    {
+      "operatingsystem": "FreeBSD"
+    },
+    {
+      "operatingsystem": "Gentoo"
+    }
+  ],
+  "requirements": [
+    {
+      "name": "pe",
+      "version_requirement": "3.2.x"
+    },
+    {
+      "name": "puppet",
+      "version_requirement": "3.x"
+    }
+  ],
+  "name": "saz-rsyslog",
+  "version": "3.0.0",
+  "source": "https://github.com/saz/puppet-rsyslog.git",
+  "author": "saz",
+  "license": "Apache License, Version 2.0",
+  "summary": "Manage rsyslog client and server",
+  "description": "Manage rsyslog client and server via Puppet",
+  "project_page": "https://github.com/saz/puppet-rsyslog",
+  "dependencies": [
+
+  ],
+  "types": [
+
+  ],
+}
