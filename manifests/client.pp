@@ -38,8 +38,7 @@ class rsyslog::client (
   $remote_servers     = false,
   $ssl_ca             = undef,
   $log_templates      = false,
-  $actionfiletemplate = false,
-  $preserve_fqdn      = false
+  $actionfiletemplate = false
 ) inherits rsyslog {
 
   $content_real = $custom_config ? {
