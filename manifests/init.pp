@@ -34,7 +34,8 @@ class rsyslog (
   $client_conf            = $rsyslog::params::client_conf,
   $server_conf            = $rsyslog::params::server_conf,
   $ssl                    = $rsyslog::params::ssl,
-  $modules                = $rsyslog::params::modules
+  $modules                = $rsyslog::params::modules,
+  $preserve_fqdn          = $rsyslog::params::preserve_fqdn
 ) inherits rsyslog::params {
   class { 'rsyslog::install': }
   class { 'rsyslog::config': }
