@@ -42,6 +42,7 @@ class rsyslog::params {
         '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
         '#$ModLoad immark  # provides --MARK-- message capability',
       ]
+      $preserve_fqdn          = false
     }
     redhat: {
       if $::operatingsystem == 'Amazon' {

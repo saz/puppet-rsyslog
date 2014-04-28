@@ -26,7 +26,6 @@ Manage rsyslog client and server via Puppet
         custom_config  => undef,
         server         => 'log',
         port           => '514',
-        preserve_fqdn  => undef,
     }
 ```
 for read from file
@@ -155,7 +154,6 @@ The following lists all the class parameters this module accepts.
     log_auth_local                      true,false          Just log auth facility locally. Defaults to false.
     custom_config                       STRING              Specify your own template to use for client config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb
     server                              STRING              Rsyslog server to log to. Will be used in the client configuration file.
-    preserve_fqdn                       true,false          Whether or not to preserve the fully qualified domain name when logging.
     log_templates                       HASH                Provides a has defining custom logging templates using the `$template` configuration parameter.
     actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging.
 
