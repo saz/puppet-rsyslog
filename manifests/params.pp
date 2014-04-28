@@ -41,7 +41,7 @@ class rsyslog::params {
         '$ModLoad imuxsock # provides support for local system logging',
         '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
         '#$ModLoad immark  # provides --MARK-- message capability',
-      ],
+      ]
       $preserve_fqdn          = false
     }
     redhat: {
