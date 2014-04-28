@@ -14,7 +14,7 @@
 #
 # Set the default permissions for all log files.
 #
-<% if scope.lookupvar('rsyslog::client::preserve_fqdn') -%>
+<% if scope.lookupvar('rsyslog::preserve_fqdn') -%>
 $PreserveFQDN on
 <% end -%>
 $FileOwner <%= scope.lookupvar('rsyslog::log_user') %>
