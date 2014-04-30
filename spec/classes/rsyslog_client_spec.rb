@@ -5,6 +5,7 @@ describe 'rsyslog::client', :type => :class do
     let :facts do
       {
         :osfamily               => 'RedHat',
+        :operatingsystem        => 'RedHat',
         :operatingsystemrelease => 6.0,
       }
     end
