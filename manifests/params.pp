@@ -88,6 +88,7 @@ class rsyslog::params {
         '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
         '#$ModLoad immark  # provides --MARK-- message capability',
       ]
+      $preserve_fqdn          = false
     }
     freebsd: {
       $rsyslog_package_name   = 'sysutils/rsyslog5'
@@ -97,6 +98,7 @@ class rsyslog::params {
       $gnutls_package_name    = 'sysutils/rsyslog5-gnutls'
       $package_status         = 'present'
       $rsyslog_d              = '/etc/syslog.d/'
+      $purge_rsyslog_d        = false
       $rsyslog_conf           = '/etc/syslog.conf'
       $rsyslog_default        = '/etc/defaults/syslogd'
       $default_config_file    = 'rsyslog_default'
@@ -117,6 +119,7 @@ class rsyslog::params {
         '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
         '#$ModLoad immark  # provides --MARK-- message capability',
       ]
+      $preserve_fqdn          = false
     }
 
     default: {
