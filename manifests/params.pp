@@ -43,6 +43,8 @@ class rsyslog::params {
         '#$ModLoad immark  # provides --MARK-- message capability',
       ]
       $preserve_fqdn          = false
+      $service_hasrestart     = true
+      $service_hasstatus      = true
     }
     redhat: {
       if $::operatingsystem == 'Amazon' {
@@ -89,6 +91,8 @@ class rsyslog::params {
         '#$ModLoad immark  # provides --MARK-- message capability',
       ]
       $preserve_fqdn          = false
+      $service_hasrestart     = true
+      $service_hasstatus      = true
     }
     freebsd: {
       $rsyslog_package_name   = 'sysutils/rsyslog5'
@@ -120,6 +124,8 @@ class rsyslog::params {
         '#$ModLoad immark  # provides --MARK-- message capability',
       ]
       $preserve_fqdn          = false
+      $service_hasrestart     = true
+      $service_hasstatus      = true
     }
 
     default: {
@@ -153,6 +159,9 @@ class rsyslog::params {
             '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
             '#$ModLoad immark  # provides --MARK-- message capability',
           ]
+          $preserve_fqdn          = false
+          $service_hasrestart     = true
+          $service_hasstatus      = true
         }
         default: {
           fail("The ${module_name} module is not supported on ${::osfamily}/${::operatingsystem}.")
