@@ -52,9 +52,10 @@ class rsyslog::server (
     'DAY'    => '/%$YEAR%/%$MONTH%/%$DAY%/',
     default  => '/',
   }
-
+   
   $real_content = $custom_config ? {
-    ''      => template("${module_name}/server-default.conf.erb"),
+    undef      => template("${module_name}/server-default.conf.erb"),
+    ''         => template("${module_name}/server-default.conf.erb"),
     default => template($custom_config),
   }
 
