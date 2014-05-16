@@ -43,6 +43,7 @@ class rsyslog::client (
 
   $content_real = $custom_config ? {
     ''      => template("${module_name}/client.conf.erb"),
+    undef   => template("${module_name}/client.conf.erb"),
     default => template($custom_config),
   }
 
