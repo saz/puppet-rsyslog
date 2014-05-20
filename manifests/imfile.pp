@@ -10,6 +10,7 @@
 # [*polling_interval*]
 # [*file_severity*]
 # [*run_file_monitor*]
+# [*persist_state_interval]
 #
 # === Variables
 #
@@ -27,7 +28,8 @@ define rsyslog::imfile(
   $file_facility,
   $polling_interval = 10,
   $file_severity = 'notice',
-  $run_file_monitor = true
+  $run_file_monitor = true,
+  $persist_state_interval = 0
 ) {
 
   include rsyslog
