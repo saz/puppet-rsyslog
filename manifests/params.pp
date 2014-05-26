@@ -94,6 +94,27 @@ class rsyslog::params {
       $service_hasrestart     = true
       $service_hasstatus      = true
     }
+    sles: {
+      $rsyslog_package_name   = 'rsyslog'
+      $relp_package_name      = 'rsyslog-module-relp'
+      $mysql_package_name     = 'rsyslog-module-mysql'
+      $pgsql_package_name     = 'rsyslog-module-pgsql'
+      $package_status         = 'latest'
+      $rsyslog_d              = '/etc/rsyslog.d/'
+      $rsyslog_conf           = '/etc/rsyslog.conf'
+      $rsyslog_default        = '/etc/sysconfig/syslog'
+      $run_user               = 'root'
+      $run_group              = 'root'
+      $log_user               = 'root'
+      $log_group              = 'root'
+      $log_style              = 'sles'
+      $perm_file              = '0600'
+      $perm_dir               = '0750'
+      $spool_dir              = '/var/spool/rsyslog/'
+      $service_name           = 'syslog'
+      $client_conf            = "${rsyslog_d}client.conf"
+      $server_conf            = "${rsyslog_d}server.conf"
+    }
     freebsd: {
       $rsyslog_package_name   = 'sysutils/rsyslog5'
       $relp_package_name      = 'sysutils/rsyslog5-relp'
