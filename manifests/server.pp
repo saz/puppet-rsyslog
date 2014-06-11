@@ -53,9 +53,10 @@ class rsyslog::server (
     default  => '/',
   }
 
-  $real_content = $custom_config ? {
-    ''      => template("${module_name}/server-default.conf.erb"),
-    default => template($custom_config),
+  if $custom_config {
+    $real_content = template($custom_config)
+  } else {
+    $real_content = template("${module_name}/server-default.conf.erb")
   }
 
   rsyslog::snippet { $rsyslog::server_conf:
