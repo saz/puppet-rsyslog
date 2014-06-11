@@ -4,8 +4,9 @@
 #### MODULES ####
 #################
 
-<% @modules.each do |module_row| %>
-<%= module_row %><% end %>
+<% scope.lookupvar('rsyslog::modules').each do |module_row| -%>
+<%= module_row %>
+<% end -%>
 
 ###########################
 #### GLOBAL DIRECTIVES ####
