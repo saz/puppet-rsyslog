@@ -42,9 +42,9 @@ class rsyslog::client (
 ) inherits rsyslog {
 
   if $custom_config {
-    $content_real = template($custom_config),
+    $content_real = template($custom_config)
   } else {
-    $content_real = template("${module_name}/client.conf.erb"),
+    $content_real = template("${module_name}/client.conf.erb")
   }
 
   rsyslog::snippet { $rsyslog::client_conf:
