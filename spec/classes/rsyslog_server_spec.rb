@@ -8,7 +8,7 @@ describe 'rsyslog::server', :type => :class do
         {
           :osfamily               => osfamily,
           :operatingsystem        => osfamily,
-          :operatingsystemrelease => 6.0,
+          :operatingsystemmajrelease => 6,
         }
       end
 

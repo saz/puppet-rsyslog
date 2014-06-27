@@ -6,7 +6,7 @@ describe 'rsyslog::snippet', :type => :define do
       {
         :osfamily               => 'RedHat',
         :operatingsystem        => 'Redhat',
-        :operatingsystemrelease => 6.0,
+        :operatingsystemmajrelease => 6,
       }
     end
 
