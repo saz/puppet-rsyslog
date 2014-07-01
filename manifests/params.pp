@@ -53,26 +53,57 @@ class rsyslog::params {
         $pgsql_package_name     = 'rsyslog-pgsql'
         $gnutls_package_name    = 'rsyslog-gnutls'
         $relp_package_name      = false
+        $default_config_file    = 'rsyslog_default'
+        $modules                = [
+          '$ModLoad imuxsock # provides support for local system logging',
+          '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
+          '#$ModLoad immark  # provides --MARK-- message capability',
+        ]
       }
-      elsif $::operatingsystemrelease >= 6.0 {
+      elsif $::operatingsystemmajrelease == 6 {
         $rsyslog_package_name   = 'rsyslog'
         $mysql_package_name     = 'rsyslog-mysql'
         $pgsql_package_name     = 'rsyslog-pgsql'
         $gnutls_package_name    = 'rsyslog-gnutls'
         $relp_package_name      = 'rsyslog-relp'
+        $default_config_file    = 'rsyslog_default'
+        $modules                = [
+          '$ModLoad imuxsock # provides support for local system logging',
+          '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
+          '#$ModLoad immark  # provides --MARK-- message capability',
+        ]
+      }
+      elsif $::operatingsystemmajrelease >= 7 {
+        $rsyslog_package_name   = 'rsyslog'
+        $mysql_package_name     = 'rsyslog-mysql'
+        $pgsql_package_name     = 'rsyslog-pgsql'
+        $gnutls_package_name    = 'rsyslog-gnutls'
+        $relp_package_name      = 'rsyslog-relp'
+        $default_config_file    = 'rsyslog_default_rhel7'
+        $modules                = [
+          '$ModLoad imuxsock # provides support for local system logging',
+          '$ModLoad imjournal # provides access to the systemd journal',
+          '#$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
+          '#$ModLoad immark  # provides --MARK-- message capability',
+        ]
       } else {
         $rsyslog_package_name   = 'rsyslog5'
         $mysql_package_name     = 'rsyslog5-mysql'
         $pgsql_package_name     = 'rsyslog5-pgsql'
         $gnutls_package_name    = 'rsyslog5-gnutls'
         $relp_package_name      = 'librelp'
+        $default_config_file    = 'rsyslog_default'
+        $modules                = [
+          '$ModLoad imuxsock # provides support for local system logging',
+          '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
+          '#$ModLoad immark  # provides --MARK-- message capability',
+        ]
       }
       $package_status         = 'latest'
       $rsyslog_d              = '/etc/rsyslog.d/'
       $purge_rsyslog_d        = false
       $rsyslog_conf           = '/etc/rsyslog.conf'
       $rsyslog_default        = '/etc/sysconfig/rsyslog'
-      $default_config_file    = 'rsyslog_default'
       $run_user               = 'root'
       $run_group              = 'root'
       $log_user               = 'root'
@@ -85,11 +116,6 @@ class rsyslog::params {
       $client_conf            = 'client'
       $server_conf            = 'server'
       $ssl                    = false
-      $modules                = [
-        '$ModLoad imuxsock # provides support for local system logging',
-        '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-        '#$ModLoad immark  # provides --MARK-- message capability',
-      ]
       $preserve_fqdn          = false
       $service_hasrestart     = true
       $service_hasstatus      = true

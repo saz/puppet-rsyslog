@@ -6,7 +6,7 @@ describe 'rsyslog::database', :type => :class do
       {
         :osfamily               => 'RedHat',
         :operatingsystem        => 'RedHat',
-        :operatingsystemrelease => 6.0,
+        :operatingsystemmajrelease => 6,
       }
     end
 
