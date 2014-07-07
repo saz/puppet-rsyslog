@@ -45,6 +45,7 @@ class rsyslog::params {
       $preserve_fqdn          = false
       $service_hasrestart     = true
       $service_hasstatus      = true
+      $v8plus                 = false
     }
     redhat: {
       if $::operatingsystem == 'Amazon' {
@@ -119,6 +120,7 @@ class rsyslog::params {
       $preserve_fqdn          = false
       $service_hasrestart     = true
       $service_hasstatus      = true
+      $v8plus                 = false
     }
     sles: {
       $rsyslog_package_name   = 'rsyslog'
@@ -140,6 +142,7 @@ class rsyslog::params {
       $service_name           = 'syslog'
       $client_conf            = "${rsyslog_d}client.conf"
       $server_conf            = "${rsyslog_d}server.conf"
+      $v8plus                 = false
     }
     freebsd: {
       $rsyslog_package_name   = 'sysutils/rsyslog5'
@@ -173,6 +176,7 @@ class rsyslog::params {
       $preserve_fqdn          = false
       $service_hasrestart     = true
       $service_hasstatus      = true
+      $v8plus                 = false
     }
 
     default: {
@@ -209,6 +213,7 @@ class rsyslog::params {
           $preserve_fqdn          = false
           $service_hasrestart     = true
           $service_hasstatus      = true
+          $v8plus                 = false
         }
         default: {
           fail("The ${module_name} module is not supported on ${::osfamily}/${::operatingsystem}.")
