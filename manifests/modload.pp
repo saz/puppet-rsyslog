@@ -1,7 +1,10 @@
 # == Class: rsyslog::modload
 #
 
-class rsyslog::modload ( $modulelist = $rsyslog::extra_modules, $modload_filename = '10-modload.conf')
+class rsyslog::modload (
+  $modulelist             = [],
+  $modload_filename       = '10-modload.conf'
+)
  {
     file { "${rsyslog::rsyslog_d}$modload_filename":
       ensure  => file,
