@@ -45,6 +45,8 @@ class rsyslog::params {
       $preserve_fqdn          = false
       $service_hasrestart     = true
       $service_hasstatus      = true
+      $extra_modules          = ['imfile', 'database']
+
     }
     redhat: {
       if $::operatingsystem == 'Amazon' {
@@ -119,6 +121,8 @@ class rsyslog::params {
       $preserve_fqdn          = false
       $service_hasrestart     = true
       $service_hasstatus      = true
+      $extra_modules          = ['imfile', 'database']
+
     }
     sles: {
       $rsyslog_package_name   = 'rsyslog'

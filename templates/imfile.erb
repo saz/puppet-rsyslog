@@ -1,6 +1,7 @@
-<% if @modload -%>
+<% if !@extra_modules.contains('imfile') -%>
 $ModLoad imfile
 <% end -%>
+
 
 $InputFileName <%= @file_name %>
 $InputFileTag <%= @file_tag %>

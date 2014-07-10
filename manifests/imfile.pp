@@ -11,7 +11,6 @@
 # [*file_severity*]
 # [*run_file_monitor*]
 # [*persist_state_interval]
-# [*modload]
 #
 # === Variables
 #
@@ -31,12 +30,11 @@ define rsyslog::imfile(
   $file_severity = 'notice',
   $run_file_monitor = true,
   $persist_state_interval = 0,
-  $modload  = true
 ) {
 
 
   include rsyslog
-
+  $extra_modules  = $rsyslog::extra_modules
   file { "${rsyslog::rsyslog_d}${name}.conf":
     ensure  => file,
     owner   => 'root',
