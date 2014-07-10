@@ -23,6 +23,14 @@ Facter.add(:rsyslog_version) do
             else
                 nil
             end
+        when "FreeBSD"
+          command='pkg query %v rsyslog'
+          version = Facter::Util::Resolution.exec(command)
+          if version =~ /^(.+)$/
+            $1
+          else
+            nil
+          end
         else
             nil
         end
