@@ -19,13 +19,20 @@ Manage rsyslog client and server via Puppet
 #### Variables and default values
 ```
     class { 'rsyslog::client':
-        log_remote     => true,
-        remote_type    => 'tcp',
-        log_local      => false,
-        log_auth_local => false,
-        custom_config  => undef,
-        server         => 'log',
-        port           => '514',
+        log_remote            => true,
+        spool_size            => '1g',
+        remote_type           => 'tcp',
+        remote_forward_format => 'RSYSLOG_ForwardFormat',
+        log_local             => false,
+        log_auth_local        => false,
+        custom_config         => undef,
+        custom_params         => undef,
+        server                => 'log',
+        port                  => '514',
+        remote_servers        => false,
+        ssl_ca                => undef,
+        log_templates         => false,
+        actionfiletemplate    => false
     }
 ```
 for read from file
@@ -149,11 +156,17 @@ The following lists all the class parameters this module accepts.
     RSYSLOG::CLIENT CLASS PARAMETERS    VALUES              DESCRIPTION
     -------------------------------------------------------------------
     log_remote                          true,false          Log Remotely. Defaults to true.
+    spool_size                          STRING              Max size for disk queue if remote server failed. Defaults to '1g'.
     remote_type                         'tcp','udp'         Which protocol to use when logging remotely. Defaults to 'tcp'.
+    remote_forward_format               STRING              Which forward format for remote servers should be used. Only used if remote_servers is false.
     log_local                           true,false          Log locally. Defaults to false.
     log_auth_local                      true,false          Just log auth facility locally. Defaults to false.
     custom_config                       STRING              Specify your own template to use for client config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb
-    server                              STRING              Rsyslog server to log to. Will be used in the client configuration file.
+    custom_params                       TODO                TODO
+    server                              STRING              Rsyslog server to log to. Will be used in the client configuration file. Only used, if remote_servers is false.
+    port                                '514'               Remote server port. Only used if remote_servers is false.
+    remote_servers                      Array of hashes     Array of hashes with remote servers. See documentation above. Defaults to false.
+    ssl_ca                              STRING              SSL CA file location. Defaults to undef.
     log_templates                       HASH                Provides a has defining custom logging templates using the `$template` configuration parameter.
     actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging.
 
