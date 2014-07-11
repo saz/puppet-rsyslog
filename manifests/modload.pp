@@ -2,7 +2,7 @@
 #
 
 class rsyslog::modload (
-  $modulelist             = [],
+  $modulelist             = $rsyslog::extra_modules,
   $modload_filename       = '10-modload.conf'
 )
  {
