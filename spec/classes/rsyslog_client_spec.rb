@@ -1,52 +1,119 @@
 require 'spec_helper'
 
 describe 'rsyslog::client', :type => :class do
-  context "osfamily = RedHat" do
-    let :facts do
+
+  context "Rsyslog version >= 8" do
+    let(:default_facts) do
       {
-        :osfamily               => 'RedHat',
-        :operatingsystem        => 'RedHat',
-        :operatingsystemmajrelease => 6,
+        :rsyslog_version => '8.1.2'
       }
     end
 
-    context "default usage (osfamily = RedHat)" do
-      let(:title) { 'rsyslog-client-basic' }
+    context "osfamily = RedHat" do
+      let :facts do
+        default_facts.merge!({
+          :osfamily               => 'RedHat',
+          :operatingsystem        => 'RedHat',
+          :operatingsystemmajrelease => 6,
+        })
+      end
 
-      it 'should compile' do
-        should contain_file('/etc/rsyslog.d/client.conf')
+      context "default usage (osfamily = RedHat)" do
+        let(:title) { 'rsyslog-client-basic' }
+
+        it 'should compile' do
+          should contain_file('/etc/rsyslog.d/client.conf')
+        end
+      end
+    end
+
+    context "osfamily = Debian" do
+      let :facts do
+        default_facts.merge!({
+          :osfamily        => 'Debian',
+        })
+      end
+
+      context "default usage (osfamily = Debian)" do
+        let(:title) { 'rsyslog-client-basic' }
+
+        it 'should compile' do
+          should contain_file('/etc/rsyslog.d/client.conf')
+        end
+      end
+    end
+
+    context "osfamily = FreeBSD" do
+      let :facts do
+        default_facts.merge!({
+          :osfamily        => 'freebsd',
+        })
+      end
+
+      context "default usage (osfamily = Debian)" do
+        let(:title) { 'rsyslog-client-basic' }
+
+        it 'should compile' do
+          should contain_file('/etc/syslog.d/client.conf')
+        end
       end
     end
   end
 
-  context "osfamily = Debian" do
-    let :facts do
+  context "Rsyslog version =< 8" do
+    let(:default_facts) do
       {
-        :osfamily        => 'Debian',
+        :rsyslog_version => '7.1.2'
       }
     end
 
-    context "default usage (osfamily = Debian)" do
-      let(:title) { 'rsyslog-client-basic' }
+    context "osfamily = RedHat" do
+      let :facts do
+        default_facts.merge!({
+          :osfamily               => 'RedHat',
+          :operatingsystem        => 'RedHat',
+          :operatingsystemmajrelease => 6,
+        })
+      end
 
-      it 'should compile' do
-        should contain_file('/etc/rsyslog.d/client.conf')
+      context "default usage (osfamily = RedHat)" do
+        let(:title) { 'rsyslog-client-basic' }
+
+        it 'should compile' do
+          should contain_file('/etc/rsyslog.d/client.conf')
+        end
       end
     end
-  end
 
-  context "osfamily = FreeBSD" do
-    let :facts do
-      {
-        :osfamily        => 'freebsd',
-      }
+    context "osfamily = Debian" do
+      let :facts do
+        default_facts.merge!({
+          :osfamily        => 'Debian',
+        })
+      end
+
+      context "default usage (osfamily = Debian)" do
+        let(:title) { 'rsyslog-client-basic' }
+
+        it 'should compile' do
+          should contain_file('/etc/rsyslog.d/client.conf')
+        end
+      end
     end
 
-    context "default usage (osfamily = Debian)" do
-      let(:title) { 'rsyslog-client-basic' }
+    context "osfamily = FreeBSD" do
+      let :facts do
+        default_facts.merge!({
+          :osfamily        => 'freebsd',
+        })
+      end
 
-      it 'should compile' do
-        should contain_file('/etc/syslog.d/client.conf')
+      context "default usage (osfamily = FreeBSD)" do
+        let(:title) { 'rsyslog-client-basic' }
+
+        it 'should compile' do
+          should contain_file('/etc/syslog.d/client.conf')
+        end
       end
     end
   end
