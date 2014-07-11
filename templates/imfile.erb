@@ -1,4 +1,4 @@
-<% if @extra_modules or !@extra_modules.contains('imfile') -%>
+<% if @extra_modules and !@extra_modules.contains('imfile') -%>
 $ModLoad imfile
 <% end -%>
 

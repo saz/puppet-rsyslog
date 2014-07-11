@@ -34,7 +34,7 @@ define rsyslog::imfile(
 
 
   include rsyslog
-  $extra_modules  = $rsyslog::extra_modules
+  $extra_modules  = $rsyslog::modload::modulelist
   file { "${rsyslog::rsyslog_d}${name}.conf":
     ensure  => file,
     owner   => 'root',

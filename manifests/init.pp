@@ -43,6 +43,4 @@ class rsyslog (
   class { 'rsyslog::config': }
   class { 'rsyslog::service': }
 
-
-  #$extra_modules          = $rsyslog::params::extra_modules
 }
