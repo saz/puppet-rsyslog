@@ -2,11 +2,12 @@
 #
 
 class rsyslog::modload (
-  $modulelist             = $rsyslog::extra_modules,
-  $modload_filename       = '10-modload.conf'
+  $modload_filename          = '10-modload.conf',
+  $extra_modules             = [],
+
 )
  {
-    file { "${rsyslog::rsyslog_d}$modload_filename":
+   file { "${rsyslog::rsyslog_d}$modload_filename":
       ensure  => file,
       owner   => 'root',
       group   => $rsyslog::run_group,
