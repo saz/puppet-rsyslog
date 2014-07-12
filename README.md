@@ -190,3 +190,13 @@ directory. i.e. www01 www02 and www02 would all log to the www directory.
 
 To log each host to a seperate directory, set the custom_config parameter to
 'rsyslog/server-hostname.conf.erb'
+
+If any of the following parameters are set to `false`, then the module will not
+manage the respective package:
+
+    gnutls_package_name
+    relp_package_name
+    rsyslog_package_name
+
+This can be used when using the adiscon PPA repository, that has merged rsyslog-gnutls
+with the main rsyslog package.
