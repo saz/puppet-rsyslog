@@ -442,4 +442,28 @@ describe 'rsyslog', :type => :class do
     end
   end
 
+  context "Rsyslog version >= 8" do
+    let(:default_facts) do
+      {
+        :rsyslog_version => nil
+      }
+    end
+
+    context "osfamily = RedHat" do
+      let :facts do
+        default_facts.merge!({
+          :osfamily               => 'RedHat',
+          :operatingsystem        => 'RedHat',
+          :operatingsystemmajrelease => 6,
+        })
+      end
+
+      context "default usage (osfamily = RedHat)" do
+        it 'should compile' do
+          should contain_file('/etc/rsyslog.conf')
+          should contain_file('/etc/rsyslog.d/')
+        end
+      end
+    end
+  end
 end
