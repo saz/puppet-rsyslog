@@ -117,4 +117,30 @@ describe 'rsyslog::client', :type => :class do
       end
     end
   end
+
+  context "Rsyslog version = nil" do
+    let(:default_facts) do
+      {
+        :rsyslog_version => nil
+      }
+    end
+
+    context "osfamily = RedHat" do
+      let :facts do
+        default_facts.merge!({
+          :osfamily               => 'RedHat',
+          :operatingsystem        => 'RedHat',
+          :operatingsystemmajrelease => 6,
+        })
+      end
+
+      context "default usage (osfamily = RedHat)" do
+        let(:title) { 'rsyslog-client-basic' }
+
+        it 'should compile' do
+          should contain_file('/etc/rsyslog.d/client.conf')
+        end
+      end
+    end
+  end
 end
