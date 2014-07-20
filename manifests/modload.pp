@@ -3,8 +3,6 @@
 
 class rsyslog::modload (
   $modload_filename          = '10-modload.conf',
-  $extra_modules             = [],
-
 )
  {
    file { "${rsyslog::rsyslog_d}$modload_filename":
