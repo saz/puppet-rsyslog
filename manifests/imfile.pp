@@ -29,10 +29,12 @@ define rsyslog::imfile(
   $polling_interval = 10,
   $file_severity = 'notice',
   $run_file_monitor = true,
-  $persist_state_interval = 0
+  $persist_state_interval = 0,
 ) {
 
+
   include rsyslog
+  $extra_modules = $rsyslog::extra_modules
 
   file { "${rsyslog::rsyslog_d}${name}.conf":
     ensure  => file,

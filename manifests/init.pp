@@ -37,9 +37,14 @@ class rsyslog (
   $server_conf            = $rsyslog::params::server_conf,
   $ssl                    = $rsyslog::params::ssl,
   $modules                = $rsyslog::params::modules,
-  $preserve_fqdn          = $rsyslog::params::preserve_fqdn
+  $preserve_fqdn          = $rsyslog::params::preserve_fqdn,
+  $extra_modules	        = $rsyslog::params::extra_modules
 ) inherits rsyslog::params {
   class { 'rsyslog::install': }
   class { 'rsyslog::config': }
+  if $extra_modules != [] {
+	class { 'rsyslog::modload': }
+   }
   class { 'rsyslog::service': }
+
 }
