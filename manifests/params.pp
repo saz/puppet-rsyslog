@@ -122,7 +122,7 @@ class rsyslog::params {
       $preserve_fqdn          = false
       $service_hasrestart     = true
       $service_hasstatus      = true
-      $extra_modules = []
+      $extra_modules          = []
     }
     sles: {
       $rsyslog_package_name   = 'rsyslog'
@@ -144,7 +144,7 @@ class rsyslog::params {
       $service_name           = 'syslog'
       $client_conf            = "${rsyslog_d}client.conf"
       $server_conf            = "${rsyslog_d}server.conf"
-      $extra_modules = []
+      $extra_modules          = []
   }
     freebsd: {
       $rsyslog_package_name   = 'sysutils/rsyslog5'
@@ -178,7 +178,7 @@ class rsyslog::params {
       $preserve_fqdn          = false
       $service_hasrestart     = true
       $service_hasstatus      = true
-      $extra_modules = []
+      $extra_modules          = []
     }
 
     default: {
