@@ -109,6 +109,7 @@ class rsyslog::params {
       $log_user               = 'root'
       $log_group              = 'root'
       $log_style              = 'redhat'
+      $umask                  = '0000'
       $perm_file              = '0600'
       $perm_dir               = '0750'
       $spool_dir              = '/var/lib/rsyslog'
