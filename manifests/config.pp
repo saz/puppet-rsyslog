@@ -43,6 +43,7 @@ class rsyslog::config {
     ensure  => directory,
     owner   => 'root',
     group   => $rsyslog::run_group,
+    seltype => 'syslogd_var_lib_t',
     require => Class['rsyslog::install'],
     notify  => Class['rsyslog::service'],
   }
