@@ -33,6 +33,7 @@ define rsyslog::imfile(
 ) {
 
   include rsyslog
+  include rsyslog::load_imfile
 
   file { "${rsyslog::rsyslog_d}${name}.conf":
     ensure  => file,
