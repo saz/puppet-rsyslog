@@ -120,11 +120,12 @@ class rsyslog::params {
       $service_hasrestart     = true
       $service_hasstatus      = true
     }
-    sles: {
+    suse: {
       $rsyslog_package_name   = 'rsyslog'
-      $relp_package_name      = 'rsyslog-module-relp'
-      $mysql_package_name     = 'rsyslog-module-mysql'
-      $pgsql_package_name     = 'rsyslog-module-pgsql'
+      $relp_package_name      = false
+      $mysql_package_name     = false
+      $pgsql_package_name     = false
+      $gnutls_package_name    = false
       $package_status         = 'latest'
       $rsyslog_d              = '/etc/rsyslog.d/'
       $rsyslog_conf           = '/etc/rsyslog.conf'
@@ -133,13 +134,18 @@ class rsyslog::params {
       $run_group              = 'root'
       $log_user               = 'root'
       $log_group              = 'root'
-      $log_style              = 'sles'
+      $log_style              = 'debian'
       $perm_file              = '0600'
       $perm_dir               = '0750'
       $spool_dir              = '/var/spool/rsyslog/'
       $service_name           = 'syslog'
-      $client_conf            = "${rsyslog_d}client.conf"
-      $server_conf            = "${rsyslog_d}server.conf"
+      $client_conf            = 'client'
+      $server_conf            = 'server'
+      $modules                = [
+        '$ModLoad imuxsock # provides support for local system logging',
+        '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
+        '#$ModLoad immark  # provides --MARK-- message capability',
+      ]
     }
     freebsd: {
       $rsyslog_package_name   = 'sysutils/rsyslog5'
