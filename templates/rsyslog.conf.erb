@@ -11,6 +11,10 @@
 ###########################
 #### GLOBAL DIRECTIVES ####
 ###########################
+#
+# Set max message size for sending and receiving
+#
+$MaxMessageSize <%= scope.lookupvar('rsyslog::max_message_size') %>
 
 #
 # Set the default permissions for all log files.

@@ -12,6 +12,8 @@
 #
 class rsyslog::params {
 
+  $max_message_size           = '2k'
+
   case $::osfamily {
     debian: {
       $rsyslog_package_name   = 'rsyslog'
