@@ -151,7 +151,6 @@ class rsyslog::params {
         '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
         '#$ModLoad immark  # provides --MARK-- message capability',
       ]
-    }
       $extra_modules          = []
   }
     freebsd: {
