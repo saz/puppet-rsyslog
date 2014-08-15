@@ -161,7 +161,7 @@ The following lists all the class parameters this module accepts.
     remote_forward_format               STRING              Which forward format for remote servers should be used. Only used if remote_servers is false.
     log_local                           true,false          Log locally. Defaults to false.
     log_auth_local                      true,false          Just log auth facility locally. Defaults to false.
-    custom_config                       STRING              Specify your own template to use for client config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb
+    custom_config                       STRING              Specify your own template to use for client config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb'
     custom_params                       TODO                TODO
     server                              STRING              Rsyslog server to log to. Will be used in the client configuration file. Only used, if remote_servers is false.
     port                                '514'               Remote server port. Only used if remote_servers is false.
