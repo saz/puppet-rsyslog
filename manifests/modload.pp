@@ -4,8 +4,8 @@
 class rsyslog::modload (
   $modload_filename          = '10-modload.conf',
 )
- {
-   file { "${rsyslog::rsyslog_d}$modload_filename":
+  {
+    file { "${rsyslog::rsyslog_d}${modload_filename}":
       ensure  => file,
       owner   => 'root',
       group   => $rsyslog::run_group,
@@ -13,5 +13,5 @@ class rsyslog::modload (
       require => Class['rsyslog::install'],
       notify  => Class['rsyslog::service'],
     }
- }
+  }
 
