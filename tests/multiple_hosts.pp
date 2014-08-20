@@ -7,11 +7,11 @@ class{'rsyslog::client':
       port => '55514',
     },
     {
-      host      => 'logs.somewhere.com',
-      port      => '555',
-      pattern   => '*.log',
-      protocol  => 'tcp',
-      format    => 'RFC3164fmt',
+      host     => 'logs.somewhere.com',
+      port     => '555',
+      pattern  => '*.log',
+      protocol => 'tcp',
+      format   => 'RFC3164fmt',
     },
   ]
 }
