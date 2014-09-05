@@ -1,6 +1,7 @@
 # == Class: rsyslog
 #
-# Meta class to install rsyslog with a basic configuration. You probably want rsyslog::client or rsyslog::server
+# Meta class to install rsyslog with a basic configuration.
+# You probably want rsyslog::client or rsyslog::server
 #
 # === Parameters
 #
@@ -39,13 +40,14 @@ class rsyslog (
   $modules                = $rsyslog::params::modules,
   $preserve_fqdn          = $rsyslog::params::preserve_fqdn,
   $max_message_size       = $rsyslog::params::max_message_size,
-  $extra_modules	        = $rsyslog::params::extra_modules
+  $extra_modules          = $rsyslog::params::extra_modules
 ) inherits rsyslog::params {
   class { 'rsyslog::install': }
   class { 'rsyslog::config': }
-  if $extra_modules != [] {
-	class { 'rsyslog::modload': }
-   }
-  class { 'rsyslog::service': }
 
+  if $extra_modules != [] {
+    class { 'rsyslog::modload': }
+  }
+
+  class { 'rsyslog::service': }
 }

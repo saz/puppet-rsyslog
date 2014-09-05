@@ -1,6 +1,7 @@
 # == Define: rsyslog::snippet
 #
-# This class allows for you to create a rsyslog configuration file with whatever content you pass in.
+# This class allows for you to create a rsyslog configuration file with
+# whatever content you pass in.
 #
 # === Parameters
 #
