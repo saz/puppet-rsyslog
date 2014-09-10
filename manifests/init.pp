@@ -28,6 +28,7 @@ class rsyslog (
   $log_user               = $rsyslog::params::log_user,
   $log_group              = $rsyslog::params::log_group,
   $log_style              = $rsyslog::params::log_style,
+  $umask                  = $rsyslog::params::umask,
   $perm_file              = $rsyslog::params::perm_file,
   $perm_dir               = $rsyslog::params::perm_dir,
   $spool_dir              = $rsyslog::params::spool_dir,
