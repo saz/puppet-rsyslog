@@ -33,6 +33,7 @@ class rsyslog::params {
       $log_user               = 'root'
       $log_group              = 'adm'
       $log_style              = 'debian'
+      $umask                  = false
       $perm_file              = '0640'
       $perm_dir               = '0755'
       $spool_dir              = '/var/spool/rsyslog'
@@ -142,6 +143,7 @@ class rsyslog::params {
       $log_user               = 'root'
       $log_group              = 'root'
       $log_style              = 'debian'
+      $umask                  = false
       $perm_file              = '0600'
       $perm_dir               = '0750'
       $spool_dir              = '/var/spool/rsyslog/'
@@ -172,6 +174,7 @@ class rsyslog::params {
       $log_user               = 'root'
       $log_group              = 'wheel'
       $log_style              = 'debian'
+      $umask                  = false
       $perm_file              = '0640'
       $perm_dir               = '0755'
       $spool_dir              = '/var/spool/syslog'
@@ -209,6 +212,7 @@ class rsyslog::params {
           $log_user               = 'root'
           $log_group              = 'adm'
           $log_style              = 'debian'
+          $umask                  = false
           $perm_file              = '0640'
           $perm_dir               = '0755'
           $spool_dir              = '/var/spool/rsyslog'
