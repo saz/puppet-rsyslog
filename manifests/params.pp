@@ -14,6 +14,11 @@
 class rsyslog::params {
 
   $max_message_size           = '2k'
+  $purge_rsyslog_d            = false
+  $extra_modules              = []
+  $run_user                   = 'root'
+  $log_user                   = 'root'
+  $preserve_fqdn              = false
 
   case $::osfamily {
     debian: {
@@ -24,13 +29,10 @@ class rsyslog::params {
       $gnutls_package_name    = 'rsyslog-gnutls'
       $package_status         = 'latest'
       $rsyslog_d              = '/etc/rsyslog.d/'
-      $purge_rsyslog_d        = false
       $rsyslog_conf           = '/etc/rsyslog.conf'
       $rsyslog_default        = '/etc/default/rsyslog'
       $default_config_file    = 'rsyslog_default'
-      $run_user               = 'root'
       $run_group              = 'root'
-      $log_user               = 'root'
       $log_group              = 'adm'
       $log_style              = 'debian'
       $perm_file              = '0640'
@@ -45,10 +47,8 @@ class rsyslog::params {
         '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
         '#$ModLoad immark  # provides --MARK-- message capability',
       ]
-      $preserve_fqdn          = false
       $service_hasrestart     = true
       $service_hasstatus      = true
-      $extra_modules          = []
 
     }
     redhat: {
@@ -106,12 +106,9 @@ class rsyslog::params {
       }
       $package_status         = 'latest'
       $rsyslog_d              = '/etc/rsyslog.d/'
-      $purge_rsyslog_d        = false
       $rsyslog_conf           = '/etc/rsyslog.conf'
       $rsyslog_default        = '/etc/sysconfig/rsyslog'
-      $run_user               = 'root'
       $run_group              = 'root'
-      $log_user               = 'root'
       $log_group              = 'root'
       $log_style              = 'redhat'
       $perm_file              = '0600'
@@ -121,10 +118,8 @@ class rsyslog::params {
       $client_conf            = 'client'
       $server_conf            = 'server'
       $ssl                    = false
-      $preserve_fqdn          = false
       $service_hasrestart     = true
       $service_hasstatus      = true
-      $extra_modules          = []
     }
     suse: {
       $rsyslog_package_name   = 'rsyslog'
@@ -136,9 +131,7 @@ class rsyslog::params {
       $rsyslog_d              = '/etc/rsyslog.d/'
       $rsyslog_conf           = '/etc/rsyslog.conf'
       $rsyslog_default        = '/etc/sysconfig/syslog'
-      $run_user               = 'root'
       $run_group              = 'root'
-      $log_user               = 'root'
       $log_group              = 'root'
       $log_style              = 'debian'
       $perm_file              = '0600'
@@ -152,7 +145,6 @@ class rsyslog::params {
         '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
         '#$ModLoad immark  # provides --MARK-- message capability',
       ]
-      $extra_modules          = []
   }
     freebsd: {
       $rsyslog_package_name   = 'sysutils/rsyslog5'
@@ -162,13 +154,10 @@ class rsyslog::params {
       $gnutls_package_name    = 'sysutils/rsyslog5-gnutls'
       $package_status         = 'present'
       $rsyslog_d              = '/etc/syslog.d/'
-      $purge_rsyslog_d        = false
       $rsyslog_conf           = '/etc/syslog.conf'
       $rsyslog_default        = '/etc/defaults/syslogd'
       $default_config_file    = 'rsyslog_default'
-      $run_user               = 'root'
       $run_group              = 'wheel'
-      $log_user               = 'root'
       $log_group              = 'wheel'
       $log_style              = 'debian'
       $perm_file              = '0640'
@@ -183,10 +172,8 @@ class rsyslog::params {
         '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
         '#$ModLoad immark  # provides --MARK-- message capability',
       ]
-      $preserve_fqdn          = false
       $service_hasrestart     = true
       $service_hasstatus      = true
-      $extra_modules          = []
     }
 
     default: {
@@ -199,13 +186,10 @@ class rsyslog::params {
           $gnutls_package_name    = false
           $package_status         = 'latest'
           $rsyslog_d              = '/etc/rsyslog.d/'
-          $purge_rsyslog_d        = false
           $rsyslog_conf           = '/etc/rsyslog.conf'
           $rsyslog_default        = '/etc/conf.d/rsyslog'
           $default_config_file    = 'rsyslog_default_gentoo'
-          $run_user               = 'root'
           $run_group              = 'root'
-          $log_user               = 'root'
           $log_group              = 'adm'
           $log_style              = 'debian'
           $perm_file              = '0640'
@@ -220,10 +204,8 @@ class rsyslog::params {
             '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
             '#$ModLoad immark  # provides --MARK-- message capability',
           ]
-          $preserve_fqdn          = false
           $service_hasrestart     = true
           $service_hasstatus      = true
-          $extra_modules          = []
 
         }
         default: {
