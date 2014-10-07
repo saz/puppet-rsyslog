@@ -66,6 +66,19 @@ class rsyslog::params {
           '#$ModLoad immark  # provides --MARK-- message capability',
         ]
       }
+      elsif $::operatingsystemmajrelease == 5 {
+        $rsyslog_package_name   = 'rsyslog'
+        $mysql_package_name     = 'rsyslog-mysql'
+        $pgsql_package_name     = 'rsyslog-pgsql'
+        $gnutls_package_name    = 'rsyslog-gnutls'
+        $relp_package_name      = 'rsyslog-relp'
+        $default_config_file    = 'rsyslog_default'
+        $modules                = [
+          '$ModLoad imuxsock # provides support for local system logging',
+          '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
+          '#$ModLoad immark  # provides --MARK-- message capability',
+        ]
+      }
       elsif $::operatingsystemmajrelease == 6 {
         $rsyslog_package_name   = 'rsyslog'
         $mysql_package_name     = 'rsyslog-mysql'
