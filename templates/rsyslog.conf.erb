@@ -4,6 +4,10 @@
 #### MODULES ####
 #################
 
+<% if scope.lookupvar('rsyslog::preserve_fqdn') -%>
+$PreserveFQDN on
+<% end -%>
+
 <% scope.lookupvar('rsyslog::modules').each do |module_row| -%>
 <%= module_row %>
 <% end -%>
@@ -19,9 +23,6 @@ $MaxMessageSize <%= scope.lookupvar('rsyslog::max_message_size') %>
 #
 # Set the default permissions for all log files.
 #
-<% if scope.lookupvar('rsyslog::preserve_fqdn') -%>
-$PreserveFQDN on
-<% end -%>
 $FileOwner <%= scope.lookupvar('rsyslog::log_user') %>
 $FileGroup <%= scope.lookupvar('rsyslog::log_group') %>
 $FileCreateMode <%= scope.lookupvar('rsyslog::perm_file') %>
