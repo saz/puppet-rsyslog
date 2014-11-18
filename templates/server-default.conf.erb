@@ -8,6 +8,7 @@
 <% if scope.lookupvar('rsyslog::server::enable_onefile') == false -%>
 
 # Templates
+$Template dynAuditLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>audit.log"
 $Template dynAuthLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>auth.log"
 $Template dynSyslog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>syslog"
 $Template dynCronLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>cron.log"
@@ -30,6 +31,14 @@ user.*              -?dynUserLog
     auth.none,authpriv.none;\
     cron.none,daemon.none;\
     mail.none,news.none     -?dynMessages
+
+# Special format to keep audit logs as sent.
+$Template auditFormat,"%msg%\n"
+
+# Catch messages from audispd and send to audit log.
+:programname,   isequal,        "audispd"       -?dynAuditLog;auditFormat
+:programname,   isequal,        "audispd"       stop
+
 <% else -%>
 # Template
 $Template dynAllMessages,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>messages"
