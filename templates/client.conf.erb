@@ -73,11 +73,13 @@ $ActionSendStreamDriverAuthMode anon
 # Log to remote syslog server using <%= scope.lookupvar('rsyslog::client::remote_type') %>
 <% if scope.lookupvar('rsyslog::client::remote_type') == 'tcp' -%>
 *.* @@<%= scope.lookupvar('rsyslog::client::server') -%>:<%= scope.lookupvar('rsyslog::client::port') -%>;<%= scope.lookupvar('remote_forward_format') -%>
+<% else -%>
 <% if scope.lookupvar('rsyslog::client::remote_type') == 'relp' -%>
 $ModLoad omrelp
 *.* :omrelp:<%= scope.lookupvar('rsyslog::client::server') -%>:<%= scope.lookupvar('rsyslog::client::port') -%>;<%= scope.lookupvar('remote_forward_format') -%>
 <% else -%>
 *.* @<%= scope.lookupvar('rsyslog::client::server') -%>:<%= scope.lookupvar('rsyslog::client::port') -%>;<%= scope.lookupvar('remote_forward_format') -%>
+<% end -%>
 <% end -%>
 <% end -%>
 <% if scope.lookupvar('rsyslog::client::log_auth_local') or scope.lookupvar('rsyslog::client::log_local') -%>
