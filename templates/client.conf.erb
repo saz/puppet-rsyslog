@@ -61,7 +61,11 @@ $ActionSendStreamDriverAuthMode anon
 <% if server['port'] and server['port'] != ''-%>
 <% port = server['port'] -%>
 <% else -%>
+<% if server['protocol'] == 'RELP' or server['protocol'] == 'relp'-%>
+<% port = '20514' -%>
+<% else -%>
 <% port = '514' -%>
+<% end -%>
 <% end -%>
 <% if server['format'] -%>
 <% format = ";#{server['format']}" -%>
