@@ -39,8 +39,8 @@ class rsyslog::client (
   $remote_servers            = false,
   $ssl_ca                    = undef,
   $log_templates             = false,
-  $actionfiletemplate        = false
-  $high_precision_timestamps = false,
+  $actionfiletemplate        = false,
+  $high_precision_timestamps = false
 ) inherits rsyslog {
 
   if $custom_config {
