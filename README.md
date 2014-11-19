@@ -130,6 +130,7 @@ Declare the following to configure the connection:
     class { 'rsyslog::server':
         enable_tcp                => true,
         enable_udp                => true,
+        enable_relp               => true,
         enable_onefile            => false,
         server_dir                => '/srv/log/',
         custom_config             => undef,
@@ -147,6 +148,7 @@ The following lists all the class parameters this module accepts.
     -------------------------------------------------------------------
     enable_tcp                          true,false          Enable TCP listener. Defaults to true.
     enable_udp                          true,false          Enable UDP listener. Defaults to true.
+    enable_relp                         true,false          Enable RELP listener. Defaults to true.
     enable_onefile                      true,false          Only one logfile per remote host. Defaults to false.
     server_dir                          STRING              Folder where logs will be stored on the server. Defaults to '/srv/log/'
     custom_config                       STRING              Specify your own template to use for server config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb'
@@ -157,7 +159,7 @@ The following lists all the class parameters this module accepts.
     -------------------------------------------------------------------
     log_remote                          true,false          Log Remotely. Defaults to true.
     spool_size                          STRING              Max size for disk queue if remote server failed. Defaults to '1g'.
-    remote_type                         'tcp','udp'         Which protocol to use when logging remotely. Defaults to 'tcp'.
+    remote_type                         'tcp','udp','relp'  Which protocol to use when logging remotely. Defaults to 'tcp'.
     remote_forward_format               STRING              Which forward format for remote servers should be used. Only used if remote_servers is false.
     log_local                           true,false          Log locally. Defaults to false.
     log_auth_local                      true,false          Just log auth facility locally. Defaults to false.
@@ -179,10 +181,6 @@ The following lists all the class parameters this module accepts.
     password                            STRING              Database password.
 
 ### Other notes
-
-Due to a missing feature in current RELP versions (InputRELPServerBindRuleset option),
-remote logging is using TCP. You can switch between TCP and UDP. As soon as there is
-a new RELP version which supports setting Rulesets, I will add support for relp back.
 
 By default, rsyslog::server will strip numbers from hostnames. This means the logs of
 multiple servers with the same non-numerical name will be aggregrated in a single

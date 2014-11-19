@@ -8,6 +8,13 @@ $ModLoad imudp
 $ModLoad imtcp
 <% end -%>
 
+<% if (scope.lookupvar('rsyslog::server::enable_relp')) -%>
+<% if (scope.function_versioncmp([@rsyslog_version, '6.3.6']) >= 0) -%>
+# Load RELP module
+$ModLoad imrelp
+<% end -%>
+<% end -%>
+
 #
 <% if scope.lookupvar('rsyslog::server::high_precision_timestamps') == false -%>
 # Use traditional timestamp format.
