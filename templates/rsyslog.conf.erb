@@ -6,6 +6,10 @@ $PreserveFQDN on
 #### MODULES ####
 #################
 
+<% if scope.lookupvar('rsyslog::preserve_fqdn') -%>
+$PreserveFQDN on
+<% end -%>
+
 <% scope.lookupvar('rsyslog::modules').each do |module_row| -%>
 <%= module_row %>
 <% end -%>
