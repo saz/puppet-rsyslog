@@ -16,12 +16,26 @@ class rsyslog::params {
   $max_message_size           = '2k'
   $purge_rsyslog_d            = false
   $extra_modules              = []
-  $run_user                   = 'root'
-  $log_user                   = 'root'
+  $run_user = $::operatingsystem ? {
+    'Ubuntu' => 'syslog',
+    default  => 'root',
+  }
+  $log_user = $::operatingsystem ? {
+    'Ubuntu' => 'syslog',
+    default  => 'root',
+  }
   $preserve_fqdn              = false
 
   case $::osfamily {
     debian: {
+      case $::operatingsystem {
+        'Debian': {
+          $run_group = 'root'
+        }
+        'Ubuntu': {
+          $run_group = 'syslog'
+        }
+      }
       $rsyslog_package_name   = 'rsyslog'
       $relp_package_name      = 'rsyslog-relp'
       $mysql_package_name     = 'rsyslog-mysql'
@@ -32,7 +46,6 @@ class rsyslog::params {
       $rsyslog_conf           = '/etc/rsyslog.conf'
       $rsyslog_default        = '/etc/default/rsyslog'
       $default_config_file    = 'rsyslog_default'
-      $run_group              = 'root'
       $log_group              = 'adm'
       $log_style              = 'debian'
       $umask                  = false
