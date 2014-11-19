@@ -171,6 +171,7 @@ The following lists all the class parameters this module accepts.
     ssl_ca                              STRING              SSL CA file location. Defaults to undef.
     log_templates                       HASH                Provides a has defining custom logging templates using the `$template` configuration parameter.
     actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging.
+    high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
 
     RSYSLOG::DATABASE CLASS PARAMETERS  VALUES              DESCRIPTION
     -------------------------------------------------------------------

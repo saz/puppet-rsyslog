@@ -19,11 +19,16 @@ $template <%= log_template['name'] %>,"<%= log_template['template'] %>"
 $ActionFileDefaultTemplate <%= scope.lookupvar('rsyslog::client::actionfiletemplate') %>
 <% else -%>
 
+<% if scope.lookupvar('rsyslog::client::high_precision_timestamps') == false -%>
 #Using default format for default logging format:
 $ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
+<% else -%>
+# Use high precision timestamp format.
+$ActionFileDefaultTemplate RSYSLOG_FileFormat
 <% end -%>
-<% if scope.lookupvar('rsyslog::client::ssl') -%>
+<% end -%>
 
+<% if scope.lookupvar('rsyslog::client::ssl') -%>
 # Setup SSL connection.
 # CA/Cert
 $DefaultNetStreamDriverCAFile <%= scope.lookupvar('rsyslog::client::ssl_ca') %>
