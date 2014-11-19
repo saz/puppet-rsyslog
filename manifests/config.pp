@@ -41,7 +41,7 @@ class rsyslog::config {
 
   file { $rsyslog::spool_dir:
     ensure  => directory,
-    owner   => 'root',
+    owner   => $rsyslog::run_user,
     group   => $rsyslog::run_group,
     seltype => 'syslogd_var_lib_t',
     require => Class['rsyslog::install'],
