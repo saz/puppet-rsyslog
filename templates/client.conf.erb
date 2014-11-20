@@ -80,6 +80,9 @@ $ActionSendStreamDriverAuthMode anon
 <% format_type = 'the default' -%>
 <% end -%>
 # Sending logs that match <%= pattern %> to <%= host %> via <%= protocol_type %> on <%= port %> using <%=format_type %> format.
+<% if server['protocol'] == 'RELP' or server['protocol'] == 'relp'-%>
+$ModLoad omrelp
+<% end -%>
 <%= pattern %> <%= protocol %><%= host %>:<%= port %><%= format %>
 <% end -%>
 <% elsif scope.lookupvar('rsyslog::client::log_remote') -%>
