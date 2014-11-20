@@ -39,8 +39,8 @@ $ActionSendStreamDriverMode 1
 $ActionSendStreamDriverAuthMode anon
 <% end -%>
 
-# Load RELP module.
 <% if server['protocol'] == 'RELP' or server['protocol'] == 'relp'-%>
+# Load RELP module.
 $ModLoad omrelp
 <% end -%>
 
