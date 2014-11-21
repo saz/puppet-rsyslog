@@ -26,7 +26,10 @@ define rsyslog::snippet(
   file { "${rsyslog::rsyslog_d}${name}.conf":
     ensure  => $ensure,
     owner   => 'root',
-    group   => 'root',
+    group   => $::osfamily ? {
+        default => 'root',
+        freebsd => 'wheel',
+    }
     content => "# This file is managed by Puppet, changes may be overwritten\n${content}\n",
     require => Class['rsyslog::config'],
     notify  => Class['rsyslog::service'],
