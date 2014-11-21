@@ -23,13 +23,16 @@ define rsyslog::snippet(
 
   include rsyslog
 
+  $rootgroup = osfamily ? {
+      'Solaris'          => 'wheel',
+      /(Darwin|FreeBSD)/ => 'wheel',
+      default            => 'root',
+  }
+
   file { "${rsyslog::rsyslog_d}${name}.conf":
     ensure  => $ensure,
     owner   => 'root',
-    group   => $::osfamily ? {
-        default => 'root',
-        freebsd => 'wheel',
-    }
+    group   => $rootgroup,
     content => "# This file is managed by Puppet, changes may be overwritten\n${content}\n",
     require => Class['rsyslog::config'],
     notify  => Class['rsyslog::service'],
