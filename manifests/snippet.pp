@@ -24,9 +24,9 @@ define rsyslog::snippet(
   include rsyslog
 
   $rootgroup = osfamily ? {
-      'Solaris'          => 'wheel',
-      /(Darwin|FreeBSD)/ => 'wheel',
-      default            => 'root',
+    'Solaris'          => 'wheel',
+    /(Darwin|FreeBSD)/ => 'wheel',
+    default            => 'root',
   }
 
   file { "${rsyslog::rsyslog_d}${name}.conf":
