@@ -10,6 +10,7 @@
 # [*remote_forward_format*]
 # [*log_local*]
 # [*log_auth_local*]
+# [*listen_localhost*]
 # [*custom_config*]
 # [*custom_params*]
 # [*server*]
@@ -32,6 +33,7 @@ class rsyslog::client (
   $remote_forward_format     = 'RSYSLOG_ForwardFormat',
   $log_local                 = false,
   $log_auth_local            = false,
+  $listen_localhost          = false,
   $custom_config             = undef,
   $custom_params             = undef,
   $server                    = 'log',
