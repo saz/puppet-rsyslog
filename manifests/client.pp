@@ -18,6 +18,8 @@
 # [*ssl_ca*]
 # [*log_templates*]
 # [*actionfiletemplate*]
+# [*rate_limit_burst*]
+# [*rate_limit_interval*]
 #
 # === Variables
 #
@@ -40,7 +42,9 @@ class rsyslog::client (
   $ssl_ca                    = undef,
   $log_templates             = false,
   $actionfiletemplate        = false,
-  $high_precision_timestamps = false
+  $high_precision_timestamps = false,
+  $rate_limit_burst          = undef,
+  $rate_limit_interval       = undef
 ) inherits rsyslog {
 
   if $custom_config {

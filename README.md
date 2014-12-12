@@ -171,6 +171,8 @@ The following lists all the class parameters this module accepts.
     log_templates                       HASH                Provides a has defining custom logging templates using the `$template` configuration parameter.
     actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging.
     high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
+    rate_limit_burst                    INTEGER             Specifies the number of messages in $rate_limit_interval before limiting begins. Defaults to undef.
+    rate_limit_interval                 INTEGER             Specifies the number of seconds per rate limit interval. Defaults to undef.
 
     RSYSLOG::DATABASE CLASS PARAMETERS  VALUES              DESCRIPTION
     -------------------------------------------------------------------
