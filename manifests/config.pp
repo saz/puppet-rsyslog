@@ -16,9 +16,9 @@ class rsyslog::config {
       owner   => $rsyslog::run_user,
       group   => $rsyslog::run_group,
       content => $::osfamily ? {
-        'debian' => template('rsyslog_debian.conf.erb'),
-        'redhat' => template('rsyslog_redhat.conf.erb'),
-        default  => template('rsyslog_redhat.conf.erb'),
+        'debian' => template('rsyslog/rsyslog_debian.conf.erb'),
+        'redhat' => template('rsyslog/rsyslog_redhat.conf.erb'),
+        default  => template('rsyslog/rsyslog_redhat.conf.erb'),
       }
     }
   }
