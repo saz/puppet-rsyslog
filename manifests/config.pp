@@ -12,7 +12,9 @@
 #
 class rsyslog::config {
   if ($rsyslog::keep_local_logs) {
-    rsyslog::snippet { 'local_logs':
+    file { "${rsyslog::rsyslog_d}local.conf":
+      owner   => $rsyslog::run_user,
+      group   => $rsyslog::run_group,
       content => $::osfamily ? {
         'debian' => template('rsyslog_debian.conf.erb'),
         'redhat' => template('rsyslog_redhat.conf.erb'),
