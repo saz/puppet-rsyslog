@@ -25,6 +25,7 @@ class rsyslog::params {
     default  => 'root',
   }
   $preserve_fqdn              = false
+  $keep_local_logs            = true
 
   case $::osfamily {
     debian: {

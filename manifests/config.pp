@@ -11,6 +11,16 @@
 #  class { 'rsyslog::config': }
 #
 class rsyslog::config {
+  if ($rsyslog::keep_local_logs) {
+    rsyslog::snippet { 'local_logs':
+      content => $::osfamily ? {
+        'debian' => template('rsyslog_debian.conf.erb'),
+        'redhat' => template('rsyslog_rhel7.conf.erb'),
+        default  => template('rsyslog_rhel7.conf.erb'),
+      }
+    }
+  }
+
   file { $rsyslog::rsyslog_d:
     ensure  => directory,
     owner   => 'root',
