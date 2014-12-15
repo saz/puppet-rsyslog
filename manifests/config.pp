@@ -15,8 +15,8 @@ class rsyslog::config {
     rsyslog::snippet { 'local_logs':
       content => $::osfamily ? {
         'debian' => template('rsyslog_debian.conf.erb'),
-        'redhat' => template('rsyslog_rhel7.conf.erb'),
-        default  => template('rsyslog_rhel7.conf.erb'),
+        'redhat' => template('rsyslog_redhat.conf.erb'),
+        default  => template('rsyslog_redhat.conf.erb'),
       }
     }
   }
