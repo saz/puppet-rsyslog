@@ -9,6 +9,11 @@ $PreserveFQDN on
 <% scope.lookupvar('rsyslog::modules').each do |module_row| -%>
 <%= module_row %>
 <% end -%>
+<% if scope.lookupvar('rsyslog::non_kernel_facility') -%>
+# Enable non-kernel facility klog messages
+$KLogPermitNonKernelFacility on
+
+<% end -%>
 
 ###########################
 #### GLOBAL DIRECTIVES ####
@@ -18,6 +23,19 @@ $PreserveFQDN on
 #
 $MaxMessageSize <%= scope.lookupvar('rsyslog::max_message_size') %>
 
+<% if scope.lookupvar('rsyslog::default_template') -%>
+#
+# Use traditional timestamp format.
+# To enable high precision timestamps, comment out the following line.
+#
+$ActionFileDefaultTemplate <%= scope.lookupvar('rsyslog::default_template') %>
+
+<% end -%>
+<% if scope.lookupvar('rsyslog::msg_reduction') -%>
+# Filter duplicated messages
+$RepeatedMsgReduction on
+
+<% end -%>
 #
 # Set the default permissions for all log files.
 #
@@ -29,6 +47,7 @@ $DirGroup <%= scope.lookupvar('rsyslog::log_group') %>
 $DirCreateMode <%= scope.lookupvar('rsyslog::perm_dir') %>
 $PrivDropToUser <%= scope.lookupvar('rsyslog::run_user') %>
 $PrivDropToGroup <%= scope.lookupvar('rsyslog::run_group') %>
+$WorkDirectory <%= scope.lookupvar('rsyslog::spool_dir') %>
 <% if scope.lookupvar('rsyslog::umask') -%>
 $Umask <%= scope.lookupvar('rsyslog::umask') %>
 <% end -%>
@@ -41,7 +60,7 @@ $IncludeConfig <%= scope.lookupvar('rsyslog::rsyslog_d') -%>*.conf
 #
 # Emergencies are sent to everybody logged in.
 #
-<% if @rsyslog_version and @rsyslog_version.split('.')[0].to_i >= 8 -%>
+<% if @rsyslog_version and @rsyslog_version.split('.')[0].to_i >= 7 -%>
 *.emerg       :omusrmsg:*
 <% else -%>
 *.emerg				*

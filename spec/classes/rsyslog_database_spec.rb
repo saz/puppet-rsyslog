@@ -63,6 +63,7 @@ describe 'rsyslog::database', :type => :class do
       let :facts do
         default_facts.merge!({
           :osfamily        => 'Debian',
+          :operatingsystem => 'Debian',
         })
       end
 
@@ -111,6 +112,7 @@ describe 'rsyslog::database', :type => :class do
       let :facts do
         default_facts.merge!({
           :osfamily        => 'freebsd',
+          :operatingsystem => 'FreeBSD',
         })
       end
 
@@ -215,6 +217,7 @@ describe 'rsyslog::database', :type => :class do
       let :facts do
         default_facts.merge!({
           :osfamily        => 'Debian',
+          :operatingsystem => 'Debian',
         })
       end
 
@@ -263,6 +266,7 @@ describe 'rsyslog::database', :type => :class do
       let :facts do
         default_facts.merge!({
           :osfamily        => 'freebsd',
+          :operatingsystem => 'FreeBSD',
         })
       end
 
