@@ -38,6 +38,7 @@ describe 'rsyslog::imfile', :type => :define do
     context "osfamily = Debian" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'Debian',
           :osfamily        => 'Debian',
         })
       end
@@ -62,6 +63,7 @@ describe 'rsyslog::imfile', :type => :define do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'freebsd',
           :osfamily        => 'freebsd',
         })
       end
@@ -120,6 +122,7 @@ describe 'rsyslog::imfile', :type => :define do
     context "osfamily = Debian" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'Debian',
           :osfamily        => 'Debian',
         })
       end
@@ -144,6 +147,7 @@ describe 'rsyslog::imfile', :type => :define do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'freebsd',
           :osfamily        => 'freebsd',
         })
       end
