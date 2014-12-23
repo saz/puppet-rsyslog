@@ -148,6 +148,7 @@ The following lists all the class parameters this module accepts.
     -------------------------------------------------------------------
     enable_tcp                          true,false          Enable TCP listener. Defaults to true.
     enable_udp                          true,false          Enable UDP listener. Defaults to true.
+    address                             STRING              The IP address to bind to. Applies to UDP listener only. Defaults to '*'.
     enable_relp                         true,false          Enable RELP listener. Defaults to true.
     enable_onefile                      true,false          Only one logfile per remote host. Defaults to false.
     server_dir                          STRING              Folder where logs will be stored on the server. Defaults to '/srv/log/'
