@@ -55,7 +55,8 @@ describe 'rsyslog::server', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
-          :osfamily        => 'freebsd',
+          :osfamily        => 'FreeBSD',
+          :operatingsystem => 'FreeBSD',
         })
       end
 
@@ -144,7 +145,8 @@ describe 'rsyslog::server', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
-          :osfamily        => 'freebsd',
+          :osfamily        => 'FreeBSD',
+          :operatingsystem => 'FreeBSD',
         })
       end
 
