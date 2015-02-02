@@ -79,8 +79,14 @@ $ActionSendStreamDriverAuthMode anon
 <% format = '' -%>
 <% format_type = 'the default' -%>
 <% end -%>
+<% if server['thendrop'] -%>
+<% dropaction = '& ~' -%>
+<% else -%>
+<% dropaction = '' -%>
+<% end -%>
 # Sending logs that match <%= pattern %> to <%= host %> via <%= protocol_type %> on <%= port %> using <%=format_type %> format.
 <%= pattern %> <%= protocol %><%= host %>:<%= port %><%= format %>
+<%= dropaction %>
 <% end -%>
 <% elsif scope.lookupvar('rsyslog::client::log_remote') -%>
 
