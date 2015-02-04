@@ -79,7 +79,7 @@ class rsyslog::params {
           '#$ModLoad immark  # provides --MARK-- message capability',
         ]
       }
-      elsif $::operatingsystemmajrelease == 5 {
+      elsif versioncmp($::operatingsystemmajrelease, '5') == 0 {
         $rsyslog_package_name   = 'rsyslog'
         $mysql_package_name     = 'rsyslog-mysql'
         $pgsql_package_name     = 'rsyslog-pgsql'
@@ -92,7 +92,7 @@ class rsyslog::params {
           '#$ModLoad immark  # provides --MARK-- message capability',
         ]
       }
-      elsif $::operatingsystemmajrelease == 6 {
+      elsif versioncmp($::operatingsystemmajrelease, '6') == 0 {
         $rsyslog_package_name   = 'rsyslog'
         $mysql_package_name     = 'rsyslog-mysql'
         $pgsql_package_name     = 'rsyslog-pgsql'
@@ -105,7 +105,7 @@ class rsyslog::params {
           '#$ModLoad immark  # provides --MARK-- message capability',
         ]
       }
-      elsif $::operatingsystemmajrelease >= 7 {
+      elsif versioncmp($::operatingsystemmajrelease, '7') >= 0 {
         $rsyslog_package_name   = 'rsyslog'
         $mysql_package_name     = 'rsyslog-mysql'
         $pgsql_package_name     = 'rsyslog-pgsql'

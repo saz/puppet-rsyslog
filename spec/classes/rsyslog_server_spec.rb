@@ -13,9 +13,9 @@ describe 'rsyslog::server', :type => :class do
       context "osfamily = #{osfamily}" do
         let :facts do
           default_facts.merge!({
-            :osfamily               => osfamily,
-            :operatingsystem        => osfamily,
-            :operatingsystemmajrelease => 6,
+            :osfamily                  => osfamily,
+            :operatingsystem           => osfamily,
+            :operatingsystemmajrelease => '6',
           })
         end
 
@@ -102,9 +102,9 @@ describe 'rsyslog::server', :type => :class do
       context "osfamily = #{osfamily}" do
         let :facts do
           default_facts.merge!({
-            :osfamily               => osfamily,
-            :operatingsystem        => osfamily,
-            :operatingsystemmajrelease => 6,
+            :osfamily                  => osfamily,
+            :operatingsystem           => osfamily,
+            :operatingsystemmajrelease => '6',
           })
         end
 

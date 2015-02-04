@@ -12,9 +12,9 @@ describe 'rsyslog::snippet', :type => :define do
     context "osfamily = RedHat" do
       let :facts do
         default_facts.merge!({
-          :osfamily               => 'RedHat',
-          :operatingsystem        => 'Redhat',
-          :operatingsystemmajrelease => 6,
+          :osfamily                  => 'RedHat',
+          :operatingsystem           => 'Redhat',
+          :operatingsystemmajrelease => '6',
         })
       end
 
@@ -88,9 +88,9 @@ describe 'rsyslog::snippet', :type => :define do
     context "osfamily = RedHat" do
       let :facts do
         default_facts.merge!({
-          :osfamily               => 'RedHat',
-          :operatingsystem        => 'Redhat',
-          :operatingsystemmajrelease => 6,
+          :osfamily                  => 'RedHat',
+          :operatingsystem           => 'Redhat',
+          :operatingsystemmajrelease => '6',
         })
       end
 

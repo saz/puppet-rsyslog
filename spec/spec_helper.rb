@@ -6,6 +6,10 @@ RSpec.configure do |c|
   end
   c.include PuppetlabsSpec::Files
 
+  if ENV['PARSER'] == 'future'
+    c.parser = 'future'
+  end
+
   c.before :each do
     # Ensure that we don't accidentally cache facts and environment
     # between test cases.
