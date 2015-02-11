@@ -48,13 +48,21 @@ $UDPServerRun 514
 <% if scope.lookupvar('rsyslog::client::ssl') -%>
 # Setup SSL connection.
 # CA/Cert
-$DefaultNetStreamDriverCAFile <%= scope.lookupvar('rsyslog::client::ssl_ca') %>
+$DefaultNetstreamDriverCAFile <%= scope.lookupvar('rsyslog::client::ssl_ca') %>
 
 # Connection settings.
 $DefaultNetstreamDriver gtls
-$ActionSendStreamDriverMode 1
+$ActionSendstreamDriverMode 1
+<% if scope.lookupvar('rsyslog::client::auth_mode') -%>
+$ActionSendStreamDriverAuthMode <%= scope.lookupvar('rsyslog::client::auth_mode') %>
+<% else -%>
 $ActionSendStreamDriverAuthMode anon
 <% end -%>
+<% if scope.lookupvar('rsyslog::client::auth_mode') == 'x509/name' -%>
+$ActionSendStreamDriverPermittedPeer <%= scope.lookupvar('rsyslog::client::permitted_peer') %>
+<% end -%>
+<% end -%>
+
 
 <% if scope.lookupvar('rsyslog::client::remote_type') == 'relp' -%>
 # Load RELP module.

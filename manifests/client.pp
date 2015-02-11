@@ -44,6 +44,8 @@ class rsyslog::client (
   $port                      = '514',
   $remote_servers            = false,
   $ssl_ca                    = undef,
+  $auth_mode                 = undef,
+  $permitted_peer            = undef,
   $log_templates             = false,
   $actionfiletemplate        = false,
   $high_precision_timestamps = false,
@@ -69,5 +71,7 @@ class rsyslog::client (
   if $rsyslog::ssl and $remote_type != 'tcp' {
     fail('You need to enable tcp in order to use SSL.')
   }
+
+  # include testing for $auth_mode and $permitted_peer
 
 }
