@@ -56,6 +56,7 @@ describe 'rsyslog::server', :type => :class do
       let :facts do
         default_facts.merge!({
           :osfamily        => 'freebsd',
+          :operatingsystem => 'freebsd',
         })
       end
 
@@ -145,6 +146,7 @@ describe 'rsyslog::server', :type => :class do
       let :facts do
         default_facts.merge!({
           :osfamily        => 'freebsd',
+          :operatingsystem => 'freebsd',
         })
       end
 
