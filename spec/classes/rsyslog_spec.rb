@@ -32,6 +32,7 @@ describe 'rsyslog', :type => :class do
     context "osfamily = Debian" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'Debian',
           :osfamily        => 'Debian',
           :operatingsystem => 'Debian',
         })
@@ -51,6 +52,7 @@ describe 'rsyslog', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'freebsd',
           :osfamily        => 'freebsd',
           :operatingsystem => 'freebsd',
         })
@@ -89,6 +91,7 @@ describe 'rsyslog', :type => :class do
     context "osfamily = Debian" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'Debian',
           :osfamily        => 'Debian',
           :operatingsystem => 'Debian',
         })
@@ -107,6 +110,7 @@ describe 'rsyslog', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'freebsd',
           :osfamily        => 'freebsd',
           :operatingsystem => 'freebsd',
         })
@@ -144,6 +148,7 @@ describe 'rsyslog', :type => :class do
     context "osfamily = Debian" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'Debian',
           :osfamily        => 'Debian',
           :operatingsystem => 'Debian',
         })
@@ -162,6 +167,7 @@ describe 'rsyslog', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'freebsd',
           :osfamily        => 'freebsd',
           :operatingsystem => 'freebsd',
         })
@@ -198,6 +204,7 @@ describe 'rsyslog', :type => :class do
     context "osfamily = Debian" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'Debian',
           :osfamily        => 'Debian',
           :operatingsystem => 'Debian',
         })
@@ -215,6 +222,7 @@ describe 'rsyslog', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'freebsd',
           :osfamily        => 'freebsd',
           :operatingsystem => 'freebsd',
         })
@@ -260,6 +268,7 @@ describe 'rsyslog', :type => :class do
     context "osfamily = Debian" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'Debian',
           :osfamily        => 'Debian',
           :operatingsystem => 'Debian',
         })
@@ -279,6 +288,7 @@ describe 'rsyslog', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'freebsd',
           :osfamily        => 'freebsd',
           :operatingsystem => 'freebsd',
         })
@@ -317,6 +327,7 @@ describe 'rsyslog', :type => :class do
     context "osfamily = Debian" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'Debian',
           :osfamily        => 'Debian',
           :operatingsystem => 'Debian',
         })
@@ -335,6 +346,7 @@ describe 'rsyslog', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'freebsd',
           :osfamily        => 'freebsd',
           :operatingsystem => 'freebsd',
         })
@@ -372,6 +384,7 @@ describe 'rsyslog', :type => :class do
     context "osfamily = Debian" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'Debian',
           :osfamily        => 'Debian',
           :operatingsystem => 'Debian',
         })
@@ -390,6 +403,7 @@ describe 'rsyslog', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'freebsd',
           :osfamily        => 'freebsd',
           :operatingsystem => 'freebsd',
         })
@@ -426,6 +440,7 @@ describe 'rsyslog', :type => :class do
     context "osfamily = Debian" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'Debian',
           :osfamily        => 'Debian',
           :operatingsystem => 'Debian',
         })
@@ -443,6 +458,7 @@ describe 'rsyslog', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
+          :operatingsystem => 'freebsd',
           :osfamily        => 'freebsd',
           :operatingsystem => 'freebsd',
         })
