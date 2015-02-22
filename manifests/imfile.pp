@@ -7,6 +7,7 @@
 # [*file_name*]
 # [*file_tag*]
 # [*file_facility*]
+# [*ensure*]
 # [*polling_interval*]
 # [*file_severity*]
 # [*run_file_monitor*]
@@ -26,6 +27,7 @@ define rsyslog::imfile(
   $file_name,
   $file_tag,
   $file_facility,
+  $ensure = 'present',
   $polling_interval = 10,
   $file_severity = 'notice',
   $run_file_monitor = true,
@@ -36,8 +38,13 @@ define rsyslog::imfile(
   include rsyslog
   $extra_modules = $rsyslog::extra_modules
 
+  $file_ensure = $ensure ? {
+    absent  => 'absent',
+    present => 'file',
+  }
+
   file { "${rsyslog::rsyslog_d}${name}.conf":
-    ensure  => file,
+    ensure  => $file_ensure,
     owner   => 'root',
     group   => $rsyslog::run_group,
     content => template('rsyslog/imfile.erb'),
