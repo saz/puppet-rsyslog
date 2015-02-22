@@ -6,6 +6,7 @@
 #
 # [*log_remote*]
 # [*spool_size*]
+# [*spool_timeoutenqueue*]
 # [*remote_type*]
 # [*remote_forward_format*]
 # [*log_local*]
@@ -30,6 +31,7 @@
 class rsyslog::client (
   $log_remote                = true,
   $spool_size                = '1g',
+  $spool_timeoutenqueue      = false,
   $remote_type               = 'tcp',
   $remote_forward_format     = 'RSYSLOG_ForwardFormat',
   $log_local                 = false,
