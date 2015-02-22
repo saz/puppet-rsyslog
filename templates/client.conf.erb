@@ -48,8 +48,13 @@ $DefaultNetstreamDriver gtls
 $ActionSendStreamDriverMode 1
 $ActionSendStreamDriverAuthMode anon
 <% end -%>
-<% if scope.lookupvar('rsyslog::client::remote_servers')  -%>
 
+<% if scope.lookupvar('rsyslog::client::remote_type') == 'relp' -%>
+# Load RELP module.
+$ModLoad omrelp
+<% end -%>
+
+<% if scope.lookupvar('rsyslog::client::remote_servers')  -%>
 <% scope.lookupvar('rsyslog::client::remote_servers').flatten.compact.each do |server| -%>
 <% if server['pattern'] and server['pattern'] != ''-%>
 <% pattern = server['pattern'] -%>
@@ -99,7 +104,6 @@ $ActionSendStreamDriverAuthMode anon
 *.* @@<%= scope.lookupvar('rsyslog::client::server') -%>:<%= scope.lookupvar('rsyslog::client::port') -%>;<%= scope.lookupvar('remote_forward_format') -%>
 <% else -%>
 <% if scope.lookupvar('rsyslog::client::remote_type') == 'relp' -%>
-$ModLoad omrelp
 *.* :omrelp:<%= scope.lookupvar('rsyslog::client::server') -%>:<%= scope.lookupvar('rsyslog::client::port') -%>;<%= scope.lookupvar('remote_forward_format') -%>
 <% else -%>
 *.* @<%= scope.lookupvar('rsyslog::client::server') -%>:<%= scope.lookupvar('rsyslog::client::port') -%>;<%= scope.lookupvar('remote_forward_format') -%>
