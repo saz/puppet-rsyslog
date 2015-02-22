@@ -28,6 +28,13 @@ $ActionFileDefaultTemplate RSYSLOG_FileFormat
 <% end -%>
 <% end -%>
 
+<% if scope.lookupvar('rsyslog::client::rate_limit_burst') -%>
+$SystemLogRateLimitBurst <%= scope.lookupvar('rsyslog::client::rate_limit_burst') %>
+<% end -%>
+<% if scope.lookupvar('rsyslog::client::rate_limit_interval') -%>
+$SystemLogRateLimitInterval <%= scope.lookupvar('rsyslog::client::rate_limit_interval') %>
+<% end -%>
+
 <% if scope.lookupvar('rsyslog::client::ssl') -%>
 # Setup SSL connection.
 # CA/Cert
