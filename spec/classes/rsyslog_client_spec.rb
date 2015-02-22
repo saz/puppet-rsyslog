@@ -30,7 +30,6 @@ describe 'rsyslog::client', :type => :class do
     context "osfamily = Debian" do
       let :facts do
         default_facts.merge!({
-          :operatingsystem => 'Debian',
           :osfamily        => 'Debian',
           :operatingsystem => 'Debian',
         })
@@ -48,13 +47,12 @@ describe 'rsyslog::client', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
-          :operatingsystem => 'freebsd',
-          :osfamily        => 'freebsd',
-          :operatingsystem => 'freebsd',
+          :osfamily        => 'FreeBSD',
+          :operatingsystem => 'FreeBSD',
         })
       end
 
-      context "default usage (osfamily = Debian)" do
+      context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'should compile' do
@@ -92,7 +90,6 @@ describe 'rsyslog::client', :type => :class do
     context "osfamily = Debian" do
       let :facts do
         default_facts.merge!({
-          :operatingsystem => 'Debian',
           :osfamily        => 'Debian',
           :operatingsystem => 'Debian',
         })
@@ -110,9 +107,8 @@ describe 'rsyslog::client', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
-          :operatingsystem => 'freebsd',
-          :osfamily        => 'freebsd',
-          :operatingsystem => 'freebsd',
+          :osfamily        => 'FreeBSD',
+          :operatingsystem => 'FreeBSD',
         })
       end
 
