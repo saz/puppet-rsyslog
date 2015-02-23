@@ -38,6 +38,13 @@ $SystemLogRateLimitBurst <%= scope.lookupvar('rsyslog::client::rate_limit_burst'
 $SystemLogRateLimitInterval <%= scope.lookupvar('rsyslog::client::rate_limit_interval') %>
 <% end -%>
 
+<% if scope.lookupvar('rsyslog::client::listen_localhost') -%>
+# Provides UDP syslog reception
+$ModLoad imudp
+$UDPServerAddress 127.0.0.1
+$UDPServerRun 514
+<% end %>
+
 <% if scope.lookupvar('rsyslog::client::ssl') -%>
 # Setup SSL connection.
 # CA/Cert
