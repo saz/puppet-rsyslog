@@ -20,14 +20,14 @@ class rsyslog::install {
 
   if $rsyslog::relp_package_name != false {
     package { $rsyslog::relp_package_name:
-      ensure => $rsyslog::package_status
+      ensure => $rsyslog::package_status,
       notify => Class['rsyslog::service'],
     }
   }
 
   if $rsyslog::gnutls_package_name != false {
     package { $rsyslog::gnutls_package_name:
-      ensure => $rsyslog::package_status
+      ensure => $rsyslog::package_status,
       notify => Class['rsyslog::service'],
     }
   }
