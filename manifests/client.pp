@@ -72,6 +72,12 @@ class rsyslog::client (
     fail('You need to enable tcp in order to use SSL.')
   }
 
-  # include testing for $auth_mode and $permitted_peer
+  if $auth_mode and $rsyslog::ssl == false {
+    fail('You need to enable SSL in order to use $auth_mode.')
+  }
+
+  if $permitted_peer and $auth_mode == undef {
+    fail('$auth_mode must be defined in order to use $permitted_peer.')
+  }
 
 }
