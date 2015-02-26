@@ -53,13 +53,13 @@ $DefaultNetstreamDriverCAFile <%= scope.lookupvar('rsyslog::client::ssl_ca') %>
 # Connection settings.
 $DefaultNetstreamDriver gtls
 $ActionSendstreamDriverMode 1
-<% if scope.lookupvar('rsyslog::client::auth_mode') -%>
-$ActionSendStreamDriverAuthMode <%= scope.lookupvar('rsyslog::client::auth_mode') %>
+<% if @auth_mode -%>
+$ActionSendStreamDriverAuthMode <%= @auth_mode %>
+<% if @permitted_peer -%>
+$ActionSendStreamDriverPermittedPeer <%= @permitted_peer %>
+<% end -%>
 <% else -%>
 $ActionSendStreamDriverAuthMode anon
-<% end -%>
-<% if scope.lookupvar('rsyslog::client::auth_mode') == 'x509/name' -%>
-$ActionSendStreamDriverPermittedPeer <%= scope.lookupvar('rsyslog::client::permitted_peer') %>
 <% end -%>
 <% end -%>
 

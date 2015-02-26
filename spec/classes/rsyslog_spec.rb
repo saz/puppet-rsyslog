@@ -46,6 +46,26 @@ describe 'rsyslog', :type => :class do
           should contain_class('rsyslog::service')
         end
       end
+
+      context "local hostname (osfamily = Debian)" do
+        let(:title) { 'rsyslog-local-hostname' }
+
+        context "with defaults" do
+          it 'is not set' do
+            should contain_file('/etc/rsyslog.conf')
+              .without_content(/\$LocalHostName/)
+          end
+        end
+
+        context "when set" do
+          let(:params) { { :local_hostname => 'example.dev' } }
+
+          it 'should compile' do
+            should contain_file('/etc/rsyslog.conf')
+              .with_content(/\$LocalHostName example.dev/)
+          end
+        end
+      end
     end
   
     context "osfamily = FreeBSD" do
