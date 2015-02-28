@@ -25,6 +25,7 @@ class rsyslog (
   $rsyslog_default_file   = $rsyslog::params::default_config_file,
   $run_user               = $rsyslog::params::run_user,
   $run_group              = $rsyslog::params::run_group,
+  $local_hostname         = undef,
   $log_user               = $rsyslog::params::log_user,
   $log_group              = $rsyslog::params::log_group,
   $log_style              = $rsyslog::params::log_style,
