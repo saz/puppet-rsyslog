@@ -31,10 +31,10 @@ $ActionFileDefaultTemplate RSYSLOG_FileFormat
 <% end -%>
 <% end -%>
 
-<% if scope.lookupvar('rsyslog::client::rate_limit_burst') -%>
+<% if ! scope.lookupvar('rsyslog::client::rate_limit_burst').empty? -%>
 $SystemLogRateLimitBurst <%= scope.lookupvar('rsyslog::client::rate_limit_burst') %>
 <% end -%>
-<% if scope.lookupvar('rsyslog::client::rate_limit_interval') -%>
+<% if ! scope.lookupvar('rsyslog::client::rate_limit_interval').empty? -%>
 $SystemLogRateLimitInterval <%= scope.lookupvar('rsyslog::client::rate_limit_interval') %>
 <% end -%>
 
