@@ -148,12 +148,18 @@ The following lists all the class parameters this module accepts.
     -------------------------------------------------------------------
     enable_tcp                          true,false          Enable TCP listener. Defaults to true.
     enable_udp                          true,false          Enable UDP listener. Defaults to true.
-    address                             STRING              The IP address to bind to. Applies to UDP listener only. Defaults to '*'.
     enable_relp                         true,false          Enable RELP listener. Defaults to true.
     enable_onefile                      true,false          Only one logfile per remote host. Defaults to false.
     server_dir                          STRING              Folder where logs will be stored on the server. Defaults to '/srv/log/'
     custom_config                       STRING              Specify your own template to use for server config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb'
+    port                                STRING/INTEGER      Port to listen on for messages via UDP and TCP. Defaults to 514
+    relp_port                           STRING/INTEGER      Port to listen on for messages via RELP. Defaults to 20514
+    address                             STRING              The IP address to bind to. Applies to UDP listener only. Defaults to '*'.
     high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
+    ssl_ca                              STRING              Path to SSL CA certificate
+    ssl_cert                            STRING              Path to SSL certificate
+    ssl_key                             STRING              Path to SSL private key
+    rotate                              TODO                TODO
 
     RSYSLOG::CLIENT CLASS PARAMETERS    VALUES              DESCRIPTION
     -------------------------------------------------------------------

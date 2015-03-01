@@ -16,6 +16,6 @@ $InputTCPServerRun <%= @port %>
 <% if @enable_relp -%>
 <% if (scope.function_versioncmp([@rsyslog_version, '6.3.6']) >= 0) -%>
 $InputRELPServerBindRuleset remote
-$InputRELPServerRun <%= @port %>
+$InputRELPServerRun <%= @relp_port %>
 <% end -%>
 <% end -%>
