@@ -1,37 +1,37 @@
 # file is managed by puppet
-<% if scope.lookupvar('rsyslog::preserve_fqdn') -%>
+<% if @preserve_fqdn -%>
 $PreserveFQDN on
 <% end -%>
 #################
 #### MODULES ####
 #################
 
-<% scope.lookupvar('rsyslog::modules').each do |module_row| -%>
+<% @modules.each do |module_row| -%>
 <%= module_row %>
 <% end -%>
-<% if scope.lookupvar('rsyslog::non_kernel_facility') -%>
+
+<% if @non_kernel_facility -%>
 # Enable non-kernel facility klog messages
 $KLogPermitNonKernelFacility on
 
 <% end -%>
-
 ###########################
 #### GLOBAL DIRECTIVES ####
 ###########################
 #
 # Set max message size for sending and receiving
 #
-$MaxMessageSize <%= scope.lookupvar('rsyslog::max_message_size') %>
+$MaxMessageSize <%= @max_message_size %>
 
-<% if scope.lookupvar('rsyslog::default_template') -%>
+<% if @default_template -%>
 #
 # Use traditional timestamp format.
 # To enable high precision timestamps, comment out the following line.
 #
-$ActionFileDefaultTemplate <%= scope.lookupvar('rsyslog::default_template') %>
+$ActionFileDefaultTemplate <%= @default_template %>
 
 <% end -%>
-<% if scope.lookupvar('rsyslog::msg_reduction') -%>
+<% if @msg_reduction -%>
 # Filter duplicated messages
 $RepeatedMsgReduction on
 
@@ -39,29 +39,29 @@ $RepeatedMsgReduction on
 #
 # Set the default permissions for all log files.
 #
-$FileOwner <%= scope.lookupvar('rsyslog::log_user') %>
-$FileGroup <%= scope.lookupvar('rsyslog::log_group') %>
-$FileCreateMode <%= scope.lookupvar('rsyslog::perm_file') %>
-$DirOwner <%= scope.lookupvar('rsyslog::log_user') %>
-$DirGroup <%= scope.lookupvar('rsyslog::log_group') %>
-$DirCreateMode <%= scope.lookupvar('rsyslog::perm_dir') %>
-$PrivDropToUser <%= scope.lookupvar('rsyslog::run_user') %>
-$PrivDropToGroup <%= scope.lookupvar('rsyslog::run_group') %>
-$WorkDirectory <%= scope.lookupvar('rsyslog::spool_dir') %>
-<% if scope.lookupvar('rsyslog::umask') -%>
-$Umask <%= scope.lookupvar('rsyslog::umask') %>
+$FileOwner <%= @log_user %>
+$FileGroup <%= @log_group %>
+$FileCreateMode <%= @perm_file %>
+$DirOwner <%= @log_user %>
+$DirGroup <%= @log_group %>
+$DirCreateMode <%= @perm_dir %>
+$PrivDropToUser <%= @run_user %>
+$PrivDropToGroup <%= @run_group %>
+$WorkDirectory <%= @spool_dir %>
+<% if @umask -%>
+$Umask <%= @umask %>
 <% end -%>
 
 #
-# Include all config files in <%= scope.lookupvar('rsyslog::rsyslog_d') %>
+# Include all config files in <%= @rsyslog_d %>
 #
-$IncludeConfig <%= scope.lookupvar('rsyslog::rsyslog_d') -%>*.conf
+$IncludeConfig <%= @rsyslog_d -%>*.conf
 
 #
 # Emergencies are sent to everybody logged in.
 #
 <% if @rsyslog_version and @rsyslog_version.split('.')[0].to_i >= 7 -%>
-*.emerg       :omusrmsg:*
+*.emerg	:omusrmsg:*
 <% else -%>
-*.emerg				*
+*.emerg	*
 <% end -%>
