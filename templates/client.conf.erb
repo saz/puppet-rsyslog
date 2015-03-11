@@ -113,10 +113,10 @@ $ModLoad omrelp
 <% elsif @log_remote -%>
 
 # Log to remote syslog server using <%= @remote_type %>
-<% if remote_type == 'tcp' -%>
+<% if @remote_type == 'tcp' -%>
 *.* @@<%= @server -%>:<%= @port -%>;<%= @remote_forward_format -%>
 <% else -%>
-<% if remote_type == 'relp' -%>
+<% if @remote_type == 'relp' -%>
 *.* :omrelp:<%= @server -%>:<%= @port -%>;<%= @remote_forward_format -%>
 <% else -%>
 *.* @<%= @server -%>:<%= @port -%>;<%= @remote_forward_format -%>
