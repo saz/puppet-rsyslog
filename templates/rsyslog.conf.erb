@@ -52,6 +52,12 @@ $WorkDirectory <%= @spool_dir %>
 $Umask <%= @umask %>
 <% end -%>
 
+<% if @omit_local_logging -%>
+# Turn off message reception via local log socket;
+# local messages are retrieved through imjournal now.
+$OmitLocalLogging on
+<% end -%>
+
 #
 # Include all config files in <%= @rsyslog_d %>
 #
