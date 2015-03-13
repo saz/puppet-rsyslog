@@ -19,25 +19,20 @@ class rsyslog::params {
   $default_template           = undef
   $msg_reduction              = false
   $non_kernel_facility        = false
-  $run_user = $::operatingsystem ? {
-    'Ubuntu' => 'syslog',
-    default  => 'root',
-  }
-  $log_user = $::operatingsystem ? {
-    'Ubuntu' => 'syslog',
-    default  => 'root',
-  }
   $preserve_fqdn              = false
 
   case $::osfamily {
     debian: {
       case $::operatingsystem {
         'Debian': {
+          $log_user  = 'root'
+          $run_user  = 'root'
           $run_group = 'root'
         }
         'Ubuntu': {
+          $log_user  = 'syslog'
+          $run_user  = 'syslog'
           $run_group = 'syslog'
-
         }
       }
       $rsyslog_package_name   = 'rsyslog'
@@ -67,7 +62,6 @@ class rsyslog::params {
       ]
       $service_hasrestart     = true
       $service_hasstatus      = true
-
     }
     redhat: {
       if $::operatingsystem == 'Amazon' {
@@ -139,7 +133,9 @@ class rsyslog::params {
       $rsyslog_d              = '/etc/rsyslog.d/'
       $rsyslog_conf           = '/etc/rsyslog.conf'
       $rsyslog_default        = '/etc/sysconfig/rsyslog'
+      $run_user               = 'root'
       $run_group              = 'root'
+      $log_user               = 'root'
       $log_group              = 'root'
       $log_style              = 'redhat'
       $umask                  = '0000'
@@ -163,7 +159,9 @@ class rsyslog::params {
       $rsyslog_d              = '/etc/rsyslog.d/'
       $rsyslog_conf           = '/etc/rsyslog.conf'
       $rsyslog_default        = '/etc/sysconfig/syslog'
+      $run_user               = 'root'
       $run_group              = 'root'
+      $log_user               = 'root'
       $log_group              = 'root'
       $log_style              = 'debian'
       $umask                  = false
@@ -178,7 +176,7 @@ class rsyslog::params {
         '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
         '#$ModLoad immark  # provides --MARK-- message capability',
       ]
-  }
+    }
     freebsd: {
       $rsyslog_package_name   = 'sysutils/rsyslog5'
       $relp_package_name      = 'sysutils/rsyslog5-relp'
@@ -190,7 +188,9 @@ class rsyslog::params {
       $rsyslog_conf           = '/etc/syslog.conf'
       $rsyslog_default        = '/etc/defaults/syslogd'
       $default_config_file    = 'rsyslog_default'
+      $run_user               = 'root'
       $run_group              = 'wheel'
+      $log_user               = 'root'
       $log_group              = 'wheel'
       $log_style              = 'debian'
       $umask                  = false
@@ -209,7 +209,6 @@ class rsyslog::params {
       $service_hasrestart     = true
       $service_hasstatus      = true
     }
-
     default: {
       case $::operatingsystem {
         gentoo: {
@@ -223,7 +222,9 @@ class rsyslog::params {
           $rsyslog_conf           = '/etc/rsyslog.conf'
           $rsyslog_default        = '/etc/conf.d/rsyslog'
           $default_config_file    = 'rsyslog_default_gentoo'
+          $run_user               = 'root'
           $run_group              = 'root'
+          $log_user               = 'root'
           $log_group              = 'adm'
           $log_style              = 'debian'
           $umask                  = false
@@ -241,7 +242,6 @@ class rsyslog::params {
           ]
           $service_hasrestart     = true
           $service_hasstatus      = true
-
         }
         default: {
           fail("The ${module_name} module is not supported on ${::osfamily}/${::operatingsystem}.")

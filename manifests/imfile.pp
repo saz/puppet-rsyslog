@@ -36,7 +36,6 @@ define rsyslog::imfile(
   $persist_state_interval = 0,
 ) {
 
-
   include rsyslog
   $extra_modules = $rsyslog::extra_modules
 
@@ -54,13 +53,9 @@ define rsyslog::imfile(
     present => 'file',
   }
 
-  file { "${rsyslog::rsyslog_d}${name}.conf":
-    ensure  => $file_ensure,
-    owner   => 'root',
-    group   => $rsyslog::run_group,
+  rsyslog::snippet { "${name}.conf":
+    ensure  => $ensure,
     content => template('rsyslog/imfile.erb'),
-    require => Class['rsyslog::install'],
-    notify  => Class['rsyslog::service'],
   }
 
 }

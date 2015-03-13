@@ -31,7 +31,7 @@ class rsyslog::database (
 ) inherits rsyslog {
 
   $db_module = "om${backend}"
-  $db_conf = "${rsyslog::rsyslog_d}${backend}.conf"
+  $db_conf = "${backend}.conf"
 
   case $backend {
     mysql: { $db_package = $rsyslog::mysql_package_name }
@@ -41,17 +41,13 @@ class rsyslog::database (
 
   package { $db_package:
     ensure => $rsyslog::package_status,
-    before => File[$db_conf],
+    before => Rsyslog::Snippet[$db_conf],
   }
 
-  file { $db_conf:
-    ensure  => present,
-    owner   => 'root',
-    group   => $rsyslog::run_group,
-    mode    => '0600',
-    content => template("${module_name}/database.conf.erb"),
-    require => Class['rsyslog::config'],
-    notify  => Class['rsyslog::service'],
+  rsyslog::snippet { $db_conf:
+    ensure    => present,
+    file_mode => '0600',
+    content   => template("${module_name}/database.conf.erb"),
   }
 
 }
