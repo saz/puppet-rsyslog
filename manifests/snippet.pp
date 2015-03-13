@@ -25,9 +25,7 @@ define rsyslog::snippet(
   $file_owner = 'root',
   $file_group = $rsyslog::run_group,
   $file_mode  = $rsyslog::perm_file
-) {
-
-  include rsyslog
+) inherits rsyslog {
 
   file { "${rsyslog::rsyslog_d}${name}.conf":
     ensure  => $ensure,
