@@ -144,6 +144,13 @@ Both can be installed at the same time.
 
 The following lists all the class parameters this module accepts.
 
+    RSYSLOG CLASS PARAMETERS            VALUES              DESCRIPTION
+    -------------------------------------------------------------------
+    msg_reduction                       true,false          Reduce repeated messages. Defaults to false.
+    non_kernel_facility                 true,false          Permit non-kernel facility messages in the kernel log. Defaults to false.
+    omit_local_logging                  true,false          Turn off message reception via local log socket. Defaults to true only for RedHat 7+ and false elsewhere.
+    preserve_fqdn                       true,false          Use full name of host even if sender and receiver are in the same domain. Defaults to false.
+
     RSYSLOG::SERVER CLASS PARAMETERS    VALUES              DESCRIPTION
     -------------------------------------------------------------------
     enable_tcp                          true,false          Enable TCP listener. Defaults to true.

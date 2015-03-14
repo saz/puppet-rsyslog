@@ -45,7 +45,7 @@ class rsyslog (
   $default_template       = $rsyslog::params::default_template,
   $msg_reduction          = $rsyslog::params::msg_reduction,
   $non_kernel_facility    = $rsyslog::params::non_kernel_facility,
-  $omit_local_logging     = $rsyslog::params::omit_local_logging,
+  $omit_local_logging     = $rsyslog::params::omit_local_logging
 ) inherits rsyslog::params {
   class { 'rsyslog::install': }
   class { 'rsyslog::config': }
