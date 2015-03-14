@@ -48,12 +48,7 @@ define rsyslog::imfile(
     default              => fail("Invalid file_readmode '${file_readmode}'. The value can range from 0-2 and determines the multiline detection method."),
   }
 
-  $file_ensure = $ensure ? {
-    absent  => 'absent',
-    present => 'file',
-  }
-
-  rsyslog::snippet { "${name}.conf":
+  rsyslog::snippet { $name:
     ensure  => $ensure,
     content => template('rsyslog/imfile.erb'),
   }
