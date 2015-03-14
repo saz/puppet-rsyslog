@@ -4,8 +4,14 @@ Manage rsyslog client and server via Puppet
 
 ## REQUIREMENTS
 
-* Puppet >=2.6 if using parameterized classes
-* Currently supports Ubuntu >=11.04 & Debian running rsyslog >=4.5
+* Puppet >=2.7
+
+## Supported platforms
+* Debian-based distributions
+* RedHat-based distributions
+* Suse-based distributions
+* Gentoo
+* FreeBSD
 
 ## USAGE
 
@@ -13,34 +19,39 @@ Manage rsyslog client and server via Puppet
 
 #### Using default values
 ```
-    class { 'rsyslog::client': }
+  class { 'rsyslog::client': }
 ```
 
 #### Variables and default values
 ```
-    class { 'rsyslog::client':
-        log_remote            => true,
-        spool_size            => '1g',
-        remote_type           => 'tcp',
-        remote_forward_format => 'RSYSLOG_ForwardFormat',
-        log_local             => false,
-        log_auth_local        => false,
-        custom_config         => undef,
-        custom_params         => undef,
-        server                => 'log',
-        port                  => '514',
-        remote_servers        => false,
-        ssl_ca                => undef,
-        log_templates         => false,
-        actionfiletemplate    => false
-    }
+  class { 'rsyslog::client':
+    log_remote                => true,
+    spool_size                => '1g',
+    spool_timeoutenqueue      => false,
+    remote_type               => 'tcp',
+    remote_forward_format     => 'RSYSLOG_ForwardFormat',
+    log_local                 => false,
+    log_auth_local            => false,
+    listen_localhost          => false,
+    custom_config             => undef,
+    custom_params             => undef,
+    server                    => 'log',
+    port                      => '514',
+    remote_servers            => false,
+    ssl_ca                    => undef,
+    log_templates             => false,
+    actionfiletemplate        => false,
+    high_precision_timestamps => false,
+    rate_limit_burst          => undef,
+    rate_limit_interval       => undef
+  }
 ```
 for read from file
 ```
- rsyslog::imfile { 'my-imfile':
-   file_name => '/some/file',
-   file_tag => 'mytag',
-   file_facility => 'myfacility',
+  rsyslog::imfile { 'my-imfile':
+    file_name     => '/some/file',
+    file_tag      => 'mytag',
+    file_facility => 'myfacility',
   }
 
 ```
@@ -110,32 +121,39 @@ Events can also be logged to a MySQL or PostgreSQL database. The database needs 
 
 Declare the following to configure the connection:
 ````
-    class { 'rsyslog::database':
-        backend  => 'mysql',
-        server   => 'localhost',
-        database => 'Syslog',
-        username => 'rsyslog',
-        password => 'secret',
-    }
+  class { 'rsyslog::database':
+    backend  => 'mysql',
+    server   => 'localhost',
+    database => 'Syslog',
+    username => 'rsyslog',
+    password => 'secret',
+  }
 ````
 ### Server
 
 #### Using default values
 ```
-    class { 'rsyslog::server': }
+  class { 'rsyslog::server': }
 ```
 
 #### Variables and default values
 ```
-    class { 'rsyslog::server':
-        enable_tcp                => true,
-        enable_udp                => true,
-        enable_relp               => true,
-        enable_onefile            => false,
-        server_dir                => '/srv/log/',
-        custom_config             => undef,
-        high_precision_timestamps => false,
-    }
+  class { 'rsyslog::server':
+    enable_tcp                => true,
+    enable_udp                => true,
+    enable_relp               => true,
+    enable_onefile            => false,
+    server_dir                => '/srv/log/',
+    custom_config             => undef,
+    port                      => '514',
+    relp_port                 => '20514',
+    address                   => '*',
+    high_precision_timestamps => false,
+    ssl_ca                    => undef,
+    ssl_cert                  => undef,
+    ssl_key                   => undef,
+    rotate                    => undef
+  }
 ```
 
 Both can be installed at the same time.
