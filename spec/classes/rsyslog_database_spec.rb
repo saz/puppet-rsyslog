@@ -12,9 +12,9 @@ describe 'rsyslog::database', :type => :class do
     context "osfamily = RedHat" do
       let :facts do
         default_facts.merge!({
-          :osfamily               => 'RedHat',
-          :operatingsystem        => 'RedHat',
-          :operatingsystemmajrelease => 6,
+          :osfamily                  => 'RedHat',
+          :operatingsystem           => 'RedHat',
+          :operatingsystemmajrelease => '6',
         })
       end
 
@@ -111,7 +111,7 @@ describe 'rsyslog::database', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
-          :osfamily        => 'freebsd',
+          :osfamily        => 'FreeBSD',
           :operatingsystem => 'FreeBSD',
         })
       end
@@ -166,9 +166,9 @@ describe 'rsyslog::database', :type => :class do
     context "osfamily = RedHat" do
       let :facts do
         default_facts.merge!({
-          :osfamily               => 'RedHat',
-          :operatingsystem        => 'RedHat',
-          :operatingsystemmajrelease => 6,
+          :osfamily                  => 'RedHat',
+          :operatingsystem           => 'RedHat',
+          :operatingsystemmajrelease => '6',
         })
       end
 
@@ -265,7 +265,7 @@ describe 'rsyslog::database', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
-          :osfamily        => 'freebsd',
+          :osfamily        => 'FreeBSD',
           :operatingsystem => 'FreeBSD',
         })
       end

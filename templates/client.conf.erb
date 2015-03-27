@@ -2,25 +2,28 @@
 # An "In-Memory Queue" is created for remote logging.
 $WorkDirectory <%= scope.lookupvar('rsyslog::spool_dir') -%>    # where to place spool files
 $ActionQueueFileName queue      # unique name prefix for spool files
-$ActionQueueMaxDiskSpace <%= scope.lookupvar('rsyslog::client::spool_size') -%>     # spool space limit (use as much as possible)
+$ActionQueueMaxDiskSpace <%= @spool_size -%>     # spool space limit (use as much as possible)
 $ActionQueueSaveOnShutdown on   # save messages to disk on shutdown
+<% if @spool_timeoutenqueue -%>
+$ActionQueueTimeoutEnqueue <%= @spool_timeoutenqueue -%>   # time to wait before discarding on full spool
+<% end -%>
 $ActionQueueType LinkedList     # run asynchronously
 $ActionResumeRetryCount -1      # infinety retries if host is down
-<% if scope.lookupvar('rsyslog::client::log_templates') and ! scope.lookupvar('rsyslog::client::log_templates').empty?-%>
+<% if @log_templates and ! @log_templates.empty?-%>
 
 # Define custom logging templates
-<% scope.lookupvar('rsyslog::client::log_templates').flatten.compact.each do |log_template| -%>
+<% @log_templates.flatten.compact.each do |log_template| -%>
 $template <%= log_template['name'] %>,"<%= log_template['template'] %>"
 <% end -%>
 <% end -%>
-<% if scope.lookupvar('rsyslog::client::actionfiletemplate') -%>
+<% if @actionfiletemplate -%>
 
 # Using specified format for default logging format:
-$ActionFileDefaultTemplate <%= scope.lookupvar('rsyslog::client::actionfiletemplate') %>
+$ActionFileDefaultTemplate <%= @actionfiletemplate %>
 <% else -%>
 
-<% if scope.lookupvar('rsyslog::client::high_precision_timestamps') == false -%>
-#Using default format for default logging format:
+<% if @high_precision_timestamps == false -%>
+# Use default format
 $ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
 <% else -%>
 # Use high precision timestamp format.
@@ -28,19 +31,38 @@ $ActionFileDefaultTemplate RSYSLOG_FileFormat
 <% end -%>
 <% end -%>
 
-<% if scope.lookupvar('rsyslog::client::ssl') -%>
+<% if @rate_limit_burst -%>
+$SystemLogRateLimitBurst <%= @rate_limit_burst %>
+<% end -%>
+<% if @rate_limit_interval -%>
+$SystemLogRateLimitInterval <%= @rate_limit_interval %>
+<% end -%>
+
+<% if @listen_localhost -%>
+# Provides UDP syslog reception
+$ModLoad imudp
+$UDPServerAddress 127.0.0.1
+$UDPServerRun 514
+<% end %>
+
+<% if @ssl -%>
 # Setup SSL connection.
 # CA/Cert
-$DefaultNetStreamDriverCAFile <%= scope.lookupvar('rsyslog::client::ssl_ca') %>
+$DefaultNetStreamDriverCAFile <%= @ssl_ca %>
 
 # Connection settings.
 $DefaultNetstreamDriver gtls
 $ActionSendStreamDriverMode 1
 $ActionSendStreamDriverAuthMode anon
 <% end -%>
-<% if scope.lookupvar('rsyslog::client::remote_servers')  -%>
 
-<% scope.lookupvar('rsyslog::client::remote_servers').flatten.compact.each do |server| -%>
+<% if @remote_type == 'relp' -%>
+# Load RELP module.
+$ModLoad omrelp
+<% end -%>
+
+<% if @remote_servers -%>
+<% @remote_servers.flatten.compact.each do |server| -%>
 <% if server['pattern'] and server['pattern'] != ''-%>
 <% pattern = server['pattern'] -%>
 <% else -%>
@@ -79,26 +101,31 @@ $ActionSendStreamDriverAuthMode anon
 <% format = '' -%>
 <% format_type = 'the default' -%>
 <% end -%>
+<% if server['thendrop'] -%>
+<% dropaction = '& ~' -%>
+<% else -%>
+<% dropaction = '' -%>
+<% end -%>
 # Sending logs that match <%= pattern %> to <%= host %> via <%= protocol_type %> on <%= port %> using <%=format_type %> format.
 <%= pattern %> <%= protocol %><%= host %>:<%= port %><%= format %>
+<%= dropaction %>
 <% end -%>
-<% elsif scope.lookupvar('rsyslog::client::log_remote') -%>
+<% elsif @log_remote -%>
 
-# Log to remote syslog server using <%= scope.lookupvar('rsyslog::client::remote_type') %>
-<% if scope.lookupvar('rsyslog::client::remote_type') == 'tcp' -%>
-*.* @@<%= scope.lookupvar('rsyslog::client::server') -%>:<%= scope.lookupvar('rsyslog::client::port') -%>;<%= scope.lookupvar('remote_forward_format') -%>
+# Log to remote syslog server using <%= @remote_type %>
+<% if @remote_type == 'tcp' -%>
+*.* @@<%= @server -%>:<%= @port -%>;<%= @remote_forward_format -%>
 <% else -%>
-<% if scope.lookupvar('rsyslog::client::remote_type') == 'relp' -%>
-$ModLoad omrelp
-*.* :omrelp:<%= scope.lookupvar('rsyslog::client::server') -%>:<%= scope.lookupvar('rsyslog::client::port') -%>;<%= scope.lookupvar('remote_forward_format') -%>
+<% if @remote_type == 'relp' -%>
+*.* :omrelp:<%= @server -%>:<%= @port -%>;<%= @remote_forward_format -%>
 <% else -%>
-*.* @<%= scope.lookupvar('rsyslog::client::server') -%>:<%= scope.lookupvar('rsyslog::client::port') -%>;<%= scope.lookupvar('remote_forward_format') -%>
+*.* @<%= @server -%>:<%= @port -%>;<%= @remote_forward_format -%>
 <% end -%>
 <% end -%>
 <% end -%>
 
+<% if @log_auth_local or @log_local -%>
 # Logging locally.
-<% if scope.lookupvar('rsyslog::client::log_auth_local') or scope.lookupvar('rsyslog::client::log_local') -%>
 
 <% if scope.lookupvar('rsyslog::log_style') == 'debian' -%>
 # Log auth messages locally
@@ -108,7 +135,7 @@ auth,authpriv.*                 /var/log/auth.log
 auth,authpriv.*                 /var/log/secure
 <% end -%>
 <% end -%>
-<% if scope.lookupvar('rsyslog::client::log_local') -%>
+<% if @log_local -%>
 <% if scope.lookupvar('rsyslog::log_style') == 'debian' -%>
 # First some standard log files.  Log by facility.
 #

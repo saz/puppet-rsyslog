@@ -7,6 +7,7 @@
 #
 # [*content*] - The actual content to place in the file.
 # [*ensure*]  - How to enforce the file (default: present)
+# [*file_mode*] - The mode of the file snippet (default: $rsyslog::perm_file)
 #
 # === Variables
 #
@@ -18,15 +19,22 @@
 #
 define rsyslog::snippet(
   $content,
-  $ensure = 'present'
+  $ensure     = 'present',
+  $file_mode  = 'undef'
 ) {
-
   include rsyslog
+
+  if $file_mode == 'undef' {
+    $file_mode_real = $rsyslog::perm_file
+  } else {
+    $file_mode_real = $file_mode
+  }
 
   file { "${rsyslog::rsyslog_d}${name}.conf":
     ensure  => $ensure,
-    owner   => $rsyslog::run_user,
+    owner   => 'root',
     group   => $rsyslog::run_group,
+    mode    => $file_mode_real,
     content => "# This file is managed by Puppet, changes may be overwritten\n${content}\n",
     require => Class['rsyslog::config'],
     notify  => Class['rsyslog::service'],

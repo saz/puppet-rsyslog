@@ -6,10 +6,12 @@
 #
 # [*log_remote*]
 # [*spool_size*]
+# [*spool_timeoutenqueue*]
 # [*remote_type*]
 # [*remote_forward_format*]
 # [*log_local*]
 # [*log_auth_local*]
+# [*listen_localhost*]
 # [*custom_config*]
 # [*custom_params*]
 # [*server*]
@@ -18,6 +20,8 @@
 # [*ssl_ca*]
 # [*log_templates*]
 # [*actionfiletemplate*]
+# [*rate_limit_burst*]
+# [*rate_limit_interval*]
 #
 # === Variables
 #
@@ -28,10 +32,12 @@
 class rsyslog::client (
   $log_remote                = true,
   $spool_size                = '1g',
+  $spool_timeoutenqueue      = false,
   $remote_type               = 'tcp',
   $remote_forward_format     = 'RSYSLOG_ForwardFormat',
   $log_local                 = false,
   $log_auth_local            = false,
+  $listen_localhost          = false,
   $custom_config             = undef,
   $custom_params             = undef,
   $server                    = 'log',
@@ -40,7 +46,9 @@ class rsyslog::client (
   $ssl_ca                    = undef,
   $log_templates             = false,
   $actionfiletemplate        = false,
-  $high_precision_timestamps = false
+  $high_precision_timestamps = false,
+  $rate_limit_burst          = undef,
+  $rate_limit_interval       = undef
 ) inherits rsyslog {
 
   if $custom_config {

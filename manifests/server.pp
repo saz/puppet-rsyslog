@@ -6,13 +6,18 @@
 #
 # [*enable_tcp*]
 # [*enable_udp*]
+# [*enable_relp*]
 # [*enable_onefile*]
 # [*server_dir*]
 # [*custom_config*]
+# [*port*]
+# [*relp_port*]
+# [*address*]
 # [*high_precision_timestamps*]
 # [*ssl_ca*]
 # [*ssl_cert*]
 # [*ssl_key*]
+# [*rotate*]
 #
 # === Variables
 #
@@ -36,6 +41,8 @@ class rsyslog::server (
   $server_dir                = '/srv/log/',
   $custom_config             = undef,
   $port                      = '514',
+  $relp_port                 = '20514',
+  $address                   = '*',
   $high_precision_timestamps = false,
   $ssl_ca                    = undef,
   $ssl_cert                  = undef,

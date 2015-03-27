@@ -12,9 +12,9 @@ describe 'rsyslog::client', :type => :class do
     context "osfamily = RedHat" do
       let :facts do
         default_facts.merge!({
-          :osfamily               => 'RedHat',
-          :operatingsystem        => 'RedHat',
-          :operatingsystemmajrelease => 6,
+          :osfamily                  => 'RedHat',
+          :operatingsystem           => 'RedHat',
+          :operatingsystemmajrelease => '6',
         })
       end
 
@@ -47,12 +47,12 @@ describe 'rsyslog::client', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
-          :osfamily        => 'freebsd',
+          :osfamily        => 'FreeBSD',
           :operatingsystem => 'FreeBSD',
         })
       end
 
-      context "default usage (osfamily = Debian)" do
+      context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'should compile' do
@@ -72,9 +72,9 @@ describe 'rsyslog::client', :type => :class do
     context "osfamily = RedHat" do
       let :facts do
         default_facts.merge!({
-          :osfamily               => 'RedHat',
-          :operatingsystem        => 'RedHat',
-          :operatingsystemmajrelease => 6,
+          :osfamily                  => 'RedHat',
+          :operatingsystem           => 'RedHat',
+          :operatingsystemmajrelease => '6',
         })
       end
 
@@ -107,7 +107,7 @@ describe 'rsyslog::client', :type => :class do
     context "osfamily = FreeBSD" do
       let :facts do
         default_facts.merge!({
-          :osfamily        => 'freebsd',
+          :osfamily        => 'FreeBSD',
           :operatingsystem => 'FreeBSD',
         })
       end
@@ -132,9 +132,9 @@ describe 'rsyslog::client', :type => :class do
     context "osfamily = RedHat" do
       let :facts do
         default_facts.merge!({
-          :osfamily               => 'RedHat',
-          :operatingsystem        => 'RedHat',
-          :operatingsystemmajrelease => 6,
+          :osfamily                  => 'RedHat',
+          :operatingsystem           => 'RedHat',
+          :operatingsystemmajrelease => '6',
         })
       end
 

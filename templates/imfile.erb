@@ -8,6 +8,9 @@ $InputFileTag <%= @file_tag %>
 $InputFileStateFile state-<%= @name %>
 $InputFileSeverity <%= @file_severity %>
 $InputFileFacility <%= @file_facility %>
+<% if @imfile_readmode -%>
+$InputFileReadMode <%= @imfile_readmode %>
+<% end -%>
 $InputFilePollInterval <%= @polling_interval %>
 $InputFilePersistStateInterval <%= @persist_state_interval %>
 <% if @run_file_monitor == true -%>
