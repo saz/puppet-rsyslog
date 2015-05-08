@@ -38,6 +38,7 @@ class rsyslog::client (
   $log_local                 = false,
   $log_auth_local            = false,
   $listen_localhost          = false,
+  $split_config              = false,
   $custom_config             = undef,
   $custom_params             = undef,
   $server                    = 'log',
@@ -53,13 +54,48 @@ class rsyslog::client (
 
   if $custom_config {
     $content_real = template($custom_config)
+  } elsif !$split_config {
+    $content_real = template(
+      "${module_name}/client/config.conf.erb",
+      "${module_name}/client/remote.conf.erb",
+      "${module_name}/client/local.conf.erb"
+    )
   } else {
-    $content_real = template("${module_name}/client.conf.erb")
+    $content_real = undef
   }
 
-  rsyslog::snippet { $rsyslog::client_conf:
-    ensure  => present,
-    content => $content_real,
+  if $content_real {
+    rsyslog::snippet { $rsyslog::client_conf:
+      ensure  => present,
+      content => $content_real,
+    }
+  } else {
+    if $remote_servers or $log_remote {
+      $_remote_ensure = 'present'
+    } else {
+      $_remote_ensure = 'absent'
+    }
+
+    if $log_auth_local or $log_local {
+      $_local_ensure = 'present'
+    } else {
+      $_local_ensure = 'absent'
+    }
+
+    rsyslog::snippet { "00_${rsyslog::client_conf}_config":
+      ensure  => present,
+      content => template("${module_name}/client/config.conf.erb"),
+    }
+
+    rsyslog::snippet { "50_${rsyslog::client_conf}_remote":
+      ensure  => $_remote_ensure,
+      content => template("${module_name}/client/remote.conf.erb"),
+    }
+
+    rsyslog::snippet { "99_${rsyslog::client_conf}_local":
+      ensure  => $_local_ensure,
+      content => template("${module_name}/client/local.conf.erb"),
+    }
   }
 
   if $rsyslog::ssl and $ssl_ca == undef {
