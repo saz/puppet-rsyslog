@@ -18,6 +18,8 @@
 # [*port*]
 # [*remote_servers*]
 # [*ssl_ca*]
+# [*ssl_permitted_peer*]
+# [*ssl_
 # [*log_templates*]
 # [*actionfiletemplate*]
 # [*rate_limit_burst*]
@@ -45,6 +47,8 @@ class rsyslog::client (
   $port                      = '514',
   $remote_servers            = false,
   $ssl_ca                    = undef,
+  $ssl_permitted_peer        = undef,
+  $ssl_auth_mode             = 'anon',
   $log_templates             = false,
   $actionfiletemplate        = false,
   $high_precision_timestamps = false,

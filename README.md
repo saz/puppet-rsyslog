@@ -40,6 +40,8 @@ Manage rsyslog client and server via Puppet
     port                      => '514',
     remote_servers            => false,
     ssl_ca                    => undef,
+    ssl_permitted_peer        => undef,
+    ssl_auth_mode             => 'anon',
     log_templates             => false,
     actionfiletemplate        => false,
     high_precision_timestamps => false,
@@ -207,6 +209,8 @@ The following lists all the class parameters this module accepts.
     port                                '514'               Remote server port. Only used if remote_servers is false.
     remote_servers                      Array of hashes     Array of hashes with remote servers. See documentation above. Defaults to false.
     ssl_ca                              STRING              SSL CA file location. Defaults to undef.
+    ssl_permitted_peer                  STRING              List of permitted peers. Defaults to undef.
+    ssl_auth_mode                       STRING              SSL auth mode. Defaults to anon.
     log_templates                       HASH                Provides a has defining custom logging templates using the `$template` configuration parameter.
     actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging.
     high_precision_timestamps           true,false          Whether or not to use high precision timestamps.

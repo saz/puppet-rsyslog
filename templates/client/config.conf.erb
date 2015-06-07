@@ -52,7 +52,10 @@ $DefaultNetStreamDriverCAFile <%= @ssl_ca %>
 # Connection settings.
 $DefaultNetstreamDriver gtls
 $ActionSendStreamDriverMode 1
-$ActionSendStreamDriverAuthMode anon
+$ActionSendStreamDriverAuthMode <%= @ssl_auth_mode %>
+<% if @ssl_permitted_peer -%>
+$ActionSendStreamDriverPermittedPeer <%= @ssl_permitted_peer %>
+<% end -%>
 <% end -%>
 
 <% if @remote_type == 'relp' -%>
