@@ -20,6 +20,7 @@ class rsyslog::params {
   $msg_reduction              = false
   $non_kernel_facility        = false
   $preserve_fqdn              = false
+  $keep_local_logs            = true
 
   case $::osfamily {
     debian: {
