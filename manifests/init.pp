@@ -40,6 +40,7 @@ class rsyslog (
   $ssl                    = $rsyslog::params::ssl,
   $modules                = $rsyslog::params::modules,
   $preserve_fqdn          = $rsyslog::params::preserve_fqdn,
+  $local_host_name        = undef,
   $max_message_size       = $rsyslog::params::max_message_size,
   $extra_modules          = $rsyslog::params::extra_modules,
   $default_template       = $rsyslog::params::default_template,

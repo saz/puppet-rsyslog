@@ -173,6 +173,7 @@ The following lists all the class parameters this module accepts.
     non_kernel_facility                 true,false          Permit non-kernel facility messages in the kernel log. Defaults to false.
     omit_local_logging                  true,false          Turn off message reception via local log socket. Defaults to true only for RedHat 7+ and false elsewhere.
     preserve_fqdn                       true,false          Use full name of host even if sender and receiver are in the same domain. Defaults to false.
+    local_host_name                     STRING              Use a custom local host name, instead of clients actual host name. Defaults to undef.
 
     RSYSLOG::SERVER CLASS PARAMETERS    VALUES              DESCRIPTION
     -------------------------------------------------------------------

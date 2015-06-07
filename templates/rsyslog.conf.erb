@@ -2,6 +2,9 @@
 <% if scope.lookupvar('rsyslog::preserve_fqdn') -%>
 $PreserveFQDN on
 <% end -%>
+<% if scope.lookupvar('rsyslog::local_host_name') -%>
+LocalHostName <%= scope.lookupvar('rsyslog::local_host_name') %>
+<% end -%>
 #################
 #### MODULES ####
 #################
