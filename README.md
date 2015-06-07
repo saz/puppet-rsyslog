@@ -3,8 +3,8 @@
 Manage rsyslog client and server via Puppet
 
 ### Donate
+If you find this module useful, consider supporting me via Gratipay
 
-If you find this module useful, consider supporting me with Gratipay
 [![Support via Gratipay](https://cdn.rawgit.com/gratipay/gratipay-badge/2.3.0/dist/gratipay.svg)](https://gratipay.com/saz/)
 
 or send some bitcoins to ```1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9```
