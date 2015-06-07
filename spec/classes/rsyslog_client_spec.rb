@@ -163,7 +163,7 @@ describe 'rsyslog::client', :type => :class do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'should compile' do
-          should contain_file('/etc/syslog.d/client.conf')
+          should contain_file('/usr/local/etc/rsyslog.d/client.conf')
         end
       end
 
@@ -172,19 +172,19 @@ describe 'rsyslog::client', :type => :class do
         let(:params) {{ :split_config => true }}
 
         it 'should not manage client.conf' do
-          should_not contain_file('/etc/syslog.d/client.conf')
+          should_not contain_file('/usr/local/etc/rsyslog.d/client.conf')
         end
 
         it 'should configure client' do
-          should contain_file('/etc/syslog.d/00_client_config.conf').with_ensure('present')
+          should contain_file('/usr/local/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
         end
 
         it 'should configure client remote logging' do
-          should contain_file('/etc/syslog.d/50_client_remote.conf').with_ensure('present')
+          should contain_file('/usr/local/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
         end
 
         it 'should remove client local logging' do
-          should contain_file('/etc/syslog.d/99_client_local.conf').with_ensure('absent')
+          should contain_file('/usr/local/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
         end
       end
     end
@@ -286,7 +286,7 @@ describe 'rsyslog::client', :type => :class do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'should compile' do
-          should contain_file('/etc/syslog.d/client.conf')
+          should contain_file('/usr/local/etc/rsyslog.d/client.conf')
         end
       end
 
@@ -295,19 +295,19 @@ describe 'rsyslog::client', :type => :class do
         let(:params) {{ :split_config => true }}
 
         it 'should not manage client.conf' do
-          should_not contain_file('/etc/syslog.d/client.conf')
+          should_not contain_file('/usr/local/etc/rsyslog.d/client.conf')
         end
 
         it 'should configure client' do
-          should contain_file('/etc/syslog.d/00_client_config.conf').with_ensure('present')
+          should contain_file('/usr/local/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
         end
 
         it 'should configure client remote logging' do
-          should contain_file('/etc/syslog.d/50_client_remote.conf').with_ensure('present')
+          should contain_file('/usr/local/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
         end
 
         it 'should remove client local logging' do
-          should contain_file('/etc/syslog.d/99_client_local.conf').with_ensure('absent')
+          should contain_file('/usr/local/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
         end
       end
     end

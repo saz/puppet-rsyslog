@@ -134,8 +134,8 @@ describe 'rsyslog', :type => :class do
         let(:title) { 'rsyslog-basic' }
   
         it 'should compile' do
-          should contain_file('/etc/syslog.conf')
-          should contain_file('/etc/syslog.d/')
+          should contain_file('/usr/local/etc/rsyslog.conf')
+          should contain_file('/usr/local/etc/rsyslog.d/')
         end
       end
     end
@@ -189,8 +189,7 @@ describe 'rsyslog', :type => :class do
         let(:title) { 'rsyslog-install-basic' }
   
         it 'should compile' do
-          should contain_package('sysutils/rsyslog5')
-          should contain_package('sysutils/rsyslog5-relp')
+          should contain_package('sysutils/rsyslog8')
         end
       end
     end
@@ -242,7 +241,7 @@ describe 'rsyslog', :type => :class do
         let(:title) { 'rsyslog-service-basic' }
   
         it 'should compile' do
-          should contain_service('syslogd')
+          should contain_service('rsyslogd')
         end
       end
     end
@@ -362,8 +361,8 @@ describe 'rsyslog', :type => :class do
         let(:title) { 'rsyslog-basic' }
   
         it 'should compile' do
-          should contain_file('/etc/syslog.conf')
-          should contain_file('/etc/syslog.d/')
+          should contain_file('/usr/local/etc/rsyslog.conf')
+          should contain_file('/usr/local/etc/rsyslog.d/')
         end
       end
     end
@@ -417,8 +416,7 @@ describe 'rsyslog', :type => :class do
         let(:title) { 'rsyslog-install-basic' }
   
         it 'should compile' do
-          should contain_package('sysutils/rsyslog5')
-          should contain_package('sysutils/rsyslog5-relp')
+          should contain_package('sysutils/rsyslog8')
         end
       end
     end
@@ -470,7 +468,7 @@ describe 'rsyslog', :type => :class do
         let(:title) { 'rsyslog-service-basic' }
   
         it 'should compile' do
-          should contain_service('syslogd')
+          should contain_service('rsyslogd')
         end
       end
     end

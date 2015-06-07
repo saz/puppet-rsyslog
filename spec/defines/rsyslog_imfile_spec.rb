@@ -80,7 +80,7 @@ describe 'rsyslog::imfile', :type => :define do
         let(:title) { 'rsyslog-imfile-basic' }
 
         it 'should compile' do
-          should contain_file('/etc/syslog.d/rsyslog-imfile-basic.conf')
+          should contain_file('/usr/local/etc/rsyslog.d/rsyslog-imfile-basic.conf')
         end
       end
     end
@@ -164,7 +164,7 @@ describe 'rsyslog::imfile', :type => :define do
         let(:title) { 'rsyslog-imfile-basic' }
 
         it 'should compile' do
-          should contain_file('/etc/syslog.d/rsyslog-imfile-basic.conf')
+          should contain_file('/usr/local/etc/rsyslog.d/rsyslog-imfile-basic.conf')
         end
       end
     end
