@@ -1,4 +1,4 @@
-<% if @log_auth_local or @log_local -%>
+<% if scope.lookupvar('rsyslog::client::log_auth_local') or scope.lookupvar('rsyslog::client::log_local') -%>
 # Logging locally.
 
 <% if scope.lookupvar('rsyslog::log_style') == 'debian' -%>

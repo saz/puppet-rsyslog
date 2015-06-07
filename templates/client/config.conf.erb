@@ -1,27 +1,27 @@
 # An "In-Memory Queue" is created for remote logging.
 $WorkDirectory <%= scope.lookupvar('rsyslog::spool_dir') -%>    # where to place spool files
 $ActionQueueFileName queue      # unique name prefix for spool files
-$ActionQueueMaxDiskSpace <%= @spool_size -%>     # spool space limit (use as much as possible)
+$ActionQueueMaxDiskSpace <%= scope.lookupvar('rsyslog::client::spool_size') -%>     # spool space limit (use as much as possible)
 $ActionQueueSaveOnShutdown on   # save messages to disk on shutdown
-<% if @spool_timeoutenqueue -%>
-$ActionQueueTimeoutEnqueue <%= @spool_timeoutenqueue -%>   # time to wait before discarding on full spool
+<% if scope.lookupvar('rsyslog::client::spool_timeoutenqueue') -%>
+$ActionQueueTimeoutEnqueue <%= scope.lookupvar('rsyslog::client::spool_timeoutenqueue') -%>   # time to wait before discarding on full spool
 <% end -%>
 $ActionQueueType LinkedList     # run asynchronously
 $ActionResumeRetryCount -1      # infinety retries if host is down
-<% if @log_templates and ! @log_templates.empty?-%>
+<% if scope.lookupvar('rsyslog::client::log_templates') and ! scope.lookupvar('rsyslog::client::log_templates').empty?-%>
 
 # Define custom logging templates
-<% @log_templates.flatten.compact.each do |log_template| -%>
+<% scope.lookupvar('rsyslog::client::log_templates').flatten.compact.each do |log_template| -%>
 $template <%= log_template['name'] %>,"<%= log_template['template'] %>"
 <% end -%>
 <% end -%>
-<% if @actionfiletemplate -%>
+<% if scope.lookupvar('rsyslog::client::actionfiletemplate') -%>
 
 # Using specified format for default logging format:
-$ActionFileDefaultTemplate <%= @actionfiletemplate %>
+$ActionFileDefaultTemplate <%= scope.lookupvar('rsyslog::client::actionfiletemplate') %>
 <% else -%>
 
-<% if @high_precision_timestamps == false -%>
+<% if scope.lookupvar('rsyslog::client::high_precision_timestamps') == false -%>
 # Use default format
 $ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
 <% else -%>
@@ -30,35 +30,35 @@ $ActionFileDefaultTemplate RSYSLOG_FileFormat
 <% end -%>
 <% end -%>
 
-<% if @rate_limit_burst -%>
-$SystemLogRateLimitBurst <%= @rate_limit_burst %>
+<% if scope.lookupvar('rsyslog::client::rate_limit_burst') -%>
+$SystemLogRateLimitBurst <%= scope.lookupvar('rsyslog::client::rate_limit_burst') %>
 <% end -%>
-<% if @rate_limit_interval -%>
-$SystemLogRateLimitInterval <%= @rate_limit_interval %>
+<% if scope.lookupvar('rsyslog::client::rate_limit_interval') -%>
+$SystemLogRateLimitInterval <%= scope.lookupvar('rsyslog::client::rate_limit_interval') %>
 <% end -%>
 
-<% if @listen_localhost -%>
+<% if scope.lookupvar('rsyslog::client::listen_localhost') -%>
 # Provides UDP syslog reception
 $ModLoad imudp
 $UDPServerAddress 127.0.0.1
 $UDPServerRun 514
 <% end %>
 
-<% if @ssl -%>
+<% if scope.lookupvar('rsyslog::ssl') -%>
 # Setup SSL connection.
 # CA/Cert
-$DefaultNetStreamDriverCAFile <%= @ssl_ca %>
+$DefaultNetStreamDriverCAFile <%= scope.lookupvar('rsyslog::client::ssl_ca') %>
 
 # Connection settings.
 $DefaultNetstreamDriver gtls
 $ActionSendStreamDriverMode 1
-$ActionSendStreamDriverAuthMode <%= @ssl_auth_mode %>
+$ActionSendStreamDriverAuthMode <%= scope.lookupvar('rsyslog::client::ssl_auth_mode') %>
 <% if @ssl_permitted_peer -%>
-$ActionSendStreamDriverPermittedPeer <%= @ssl_permitted_peer %>
+$ActionSendStreamDriverPermittedPeer <%= scope.lookupvar('rsyslog::client::ssl_permitted_peer') %>
 <% end -%>
 <% end -%>
 
-<% if @remote_type == 'relp' -%>
+<% if scope.lookupvar('rsyslog::client::remote_type') == 'relp' -%>
 # Load RELP module.
 $ModLoad omrelp
 <% end -%>

@@ -1,16 +1,16 @@
 # file is managed by puppet
-<% if @preserve_fqdn -%>
+<% if scope.lookupvar('rsyslog::preserve_fqdn') -%>
 $PreserveFQDN on
 <% end -%>
 #################
 #### MODULES ####
 #################
 
-<% @modules.each do |module_row| -%>
+<% scope.lookupvar('rsyslog::modules').each do |module_row| -%>
 <%= module_row %>
 <% end -%>
 
-<% if @non_kernel_facility -%>
+<% if scope.lookupvar('rsyslog::non_kernel_facility') -%>
 # Enable non-kernel facility klog messages
 $KLogPermitNonKernelFacility on
 
@@ -21,17 +21,17 @@ $KLogPermitNonKernelFacility on
 #
 # Set max message size for sending and receiving
 #
-$MaxMessageSize <%= @max_message_size %>
+$MaxMessageSize <%= scope.lookupvar('rsyslog::max_message_size') %>
 
-<% if @default_template -%>
+<% if scope.lookupvar('rsyslog::default_template') -%>
 #
 # Use traditional timestamp format.
 # To enable high precision timestamps, comment out the following line.
 #
-$ActionFileDefaultTemplate <%= @default_template %>
+$ActionFileDefaultTemplate <%= scope.lookupvar('rsyslog::default_template') %>
 
 <% end -%>
-<% if @msg_reduction -%>
+<% if scope.lookupvar('rsyslog::msg_reduction') -%>
 # Filter duplicated messages
 $RepeatedMsgReduction on
 
@@ -39,29 +39,29 @@ $RepeatedMsgReduction on
 #
 # Set the default permissions for all log files.
 #
-$FileOwner <%= @log_user %>
-$FileGroup <%= @log_group %>
-$FileCreateMode <%= @perm_file %>
-$DirOwner <%= @log_user %>
-$DirGroup <%= @log_group %>
-$DirCreateMode <%= @perm_dir %>
-$PrivDropToUser <%= @run_user %>
-$PrivDropToGroup <%= @run_group %>
-$WorkDirectory <%= @spool_dir %>
-<% if @umask -%>
-$Umask <%= @umask %>
+$FileOwner <%= scope.lookupvar('rsyslog::log_user') %>
+$FileGroup <%= scope.lookupvar('rsyslog::log_group') %>
+$FileCreateMode <%= scope.lookupvar('rsyslog::perm_file') %>
+$DirOwner <%= scope.lookupvar('rsyslog::log_user') %>
+$DirGroup <%= scope.lookupvar('rsyslog::log_group') %>
+$DirCreateMode <%= scope.lookupvar('rsyslog::perm_dir') %>
+$PrivDropToUser <%= scope.lookupvar('rsyslog::run_user') %>
+$PrivDropToGroup <%= scope.lookupvar('rsyslog::run_group') %>
+$WorkDirectory <%= scope.lookupvar('rsyslog::spool_dir') %>
+<% if scope.lookupvar('rsyslog::umask') -%>
+$Umask <%= scope.lookupvar('rsyslog::umask') %>
 <% end -%>
 
-<% if @omit_local_logging -%>
+<% if scope.lookupvar('rsyslog::omit_local_logging') -%>
 # Turn off message reception via local log socket;
 # local messages are retrieved through imjournal now.
 $OmitLocalLogging on
 <% end -%>
 
 #
-# Include all config files in <%= @rsyslog_d %>
+# Include all config files in <%= scope.lookupvar('rsyslog::rsyslog_d') %>
 #
-$IncludeConfig <%= @rsyslog_d -%>*.conf
+$IncludeConfig <%= scope.lookupvar('rsyslog::rsyslog_d') -%>*.conf
 
 #
 # Emergencies are sent to everybody logged in.

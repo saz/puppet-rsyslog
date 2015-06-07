@@ -4,7 +4,7 @@
 <%= scope.function_template(['rsyslog/server/_default-header.conf.erb']) %>
 
 # Log files are stored in directories matching the hostname
-<% if @enable_onefile == false -%>
+<% if scope.lookupvar('rsyslog::server::enable_onefile') == false -%>
 
 # Templates
 $Template dynAuthLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%hostname%<%= scope.lookupvar('rsyslog::server::logpath') -%>auth.log"
