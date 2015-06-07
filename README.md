@@ -33,6 +33,7 @@ Manage rsyslog client and server via Puppet
     log_local                 => false,
     log_auth_local            => false,
     listen_localhost          => false,
+    split_config              => false,
     custom_config             => undef,
     custom_params             => undef,
     server                    => 'log',
@@ -199,6 +200,7 @@ The following lists all the class parameters this module accepts.
     remote_forward_format               STRING              Which forward format for remote servers should be used. Only used if remote_servers is false.
     log_local                           true,false          Log locally. Defaults to false.
     log_auth_local                      true,false          Just log auth facility locally. Defaults to false.
+    split_config                        true,false          Splits the client config into 00_client_config.conf, 50_client_remote.conf and 99_client_local.conf. Defaults to false.
     custom_config                       STRING              Specify your own template to use for client config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb'
     custom_params                       TODO                TODO
     server                              STRING              Rsyslog server to log to. Will be used in the client configuration file. Only used, if remote_servers is false.
