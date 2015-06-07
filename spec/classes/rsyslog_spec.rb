@@ -47,13 +47,12 @@ describe 'rsyslog', :type => :class do
         end
       end
 
-      context "local hostname (osfamily = Debian)" do
+      context "local host name (osfamily = Debian)" do
         let(:title) { 'rsyslog-local-hostname' }
 
         context "with defaults" do
           it 'is not set' do
-            should contain_file('/etc/rsyslog.conf')
-              .without_content(/\$LocalHostName/)
+            should contain_file('/etc/rsyslog.conf').without_content(/\$LocalHostName/)
           end
         end
 
@@ -61,8 +60,7 @@ describe 'rsyslog', :type => :class do
           let(:params) { { :local_host_name => 'example.dev' } }
 
           it 'should compile' do
-            should contain_file('/etc/rsyslog.conf')
-              .with_content(/\$LocalHostName example.dev/)
+            should contain_file('/etc/rsyslog.conf').with_content(/\$LocalHostName example.dev/)
           end
         end
       end

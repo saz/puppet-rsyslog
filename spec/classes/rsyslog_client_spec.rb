@@ -92,8 +92,7 @@ describe 'rsyslog::client', :type => :class do
         context "without SSL" do
           let(:params) { { :ssl_auth_mode => 'x509/name' } }
           it 'should fail' do
-            expect { should contain_class('rsyslog::client') }
-              .to raise_error(Puppet::Error, /You need to enable SSL in order to use ssl_auth_mode./)
+            expect { should contain_class('rsyslog::client') }.to raise_error(Puppet::Error, /You need to enable SSL in order to use ssl_auth_mode./)
           end
         end
 
@@ -108,9 +107,7 @@ describe 'rsyslog::client', :type => :class do
             let(:params) { ssl_params }
 
             it 'should compile' do
-              should contain_file('/etc/rsyslog.d/client.conf')
-                .with_content(/\$ActionSendStreamDriverAuthMode anon/)
-                .without_content(/\$ActionSendStreamDriverPermittedPeer/)
+              should contain_file('/etc/rsyslog.d/client.conf').with_content(/\$ActionSendStreamDriverAuthMode anon/).without_content(/\$ActionSendStreamDriverPermittedPeer/)
             end
           end
 
@@ -122,9 +119,7 @@ describe 'rsyslog::client', :type => :class do
             end
 
             it 'should contain ActionSendStreamDriverAuthMode' do
-              should contain_file('/etc/rsyslog.d/client.conf')
-                .with_content(/\$ActionSendStreamDriverAuthMode x509\/name/)
-                .without_content(/\$ActionSendStreamDriverPermittedPeer/)
+              should contain_file('/etc/rsyslog.d/client.conf').with_content(/\$ActionSendStreamDriverAuthMode x509\/name/).without_content(/\$ActionSendStreamDriverPermittedPeer/)
             end
           end
 
@@ -136,8 +131,7 @@ describe 'rsyslog::client', :type => :class do
             end
 
             it 'should fail' do
-              expect { should contain_class('rsyslog::client') }
-                .to raise_error(Puppet::Error, /You need to set auth_mode to 'x509\/name' in order to use ssl_permitted_peer./)
+              expect { should contain_class('rsyslog::client') }.to raise_error(Puppet::Error, /You need to set auth_mode to 'x509\/name' in order to use ssl_permitted_peer./)
             end
           end
 
@@ -150,9 +144,7 @@ describe 'rsyslog::client', :type => :class do
             end
 
             it 'should contain ActionSendStreamDriverPermittedPeer' do
-              should contain_file('/etc/rsyslog.d/client.conf')
-                .with_content(/\$ActionSendStreamDriverAuthMode x509\/name/)
-                .with_content(/\$ActionSendStreamDriverPermittedPeer logs.example.com/) 
+              should contain_file('/etc/rsyslog.d/client.conf').with_content(/\$ActionSendStreamDriverAuthMode x509\/name/).with_content(/\$ActionSendStreamDriverPermittedPeer logs.example.com/) 
             end
           end
         end
