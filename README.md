@@ -149,6 +149,8 @@ Declare the following to configure the connection:
     relp_port                 => '20514',
     address                   => '*',
     high_precision_timestamps => false,
+    log_templates             => false,
+    actionfiletemplate        => false,
     ssl_ca                    => undef,
     ssl_cert                  => undef,
     ssl_key                   => undef,
@@ -179,7 +181,10 @@ The following lists all the class parameters this module accepts.
     custom_config                       STRING              Specify your own template to use for server config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb'
     port                                STRING/INTEGER      Port to listen on for messages via UDP and TCP. Defaults to 514
     relp_port                           STRING/INTEGER      Port to listen on for messages via RELP. Defaults to 20514
-    address                             STRING              The IP address to bind to. Applies to UDP listener only. Defaults to '*'.
+    address                             STRING              The IP address to bind to. Applies to UDP listener only. Defaults to '*'.
+
+    log_templates                       HASH                Provides a has defining custom logging templates using the `$template` configuration parameter.
+    actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging.
     high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
     ssl_ca                              STRING              Path to SSL CA certificate
     ssl_cert                            STRING              Path to SSL certificate

@@ -17,6 +17,8 @@
 # [*ssl_ca*]
 # [*ssl_cert*]
 # [*ssl_key*]
+# [*log_templates*]
+# [*actionfiletemplate*]
 # [*rotate*]
 #
 # === Variables
@@ -47,6 +49,8 @@ class rsyslog::server (
   $ssl_ca                    = undef,
   $ssl_cert                  = undef,
   $ssl_key                   = undef,
+  $log_templates             = false,
+  $actionfiletemplate        = false,
   $rotate                    = undef
 ) inherits rsyslog {
 
