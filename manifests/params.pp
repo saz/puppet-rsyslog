@@ -185,14 +185,14 @@ class rsyslog::params {
       $omit_local_logging     = false
     }
     freebsd: {
-      $rsyslog_package_name   = 'sysutils/rsyslog5'
-      $relp_package_name      = 'sysutils/rsyslog5-relp'
-      $mysql_package_name     = 'sysutils/rsyslog5-mysql'
-      $pgsql_package_name     = 'sysutils/rsyslog5-pgsql'
-      $gnutls_package_name    = 'sysutils/rsyslog5-gnutls'
+      $rsyslog_package_name   = 'sysutils/rsyslog8'
+      $relp_package_name      = false
+      $mysql_package_name     = false
+      $pgsql_package_name     = false
+      $gnutls_package_name    = false
       $package_status         = 'present'
-      $rsyslog_d              = '/etc/syslog.d/'
-      $rsyslog_conf           = '/etc/syslog.conf'
+      $rsyslog_d              = '/usr/local/etc/rsyslog.d/'
+      $rsyslog_conf           = '/usr/local/etc/rsyslog.conf'
       $rsyslog_default        = '/etc/defaults/syslogd'
       $default_config_file    = 'rsyslog_default'
       $run_user               = 'root'
@@ -203,8 +203,8 @@ class rsyslog::params {
       $umask                  = false
       $perm_file              = '0640'
       $perm_dir               = '0755'
-      $spool_dir              = '/var/spool/syslog'
-      $service_name           = 'syslogd'
+      $spool_dir              = '/var/spool/rsyslog'
+      $service_name           = 'rsyslogd'
       $client_conf            = 'client'
       $server_conf            = 'server'
       $ssl                    = false
