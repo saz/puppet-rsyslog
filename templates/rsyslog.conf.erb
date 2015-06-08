@@ -26,7 +26,7 @@ $KLogPermitNonKernelFacility on
 #
 $MaxMessageSize <%= scope.lookupvar('rsyslog::max_message_size') %>
 
-<% if scope.lookupvar('rsyslog::default_template') -%>
+<% if scope.lookupvar('rsyslog::default_template')  and scope.lookupvar('rsyslog::default_template') != :undef -%>
 #
 # Use traditional timestamp format.
 # To enable high precision timestamps, comment out the following line.
