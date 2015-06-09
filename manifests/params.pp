@@ -84,7 +84,7 @@ class rsyslog::params {
         $mysql_package_name     = 'rsyslog-mysql'
         $pgsql_package_name     = 'rsyslog-pgsql'
         $gnutls_package_name    = 'rsyslog-gnutls'
-        $relp_package_name      = 'rsyslog-relp'
+        $relp_package_name      = false
         $default_config_file    = 'rsyslog_default'
         $modules                = [
           '$ModLoad imuxsock # provides support for local system logging',
