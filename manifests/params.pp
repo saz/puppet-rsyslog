@@ -199,7 +199,7 @@ class rsyslog::params {
       $run_group              = 'wheel'
       $log_user               = 'root'
       $log_group              = 'wheel'
-      $log_style              = 'debian'
+      $log_style              = 'freebsd'
       $umask                  = false
       $perm_file              = '0640'
       $perm_dir               = '0755'
