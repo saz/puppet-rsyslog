@@ -42,6 +42,7 @@ class rsyslog::server (
   $enable_onefile            = false,
   $server_dir                = '/srv/log/',
   $custom_config             = undef,
+  $content                   = undef,
   $port                      = '514',
   $relp_port                 = '20514',
   $address                   = '*',
@@ -65,7 +66,12 @@ class rsyslog::server (
     default  => '/',
   }
 
-  if $custom_config {
+  if $content {
+    if $custom_config {
+      fail 'Cannot set both $content and $custom_config'
+    }
+    $real_content = $content
+  } elsif $custom_config {
     $real_content = template($custom_config)
   } else {
     $real_content = template("${module_name}/server-default.conf.erb")
