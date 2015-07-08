@@ -5,7 +5,7 @@
 
 # Log files are stored in directories matching the short hostname, excluding numbers
 # i.e. web01 web02 and web03 will all log to a the web directory
-<% if @enable_onefile == false -%>
+<% if scope.lookupvar('rsyslog::server::enable_onefile') == false -%>
 
 # Templates
 $Template dynAuditLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>audit.log"

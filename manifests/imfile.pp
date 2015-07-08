@@ -42,6 +42,7 @@ define rsyslog::imfile(
   # This mode should defined when having multiline messages.
   $imfile_readmode = $file_readmode ? {
     /^$/                 => undef, # Do not specify in configuration (current default behaviour)
+    undef                => undef, # Do not specify in configuration (current default behaviour)
     /^(0|default|line)$/ => 0,     # Each line is a new message.
     /^(1|paragraph)$/    => 1,     # There is a blank line between log messages.
     /^(2|indented)$/     => 2,     # New log messages start at the beginning of a line. If a line starts with a space it is part of the log message before it.

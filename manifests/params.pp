@@ -62,6 +62,7 @@ class rsyslog::params {
       ]
       $service_hasrestart     = true
       $service_hasstatus      = true
+      $omit_local_logging     = false
     }
     redhat: {
       if $::operatingsystem == 'Amazon' {
@@ -76,6 +77,7 @@ class rsyslog::params {
           '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
           '#$ModLoad immark  # provides --MARK-- message capability',
         ]
+        $omit_local_logging     = false
       }
       elsif versioncmp($::operatingsystemmajrelease, '5') == 0 {
         $rsyslog_package_name   = 'rsyslog'
@@ -89,6 +91,7 @@ class rsyslog::params {
           '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
           '#$ModLoad immark  # provides --MARK-- message capability',
         ]
+        $omit_local_logging     = false
       }
       elsif versioncmp($::operatingsystemmajrelease, '6') == 0 {
         $rsyslog_package_name   = 'rsyslog'
@@ -102,6 +105,7 @@ class rsyslog::params {
           '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
           '#$ModLoad immark  # provides --MARK-- message capability',
         ]
+        $omit_local_logging     = false
       }
       elsif versioncmp($::operatingsystemmajrelease, '7') >= 0 {
         $rsyslog_package_name   = 'rsyslog'
@@ -116,6 +120,7 @@ class rsyslog::params {
           '#$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
           '#$ModLoad immark  # provides --MARK-- message capability',
         ]
+        $omit_local_logging     = true
       } else {
         $rsyslog_package_name   = 'rsyslog5'
         $mysql_package_name     = 'rsyslog5-mysql'
@@ -128,6 +133,7 @@ class rsyslog::params {
           '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
           '#$ModLoad immark  # provides --MARK-- message capability',
         ]
+        $omit_local_logging     = false
       }
       $package_status         = 'latest'
       $rsyslog_d              = '/etc/rsyslog.d/'
@@ -176,6 +182,7 @@ class rsyslog::params {
         '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
         '#$ModLoad immark  # provides --MARK-- message capability',
       ]
+      $omit_local_logging     = false
     }
     freebsd: {
       $rsyslog_package_name   = 'sysutils/rsyslog5'
@@ -208,6 +215,7 @@ class rsyslog::params {
       ]
       $service_hasrestart     = true
       $service_hasstatus      = true
+      $omit_local_logging     = false
     }
     default: {
       case $::operatingsystem {
@@ -242,6 +250,7 @@ class rsyslog::params {
           ]
           $service_hasrestart     = true
           $service_hasstatus      = true
+          $omit_local_logging     = false
         }
         default: {
           fail("The ${module_name} module is not supported on ${::osfamily}/${::operatingsystem}.")

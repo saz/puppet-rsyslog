@@ -1,21 +1,34 @@
-<% if @enable_udp -%>
+<% if scope.lookupvar('rsyslog::server::enable_udp') -%>
 # Load UDP module
 $ModLoad imudp
 <% end -%>
 
-<% if @enable_tcp -%>
+<% if scope.lookupvar('rsyslog::server::enable_tcp') -%>
 # Load TCP module
 $ModLoad imtcp
 <% end -%>
 
-<% if @enable_relp -%>
+<% if scope.lookupvar('rsyslog::server::enable_relp') -%>
 <% if (scope.function_versioncmp([@rsyslog_version, '6.3.6']) >= 0) -%>
 # Load RELP module
 $ModLoad imrelp
 <% end -%>
 <% end -%>
 
-<% if @high_precision_timestamps == false -%>
+<% if scope.lookupvar('rsyslog::server::log_templates') and ! scope.lookupvar('rsyslog::server::log_templates').empty?-%>
+
+# Define custom logging templates
+<% scope.lookupvar('rsyslog::server::log_templates').flatten.compact.each do |log_template| -%>
+$template <%= log_template['name'] %>,"<%= log_template['template'] %>"
+<% end -%>
+<% end -%>
+<% if scope.lookupvar('rsyslog::server::actionfiletemplate') -%>
+
+# Using specified format for default logging format:
+$ActionFileDefaultTemplate <%= scope.lookupvar('rsyslog::server::actionfiletemplate') %>
+<% else -%>
+
+<% if scope.lookupvar('rsyslog::server::high_precision_timestamps') == false -%>
 #
 # Use traditional timestamp format.
 #
@@ -26,15 +39,16 @@ $ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
 #
 $ActionFileDefaultTemplate RSYSLOG_FileFormat
 <% end -%>
+<% end -%>
 
-<% if @ssl -%>
+<% if scope.lookupvar('rsyslog::ssl') -%>
 # Server side SSL.
 $DefaultNetstreamDriver gtls
 
 # Cert files.
-$DefaultNetstreamDriverCAFile <%= @ssl_ca %>
-$DefaultNetstreamDriverCertFile <%= @ssl_cert %>
-$DefaultNetstreamDriverKeyFile <%= @ssl_key %>
+$DefaultNetstreamDriverCAFile <%= scope.lookupvar('rsyslog::server::ssl_ca') %>
+$DefaultNetstreamDriverCertFile <%= scope.lookupvar('rsyslog::server::ssl_cert') %>
+$DefaultNetstreamDriverKeyFile <%= scope.lookupvar('rsyslog::server::ssl_key') %>
 
 $InputTCPServerStreamDriverMode 1
 $InputTCPServerStreamDriverAuthMode anon
