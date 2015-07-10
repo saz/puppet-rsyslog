@@ -165,6 +165,7 @@ class rsyslog::params {
       $rsyslog_d              = '/etc/rsyslog.d/'
       $rsyslog_conf           = '/etc/rsyslog.conf'
       $rsyslog_default        = '/etc/sysconfig/syslog'
+      $default_config_file    = 'rsyslog_default'
       $run_user               = 'root'
       $run_group              = 'root'
       $log_user               = 'root'
