@@ -10,7 +10,7 @@ Facter.add(:rsyslog_version) do
         when "Debian"
             command='/usr/bin/dpkg-query -f \'${Status};${Version};\' -W rsyslog 2>/dev/null'
             version = Facter::Util::Resolution.exec(command)
-            if version =~ /.*install ok installed;([^;]+);.*/
+            if version =~ /.*[install|hold] ok installed;([^;]+);.*/
                 $1
             else
                 nil
