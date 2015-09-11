@@ -41,6 +41,10 @@ $ActionFileDefaultTemplate RSYSLOG_FileFormat
 <% end -%>
 <% end -%>
 
+<% if scope.lookupvar('rsyslog::server::escape_control_characters') == false -%>
+$EscapeControlCharactersOnReceive off
+<% end -%>
+
 <% if scope.lookupvar('rsyslog::ssl') -%>
 # Server side SSL.
 $DefaultNetstreamDriver gtls

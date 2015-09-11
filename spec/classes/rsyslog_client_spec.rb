@@ -335,6 +335,11 @@ describe 'rsyslog::client', :type => :class do
         it 'should compile' do
           should contain_file('/etc/rsyslog.d/client.conf')
         end
+
+        it "should not contain EscapeControlCharactersOnReceive off" do
+         should_not contain_rsyslog__snippet('00_client_config.conf').with_content(/\$EscapeControlCharactersOnReceive off/)
+        end
+
       end
 
       context "split_config => true" do
@@ -357,6 +362,15 @@ describe 'rsyslog::client', :type => :class do
           should contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
         end
       end
+
+      context "escape_control_characters => false" do
+        let(:params) {{ :escape_control_characters => false }}
+
+        it "should set EscapeControlCharactersOnReceive off" do
+         should contain_rsyslog__snippet('client').with_content(/\$EscapeControlCharactersOnReceive off/)
+        end
+      end
+
     end
   end
 end

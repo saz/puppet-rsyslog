@@ -24,6 +24,10 @@
 # [*actionfiletemplate*]
 # [*rate_limit_burst*]
 # [*rate_limit_interval*]
+# [*escape_control_characters*]
+#  (optional) Boolean used to turn EscapeControlCharactersOnReceive if this
+#  parameters is set to false.  This option in rsyslog is enabled by default.
+#  Defaults to true.
 #
 # === Variables
 #
@@ -53,7 +57,8 @@ class rsyslog::client (
   $actionfiletemplate        = false,
   $high_precision_timestamps = false,
   $rate_limit_burst          = undef,
-  $rate_limit_interval       = undef
+  $rate_limit_interval       = undef,
+  $escape_control_characters = true,
 ) inherits rsyslog {
 
   if $custom_config {
