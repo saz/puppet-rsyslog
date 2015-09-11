@@ -20,6 +20,10 @@
 # [*log_templates*]
 # [*actionfiletemplate*]
 # [*rotate*]
+# [*escape_control_characters*]
+#  (optional) Boolean used to turn EscapeControlCharactersOnReceive if this
+#  parameters is set to false.  This option in rsyslog is enabled by default.
+#  Defaults to true.
 #
 # === Variables
 #
@@ -52,7 +56,8 @@ class rsyslog::server (
   $ssl_key                   = undef,
   $log_templates             = false,
   $actionfiletemplate        = false,
-  $rotate                    = undef
+  $rotate                    = undef,
+  $escape_control_characters = true,
 ) inherits rsyslog {
 
   ### Logrotate policy

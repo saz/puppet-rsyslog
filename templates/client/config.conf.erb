@@ -44,6 +44,10 @@ $UDPServerAddress 127.0.0.1
 $UDPServerRun 514
 <% end %>
 
+<% if scope.lookupvar('rsyslog::client::escape_control_characters') == false -%>
+$EscapeControlCharactersOnReceive off
+<% end -%>
+
 <% if scope.lookupvar('rsyslog::ssl') -%>
 # Setup SSL connection.
 # CA/Cert
