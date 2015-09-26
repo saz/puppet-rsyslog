@@ -26,6 +26,12 @@ $KLogPermitNonKernelFacility on
 #
 $MaxMessageSize <%= scope.lookupvar('rsyslog::max_message_size') %>
 
+#
+# Set rate limit for messages received.
+# 
+$SystemLogRateLimitInterval <%= scope.lookupvar('rsyslog::system_log_rate_limit_interval') %>
+$SystemLogRateLimitBurst <%= scope.lookupvar('rsyslog::system_log_rateLimit_burst') %>
+
 <% if scope.lookupvar('rsyslog::default_template')  and scope.lookupvar('rsyslog::default_template') != :undef -%>
 #
 # Use traditional timestamp format.

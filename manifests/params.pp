@@ -13,13 +13,15 @@
 #
 class rsyslog::params {
 
-  $max_message_size           = '2k'
-  $purge_rsyslog_d            = false
-  $extra_modules              = []
-  $default_template           = undef
-  $msg_reduction              = false
-  $non_kernel_facility        = false
-  $preserve_fqdn              = false
+  $max_message_size               = '2k'
+  $system_log_rate_limit_interval = '1'
+  $system_log_rateLimit_burst     = '100'
+  $purge_rsyslog_d                = false
+  $extra_modules                  = []
+  $default_template               = undef
+  $msg_reduction                  = false
+  $non_kernel_facility            = false
+  $preserve_fqdn                  = false
 
   case $::osfamily {
     debian: {
