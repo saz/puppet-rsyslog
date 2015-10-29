@@ -36,23 +36,23 @@
 #  }
 #
 class rsyslog::server (
-  $enable_tcp                = true,
-  $enable_udp                = true,
-  $enable_relp               = true,
-  $enable_onefile            = false,
-  $server_dir                = '/srv/log/',
-  $custom_config             = undef,
-  $content                   = undef,
-  $port                      = '514',
-  $relp_port                 = '20514',
-  $address                   = '*',
-  $high_precision_timestamps = false,
-  $ssl_ca                    = undef,
-  $ssl_cert                  = undef,
-  $ssl_key                   = undef,
-  $log_templates             = false,
-  $actionfiletemplate        = false,
-  $rotate                    = undef
+  $enable_tcp                = hiera( 'rsyslog::server::enable_tcp',                true ),
+  $enable_udp                = hiera( 'rsyslog::server::enable_udp',                true ),
+  $enable_relp               = hiera( 'rsyslog::server::enable_relp',               true ),
+  $enable_onefile            = hiera( 'rsyslog::server::enable_onefile',            false ),
+  $server_dir                = hiera( 'rsyslog::server::server_dir',                '/srv/log/' ),
+  $custom_config             = hiera( 'rsyslog::server::custom_config',             undef ),
+  $content                   = hiera( 'rsyslog::server::content',                   undef ),
+  $port                      = hiera( 'rsyslog::server::port',                      '514' ),
+  $relp_port                 = hiera( 'rsyslog::server::relp_port',                 '20514' ),
+  $address                   = hiera( 'rsyslog::server::address',                   '*' ),
+  $high_precision_timestamps = hiera( 'rsyslog::server::high_precision_timestamps', false ),
+  $ssl_ca                    = hiera( 'rsyslog::server::ssl_ca',                    undef ),
+  $ssl_cert                  = hiera( 'rsyslog::server::ssl_cert',                  undef ),
+  $ssl_key                   = hiera( 'rsyslog::server::ssl_key',                   undef ),
+  $log_templates             = hiera( 'rsyslog::server::log_templates',             false ),
+  $actionfiletemplate        = hiera( 'rsyslog::server::actionfiletemplate',        false ),
+  $rotate                    = hiera( 'rsyslog::server::rotate',                    undef )
 ) inherits rsyslog {
 
   ### Logrotate policy
