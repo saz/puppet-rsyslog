@@ -52,9 +52,14 @@ class rsyslog::server (
   $ssl_key                   = undef,
   $log_templates             = false,
   $actionfiletemplate        = false,
+  $purge_rsyslog_d           = $rsyslog::purge_rsyslog_d,
   $rotate                    = undef
-) inherits rsyslog {
+) {
 
+  class { 'rsyslog':
+    purge_rsyslog_d  => $purge_rsyslog_d,
+  }
+  
   ### Logrotate policy
   $logpath = $rotate ? {
     'year'   => '/%$YEAR%/',

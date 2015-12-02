@@ -52,9 +52,14 @@ class rsyslog::client (
   $log_templates             = false,
   $actionfiletemplate        = false,
   $high_precision_timestamps = false,
+  $purge_rsyslog_d           = $rsyslog::purge_rsyslog_d,
   $rate_limit_burst          = undef,
   $rate_limit_interval       = undef
-) inherits rsyslog {
+) {
+
+  class { 'rsyslog':
+    purge_rsyslog_d  => $purge_rsyslog_d,
+  }
 
   if $custom_config {
     $content_real = template($custom_config)
