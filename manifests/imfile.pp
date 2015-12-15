@@ -34,6 +34,7 @@ define rsyslog::imfile(
   $file_severity = 'notice',
   $run_file_monitor = true,
   $persist_state_interval = 0,
+  $imfile_template = 'rsyslog/imfile.erb',
 ) {
 
   include rsyslog
@@ -51,7 +52,7 @@ define rsyslog::imfile(
 
   rsyslog::snippet { $name:
     ensure  => $ensure,
-    content => template('rsyslog/imfile.erb'),
+    content => template($imfile_template),
   }
 
 }
