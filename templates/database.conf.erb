@@ -2,5 +2,8 @@
 
 ## Configuration file for rsyslog-<%= @backend %>
 
+# rsyslog template used to correctly separate Syslogtag and ProcessID fields for log entries
+$template sqlFormat,"INSERT INTO SystemEvents (Message, Facility, FromHost, Priority, DeviceReportedTime, ReceivedAt, InfoUnitID, SysLogTag, ProcessID) values ('%msg%',%syslogfacility%,'%HOSTNAME%',%syslogpriority%,'%timereported:::date-mysql%', '%timegenerated:::date-mysql%',%iut%,'%programname%','%procid:R,ERE,0,ZERO:[0-9]+--end%')",SQL
+
 $ModLoad <%= @db_module %>
-*.* :<%= @db_module -%>:<%= @server -%>,<%= @database -%>,<%= @username -%>,<%= @password %>
+*.* :<%= @db_module -%>:<%= @server -%>,<%= @database -%>,<%= @username -%>,<%= @password %>;sqlFormat
