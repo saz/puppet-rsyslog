@@ -98,3 +98,8 @@ uucp,news.crit                 -/var/log/spooler
 local7.*                       -/var/log/boot.log
 <% end -%>
 <% end -%>
+
+<% if @log_local_custom -%>
+ # Custom fragment
+ <%= @log_local_custom %>
+<% end -%>
