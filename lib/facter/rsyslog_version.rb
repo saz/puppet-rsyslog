@@ -13,7 +13,7 @@ Facter.add(:rsyslog_version) do
             if version =~ /.*[install|hold] ok installed;([^;]+);.*/
                 $1
             else
-                nil
+                ''
             end
         when "RedHat", "Suse"
             command='rpm -qa --qf "%{VERSION}" "rsyslog"'
@@ -21,7 +21,7 @@ Facter.add(:rsyslog_version) do
             if version =~ /^(.+)$/
                 $1
             else
-                nil
+                ''
             end
         when "FreeBSD"
           command='pkg query %v rsyslog'
@@ -29,10 +29,10 @@ Facter.add(:rsyslog_version) do
           if version =~ /^(.+)$/
             $1
           else
-            nil
+            ''
           end
         else
-            nil
+            ''
         end
     end
 end
