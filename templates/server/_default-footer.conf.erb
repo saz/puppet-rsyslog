@@ -14,7 +14,7 @@ $InputTCPServerRun <%= scope.lookupvar('rsyslog::server::port') %>
 <% end -%>
 
 <% if scope.lookupvar('rsyslog::server::enable_relp') -%>
-<% if (scope.function_versioncmp([@rsyslog_version, '6.3.6']) >= 0) -%>
+<% if (@rsyslog_version and (scope.function_versioncmp([@rsyslog_version, '6.3.6']) >= 0)) -%>
 $InputRELPServerBindRuleset remote
 $InputRELPServerRun <%= scope.lookupvar('rsyslog::server::relp_port') %>
 <% end -%>
