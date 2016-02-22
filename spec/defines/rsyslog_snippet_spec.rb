@@ -30,6 +30,11 @@ describe 'rsyslog::snippet', :type => :define do
         it 'should compile' do
           should contain_file('/etc/rsyslog.d/rsyslog-snippet-basic.conf').with_content("# This file is managed by Puppet, changes may be overwritten\nRandom Content\n")
         end
+
+        let(:title) { 'rsyslog/snippet/basic' }
+        it 'should compile' do
+          should contain_file('/etc/rsyslog.d/rsyslog-snippet-basic.conf').with_content("# This file is managed by Puppet, changes may be overwritten\nRandom Content\n")
+        end
       end
     end
 
