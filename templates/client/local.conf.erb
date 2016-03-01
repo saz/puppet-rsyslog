@@ -99,7 +99,7 @@ local7.*                       -/var/log/boot.log
 <% end -%>
 <% end -%>
 
-<% if @log_local_custom -%>
+<% if scope.lookupvar('rsyslog::client::log_local_custom') -%>
  # Custom fragment
- <%= @log_local_custom %>
+ <%= scope.lookupvar('rsyslog::client::log_local_custom') %>
 <% end -%>
