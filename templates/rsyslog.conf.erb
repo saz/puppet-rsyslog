@@ -67,6 +67,13 @@ $Umask <%= scope.lookupvar('rsyslog::umask') %>
 $OmitLocalLogging <%= scope.lookupvar('rsyslog::omit_local_logging') %>
 <% end -%>
 
+# Settings for imjournal
+<% if scope.lookupvar('rsyslog::im_journal_statfile') -%>
+$IMJournalStateFile <%=scope.lookupvar('rsyslog::im_journal_statfile') %>
+<% end %>
+$imjournalRatelimitInterval <%=scope.lookupvar('rsyslog::im_journal_ratelimit_interval') %>
+$imjournalRatelimitBurst <%=scope.lookupvar('rsyslog::im_journal_ratelimit_burst') %>
+
 #
 # Include all config files in <%= scope.lookupvar('rsyslog::rsyslog_d') %>
 #
