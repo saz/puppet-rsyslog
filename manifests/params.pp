@@ -110,21 +110,22 @@ class rsyslog::params {
         $omit_local_logging     = false
       }
       elsif versioncmp($::operatingsystemmajrelease, '7') >= 0 {
-        $rsyslog_package_name           = 'rsyslog'
-        $mysql_package_name             = 'rsyslog-mysql'
-        $pgsql_package_name             = 'rsyslog-pgsql'
-        $gnutls_package_name            = 'rsyslog-gnutls'
-        $relp_package_name              = 'rsyslog-relp'
-        $default_config_file            = 'rsyslog_default_rhel7'
-        $modules                        = [
+        $rsyslog_package_name                = 'rsyslog'
+        $mysql_package_name                  = 'rsyslog-mysql'
+        $pgsql_package_name                  = 'rsyslog-pgsql'
+        $gnutls_package_name                 = 'rsyslog-gnutls'
+        $relp_package_name                   = 'rsyslog-relp'
+        $default_config_file                 = 'rsyslog_default_rhel7'
+        $modules                             = [
           '$ModLoad imuxsock # provides support for local system logging',
           '$ModLoad imjournal # provides access to the systemd journal',
           '#$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
           '#$ModLoad immark  # provides --MARK-- message capability',
         ]
-        $omit_local_logging             = true
-        $im_journal_ratelimit_interval  = '600'
-        $im_journal_ratelimit_burst     = '20000'
+        $omit_local_logging                  = true
+        $im_journal_ratelimit_interval       = '600'
+        $im_journal_ratelimit_burst          = '20000'
+        $im_journal_ignore_previous_messages = 'off'
       } else {
         $rsyslog_package_name   = 'rsyslog5'
         $mysql_package_name     = 'rsyslog5-mysql'
