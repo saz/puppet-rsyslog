@@ -68,9 +68,10 @@ $OmitLocalLogging <%= scope.lookupvar('rsyslog::omit_local_logging') %>
 <% end -%>
 
 # Settings for imjournal
-<% if scope.lookupvar('rsyslog::im_journal_statfile') -%>
-$IMJournalStateFile <%=scope.lookupvar('rsyslog::im_journal_statfile') %>
+<% if scope.lookupvar('rsyslog::im_journal_statefile') -%>
+$IMJournalStateFile <%=scope.lookupvar('rsyslog::im_journal_statefile') %>
 <% end %>
+$ImjournalIgnorePreviousMessages <%=scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') %>
 $imjournalRatelimitInterval <%=scope.lookupvar('rsyslog::im_journal_ratelimit_interval') %>
 $imjournalRatelimitBurst <%=scope.lookupvar('rsyslog::im_journal_ratelimit_burst') %>
 
