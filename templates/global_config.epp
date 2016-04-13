@@ -1,0 +1,12 @@
+<%- |
+  String $value,
+  String $config_item,
+  Optional[String] $type
+| -%>
+<% if $type == 'legacy' { -%>
+$<%= $config_item %> <%= $value %>
+<% } else { -%>
+global (
+  <%= $config_item %>="<%= $value %>"
+)
+<% } -%>

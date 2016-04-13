@@ -1,0 +1,85 @@
+---
+rsyslog::confdir: /etc/rsyslog.d
+rsyslog::package_name: rsyslog
+rsyslog::package_version: installed
+rsyslog::manage_package: true
+rsyslog::manage_confdir: true
+rsyslog::override_default_config: true
+rsyslog::config_file: /etc/rsyslog.conf
+rsyslog::service_name: rsyslog
+rsyslog::service_status: running
+rsyslog::service_enabled: true
+
+## This can be an array of extra "feature" packages to install for rsyslog
+rsyslog::feature_packages: []
+
+# rsyslog::modules
+# This sets modules that will be loaded
+#
+rsyslog::modules:
+  - imuxsock
+  - imklog
+
+rsyslog::global_config:
+  EscapeControlCharactersOnReceive:
+    value: 'off'
+    type: legacy
+  parser.SomeConfigurationOption: 
+    value: 'on'
+    
+
+
+rsyslog::module_load_priority: 10
+rsyslog::global_config_priority: 20
+rsyslog::template_priority: 30
+
+rsyslog::templates:
+  remote:
+    type: string
+    string: "/var/log/rsyslog/logs/%fromhost-ip%/%fromhost-ip%.log"
+  tpl2:
+    type: subtree
+    subtree: "$1!$usr"
+
+  someplug:
+     type: plugin
+     plugin: foobar
+     options:
+       sql: "on"
+  
+  plain-syslog:
+    type: list
+    list_descriptions:
+      - constant:
+          value: '{'
+      - constant:
+          value: '\"@timestamp\":\"'
+      - constant:
+          value: '\"@remove_me_timestamp\":\"'
+      - property:
+         name: timereported
+         dateFormat: rfc3339
+      - constant:
+         value: '\"host\":\"'
+      - property:
+         name: hostname
+      - constant:
+         value: '\"severity\":\"'
+      - property:
+         name: syslogseverity-text
+      - constant:
+         value: '\"facility\":\"'
+      - property:
+         name: syslogfacility-text
+      - constant:
+         value: '\"tag\":\"'
+      - property:
+         name: syslogtag
+         format: json
+      - constant:
+         value: '\"message\":\"'
+      - property:
+         name: msg
+         format: json
+      - constant:
+         value: '\"}'

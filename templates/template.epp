@@ -1,0 +1,29 @@
+<%- |
+$template_name,
+$string,
+$list_descriptions,
+$type,
+$subtree,
+$plugin ,
+$options
+| %>
+template (name="<%= $template_name %>" type="<%= $type %>"<%-%>
+<% if $type == 'string' { -%>
+  string="<%= $string %>"<%-%>
+<%}-%>
+<% if $type == 'subtree' { -%>
+  subtree="<%= $subtree %>"<%-%>
+<%}-%>
+<% if $type == 'plugin' { -%>
+  plugin="<%= $plugin %>"<%-%>
+<%}-%>
+<% $options.each |$option,$value| {-%> <%= " option.${option}" %>="<%= $value %>"<%}-%>
+)
+<% if $type == 'list' { -%>
+{
+<% $list_descriptions.each | $element | { -%>
+  <%- $element.each |$key, $params| { -%>
+    <%= $key %>(<% $params.each |$p,$v| { -%><%= $p%>="<%= $v %>" <% }%><% } %>)
+<%}-%>
+}
+<%}-%>

@@ -1,0 +1,6 @@
+<%- |
+  Array $modules
+| -%>
+<% $modules.each | $module | { -%>
+module(load="<%= $module %>")
+<% } -%>
