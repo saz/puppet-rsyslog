@@ -23,11 +23,21 @@ class rsyslog::base {
   }
 
   if $rsyslog::manage_confdir {
+
+    $purge_params = $::rsyslog::purge_config_files ? {
+      true  => {
+        "purge"   => true,
+        "recurse" => true,
+      },
+      false => {}
+    }
+
     file { $rsyslog::confdir:
       ensure  => directory,
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
+      *       => $purge_params,
       require => Package[$rsyslog::package_name],
     }
   }

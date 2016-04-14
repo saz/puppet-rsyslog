@@ -4,6 +4,7 @@ rsyslog::package_name: rsyslog
 rsyslog::package_version: installed
 rsyslog::manage_package: true
 rsyslog::manage_confdir: true
+rsyslog::purge_config_files: true
 rsyslog::override_default_config: true
 rsyslog::config_file: /etc/rsyslog.conf
 rsyslog::service_name: rsyslog
@@ -13,6 +14,15 @@ rsyslog::service_enabled: true
 ## This can be an array of extra "feature" packages to install for rsyslog
 rsyslog::feature_packages: []
 
+## Default object type priorities (can be overridden)
+rsyslog::module_load_priority: 10
+rsyslog::input_priority: 15
+rsyslog::global_config_priority: 20
+rsyslog::template_priority: 30
+rsyslog::action_priority: 40
+rsyslog::custom_priority: 90
+
+
 # rsyslog::modules
 # This sets modules that will be loaded
 #
@@ -21,18 +31,14 @@ rsyslog::modules:
   - imklog
 
 rsyslog::global_config:
+  parser.SomeConfigurationOption: 
+    value: 'on'
   EscapeControlCharactersOnReceive:
     value: 'off'
     type: legacy
-  parser.SomeConfigurationOption: 
-    value: 'on'
     
-
-
-rsyslog::module_load_priority: 10
-rsyslog::global_config_priority: 20
-rsyslog::template_priority: 30
-
+#
+#
 rsyslog::templates:
   remote:
     type: string
@@ -40,13 +46,11 @@ rsyslog::templates:
   tpl2:
     type: subtree
     subtree: "$1!$usr"
-
   someplug:
      type: plugin
      plugin: foobar
      options:
        sql: "on"
-  
   plain-syslog:
     type: list
     list_descriptions:
@@ -83,3 +87,41 @@ rsyslog::templates:
          format: json
       - constant:
          value: '\"}'
+
+
+
+
+
+
+
+
+#
+rsyslog::actions:
+  elasticsearch:
+    type: omelasticsearch
+    config:
+      queue.type: "linkedlist"
+      queue.spoolDirectory: /var/log/rsyslog/queue
+    template: |
+      if $fromhost == [ "abc" ] then {
+        <%= $content %>
+      }
+
+
+
+   
+rsyslog::inputs:
+  imudp:
+    type: imudp
+    config:
+      queue.type: "linkedlist"
+      queue.spoolDirectory: /var/log/rsyslog/queue
+   
+rsyslog::custom_config:
+  localhost_action:
+    priority: 45
+    content: |
+      if $fromhost == ["apl00036i2","localhost"] then {
+        action(type="omfile" file="/var/log/syslog")
+      }
+    

@@ -9,11 +9,13 @@ define rsyslog::component::template (
   Optional[String]  $subtree = '',
   Optional[String]  $plugin = '',
   Optional[Hash]    $options = {},
+  Optional[String]  $template = '<%= $content %>'
 ) {
 
   include rsyslog
 
-  
+
+
   file { "${::rsyslog::confdir}/${priority}_${name}_template.conf":
     ensure   => file,
     owner    => 'root',

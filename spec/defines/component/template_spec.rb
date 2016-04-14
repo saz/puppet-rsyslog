@@ -74,7 +74,6 @@ describe 'rsyslog::component::template' do
     ] } }
 
     it do
-
       is_expected.to contain_file('/etc/rsyslog.d/30_mytpl_template.conf').with_content(
         /(?x)\s*template\s+\(name="mytpl"\s+type="list"\s*\)
         \s*\{

@@ -12,6 +12,12 @@ describe 'rsyslog' do
       it { is_expected.to contain_class('rsyslog::config::global') }
       it { is_expected.to contain_concat('/etc/rsyslog.d/20_global.conf')}
       it { is_expected.to have_concat__fragment_resource_count(2) }
+      it { is_expected.to contain_concat__fragment('rsyslog::global::parser.RainerOpt').with_target(
+        '/etc/rsyslog.d/20_global.conf')
+      }
+      it { is_expected.to contain_concat__fragment('rsyslog::global::LegacyOpt').with_target(
+        '/etc/rsyslog.d/20_global.conf')
+      }
       it {
         is_expected.to contain_concat__fragment('rsyslog::global::parser.RainerOpt').with_content(
           /(?x)\s*global\s+\(\s*\n
