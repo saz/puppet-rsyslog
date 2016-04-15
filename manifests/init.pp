@@ -66,7 +66,8 @@ class rsyslog (
   Optional[Hash] $inputs = {},
   Integer $input_priority,
   Integer $custom_priority,
-  Optional[Hash] $custom_config = {}
+  Optional[Hash] $custom_config = {},
+  String $target_file
 ) {
 
 

@@ -1,0 +1,11 @@
+<%- |
+$action_name,
+$type,
+$config
+| -%>
+# <%= $action_name %>
+action(type="<%= $type %>"
+<% $config.each |$k, $v| { -%>
+  <%= $k %>="<%= $v %>"
+<%}-%>
+)

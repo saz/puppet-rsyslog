@@ -21,7 +21,7 @@ rsyslog::global_config_priority: 20
 rsyslog::template_priority: 30
 rsyslog::action_priority: 40
 rsyslog::custom_priority: 90
-
+rsyslog::target_file: 50_server.conf
 
 # rsyslog::modules
 # This sets modules that will be loaded
@@ -91,10 +91,6 @@ rsyslog::templates:
 
 
 
-
-
-
-
 #
 rsyslog::actions:
   elasticsearch:
@@ -102,12 +98,31 @@ rsyslog::actions:
     config:
       queue.type: "linkedlist"
       queue.spoolDirectory: /var/log/rsyslog/queue
-    template: |
-      if $fromhost == [ "abc" ] then {
-        <%= $content %>
+
+  plankofwoodsearch:
+    type: omplankofwoodsearch
+    config:
+      queue.type: "linkedlist"
+      queue.spoolDirectory: /var/log/rsyslog/queue
+    format: |
+      if [ "foo" = "bar" ] then {
+      <%= $content %>
+      } else {
+
+  maybeofwoodsearch:
+    type: ommaybeofwoodsearch
+    config:
+      queue.type: "linkedlist"
+      queue.spoolDirectory: /var/log/rsyslog/queue
+    format: |
+      <%= $content %>
       }
 
-
+  elsecondofwoodsearch:
+    type: omelsecondofwoodsearch
+    config:
+      queue.type: "linkedlist"
+      queue.spoolDirectory: /var/log/rsyslog/queue
 
    
 rsyslog::inputs:

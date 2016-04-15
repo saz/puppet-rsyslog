@@ -1,0 +1,11 @@
+<%- |
+$input_name,
+$type,
+$config
+| -%>
+# <%= $input_name %>
+input(type="<%= $type %>"
+<% $config.each |$k, $v| { -%>
+  <%= $k %>="<%= $v %>"
+<%}-%>
+)

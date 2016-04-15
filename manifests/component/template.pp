@@ -1,5 +1,6 @@
 define rsyslog::component::template (
   Integer           $priority,
+  String            $target,
   Enum['string',
        'list',
        'subtree',
@@ -9,18 +10,12 @@ define rsyslog::component::template (
   Optional[String]  $subtree = '',
   Optional[String]  $plugin = '',
   Optional[Hash]    $options = {},
-  Optional[String]  $template = '<%= $content %>'
+  Optional[String]  $format = '<%= $content %>'
 ) {
 
   include rsyslog
 
-
-
-  file { "${::rsyslog::confdir}/${priority}_${name}_template.conf":
-    ensure   => file,
-    owner    => 'root',
-    group    => 'root',
-    content  => epp('rsyslog/template.epp',
+  $content = epp('rsyslog/template.epp',
       {
         "string"            => $string,
         "list_descriptions" => $list_descriptions,
@@ -29,7 +24,12 @@ define rsyslog::component::template (
         "subtree"           => $subtree,
         "plugin"            => $plugin,
         "options"           => $options,
-      }),
+  })
+
+  concat::fragment {"rsyslog::component::template::${name}":
+    target  => "${rsyslog::confdir}/${target}",
+    content => inline_epp($format),
+    order   => $priority,
   }
 
 }
