@@ -29,7 +29,7 @@ This module is only compatible with Puppet 4.0.0+
 
 Configuration options should be configured in Hiera
 
-### Main configuration
+### Main system configuration
 
 ##### `rsyslog::confdir`
 Specifies the main directory where the module will place all configuration files (default: rsyslogd)
@@ -66,4 +66,33 @@ State of the service (default: running)
 
 ##### `rsyslog::service_enabled`
 Whether or not to enable the service (default: true)
+
+### Rsyslog Configuration Directives
+
+##### Config file
+
+By default, everything is configured in a single file under `$confdir` called 50_rsyslog.conf.  This means that packages and other OS specific configurations can also be included (see purge_config_files above).  The default file can be changed using the `rsyslog::target_file` directive and is relative to the confdir.
+
+eg:
+```
+rsyslog::target_file: 50_rsyslog.conf
+```
+
+
+##### Ordering 
+
+The following configuration parameters are defaults for the order of configuration object types within the configuration file.  They can be overriden for individual object definitions (see configuring objects below)
+
+```
+## Default object type priorities (can be overridden)
+rsyslog::module_load_priority: 10
+rsyslog::input_priority: 15
+rsyslog::global_config_priority: 20
+rsyslog::main_queue_priority: 25
+rsyslog::template_priority: 30
+rsyslog::action_priority: 40
+rsyslog::custom_priority: 90
+```
+
+### Configuring Objects
 
