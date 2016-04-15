@@ -47,6 +47,6 @@ PLATFORMS
 
 DEPENDENCIES
   facter (>= 1.7.0)
-  puppet (= 4.4.1)
+  puppet (>= 4.4.1)
   puppet-lint (>= 1.0.0)
   puppetlabs_spec_helper (>= 0.8.2)

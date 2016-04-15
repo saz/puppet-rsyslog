@@ -67,6 +67,8 @@ class rsyslog (
   Integer $input_priority,
   Integer $custom_priority,
   Optional[Hash] $custom_config = {},
+  Integer $main_queue_priority,
+  Optional[Hash] $main_queue_opts,
   String $target_file
 ) {
 

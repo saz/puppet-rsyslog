@@ -14,70 +14,56 @@
 
 ## Description
 
-Start with a one- or two-sentence summary of what the module does and/or what
-problem it solves. This is your 30-second elevator pitch for your module.
-Consider including OS/Puppet version it works with.
+This module manages the rsyslog server and client configuration. It supports rsyslog v8 and defaults to configuring most things in the newer rainerscript configuration style.  Where possible, common configuration patterns have been abstracted so they can be defined in a structured way from hiera.  Though there are a lot of customization options with the configuration, highly complex rsyslog configurations are not easily represented in simple data structures and in these circumstances you may have to provide raw rainerscript code to acheive what you need.  However, the aim of this module is to abstract as much as possible.
 
-You can give more descriptive information in a second paragraph. This paragraph
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?" If your module has a range of functionality (installation, configuration,
-management, etc.), this is the time to mention it.
+This module is only compatible with Puppet 4.0.0+
 
-## Setup
+## Public classes
 
-### What rsyslog affects **OPTIONAL**
+### rsyslog
+### rsyslog::server
+### rsyslog::client
 
-If it's obvious what your module touches, you can skip this section. For
-example, folks can probably figure out that your mysql_instance module affects
-their MySQL instances.
 
-If there's more that they should know about, though, this is the place to mention:
+## Configuration
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
+Configuration options should be configured in Hiera
 
-### Setup Requirements **OPTIONAL**
+### Main configuration
 
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
+#### `rsyslog::confdir`
+Specifies the main directory where the module will place all configuration files (default: rsyslogd)
 
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you might want to include an additional "Upgrading" section
-here.
+#### `rsyslog::package_name`
+The package to install (default: rsyslog)
 
-### Beginning with rsyslog
+#### `rsyslog::package_version`
+Package version/state to install, (default: installed)
 
-The very basic steps needed for a user to get the module up and running. This
-can include setup steps, if necessary, or it can be an example of the most
-basic use of the module.
+#### `rsyslog::feature_packages`
+An array containing a list of extra packages (features) to install.
 
-## Usage
+#### `rsyslog::manage_package`
+Enable or disable managing the package (default: true)
 
-This section is where you describe how to customize, configure, and do the
-fancy stuff with your module here. It's especially helpful if you include usage
-examples and code samples for doing things with your module.
+#### `rsyslog::manage_confdir`
+Enable or disable managing the configuration directory (confdir) (default: true)
 
-## Reference
+#### `rsyslog::purge_config_files`
+When `rsyslog::manage_confdir` is set to true, this option defines whether or not to purge unmanaged files within the configuration directory (default: true)
 
-Here, include a complete list of your module's classes, types, providers,
-facts, along with the parameters for each. Users refer to this section (thus
-the name "Reference") to find specific details; most users don't read it per
-se.
+#### `rsyslog::config_file`
+Location of rsyslog main configuration file (default: /etc/rsyslog.conf)
 
-## Limitations
+#### `rsyslog::override_default_config`
+When set to true, the default configuration file is overridden with just an include statement to the configuration directory .d (default: true)
 
-This is where you list OS compatibility, version compatibility, etc. If there
-are Known Issues, you might want to include them under their own heading here.
+#### `rsyslog::service_name`
+Name of the service (default: rsyslog)
 
-## Development
+#### `rsyslog::service_status`
+State of the service (default: running)
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
+#### `rsyslog::service_enabled`
+Whether or not to enable the service (default: true)
 
-## Release Notes/Contributors/Etc. **Optional**
-
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You can also add any additional sections you feel
-are necessary or important to include here. Please use the `## ` header.

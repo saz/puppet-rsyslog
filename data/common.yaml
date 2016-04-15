@@ -18,6 +18,7 @@ rsyslog::feature_packages: []
 rsyslog::module_load_priority: 10
 rsyslog::input_priority: 15
 rsyslog::global_config_priority: 20
+rsyslog::main_queue_priority: 25
 rsyslog::template_priority: 30
 rsyslog::action_priority: 40
 rsyslog::custom_priority: 90
@@ -37,6 +38,10 @@ rsyslog::global_config:
     value: 'off'
     type: legacy
     
+rsyslog::main_queue_opts:
+  queue.maxdiskspace: 1000G
+  queue.dequeuebatchsize: 1000
+
 #
 #
 rsyslog::templates:
