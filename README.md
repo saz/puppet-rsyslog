@@ -31,39 +31,39 @@ Configuration options should be configured in Hiera
 
 ### Main configuration
 
-#### `rsyslog::confdir`
+##### `rsyslog::confdir`
 Specifies the main directory where the module will place all configuration files (default: rsyslogd)
 
-###### `rsyslog::package_name`
+##### `rsyslog::package_name`
 The package to install (default: rsyslog)
 
-#### `rsyslog::package_version`
+##### `rsyslog::package_version`
 Package version/state to install, (default: installed)
 
-#### `rsyslog::feature_packages`
+##### `rsyslog::feature_packages`
 An array containing a list of extra packages (features) to install.
 
-#### `rsyslog::manage_package`
+##### `rsyslog::manage_package`
 Enable or disable managing the package (default: true)
 
-#### `rsyslog::manage_confdir`
+##### `rsyslog::manage_confdir`
 Enable or disable managing the configuration directory (confdir) (default: true)
 
-#### `rsyslog::purge_config_files`
+##### `rsyslog::purge_config_files`
 When `rsyslog::manage_confdir` is set to true, this option defines whether or not to purge unmanaged files within the configuration directory (default: true)
 
-#### `rsyslog::config_file`
+##### `rsyslog::config_file`
 Location of rsyslog main configuration file (default: /etc/rsyslog.conf)
 
-#### `rsyslog::override_default_config`
+##### `rsyslog::override_default_config`
 When set to true, the default configuration file is overridden with just an include statement to the configuration directory .d (default: true)
 
-#### `rsyslog::service_name`
+##### `rsyslog::service_name`
 Name of the service (default: rsyslog)
 
-#### `rsyslog::service_status`
+##### `rsyslog::service_status`
 State of the service (default: running)
 
-#### `rsyslog::service_enabled`
+##### `rsyslog::service_enabled`
 Whether or not to enable the service (default: true)
 
