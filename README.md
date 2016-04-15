@@ -74,7 +74,7 @@ Whether or not to enable the service (default: true)
 By default, everything is configured in a single file under `$confdir` called 50_rsyslog.conf.  This means that packages and other OS specific configurations can also be included (see purge_config_files above).  The default file can be changed using the `rsyslog::target_file` directive and is relative to the confdir.
 
 eg:
-```
+```yaml
 rsyslog::target_file: 50_rsyslog.conf
 ```
 
@@ -83,7 +83,7 @@ rsyslog::target_file: 50_rsyslog.conf
 
 The following configuration parameters are defaults for the order of configuration object types within the configuration file.  They can be overriden for individual object definitions (see configuring objects below)
 
-```
+```yaml
 ## Default object type priorities (can be overridden)
 rsyslog::module_load_priority: 10
 rsyslog::input_priority: 15
@@ -95,4 +95,133 @@ rsyslog::custom_priority: 90
 ```
 
 ### Configuring Objects
+
+Configuration objects are written to the configuration file in rainerscript format and can be configured in a more abstract way directly from Hiera.     The following configuration object types are supported
+
+* Modules
+* Inputs
+* Global configuration
+* Main queue options
+* Templates
+* Actions
+
+##### `rsyslog::modules`
+
+An array of modules to load
+
+```yaml
+rsyslog::modules:
+  - imuxsock
+  - imklog
+```
+
+This will generate rainerscript as
+
+```
+module(load="imuxsock")
+module(load="imklog")
+```
+
+##### `rsyslog::global_config`
+
+A hash of hashes, they key represents the configuration setting and the value is a hash with the following keys:
+* `value`: the value of the setting
+* `type`: the type of format to use (legacy or rainerscript), if omitted rainerscript is used.
+
+```yaml
+rsyslog::global_config:
+  parser.SomeConfigurationOption:
+    value: 'on'
+  EscapeControlCharactersOnReceive:
+    value: 'off'
+    type: legacy
+```
+
+```
+global (
+  parser.SomeConfigurationOption="on"
+)
+$EscapeControlCharactersOnReceive off
+```
+
+##### `rsyslog::main_queue_opts`
+Configures the `main_queue` object in rsyslog as a hash
+
+```yaml
+rsyslog::main_queue_opts:
+  queue.maxdiskspace: 1000G
+  queue.dequeuebatchsize: 1000
+```
+
+```
+main_queue(
+  queue.maxdiskspace="1000G"
+  queue.dequeuebatchsize="1000"
+)
+```
+
+##### `rsyslog::templates`
+Configures `template` objects in rsyslog.  Each element is a hash containing the name of the template, the type and the template data.    The type parameter can be one of `string`, `subtree`, `plugin` or `list`
+
+```yaml
+rsyslog::templates:
+  remote:
+    type: string
+    string: "/var/log/rsyslog/logs/%fromhost-ip%/%fromhost-ip%.log"
+  tpl2:
+    type: subtree
+    subtree: "$1!$usr"
+  someplug:
+     type: plugin
+     plugin: foobar
+```
+
+eg:
+
+```
+template (name="remote" type="string"
+  string="/var/log/rsyslog/logs/%fromhost-ip%/%fromhost-ip%.log"
+)
+```
+
+When using `list`, the `list_descriptions` hash should contain an array od single element hashes, the key should be `constant` or `property` with their corresponding parameters in a sub hash.  eg:
+
+```yaml
+  plain-syslog:
+    type: list
+    list_descriptions:
+      - constant:
+          value: '{'
+      - constant:
+          value: '\"@timestamp\":\"'
+      - constant:
+          value: '\"@remove_me_timestamp\":\"'
+      - property:
+         name: timereported
+         dateFormat: rfc3339
+      - constant:
+         value: '\"host\":\"'
+      - property:
+         name: hostname
+      - constant:
+         value: '\"severity\":\"'
+      - property:
+         name: syslogseverity-text
+      - constant:
+         value: '\"facility\":\"'
+      - property:
+         name: syslogfacility-text
+      - constant:
+         value: '\"tag\":\"'
+      - property:
+         name: syslogtag
+         format: json
+      - constant:
+         value: '\"message\":\"'
+      - property:
+         name: msg
+         format: json
+      - constant:
+         value: '\"}'
+```
 
