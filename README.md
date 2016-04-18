@@ -225,3 +225,80 @@ When using `list`, the `list_descriptions` hash should contain an array od singl
          value: '\"}'
 ```
 
+##### rsyslog::actions
+Configures action objects in rainerscript.  Each element of the hash contains the type of action, followed by a hash of configuration options. Eg:
+
+```yaml
+rsyslog::actions:
+  elasticsearch:
+    type: omelasticsearch
+    config:
+      queue.type: "linkedlist"
+      queue.spoolDirectory: /var/log/rsyslog/queue
+```
+
+will produce
+
+```
+action(type="omelasticsearch"
+  queue.type="linkedlist"
+  queue.spoolDirectory="/var/log/rsyslog/queue"
+)
+```
+
+
+##### rsyslog::inputs
+Configures input objects in rainerscript.  Each element of the hash contains the type of input, followed by a hash of configuration options. Eg:
+
+```yaml
+rsyslog::inputs:
+  imudp:
+    type: imudp
+    config:
+      port: '514'
+```
+
+will produce
+
+```
+input(type="imudp"
+  port="514"
+)
+```
+
+### Formatting
+
+This module attempts to abstract rainerscript objects into data structures that can be handled easily within hiera, however there are clearly times when you need to add some more code structure around an object, such as conditionals.  For simple code additions, the `template`, `action`, `input` and `global_config` object types support the optional parameter of `format` which takes Puppet EPP formatted template as a value, using the variable `$content` to signify the object itself.   For example, to wrap an action in a simple conditional you could format it as
+
+```yaml
+rsyslog::actions:
+  elasticsearch:
+    type: omelasticsearch
+    config:
+      queue.type: "linkedlist"
+      queue.spoolDirectory: "/var/log/rsyslog/queue"
+    format: |
+      if [ $fromhost == "foo.localdomain"] then {
+      <%= $content %>
+      }
+```
+
+For more complicated code structures that don't lend themselves well to a structured format, like multiple nested conditionals there is also a special configuration object type called custom_config.    `custom_config` takes two arguments, `priority` to determine where in the file it should be configured, and `content` a text string to insert.  Eg;
+
+```yaml
+rsyslog::custom_config:
+  localhost_action:
+    priority: 45
+    content: |
+      if $fromhost == ["foo.localdomain","localhost"] then {
+        action(type="omfile" file="/var/log/syslog")
+      } else {
+       action(type="omelasticsearch"
+         queue.type="linkedlist"
+         queue.spoolDirectory="/var/log/rsyslog/queue"
+       )
+    }
+
+```
+
+
