@@ -8,6 +8,7 @@ describe 'rsyslog::component::action' do
     let(:params) { {
       :type     => 'omelasticsearch',
       :priority => 40,
+      :target   => '50_rsyslog.conf',
       :config   => {
         "queue.type"           => "linkedlist",
         "queue.spoolDirectory" => "/var/log/rsyslog/queue",
@@ -15,7 +16,7 @@ describe 'rsyslog::component::action' do
     }}
 
     it do
-      is_expected.to contain_file('/etc/rsyslog.d/40_myaction_action.conf').with_content(
+      is_expected.to contain_concat__fragment('rsyslog::component::action::myaction').with_content(
         /(?x)# myaction\n
         \s*action\(type="omelasticsearch"\s*\n
         \s+queue\.type="linkedlist"\s*\n

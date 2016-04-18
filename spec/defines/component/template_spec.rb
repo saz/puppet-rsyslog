@@ -8,11 +8,12 @@ describe 'rsyslog::component::template' do
     let(:params) { {
       :type     => 'string',
       :priority => 30,
+      :target   => '50_rsyslog.conf',
       :string   => '/var/log/rsyslog/logs/%fromhost-ip%/%fromhost-ip%.log'
     }}
 
     it do
-      is_expected.to contain_file('/etc/rsyslog.d/30_mytpl_template.conf').with_content(
+      is_expected.to contain_concat__fragment('rsyslog::component::template::mytpl').with_content(
         /(?x)\s*template\s*\(name="mytpl"\s*type="string"
         \s+string="\/var\/log\/rsyslog\/logs\/%fromhost-ip%\/%fromhost-ip%.log"\s*\)\s*$/)
     end
@@ -22,11 +23,12 @@ describe 'rsyslog::component::template' do
     let(:params) { {
       :type     => 'plugin',
       :priority => 30,
+      :target   => '50_rsyslog.conf',
       :plugin   => 'mystringgen'
     }}
 
     it do
-      is_expected.to contain_file('/etc/rsyslog.d/30_mytpl_template.conf').with_content(
+      is_expected.to contain_concat__fragment('rsyslog::component::template::mytpl').with_content(
         /(?x)\s*template\s*\(name="mytpl"\s*type="plugin"
         \s+plugin="mystringgen"\s*\)\s*$/)
     end
@@ -36,11 +38,12 @@ describe 'rsyslog::component::template' do
     let(:params) { {
       :type     => 'subtree',
       :priority => 30,
+      :target   => '50_rsyslog.conf',
       :subtree   => '$!usr!tpl2'
     }}
 
     it do
-      is_expected.to contain_file('/etc/rsyslog.d/30_mytpl_template.conf').with_content(
+      is_expected.to contain_concat__fragment('rsyslog::component::template::mytpl').with_content(
         /(?x)\s*template\s*\(name="mytpl"\s*type="subtree"
         \s+subtree="\$!usr!tpl2"\s*\)\s*$/)
     end
@@ -50,12 +53,13 @@ describe 'rsyslog::component::template' do
     let(:params) { {
       :type     => 'string',
       :priority => 30,
+      :target   => '50_rsyslog.conf',
       :string   => '/var/log/rsyslog/logs/%fromhost-ip%/%fromhost-ip%.log',
       :options  => { 'sql' => 'on' }
     }}
 
     it do
-      is_expected.to contain_file('/etc/rsyslog.d/30_mytpl_template.conf').with_content(
+      is_expected.to contain_concat__fragment('rsyslog::component::template::mytpl').with_content(
         /(?x)\s*template\s*\(name="mytpl"\s*type="string"
         \s+string="\/var\/log\/rsyslog\/logs\/%fromhost-ip%\/%fromhost-ip%.log"
         \s+option\.sql="on"\s*\)\s*$/)
@@ -66,6 +70,7 @@ describe 'rsyslog::component::template' do
     let(:params) { {
       :type => 'list',
       :priority => 30,
+      :target   => '50_rsyslog.conf',
       :list_descriptions => [
         { 'constant' => { 'value' => '{' } },
         { 'constant' => { 'value' => '\"@timestamp\":\"' } },
@@ -74,7 +79,7 @@ describe 'rsyslog::component::template' do
     ] } }
 
     it do
-      is_expected.to contain_file('/etc/rsyslog.d/30_mytpl_template.conf').with_content(
+      is_expected.to contain_concat__fragment('rsyslog::component::template::mytpl').with_content(
         /(?x)\s*template\s+\(name="mytpl"\s+type="list"\s*\)
         \s*\{
         \s*constant\(\s*value="\{"\s*\)\s*\n

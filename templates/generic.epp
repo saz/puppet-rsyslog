@@ -1,0 +1,9 @@
+<%- |
+$object_name,
+$config
+| -%>
+<%= $object_name %>(
+<% $config.each |$k, $v| { -%>
+  <%= $k %>="<%= $v %>"
+<%}-%>
+)
