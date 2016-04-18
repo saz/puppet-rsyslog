@@ -2,6 +2,9 @@
 
 #### Table of Contents
 
+1. [Configuration](#configuration)
+  1.1. [Main system configuration](#main-system-configuration)
+
 1. [Description](#description)
 1. [Setup - The basics of getting started with rsyslog](#setup)
     * [What rsyslog affects](#what-rsyslog-affects)
@@ -266,6 +269,8 @@ input(type="imudp"
 )
 ```
 
+### Positioning
+All rsyslog object types are positioned according to the default variables 
 ### Formatting
 
 This module attempts to abstract rainerscript objects into data structures that can be handled easily within hiera, however there are clearly times when you need to add some more code structure around an object, such as conditionals.  For simple code additions, the `template`, `action`, `input` and `global_config` object types support the optional parameter of `format` which takes Puppet EPP formatted template as a value, using the variable `$content` to signify the object itself.   For example, to wrap an action in a simple conditional you could format it as
@@ -283,7 +288,7 @@ rsyslog::actions:
       }
 ```
 
-For more complicated code structures that don't lend themselves well to a structured format, like multiple nested conditionals there is also a special configuration object type called custom_config.    `custom_config` takes two arguments, `priority` to determine where in the file it should be configured, and `content` a text string to insert.  Eg;
+For more complicated code structures that don't lend themselves well to a structured format, like multiple nested conditionals there is also a special configuration object type called custom_config.    `custom_config` takes two arguments, `priority` to determine where in the file it should be configured, and `content` a text string to insert. By default the priority is set by the `custom_config_priority` parameter (see [Ordering](#ordering))
 
 ```yaml
 rsyslog::custom_config:
@@ -298,6 +303,10 @@ rsyslog::custom_config:
          queue.spoolDirectory="/var/log/rsyslog/queue"
        )
     }
+
+  stop:
+    content: |
+      if [ $fromhost == "foo" ] then stop
 
 ```
 
