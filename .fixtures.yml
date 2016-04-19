@@ -1,8 +1,8 @@
 ---
 fixtures:
   forge_modules:
-#    concat: "puppetlabs/concat"
-#    stdlib: "puppetlabs/stdlib"
+    concat: "puppetlabs/concat"
+    stdlib: "puppetlabs/stdlib"
 
   symlinks:
     rsyslog: "#{source_dir}"
