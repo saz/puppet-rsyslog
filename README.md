@@ -24,9 +24,16 @@ This module is only compatible with Puppet 4.0.0+
 ## Public classes
 
 ### rsyslog
+
+Configures base rsyslog packages, service and general configuration
+
 ### rsyslog::server
+
+Configuration directives for a server
+
 ### rsyslog::client
 
+Configuration directives for a client
 
 ## Configuration
 
@@ -108,12 +115,14 @@ Configuration objects are written to the configuration file in rainerscript form
 * Templates
 * Actions
 
-##### `rsyslog::modules`
+Configuration objects should be declared in the rsyslog::server or rsyslog::client namespaces accordingly.
+
+##### `rsyslog::server::modules`
 
 An array of modules to load
 
 ```yaml
-rsyslog::modules:
+rsyslog::server::modules:
   - imuxsock
   - imklog
 ```
@@ -125,14 +134,14 @@ module(load="imuxsock")
 module(load="imklog")
 ```
 
-##### `rsyslog::global_config`
+##### `rsyslog::server::global_config`  `rsyslog::client::global_config`
 
 A hash of hashes, they key represents the configuration setting and the value is a hash with the following keys:
 * `value`: the value of the setting
 * `type`: the type of format to use (legacy or rainerscript), if omitted rainerscript is used.
 
 ```yaml
-rsyslog::global_config:
+rsyslog::server::global_config:
   parser.SomeConfigurationOption:
     value: 'on'
   EscapeControlCharactersOnReceive:
@@ -147,11 +156,11 @@ global (
 $EscapeControlCharactersOnReceive off
 ```
 
-##### `rsyslog::main_queue_opts`
+##### `rsyslog::server::main_queue_opts`
 Configures the `main_queue` object in rsyslog as a hash
 
 ```yaml
-rsyslog::main_queue_opts:
+rsyslog::server::main_queue_opts:
   queue.maxdiskspace: 1000G
   queue.dequeuebatchsize: 1000
 ```
@@ -163,11 +172,11 @@ main_queue(
 )
 ```
 
-##### `rsyslog::templates`
+##### `rsyslog::server::templates`
 Configures `template` objects in rsyslog.  Each element is a hash containing the name of the template, the type and the template data.    The type parameter can be one of `string`, `subtree`, `plugin` or `list`
 
 ```yaml
-rsyslog::templates:
+rsyslog::server::templates:
   remote:
     type: string
     string: "/var/log/rsyslog/logs/%fromhost-ip%/%fromhost-ip%.log"
@@ -228,11 +237,11 @@ When using `list`, the `list_descriptions` hash should contain an array od singl
          value: '\"}'
 ```
 
-##### rsyslog::actions
+##### `rsyslog::server::actions` `rsyslog::client::actions`
 Configures action objects in rainerscript.  Each element of the hash contains the type of action, followed by a hash of configuration options. Eg:
 
 ```yaml
-rsyslog::actions:
+rsyslog::server::actions:
   elasticsearch:
     type: omelasticsearch
     config:
@@ -250,11 +259,11 @@ action(type="omelasticsearch"
 ```
 
 
-##### rsyslog::inputs
+##### `rsyslog::server::inputs` `rsyslog::client::inputs`
 Configures input objects in rainerscript.  Each element of the hash contains the type of input, followed by a hash of configuration options. Eg:
 
 ```yaml
-rsyslog::inputs:
+rsyslog::server::inputs:
   imudp:
     type: imudp
     config:
@@ -270,13 +279,24 @@ input(type="imudp"
 ```
 
 ### Positioning
-All rsyslog object types are positioned according to the default variables 
+All rsyslog object types are positioned according to the default variables (see [Ordering](#ordering)).  The position can be overriden for any object by adding the optional `position` parameter.
+
+```yaml
+rsyslog::server::actions:
+  elasticsearch:
+    type: omelasticsearch
+    config:
+      queue.type: "linkedlist"
+      queue.spoolDirectory: "/var/log/rsyslog/queue"
+    position: 35
+```
+
 ### Formatting
 
 This module attempts to abstract rainerscript objects into data structures that can be handled easily within hiera, however there are clearly times when you need to add some more code structure around an object, such as conditionals.  For simple code additions, the `template`, `action`, `input` and `global_config` object types support the optional parameter of `format` which takes Puppet EPP formatted template as a value, using the variable `$content` to signify the object itself.   For example, to wrap an action in a simple conditional you could format it as
 
 ```yaml
-rsyslog::actions:
+rsyslog::server::actions:
   elasticsearch:
     type: omelasticsearch
     config:
@@ -291,7 +311,7 @@ rsyslog::actions:
 For more complicated code structures that don't lend themselves well to a structured format, like multiple nested conditionals there is also a special configuration object type called custom_config.    `custom_config` takes two arguments, `priority` to determine where in the file it should be configured, and `content` a text string to insert. By default the priority is set by the `custom_config_priority` parameter (see [Ordering](#ordering))
 
 ```yaml
-rsyslog::custom_config:
+rsyslog::server::custom_config:
   localhost_action:
     priority: 45
     content: |
