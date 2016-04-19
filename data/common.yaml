@@ -27,24 +27,24 @@ rsyslog::target_file: 50_rsyslog.conf
 # rsyslog::modules
 # This sets modules that will be loaded
 #
-rsyslog::modules:
+rsyslog::server::modules:
   - imuxsock
   - imklog
 
-rsyslog::global_config:
+rsyslog::server::global_config:
   parser.SomeConfigurationOption: 
     value: 'on'
   EscapeControlCharactersOnReceive:
     value: 'off'
     type: legacy
     
-rsyslog::main_queue_opts:
+rsyslog::server::main_queue_opts:
   queue.maxdiskspace: 1000G
   queue.dequeuebatchsize: 1000
 
 #
 #
-rsyslog::templates:
+rsyslog::server::templates:
   remote:
     type: string
     string: "/var/log/rsyslog/logs/%fromhost-ip%/%fromhost-ip%.log"
@@ -97,7 +97,7 @@ rsyslog::templates:
 
 
 #
-rsyslog::actions:
+rsyslog::server::actions:
   elasticsearch:
     type: omelasticsearch
     config:
@@ -130,14 +130,14 @@ rsyslog::actions:
       queue.spoolDirectory: /var/log/rsyslog/queue
 
    
-rsyslog::inputs:
+rsyslog::client::inputs:
   imudp:
     type: imudp
     config:
       queue.type: "linkedlist"
       queue.spoolDirectory: /var/log/rsyslog/queue
    
-rsyslog::custom_config:
+rsyslog::server::custom_config:
   localhost_action:
     priority: 45
     content: |

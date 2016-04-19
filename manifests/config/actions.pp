@@ -1,5 +1,5 @@
 class rsyslog::config::actions {
-  $::rsyslog::actions.each |$action, $config| {
+  $::rsyslog::config::actions.each |$action, $config| {
     rsyslog::component::action { $action:
       *            => {
         'priority' => $rsyslog::action_priority,
