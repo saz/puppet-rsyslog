@@ -3,6 +3,7 @@
 #### Table of Contents
 
 * [Description](#description)
+* [Usage](#usage)
 * [Public Classes](#public-classes)
 * [Configuration](#configuration)
   * [Main system configuration](#main-system-configuration)
@@ -24,6 +25,14 @@
 This module manages the rsyslog server and client configuration. It supports rsyslog v8 and defaults to configuring most things in the newer rainerscript configuration style.  Where possible, common configuration patterns have been abstracted so they can be defined in a structured way from hiera.  Though there are a lot of customization options with the configuration, highly complex rsyslog configurations are not easily represented in simple data structures and in these circumstances you may have to provide raw rainerscript code to acheive what you need.  However, the aim of this module is to abstract as much as possible.
 
 This module is only compatible with Puppet 4.0.0+
+
+## Usage
+
+Simply include the `rsyslog::client` or `rsyslog::server` class
+
+```puppet
+class { 'rsyslog::server': }
+```
 
 ## Public classes
 
