@@ -2,18 +2,22 @@
 
 #### Table of Contents
 
-1. [Configuration](#configuration)
-  1.1. [Main system configuration](#main-system-configuration)
+* [Description](#description)
+* [Public Classes](#public-classes)
+* [Configuration](#configuration)
+  * [Main system configuration](#main-system-configuration)
+  * [Rsyslog configuration directives](#rsyslog-configuration-directives)
+  * [Configuring objects](#configuring-options)
+    * [Modules](#rsyslog::server::modules)
+    * [global_config](#rsyslog::server::global_config-rsyslog::client::global_config)
+    * [Queue options](#rsyslog::server::main_queue_opts)
+    * [Templates](#rsyslog::server::templates)
+    * [Actions](#rsyslog::server::actions-rsyslog::client::actions)
+    * [Inputs](#rsyslog::server::inputs-rsyslog::client::inputs)
+  * [Positioning](#positioning)
+  * [Formatting](#formatting)
 
-1. [Description](#description)
-1. [Setup - The basics of getting started with rsyslog](#setup)
-    * [What rsyslog affects](#what-rsyslog-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with rsyslog](#beginning-with-rsyslog)
-1. [Usage - Configuration options and additional functionality](#usage)
-1. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-1. [Limitations - OS compatibility, etc.](#limitations)
-1. [Development - Guide for contributing to the module](#development)
+    
 
 ## Description
 
