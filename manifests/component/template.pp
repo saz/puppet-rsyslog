@@ -1,10 +1,12 @@
 define rsyslog::component::template (
   Integer           $priority,
   String            $target,
-  Enum['string',
-       'list',
-       'subtree',
-       'plugin']    $type,
+  Enum[
+    'string',
+    'list',
+    'subtree',
+    'plugin'
+  ]                 $type,
   Optional[Array]   $list_descriptions = [],
   Optional[String]  $string = '',
   Optional[String]  $subtree = '',
@@ -17,13 +19,13 @@ define rsyslog::component::template (
 
   $content = epp('rsyslog/template.epp',
       {
-        "string"            => $string,
-        "list_descriptions" => $list_descriptions,
-        "type"              => $type,
-        "template_name"     => $name,
-        "subtree"           => $subtree,
-        "plugin"            => $plugin,
-        "options"           => $options,
+        'string'            => $string,
+        'list_descriptions' => $list_descriptions,
+        'type'              => $type,
+        'template_name'     => $name,
+        'subtree'           => $subtree,
+        'plugin'            => $plugin,
+        'options'           => $options,
   })
 
   concat::fragment {"rsyslog::component::template::${name}":

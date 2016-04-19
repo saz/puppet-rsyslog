@@ -24,124 +24,18 @@ rsyslog::action_priority: 40
 rsyslog::custom_priority: 90
 rsyslog::target_file: 50_rsyslog.conf
 
-# rsyslog::modules
-# This sets modules that will be loaded
-#
-rsyslog::modules:
-  - imuxsock
-  - imklog
-
-rsyslog::global_config:
-  parser.SomeConfigurationOption: 
-    value: 'on'
-  EscapeControlCharactersOnReceive:
-    value: 'off'
-    type: legacy
-    
-rsyslog::main_queue_opts:
-  queue.maxdiskspace: 1000G
-  queue.dequeuebatchsize: 1000
-
-#
-#
-rsyslog::templates:
-  remote:
-    type: string
-    string: "/var/log/rsyslog/logs/%fromhost-ip%/%fromhost-ip%.log"
-  tpl2:
-    type: subtree
-    subtree: "$1!$usr"
-  someplug:
-     type: plugin
-     plugin: foobar
-     options:
-       sql: "on"
-  plain-syslog:
-    type: list
-    list_descriptions:
-      - constant:
-          value: '{'
-      - constant:
-          value: '\"@timestamp\":\"'
-      - constant:
-          value: '\"@remove_me_timestamp\":\"'
-      - property:
-         name: timereported
-         dateFormat: rfc3339
-      - constant:
-         value: '\"host\":\"'
-      - property:
-         name: hostname
-      - constant:
-         value: '\"severity\":\"'
-      - property:
-         name: syslogseverity-text
-      - constant:
-         value: '\"facility\":\"'
-      - property:
-         name: syslogfacility-text
-      - constant:
-         value: '\"tag\":\"'
-      - property:
-         name: syslogtag
-         format: json
-      - constant:
-         value: '\"message\":\"'
-      - property:
-         name: msg
-         format: json
-      - constant:
-         value: '\"}'
-
-
-
-
-#
-rsyslog::actions:
-  elasticsearch:
-    type: omelasticsearch
-    config:
-      queue.type: "linkedlist"
-      queue.spoolDirectory: /var/log/rsyslog/queue
-
-  plankofwoodsearch:
-    type: omplankofwoodsearch
-    config:
-      queue.type: "linkedlist"
-      queue.spoolDirectory: /var/log/rsyslog/queue
-    format: |
-      if [ "foo" = "bar" ] then {
-      <%= $content %>
-      } else {
-
-  maybeofwoodsearch:
-    type: ommaybeofwoodsearch
-    config:
-      queue.type: "linkedlist"
-      queue.spoolDirectory: /var/log/rsyslog/queue
-    format: |
-      <%= $content %>
-      }
-
-  elsecondofwoodsearch:
-    type: omelsecondofwoodsearch
-    config:
-      queue.type: "linkedlist"
-      queue.spoolDirectory: /var/log/rsyslog/queue
-
-   
-rsyslog::inputs:
-  imudp:
-    type: imudp
-    config:
-      queue.type: "linkedlist"
-      queue.spoolDirectory: /var/log/rsyslog/queue
-   
-rsyslog::custom_config:
-  localhost_action:
-    priority: 45
-    content: |
-      if $fromhost == ["apl00036i2","localhost"] then {
-        action(type="omfile" file="/var/log/syslog")
-      }
-    
+## Optional configuration values - see README.md
+#rsyslog::server::modules:
+#rsyslog::server::global_config:
+#rsyslog::server::templates:
+#rsyslog::server::actions:
+#rsyslog::server::inputs:
+#rsyslog::server::custom_config:
+#    
+#rsyslog::client::modules:
+#rsyslog::client::global_config:
+#rsyslog::client::templates:
+#rsyslog::client::actions:
+#rsyslog::client::inputs:
+#rsyslog::client::custom_config:
+#    

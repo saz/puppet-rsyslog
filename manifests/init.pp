@@ -48,7 +48,6 @@ class rsyslog (
   String  $package_version,
   String  $config_file,
   Array   $feature_packages,
-  Optional[Array]   $modules = [],
   Integer $module_load_priority,
   String  $service_name,
   String  $service_status,
@@ -58,22 +57,15 @@ class rsyslog (
   Boolean $manage_confdir,
   Boolean $purge_config_files,
   Integer $global_config_priority,
-  Optional[Hash]    $global_config = {},
   Integer $template_priority,
-  Optional[Hash] $templates = {},
-  Optional[Hash] $actions = {},
   Integer $action_priority,
-  Optional[Hash] $inputs = {},
   Integer $input_priority,
   Integer $custom_priority,
-  Optional[Hash] $custom_config = {},
   Integer $main_queue_priority,
-  Optional[Hash] $main_queue_opts,
   String $target_file
 ) {
 
 
-  class { 'rsyslog::base': } ->
-  class { 'rsyslog::config': }
+  class { 'rsyslog::base': }
 
 }
