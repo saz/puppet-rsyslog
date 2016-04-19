@@ -1,7 +1,8 @@
 class rsyslog::config {
 
   concat { "${::rsyslog::confdir}/${::rsyslog::target_file}":
-    owner => 'root',
+    owner  => 'root',
+    notify => Service[$::rsyslog::service_name],
   }
 
   include rsyslog::config::modules
