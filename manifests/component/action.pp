@@ -9,10 +9,10 @@ define rsyslog::component::action (
   include rsyslog
 
   $content = epp('rsyslog/action.epp', {
-        "action_name"  => $name,
-        "type"        => $type,
-        "config"      => $config
-   })
+        'action_name' => $name,
+        'type'        => $type,
+        'config'      => $config,
+  })
 
   concat::fragment {"rsyslog::component::action::${name}":
     target  => "${rsyslog::confdir}/${target}",

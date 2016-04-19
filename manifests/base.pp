@@ -26,8 +26,8 @@ class rsyslog::base {
 
     $purge_params = $::rsyslog::purge_config_files ? {
       true  => {
-        "purge"   => true,
-        "recurse" => true,
+        'purge'   => true,
+        'recurse' => true,
       },
       false => {}
     }
@@ -56,8 +56,8 @@ class rsyslog::base {
   }
 
   service { $rsyslog::service_name:
-    ensure  => $rsyslog::service_status,
-    enable  => $rsyslog::service_enabled,
+    ensure => $rsyslog::service_status,
+    enable => $rsyslog::service_enabled,
   }
 
 }

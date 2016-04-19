@@ -66,6 +66,6 @@ class rsyslog (
 ) {
 
 
-  class { 'rsyslog::base': } 
+  class { 'rsyslog::base': }
 
 }

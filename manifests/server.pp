@@ -1,11 +1,11 @@
 class rsyslog::server (
-  Optional[Hash] $global_config = {},
-  Optional[Hash] $templates = {},
-  Optional[Hash] $actions = {},
-  Optional[Hash] $inputs = {},
-  Optional[Hash] $custom_config = {},
-  Optional[Hash] $main_queue_opts = {},
-  Optional[Array] $modules = [],
+  Optional[Hash]  $global_config   = {},
+  Optional[Hash]  $templates       = {},
+  Optional[Hash]  $actions         = {},
+  Optional[Hash]  $inputs          = {},
+  Optional[Hash]  $custom_config   = {},
+  Optional[Hash]  $main_queue_opts = {},
+  Optional[Array] $modules         = [],
 ) {
 
   include rsyslog
