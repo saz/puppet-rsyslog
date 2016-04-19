@@ -2,13 +2,14 @@
   "name": "crayfishx/rsyslog",
   "version": "0.1.0",
   "author": "crayfishx",
-  "summary": "Manage rsyslog",
+  "summary": "Manage rsyslog v8 configuration",
   "license": "Apache-2.0",
-  "source": "",
-  "project_page": null,
-  "issues_url": null,
+  "source": "https://github.com/crayfishx/puppet-rsyslog",
+  "project_page": "https://github.com/crayfishx/puppet-rsyslog",
+  "issues_url": "https://github.com/crayfishx/puppet-rsyslog",
   "dependencies": [
-    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0 < 5.0.0"},
+    {"name":"puppetlabs-concat","version_requirement":">= 2.0.0 < 3.0.0"}
   ],
   "data_provider": "hiera"
 }
