@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/crayfishx/puppet-rsyslog.svg?branch=master)](https://travis-ci.org/crayfishx/puppet-rsyslog)
+
+
+
 # rsyslog
 
 #### Table of Contents
@@ -343,4 +347,12 @@ rsyslog::server::custom_config:
 
 ```
 
+### License
+
+* This module is licensed under Apache 2.0, see LICENSE.txt for more details
+
+### Maintainer
+
+* Written and maintained by Craig Dunn (craig@craigdunn.org) @crayfishx
+* Sponsored by [Skyscape Cloud Services](http://www.skyscapecloud.com)
 
