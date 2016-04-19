@@ -112,12 +112,12 @@ rsyslog::custom_priority: 90
 
 Configuration objects are written to the configuration file in rainerscript format and can be configured in a more abstract way directly from Hiera.     The following configuration object types are supported
 
-* Modules
-* Inputs
-* Global configuration
-* Main queue options
-* Templates
-* Actions
+* [Modules](#rsyslogservermodules)
+* [Global configuration](#rsyslogserverglobal_config-rsyslogclientglobal_config)
+* [Main queue options](#rsyslogservermain_queue_opts)
+* [Templates](#rsyslogservertemplates)
+* [Actions](#rsyslogserveractions-rsyslogclientactions)
+* [Inputs](#rsyslogserverinputs-rsyslogclientinputs)
 
 Configuration objects should be declared in the rsyslog::server or rsyslog::client namespaces accordingly.
 
