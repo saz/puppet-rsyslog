@@ -1,9 +1,8 @@
 require 'spec_helper'
 
-describe 'rsyslog' do
+describe 'rsyslog::server' do
   let (:params) {{
     :modules => ['imuxsock', 'imklog'],
-    :module_load_priority => 20,
   }}
 
   describe 'rsyslog::config::modules' do
@@ -11,7 +10,7 @@ describe 'rsyslog' do
       it { is_expected.to contain_class('rsyslog::config::modules') }
       it { is_expected.to contain_concat__fragment('rsyslog::config::modules').with(
         'target' => '/etc/rsyslog.d/50_rsyslog.conf',
-        'order'  => 20
+        'order'  => 10
       )}
 
 

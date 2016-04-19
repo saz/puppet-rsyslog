@@ -4,12 +4,12 @@
 #
 define rsyslog::component::custom_config (
   Integer $priority,
-  String  $filename_part = $name,
   String  $target,
-  String  $content
+  String  $content,
+  String  $filename_part = $name,
 ) {
 
-  include rsyslog 
+  include rsyslog
 
   concat::fragment { "rsyslog::component::custom_config::${name}":
     target  => "${rsyslog::confdir}/${target}",
