@@ -54,7 +54,7 @@ Configuration directives for a client
 
 ## Configuration
 
-Configuration options should be configured in Hiera
+Configuration options should be configured in Hiera.  Defaults are defined in data/common.yaml within the module
 
 ### Main system configuration
 
