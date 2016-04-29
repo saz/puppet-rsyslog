@@ -120,7 +120,7 @@
   ```
   Similarly the each of the config classes provide a piece of functionality.
   For full details on which class provides what functionaly in configuring 
-  rsyslog please see the [README.md](../blob/master/README.md) file.
+  rsyslog please see the [README.md](../master/README.md) file.
 
 ## Extending Module
   The module provides full flexiblity for custom configuration / extension,
