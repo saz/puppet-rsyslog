@@ -5,7 +5,7 @@ $ModLoad imfile
 
 $InputFileName <%= @file_name %>
 $InputFileTag <%= @file_tag %>
-$InputFileStateFile state-<%= @name %>
+$InputFileStateFile state-<%= @name.gsub(/[\/ ]/,'-') %>
 $InputFileSeverity <%= @file_severity %>
 $InputFileFacility <%= @file_facility %>
 <% if @imfile_readmode -%>
