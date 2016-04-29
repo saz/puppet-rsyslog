@@ -13,15 +13,19 @@
 #
 class rsyslog::params {
 
-  $max_message_size               = '2k'
-  $system_log_rate_limit_interval = '1'
-  $system_log_rateLimit_burst     = '100'
-  $purge_rsyslog_d                = false
-  $extra_modules                  = []
-  $default_template               = undef
-  $msg_reduction                  = false
-  $non_kernel_facility            = false
-  $preserve_fqdn                  = false
+  $max_message_size                    = '2k'
+  $system_log_rate_limit_interval      = '1'
+  $system_log_rateLimit_burst          = '100'
+  $purge_rsyslog_d                     = false
+  $extra_modules                       = []
+  $default_template                    = undef
+  $msg_reduction                       = false
+  $non_kernel_facility                 = false
+  $preserve_fqdn                       = false
+  $im_journal_ratelimit_interval       = '600'
+  $im_journal_ratelimit_burst          = '20000'
+  $im_journal_ignore_previous_messages = 'off'
+  $im_journal_statefile                = false
 
   case $::osfamily {
     debian: {
@@ -123,10 +127,6 @@ class rsyslog::params {
           '#$ModLoad immark  # provides --MARK-- message capability',
         ]
         $omit_local_logging                  = true
-        $im_journal_ratelimit_interval       = '600'
-        $im_journal_ratelimit_burst          = '20000'
-        $im_journal_ignore_previous_messages = 'off'
-        $im_journal_statefile                = false
       } else {
         $rsyslog_package_name   = 'rsyslog5'
         $mysql_package_name     = 'rsyslog5-mysql'
