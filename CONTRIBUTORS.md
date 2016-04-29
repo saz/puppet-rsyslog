@@ -141,7 +141,7 @@
   The module provides full flexibility for custom configuration / extension,
   it can be easily extended to include any specific functionally by assigning
   a priority for the class where the new functionality to be placed in the
-  50_rsyslog.conf file or it can also be dropped as file into /etc/rsyslog.d
-  directory. The class/component/template structure shoule be maintained as 
-  above to keep it consistent.
+  50_rsyslog.conf file or it can also be dropped as a separate file into 
+  /etc/rsyslog.d directory. The class/component/template structure shoule 
+  be maintained as above to keep the code consistent.
   
