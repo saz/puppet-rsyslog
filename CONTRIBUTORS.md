@@ -12,14 +12,15 @@
   it as client/server based on the configuration data provided. The configuration 
   class is broken down into 7 classes
 
-  - rsyslog::config::modules
-  - rsyslog::config::global
-  - rsyslog::config::main_queue
-  - rsyslog::config::templates
-  - rsyslog::config::actions
-  - rsyslog::config::inputs
-  - rsyslog::config::custom
-
+  ```
+  * rsyslog::config::modules
+  * rsyslog::config::global
+  * rsyslog::config::main_queue
+  * rsyslog::config::templates
+  * rsyslog::config::actions
+  * rsyslog::config::inputs
+  * rsyslog::config::custom
+  ```
 
   Each of the above classes accepts either an Array or Hash as its input. There
   are parts of configuration in rsyslog where having simple hash won't suit for
