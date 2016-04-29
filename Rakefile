@@ -14,6 +14,11 @@ task :validate do
   Dir['templates/**/*.erb'].each do |template|
     sh "erb -P -x -T '-' #{template} | ruby -c"
   end
+  #Validate epp template Checks
+  Dir['templates/**/*.epp'].each do |template|
+    sh "puppet epp validate  #{template}"
+  end
+
 end
 
 task :default => [:validate, :lint, :spec]

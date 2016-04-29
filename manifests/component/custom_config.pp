@@ -12,7 +12,7 @@ define rsyslog::component::custom_config (
   include rsyslog
 
   concat::fragment { "rsyslog::component::custom_config::${name}":
-    target  => "${rsyslog::confdir}/${target}",
+    target  => "${::rsyslog::confdir}/${target}",
     order   => $priority,
     content => $content,
   }

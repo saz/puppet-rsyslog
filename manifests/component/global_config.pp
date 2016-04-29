@@ -15,7 +15,7 @@ define rsyslog::component::global_config (
   })
 
   concat::fragment {"rsyslog::component::global_config::${name}":
-    target  => "${rsyslog::confdir}/${target}",
+    target  => "${::rsyslog::confdir}/${target}",
     content => inline_epp($format),
     order   => $priority,
   }

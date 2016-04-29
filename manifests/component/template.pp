@@ -29,7 +29,7 @@ define rsyslog::component::template (
   })
 
   concat::fragment {"rsyslog::component::template::${name}":
-    target  => "${rsyslog::confdir}/${target}",
+    target  => "${::rsyslog::confdir}/${target}",
     content => inline_epp($format),
     order   => $priority,
   }
