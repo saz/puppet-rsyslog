@@ -20,6 +20,7 @@
   - rsyslog::config::inputs
   - rsyslog::config::custom
 
+
   Each of the above classes accepts either an Array or Hash as its input. There
   are parts of configuration in rsyslog where having simple hash won't suit for
   complex configuration. so to facilate that few of the above mentioned classes
