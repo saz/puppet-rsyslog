@@ -38,7 +38,7 @@
   and pass small set of hashes to the definition and creates the configuration shown
   below. For full list 
 
-  ##### Hiera Data
+##### Hiera Data
   ```
   #common configuration
   rsyslog::global_config_priority: 20
@@ -54,7 +54,7 @@
     type: legacy
   ```
 
-  ##### global_config class
+##### Global Config Class
   ```
   #This class loops through the hash of hashes and passes
   #small hashes to the component as input
@@ -71,7 +71,7 @@
   }
   ```
 
-  ##### Custom Definition/Component
+##### Custom Definition/Component
   ```
   #All this define does send the hash values to epp 
   #template and gets content returned by the template
@@ -101,7 +101,7 @@
   }
   ```
 
-  ##### EPP Template
+##### EPP Template
   ```
   #This template will return predefined content 
   #interpretting the values provided by component
@@ -120,7 +120,7 @@
   <% } -%>
   ```
 
-  ##### Configuration Output
+##### Configuration Output
   ```
   #The configuration output will be on multiple small files initially and 
   #will be joined together by the concat module as they will have same priority
