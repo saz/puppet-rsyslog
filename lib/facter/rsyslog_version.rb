@@ -24,13 +24,21 @@ Facter.add(:rsyslog_version) do
                 nil
             end
         when "FreeBSD"
-          command='pkg query %v rsyslog8'
-          version = Facter::Util::Resolution.exec(command)
-          if version =~ /^(.+)$/
-            $1
-          else
-            nil
-          end
+            command='pkg query %v rsyslog8'
+            version = Facter::Util::Resolution.exec(command)
+            if version =~ /^(.+)$/
+              $1
+            else
+              nil
+            end
+        when "Gentoo"
+            command='equery -q -C list -F \'$version\' rsyslog'
+            version = Facter::Util::Resolution.exec(command)
+            if version =~ /^(.+)$/
+                $1
+            else
+                nil
+            end
         else
             nil
         end
