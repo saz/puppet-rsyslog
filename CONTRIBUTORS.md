@@ -4,11 +4,11 @@
   This is a rsyslog module which uses the concept of default hiera data in a 
   puppet module, the aim of the module is to abstract rsyslog configuration as
   much as possible into simple yaml configuration. The module is broken down
-  granuarly to provide any custom configuration required.
+  granularly to provide any custom configuration required.
 
 ## Module Layout
   The module is written as 2 main components one is is installing the package,
-  configuring the service etc, with base install and the second is configuring 
+  configuring the service etc.., with base install and the second is configuring 
   it as client/server based on the configuration data provided. The configuration 
   class is broken down into 7 classes
 
@@ -24,13 +24,13 @@
 
   Each of the above classes accepts either an Array or Hash as its input. There
   are parts of configuration in rsyslog where having simple hash won't suit for
-  complex configuration. so to facilate that few of the above mentioned classes
+  complex configuration. To facilitate that, few of the above mentioned classes
   accepts hash of hashes as its input and loops through that hash and passes
   the broken down small hash as the input to the specific component written for
-  that class. The component or the custom definition creates content by passing 
-  the values to epp template and uses concat module, config priority assigned 
-  for that class and creates small snippets of configuration which is joined 
-  together in the end by the concat module. 
+  that class. The component/definition creates content by passing the hash values
+  to epp template. The class uses concat module, config priority, target file 
+  assigned for that class and creates small snippets of configuration which is 
+  joined together in the end by the concat module. 
 
 ## Example
   The below example shows what happens when `include rsyslog::config::global` class
@@ -38,7 +38,7 @@
   and pass small set of hashes to the definition and creates the configuration shown
   below. For full list 
 
-  ** Hiera Data **
+  ##### Hiera Data
   ```
   #common configuration
   rsyslog::global_config_priority: 20
@@ -54,8 +54,11 @@
     type: legacy
   ```
 
-  ** global_config class **
+  ##### global_config class
   ```
+  #This class loops through the hash of hashes and passes
+  #small hashes to the component as input
+
   class rsyslog::config::global {
     $::rsyslog::config::global_config.each |$param, $config| {
       rsyslog::component::global_config { $param:
@@ -68,8 +71,11 @@
   }
   ```
 
-  ** Custom Definition/Component **
+  ##### Custom Definition/Component
   ```
+  #All this define does send the hash values to epp 
+  #template and gets content returned by the template
+
   define rsyslog::component::global_config (
     Integer           $priority,
     String            $target,
@@ -95,8 +101,11 @@
   }
   ```
 
-  ** EPP Template **
+  ##### EPP Template
   ```
+  #This template will return predefined content 
+  #interpretting the values provided by component
+
   <%- |
     String $value,
     String $config_item,
@@ -111,24 +120,28 @@
   <% } -%>
   ```
 
-  ** Configuration Output **
+  ##### Configuration Output
   ```
-  #The configuration output will be on multiple small files initially 
-  #and will be joined together by the concat module based on priority
+  #The configuration output will be on multiple small files initially and 
+  #will be joined together by the concat module as they will have same priority
+
+  #snippet1-priority20
   global (
   parser.SomeConfigurationOption="on"
   )
+  
+  #snippet2-prirority20
   $EscapeControlCharactersOnReceive off
   ```
-  Similarly the each of the config classes provide a piece of functionality.
-  For full details on which class provides what functionaly in configuring 
+  Similarly each of the config classes provide a piece of functionality.
+  For full details on which class provides what functionally in configuring 
   rsyslog please see the [README.md](../master/README.md) file.
 
 ## Extending Module
-  The module provides full flexiblity for custom configuration / extension,
-  it can be easily extended to include any specific functionaly by assigning
+  The module provides full flexibility for custom configuration / extension,
+  it can be easily extended to include any specific functionally by assigning
   a priority for the class where the new functionality to be placed in the
   50_rsyslog.conf file or it can also be dropped as file into /etc/rsyslog.d
-  directory. If the class/component/template structure is maintained as above
-  explained it would make its usablity easier for everyone.
+  directory. The class/component/template structure shoule be maintained as 
+  above to keep it consistent.
   
