@@ -181,6 +181,7 @@ The following lists all the class parameters this module accepts.
     omit_local_logging                  true,false          Turn off message reception via local log socket. Defaults to true only for RedHat 7+ and false elsewhere.
     preserve_fqdn                       true,false          Use full name of host even if sender and receiver are in the same domain. Defaults to false.
     local_host_name                     STRING              Use a custom local host name, instead of clients actual host name. Defaults to undef.
+    package_status                      STRING              Manages rsyslog package installation. Defaults to 'present'.
 
     RSYSLOG::SERVER CLASS PARAMETERS    VALUES              DESCRIPTION
     -------------------------------------------------------------------
@@ -251,3 +252,6 @@ manage the respective package:
 
 This can be used when using the adiscon PPA repository, that has merged rsyslog-gnutls
 with the main rsyslog package.
+
+Default package_status parameter for rsyslog class used to be 'latest'. However, it was
+against puppet best practices so it defaults to 'present' now.
