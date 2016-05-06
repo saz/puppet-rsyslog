@@ -213,7 +213,7 @@ template (name="remote" type="string"
 )
 ```
 
-When using `list`, the `list_descriptions` hash should contain an array od single element hashes, the key should be `constant` or `property` with their corresponding parameters in a sub hash.  eg:
+When using `list`, the `list_descriptions` hash should contain an array of single element hashes, the key should be `constant` or `property` with their corresponding parameters in a sub hash.  eg:
 
 ```yaml
   plain-syslog:

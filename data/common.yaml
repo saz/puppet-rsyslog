@@ -31,11 +31,11 @@ rsyslog::target_file: 50_rsyslog.conf
 #rsyslog::server::actions:
 #rsyslog::server::inputs:
 #rsyslog::server::custom_config:
-#    
+#rsyslog::server::main_queue_opts
+#
 #rsyslog::client::modules:
 #rsyslog::client::global_config:
-#rsyslog::client::templates:
 #rsyslog::client::actions:
 #rsyslog::client::inputs:
 #rsyslog::client::custom_config:
-#    
+#
