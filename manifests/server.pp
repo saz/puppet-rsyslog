@@ -52,7 +52,7 @@ class rsyslog::server (
   $ssl_cert                  = undef,
   $ssl_key                   = undef,
   $log_templates             = false,
-  $log_filters               = undef,
+  $log_filters               = false,
   $actionfiletemplate        = false,
   $rotate                    = undef
 ) inherits rsyslog {

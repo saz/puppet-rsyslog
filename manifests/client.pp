@@ -53,7 +53,7 @@ class rsyslog::client (
   $ssl_permitted_peer        = undef,
   $ssl_auth_mode             = 'anon',
   $log_templates             = false,
-  $log_filters               = undef,
+  $log_filters               = false,
   $actionfiletemplate        = false,
   $high_precision_timestamps = false,
   $rate_limit_burst          = undef,
