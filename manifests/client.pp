@@ -22,6 +22,7 @@
 # [*ssl_permitted_peer*]
 # [*ssl_
 # [*log_templates*]
+# [*log_filters*]
 # [*actionfiletemplate*]
 # [*rate_limit_burst*]
 # [*rate_limit_interval*]
@@ -52,6 +53,7 @@ class rsyslog::client (
   $ssl_permitted_peer        = undef,
   $ssl_auth_mode             = 'anon',
   $log_templates             = false,
+  $log_filters               = undef,
   $actionfiletemplate        = false,
   $high_precision_timestamps = false,
   $rate_limit_burst          = undef,
