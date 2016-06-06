@@ -1,5 +1,6 @@
 class rsyslog::server (
   Optional[Hash]  $global_config   = {},
+  Optional[Hash]  $legacy_config   = {},
   Optional[Hash]  $templates       = {},
   Optional[Hash]  $actions         = {},
   Optional[Hash]  $inputs          = {},
@@ -13,6 +14,7 @@ class rsyslog::server (
 
   class { 'rsyslog::config':
     global_config   => $global_config,
+    legacy_config   => $legacy_config,
     templates       => $templates,
     actions         => $actions,
     inputs          => $inputs,

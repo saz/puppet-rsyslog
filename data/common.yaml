@@ -16,6 +16,7 @@ rsyslog::feature_packages: []
 
 ## Default object type priorities (can be overridden)
 rsyslog::module_load_priority: 10
+rsyslog::legacy_config_priority: 11
 rsyslog::input_priority: 15
 rsyslog::global_config_priority: 20
 rsyslog::main_queue_priority: 25

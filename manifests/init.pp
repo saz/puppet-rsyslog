@@ -57,6 +57,7 @@ class rsyslog (
   Boolean $manage_confdir,
   Boolean $purge_config_files,
   Integer $global_config_priority,
+  Integer $legacy_config_priority,
   Integer $template_priority,
   Integer $action_priority,
   Integer $input_priority,
