@@ -2,7 +2,7 @@ define rsyslog::component::legacy_config (
   Integer           $priority,
   String            $target,
   String            $value,
-  Optional[String]  $key,
+  Optional[String]  $key = 'legacy_key',
   Optional[String]  $type = 'sysklogd',
   Optional[String]  $format = '<%= $content %>'
 ) {
