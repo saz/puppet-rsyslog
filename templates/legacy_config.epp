@@ -6,7 +6,7 @@
 | -%>
 <% if $type == 'sysklogd' { -%>
 # <%= $config_item %>
-<%= $key %>                 <%= $value %>
+<%= $key %>     <%= $value %>
 
 <% } else { -%>
 # <%= $config_item %>

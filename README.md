@@ -19,6 +19,7 @@
     * [Templates](#rsyslogservertemplates)
     * [Actions](#rsyslogserveractions-rsyslogclientactions)
     * [Inputs](#rsyslogserverinputs-rsyslogclientinputs)
+    * [legacy_config](#rsyslogserverlegacy_config)
   * [Positioning](#positioning)
   * [Formatting](#formatting)
 
@@ -113,6 +114,7 @@ The following configuration parameters are defaults for the order of configurati
 ```yaml
 ## Default object type priorities (can be overridden)
 rsyslog::module_load_priority: 10
+rsyslog::legacy_config_priority: 11
 rsyslog::input_priority: 15
 rsyslog::global_config_priority: 20
 rsyslog::main_queue_priority: 25
@@ -131,6 +133,7 @@ Configuration objects are written to the configuration file in rainerscript form
 * [Templates](#rsyslogservertemplates)
 * [Actions](#rsyslogserveractions-rsyslogclientactions)
 * [Inputs](#rsyslogserverinputs-rsyslogclientinputs)
+* [legacy_config](#rsyslogserverlegacy_config)
 
 Configuration objects should be declared in the rsyslog::server or rsyslog::client namespaces accordingly.
 
@@ -295,8 +298,82 @@ input(type="imudp"
 )
 ```
 
+##### `rsyslog::server::legacy_config`
+
+Legacy config support is provided to facilitate backwards compatibility with `sysklogd` format as this module mainly supports `rainerscript` format.
+
+A hash of hashes, each hash name is used as the comment/reference for the setting and the hash will have the following values:
+* `key`: the key/logger rule setting
+* `value`: the value/target of the setting
+* `type`: the type of format to use (legacy or sysklogd), if omitted sysklogd is used. If legacy type is used `key` can be skipped and one long string can be provided as value.
+
+```yaml
+rsyslog::client::legacy_config:
+  auth_priv_rule:
+    key: "auth,authpriv.*"
+    value: "/var/log/auth.log"
+  auth_none_rule:
+    key: "*.*;auth,authpriv.none"
+    value: "/var/log/syslog"
+  syslog_all_rule:
+    key: "syslog.*"
+    value: "/var/log/rsyslog.log"
+  mail_error_rule:
+    key: "mail.err"
+    value: "/var/log/mail.err"
+  news_critical_rule:
+    key: "news.crit"
+    value: "/var/log/news/news.crit"
+```
+will produce
+
+```
+# auth_priv_rule
+auth,authpriv.*    /var/log/auth.log
+
+# auth_none_rule
+*.*;auth,authpriv.none    /var/log/syslog
+
+# syslog_all_rule
+syslog.*    /var/log/rsyslog.log
+
+# mail_error_rule
+mail.err    /var/log/mail.err
+
+# news_critical_rule
+news.crit    /var/log/news/news.crit
+
+```
+legacy type values can be passed as one long string skipping the key parameter like below and you can also override the priority in the hash to rearrange the contents 
+```
+  emergency_rule:
+    key: "*.emerg"
+    value: ":omusrmsg:*"
+  testing_legacy_remotelog:
+    value: "*.* @@logmonster.cloudfront.net:1514"
+    type: "legacy"
+    priority: 12
+  testing_legacy_rule:
+    value: "*.* >dbhost,dbname,dbuser,dbpassword;dbtemplate"
+    type: "legacy"
+
+```
+will produce
+
+```
+# emergency_rule
+*.emerg    :omusrmsg:*
+
+# testing_legacy_rule
+*.* >dbhost,dbname,dbuser,dbpassword;dbtemplate
+
+# testing_legacy_remotelog
+*.* @@logmonster.cloudfront.net:1514
+
+```
+
 ### Positioning
-All rsyslog object types are positioned according to the default variables (see [Ordering](#ordering)).  The position can be overriden for any object by adding the optional `position` parameter.
+All rsyslog object types are positioned according to the default variables (see [Ordering](#ordering)).  The position can be overridden for any object by adding the optional `position` parameter.
 
 ```yaml
 rsyslog::server::actions:
