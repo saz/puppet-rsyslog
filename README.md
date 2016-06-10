@@ -373,7 +373,7 @@ will produce
 ```
 
 ### Positioning
-All rsyslog object types are positioned according to the default variables (see [Ordering](#ordering)).  The position can be overridden for any object by adding the optional `position` parameter.
+All rsyslog object types are positioned according to the default variables (see [Ordering](#ordering)).  The position can be overridden for any object by adding the optional `priority` parameter.
 
 ```yaml
 rsyslog::server::actions:
@@ -382,7 +382,7 @@ rsyslog::server::actions:
     config:
       queue.type: "linkedlist"
       queue.spoolDirectory: "/var/log/rsyslog/queue"
-    position: 35
+    priority: 35
 ```
 
 ### Formatting
