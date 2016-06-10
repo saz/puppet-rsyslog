@@ -1,0 +1,15 @@
+<%- |
+  String $config_item,
+  String $value,
+  Optional[String] $key,
+  Optional[String] $type
+| -%>
+<% if $type == 'sysklogd' { -%>
+# <%= $config_item %>
+<%= $key %>     <%= $value %>
+
+<% } else { -%>
+# <%= $config_item %>
+<%= $value %>
+
+<% } -%>

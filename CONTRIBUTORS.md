@@ -10,7 +10,7 @@
   The module is written as 2 main components one is is installing the package,
   configuring the service etc.., with base install and the second is configuring 
   it as client/server based on the configuration data provided. The configuration 
-  class is broken down into 7 classes
+  class is broken down into 8 classes
 
   ```
   * rsyslog::config::modules
@@ -20,6 +20,7 @@
   * rsyslog::config::actions
   * rsyslog::config::inputs
   * rsyslog::config::custom
+  * rsyslog::config::legacy
   ```
 
   Each of the above classes accepts either an Array or Hash as its input. There
