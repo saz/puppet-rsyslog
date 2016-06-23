@@ -4,7 +4,7 @@ class rsyslog::client (
   Optional[Hash]  $actions         = {},
   Optional[Hash]  $inputs          = {},
   Optional[Hash]  $custom_config   = {},
-  Optional[Array] $modules         = [],
+  Optional[Hash]  $modules         = {},
 ) {
 
   include rsyslog
