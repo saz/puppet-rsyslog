@@ -23,5 +23,3 @@ module ( load="builtin:<%= $config_item -%>"
      <% } %>
 )
 <%}-%>
-
-
