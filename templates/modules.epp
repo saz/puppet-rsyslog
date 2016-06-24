@@ -4,20 +4,20 @@
   Optional[Hash] $config
 | -%>
 <% if $type == 'external' and empty($config) == true  { -%>
-module ( load="<%=$config_item %>" )
+module(load="<%=$config_item -%>")
 <% } -%>
 <% elsif $type == 'external' and empty($config) == false { -%>
-module ( load="<%= $config_item -%>" 
+module(load="<%= $config_item -%>" 
      <% $config.each |$key, $value| {-%>
      <%= $key %>="<%= $value -%>"
      <% } %>
 )
 <% } -%>
 <% elsif $type == 'builtin' and empty($config) == true  { -%>
-module ( load="builtin:<%= $config_item %>" )
+module(load="builtin:<%= $config_item -%>" )
 <% } -%>
 <% elsif $type == 'builtin' and empty($config) == false { -%>
-module ( load="builtin:<%= $config_item -%>" 
+module(load="builtin:<%= $config_item -%>" 
      <% $config.each |$key, $value| {-%> 
      <%= $key %>="<%= $value -%>"
      <% } %>
