@@ -3,6 +3,7 @@ define rsyslog::component::action (
   String            $target,
   String            $type,
   Optional[Hash]    $config,
+  Optional[String]  $facility = 'default',
   Optional[String]  $format = '<%= $content %>'
 ) {
 
@@ -11,6 +12,7 @@ define rsyslog::component::action (
   $content = epp('rsyslog/action.epp', {
         'action_name' => $name,
         'type'        => $type,
+        'facility'    => $facility,
         'config'      => $config,
   })
 
