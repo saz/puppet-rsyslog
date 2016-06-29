@@ -113,13 +113,13 @@ The following configuration parameters are defaults for the order of configurati
 
 ```yaml
 ## Default object type priorities (can be overridden)
-rsyslog::module_load_priority: 10
-rsyslog::legacy_config_priority: 11
-rsyslog::input_priority: 15
-rsyslog::global_config_priority: 20
-rsyslog::main_queue_priority: 25
-rsyslog::template_priority: 30
-rsyslog::action_priority: 40
+rsyslog::global_config_priority: 10
+rsyslog::module_load_priority: 20
+rsyslog::input_priority: 30
+rsyslog::main_queue_priority: 40
+rsyslog::template_priority: 50
+rsyslog::action_priority: 60
+rsyslog::legacy_config_priority: 70
 rsyslog::custom_priority: 90
 ```
 
@@ -166,7 +166,7 @@ rsyslog::server::modules:
       dirCreateMode: "0755" 
   impstats:
     type: "external"
-    priority: 19
+    priority: 29
     config:
       interval: "60"
       severity: "7"
