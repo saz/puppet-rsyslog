@@ -213,20 +213,40 @@ A hash of hashes, they key represents the configuration setting and the value is
 eg:
 ```yaml
 rsyslog::server::global_config:
-  parser.SomeConfigurationOption:
-    value: 'on'
-  EscapeControlCharactersOnReceive:
-    value: 'off'
+  umask:
+    value: '0000'
     type: legacy
+    priority: 01
+  RepeatedMsgReduction:
+    value: 'on'
+    type: legacy
+  PrivDropToUser:
+    value: 'syslog'
+    type: legacy
+  PrivDropToGroup:
+    value: 'syslog'
+    type: legacy
+  parser.escapeControlCharactersOnReceive:
+    value: 'on'
+  workDirectory:
+    value: '/var/spool/rsyslog'
+  maxMessageSize:
+    value: '64k'
 ```
 
 will produce
 
 ```
+$umask 0000
+$PrivDropToGroup syslog
+$PrivDropToUser syslog
+$RepeatedMsgReduction on
 global (
-  parser.SomeConfigurationOption="on"
+    parser.escapeControlCharactersOnReceive="on"
+    workDirectory="/var/spool/rsyslog"
+    maxMessageSize="64k"
+  
 )
-$EscapeControlCharactersOnReceive off
 ```
 
 ##### `rsyslog::server::main_queue_opts`
