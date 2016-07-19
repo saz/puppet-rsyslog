@@ -113,13 +113,13 @@ The following configuration parameters are defaults for the order of configurati
 
 ```yaml
 ## Default object type priorities (can be overridden)
-rsyslog::module_load_priority: 10
-rsyslog::legacy_config_priority: 11
-rsyslog::input_priority: 15
-rsyslog::global_config_priority: 20
-rsyslog::main_queue_priority: 25
-rsyslog::template_priority: 30
-rsyslog::action_priority: 40
+rsyslog::global_config_priority: 10
+rsyslog::module_load_priority: 20
+rsyslog::input_priority: 30
+rsyslog::main_queue_priority: 40
+rsyslog::template_priority: 50
+rsyslog::action_priority: 60
+rsyslog::legacy_config_priority: 70
 rsyslog::custom_priority: 90
 ```
 
@@ -139,51 +139,126 @@ Configuration objects should be declared in the rsyslog::server or rsyslog::clie
 
 ##### `rsyslog::server::modules`
 
-An array of modules to load
+A hash of hashes, hash key represents the module name and accepts a hash with values or an empty hash as its value.
+The hash accepts the following three values:
+* `type`: values can be `external or builtin` the default value is external and need not be specified explicitly.
+* `config`: its a hash which provides optional parameters to the module loaded.
+* `priority`: The module load order can be priortised based on the optional `priority` value.
 
+eg:
 ```yaml
 rsyslog::server::modules:
-  - imuxsock
-  - imklog
+  imuxsock: {}
+  imudp:
+    config:
+      threads: "2"
+      TimeRequery: "8"
+      batchSize: "128"
+  omusrmsg:
+    type: "builtin"
+  omfile:
+    type: "builtin"
+    config:
+      fileOwner: "syslog"
+      fileGroup: "adm"
+      dirGroup: "adm"
+      fileCreateMode: "0640"
+      dirCreateMode: "0755" 
+  impstats:
+    type: "external"
+    priority: 29
+    config:
+      interval: "60"
+      severity: "7"
+      log.syslog: "off"
+      log.file: "/var/log/rsyslog/logs/stats/stats.log"
+      Ruleset: "remote"
 ```
 
-This will generate rainerscript as
+will produce
 
 ```
-module(load="imuxsock")
-module(load="imklog")
+module (load="imuxsock")
+module (load="imudp"
+           threads="2"
+           TimeRequery="8"
+           batchSize="128"
+
+)
+module (load="builtin:omusrmsg")
+module (load="builtin:omfile"
+           fileOwner="syslog"
+           fileGroup="adm"
+           dirGroup="adm"
+           fileCreateMode="0640"
+           dirCreateMode="0755"
+
+)
+module (load="impstats"
+           interval="60"
+           severity="7"
+           log.syslog="off"
+           log.file="/var/log/rsyslog/logs/stats/stats.log"
+           Ruleset="remote"
+
+)
 ```
 
-##### `rsyslog::server::global_config`  `rsyslog::client::global_config`
+##### `rsyslog::server::global_config` `rsyslog::client::global_config`
 
 A hash of hashes, they key represents the configuration setting and the value is a hash with the following keys:
 * `value`: the value of the setting
 * `type`: the type of format to use (legacy or rainerscript), if omitted rainerscript is used.
 
+eg:
 ```yaml
 rsyslog::server::global_config:
-  parser.SomeConfigurationOption:
-    value: 'on'
-  EscapeControlCharactersOnReceive:
-    value: 'off'
+  umask:
+    value: '0000'
     type: legacy
+    priority: 01
+  RepeatedMsgReduction:
+    value: 'on'
+    type: legacy
+  PrivDropToUser:
+    value: 'syslog'
+    type: legacy
+  PrivDropToGroup:
+    value: 'syslog'
+    type: legacy
+  parser.escapeControlCharactersOnReceive:
+    value: 'on'
+  workDirectory:
+    value: '/var/spool/rsyslog'
+  maxMessageSize:
+    value: '64k'
 ```
 
+will produce
+
 ```
+$umask 0000
+$PrivDropToGroup syslog
+$PrivDropToUser syslog
+$RepeatedMsgReduction on
 global (
-  parser.SomeConfigurationOption="on"
+    parser.escapeControlCharactersOnReceive="on"
+    workDirectory="/var/spool/rsyslog"
+    maxMessageSize="64k"
+  
 )
-$EscapeControlCharactersOnReceive off
 ```
 
 ##### `rsyslog::server::main_queue_opts`
-Configures the `main_queue` object in rsyslog as a hash
+Configures the `main_queue` object in rsyslog as a hash. eg:
 
 ```yaml
 rsyslog::server::main_queue_opts:
   queue.maxdiskspace: 1000G
   queue.dequeuebatchsize: 1000
 ```
+
+will produce
 
 ```
 main_queue(
@@ -195,6 +270,7 @@ main_queue(
 ##### `rsyslog::server::templates`
 Configures `template` objects in rsyslog.  Each element is a hash containing the name of the template, the type and the template data.    The type parameter can be one of `string`, `subtree`, `plugin` or `list`
 
+eg:
 ```yaml
 rsyslog::server::templates:
   remote:
@@ -208,7 +284,7 @@ rsyslog::server::templates:
      plugin: foobar
 ```
 
-eg:
+will produce
 
 ```
 template (name="remote" type="string"
@@ -216,8 +292,9 @@ template (name="remote" type="string"
 )
 ```
 
-When using `list`, the `list_descriptions` hash should contain an array of single element hashes, the key should be `constant` or `property` with their corresponding parameters in a sub hash.  eg:
+When using `list`, the `list_descriptions` hash should contain an array of single element hashes, the key should be `constant` or `property` with their corresponding parameters in a sub hash.
 
+eg:
 ```yaml
   plain-syslog:
     type: list
@@ -226,30 +303,28 @@ When using `list`, the `list_descriptions` hash should contain an array of singl
           value: '{'
       - constant:
           value: '\"@timestamp\":\"'
-      - constant:
-          value: '\"@remove_me_timestamp\":\"'
       - property:
          name: timereported
          dateFormat: rfc3339
       - constant:
-         value: '\"host\":\"'
+         value: '\",\"host\":\"'
       - property:
          name: hostname
       - constant:
-         value: '\"severity\":\"'
+         value: '\",\"severity\":\"'
       - property:
          name: syslogseverity-text
       - constant:
-         value: '\"facility\":\"'
+         value: '\",\"facility\":\"'
       - property:
          name: syslogfacility-text
       - constant:
-         value: '\"tag\":\"'
+         value: '\",\"tag\":\"'
       - property:
          name: syslogtag
          format: json
       - constant:
-         value: '\"message\":\"'
+         value: '\",\"message\":\"'
       - property:
          name: msg
          format: json
@@ -257,11 +332,50 @@ When using `list`, the `list_descriptions` hash should contain an array of singl
          value: '\"}'
 ```
 
-##### `rsyslog::server::actions` `rsyslog::client::actions`
-Configures action objects in rainerscript.  Each element of the hash contains the type of action, followed by a hash of configuration options. Eg:
+will produce
 
+```
+template (name="plain-syslog" type="list"
+)
+{
+    constant(value="{" )
+    constant(value="\"@timestamp\":\"" )
+    property(name="timereported" dateFormat="rfc3339" )
+    constant(value="\",\"host\":\"" )
+    property(name="hostname" )
+    constant(value="\",\"severity\":\"" )
+    property(name="syslogseverity-text" )
+    constant(value="\",\"facility\":\"" )
+    property(name="syslogfacility-text" )
+    constant(value="\",\"tag\":\"" )
+    property(name="syslogtag" format="json" )
+    constant(value="\",\"message\":\"" )
+    property(name="msg" format="json" )
+    constant(value="\"}" )
+}
+
+```
+
+##### `rsyslog::server::actions` `rsyslog::client::actions`
+Configures action objects in rainerscript.  Each element of the hash contains the type of action, followed by a hash of configuration options.
+It also accepts an optional facility parameter and the content is formatted based on the no of config options passed and if the facility option is present.
+
+eg:
 ```yaml
 rsyslog::server::actions:
+  all_logs:
+    type: omfile
+    facility: "*.*;auth,authpriv.none"
+    config:
+      dynaFile: "remoteSyslog"
+      specifics: "/var/log/test"
+  kern_logs:
+    type: omfile
+    facility: "kern.*"
+    config:
+      dynaFile: "remoteSyslog"
+      file: "/var/log/kern.log"
+      cmd: "/proc/cmdline"
   elasticsearch:
     type: omelasticsearch
     config:
@@ -272,6 +386,19 @@ rsyslog::server::actions:
 will produce
 
 ```
+#Note: There is only 2 options passed so formats in a single line.
+# all_logs
+*.*;auth,authpriv.none         action(type="omfile" dynaFile="remoteSyslog" specifics="/var/log/test" )
+
+#Note: There is more than 2 options passed so formats into multi line with facility.
+# kern_logs
+kern.*                         action(type="omfile"
+                                 dynaFile="remoteSyslog"
+                                 file="/var/log/kern.log"
+                                 cmd="/proc/cmdline"
+                               )
+
+#Note: There is no facility option passed so formats it without facility.
 action(type="omelasticsearch"
   queue.type="linkedlist"
   queue.spoolDirectory="/var/log/rsyslog/queue"
@@ -307,6 +434,7 @@ A hash of hashes, each hash name is used as the comment/reference for the settin
 * `value`: the value/target of the setting
 * `type`: the type of format to use (legacy or sysklogd), if omitted sysklogd is used. If legacy type is used `key` can be skipped and one long string can be provided as value.
 
+eg:
 ```yaml
 rsyslog::client::legacy_config:
   auth_priv_rule:
@@ -325,6 +453,7 @@ rsyslog::client::legacy_config:
     key: "news.crit"
     value: "/var/log/news/news.crit"
 ```
+
 will produce
 
 ```
@@ -345,6 +474,7 @@ news.crit    /var/log/news/news.crit
 
 ```
 legacy type values can be passed as one long string skipping the key parameter like below and you can also override the priority in the hash to rearrange the contents 
+eg:
 ```
   emergency_rule:
     key: "*.emerg"
@@ -358,6 +488,7 @@ legacy type values can be passed as one long string skipping the key parameter l
     type: "legacy"
 
 ```
+
 will produce
 
 ```
@@ -375,6 +506,7 @@ will produce
 ### Positioning
 All rsyslog object types are positioned according to the default variables (see [Ordering](#ordering)).  The position can be overridden for any object by adding the optional `priority` parameter.
 
+eg:
 ```yaml
 rsyslog::server::actions:
   elasticsearch:
@@ -389,6 +521,7 @@ rsyslog::server::actions:
 
 This module attempts to abstract rainerscript objects into data structures that can be handled easily within hiera, however there are clearly times when you need to add some more code structure around an object, such as conditionals.  For simple code additions, the `template`, `action`, `input` and `global_config` object types support the optional parameter of `format` which takes Puppet EPP formatted template as a value, using the variable `$content` to signify the object itself.   For example, to wrap an action in a simple conditional you could format it as
 
+eg:
 ```yaml
 rsyslog::server::actions:
   elasticsearch:
