@@ -1,12 +1,16 @@
 <%- |
-  String $value,
-  String $config_item,
-  Optional[String] $type
+  Optional[String] $value="dummy",
+  Optional[String] $config_item="dummy",
+  String $type,
+  Optional[Hash]  $config={},
 | -%>
 <% if $type == 'legacy' { -%>
 $<%= $config_item %> <%= $value %>
 <% } else { -%>
 global (
-  <%= $config_item %>="<%= $value %>"
+  <% $config.each |$item, $data| { -%>
+  <%= $item %>="<%=$data%>"
+  <%}-%>
+
 )
 <% } -%>
