@@ -6,7 +6,7 @@ class rsyslog::server (
   Optional[Hash]  $inputs          = {},
   Optional[Hash]  $custom_config   = {},
   Optional[Hash]  $main_queue_opts = {},
-  Optional[Array] $modules         = [],
+  Optional[Hash]  $modules         = {},
 ) {
 
   include rsyslog

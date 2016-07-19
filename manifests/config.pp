@@ -6,7 +6,7 @@ class rsyslog::config (
   Optional[Hash] $inputs = {},
   Optional[Hash] $custom_config = {},
   Optional[Hash] $main_queue_opts = {},
-  Optional[Array] $modules = [],
+  Optional[Hash] $modules = {},
 ) {
 
   concat { "${::rsyslog::confdir}/${::rsyslog::target_file}":
