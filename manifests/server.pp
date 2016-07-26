@@ -8,6 +8,7 @@
 # [*enable_udp*]
 # [*enable_relp*]
 # [*enable_onefile*]
+# [*relay_server*]
 # [*server_dir*]
 # [*custom_config*]
 # [*port*]
@@ -40,6 +41,7 @@ class rsyslog::server (
   $enable_udp                = true,
   $enable_relp               = true,
   $enable_onefile            = false,
+  $relay_server              = false,
   $server_dir                = '/srv/log/',
   $custom_config             = undef,
   $content                   = undef,

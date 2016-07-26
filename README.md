@@ -153,6 +153,7 @@ Declare the following to configure the connection:
     enable_udp                => true,
     enable_relp               => true,
     enable_onefile            => false,
+    relay_server              => false,
     server_dir                => '/srv/log/',
     custom_config             => undef,
     port                      => '514',
@@ -188,6 +189,7 @@ The following lists all the class parameters this module accepts.
     enable_udp                          true,false          Enable UDP listener. Defaults to true.
     enable_relp                         true,false          Enable RELP listener. Defaults to true.
     enable_onefile                      true,false          Only one logfile per remote host. Defaults to false.
+    relay_server                        true,false          If the server should be able to relay the received logs to another server. The rsyslog::client must also be set up.
     server_dir                          STRING              Folder where logs will be stored on the server. Defaults to '/srv/log/'
     custom_config                       STRING              Specify your own template to use for server config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb'
     port                                STRING/INTEGER      Port to listen on for messages via UDP and TCP. Defaults to 514

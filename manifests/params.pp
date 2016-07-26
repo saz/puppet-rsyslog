@@ -194,7 +194,7 @@ class rsyslog::params {
     freebsd: {
       $rsyslog_package_name   = 'sysutils/rsyslog8'
       $relp_package_name      = false
-      $mysql_package_name     = false 
+      $mysql_package_name     = false
       $pgsql_package_name     = false
       $gnutls_package_name    = false
       $package_status         = 'present'
@@ -229,7 +229,7 @@ class rsyslog::params {
         gentoo: {
           $rsyslog_package_name   = 'app-admin/rsyslog'
           $relp_package_name      = false
-          $mysql_package_name     = 'rsyslog-mysql' 
+          $mysql_package_name     = 'rsyslog-mysql'
           $pgsql_package_name     = 'rsyslog-pgsql'
           $gnutls_package_name    = false
           $package_status         = 'latest'
