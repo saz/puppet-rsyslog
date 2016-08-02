@@ -50,6 +50,7 @@ or send some bitcoins to ```1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9```
     ssl_permitted_peer        => undef,
     ssl_auth_mode             => 'anon',
     log_templates             => false,
+    log_filters               => false,
     actionfiletemplate        => false,
     high_precision_timestamps => false,
     rate_limit_burst          => undef,
@@ -160,6 +161,7 @@ Declare the following to configure the connection:
     address                   => '*',
     high_precision_timestamps => false,
     log_templates             => false,
+    log_filters               => false,
     actionfiletemplate        => false,
     ssl_ca                    => undef,
     ssl_cert                  => undef,
@@ -196,6 +198,7 @@ The following lists all the class parameters this module accepts.
     address                             STRING              The IP address to bind to. Applies to UDP listener only. Defaults to '*'.
 
     log_templates                       HASH                Provides a has defining custom logging templates using the `$template` configuration parameter.
+    log_filters                         HASH                Provides a has defining custom logging filters using the `if/then` configurations parameter.
     actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging.
     high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
     ssl_ca                              STRING              Path to SSL CA certificate
@@ -221,6 +224,7 @@ The following lists all the class parameters this module accepts.
     ssl_permitted_peer                  STRING              List of permitted peers. Defaults to undef.
     ssl_auth_mode                       STRING              SSL auth mode. Defaults to anon.
     log_templates                       HASH                Provides a has defining custom logging templates using the `$template` configuration parameter.
+    log_filters                         HASH                Provides a has defining custom logging filters using the `if/then` configurations parameter.
     actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging.
     high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
     rate_limit_burst                    INTEGER             Specifies the number of messages in $rate_limit_interval before limiting begins. Defaults to undef.
