@@ -15,6 +15,13 @@ $ActionResumeRetryCount -1      # infinety retries if host is down
 $template <%= log_template['name'] %>,"<%= log_template['template'] %>"
 <% end -%>
 <% end -%>
+<% if scope.lookupvar('rsyslog::client::log_filters') -%>
+
+# Define custom if/then log conditions
+<% scope.lookupvar('rsyslog::client::log_filters').each do |log_filter| -%>
+if <%= log_filter['expession'] %> then <%= log_filter['action'] %>
+<% end -%>
+<% end -%>
 <% if scope.lookupvar('rsyslog::client::actionfiletemplate') -%>
 
 # Using specified format for default logging format:

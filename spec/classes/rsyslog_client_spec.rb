@@ -46,6 +46,15 @@ describe 'rsyslog::client', :type => :class do
           should contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
         end
       end
+
+      context 'log_filters (osfamily = RedHat)' do
+        let(:title) { 'log_filters_check' }
+        let(:params) { {'log_filters' => [{'expession' => '$msg contains \'error0\'', 'action' => '/var/log/err.log'}] } }
+
+        it 'should compile' do
+          should contain_file('/etc/rsyslog.d/client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
+        end
+      end
     end
 
     context "osfamily = Debian" do
@@ -82,6 +91,15 @@ describe 'rsyslog::client', :type => :class do
 
         it 'should remove client local logging' do
           should contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
+        end
+      end
+
+      context 'log_filters (osfamily = RedHat)' do
+        let(:title) { 'log_filters_check' }
+        let(:params) { {'log_filters' => [{'expession' => '$msg contains \'error0\'', 'action' => '/var/log/err.log'}] } }
+
+        it 'should compile' do
+          should contain_file('/etc/rsyslog.d/client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
         end
       end
 
@@ -234,6 +252,15 @@ describe 'rsyslog::client', :type => :class do
           should contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
         end
       end
+
+      context 'log_filters (osfamily = RedHat)' do
+        let(:title) { 'log_filters_check' }
+        let(:params) { {'log_filters' => [{'expession' => '$msg contains \'error0\'', 'action' => '/var/log/err.log'}] } }
+
+        it 'should compile' do
+          should contain_file('/etc/rsyslog.d/client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
+        end
+      end
     end
 
     context "osfamily = Debian" do
@@ -270,6 +297,15 @@ describe 'rsyslog::client', :type => :class do
 
         it 'should remove client local logging' do
           should contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
+        end
+      end
+
+      context 'log_filters (osfamily = RedHat)' do
+        let(:title) { 'log_filters_check' }
+        let(:params) { {'log_filters' => [{'expession' => '$msg contains \'error0\'', 'action' => '/var/log/err.log'}] } }
+
+        it 'should compile' do
+          should contain_file('/etc/rsyslog.d/client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
         end
       end
     end

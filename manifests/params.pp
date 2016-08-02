@@ -46,7 +46,7 @@ class rsyslog::params {
       $mysql_package_name     = 'rsyslog-mysql'
       $pgsql_package_name     = 'rsyslog-pgsql'
       $gnutls_package_name    = 'rsyslog-gnutls'
-      $package_status         = 'latest'
+      $package_status         = 'present'
       $rsyslog_d              = '/etc/rsyslog.d/'
       $rsyslog_conf           = '/etc/rsyslog.conf'
       $rsyslog_default        = '/etc/default/rsyslog'
@@ -141,7 +141,7 @@ class rsyslog::params {
         ]
         $omit_local_logging     = false
       }
-      $package_status         = 'latest'
+      $package_status         = 'present'
       $rsyslog_d              = '/etc/rsyslog.d/'
       $rsyslog_conf           = '/etc/rsyslog.conf'
       $rsyslog_default        = '/etc/sysconfig/rsyslog'
@@ -167,7 +167,7 @@ class rsyslog::params {
       $mysql_package_name     = false
       $pgsql_package_name     = false
       $gnutls_package_name    = false
-      $package_status         = 'latest'
+      $package_status         = 'present'
       $rsyslog_d              = '/etc/rsyslog.d/'
       $rsyslog_conf           = '/etc/rsyslog.conf'
       $rsyslog_default        = '/etc/sysconfig/syslog'
@@ -232,7 +232,7 @@ class rsyslog::params {
           $mysql_package_name     = 'rsyslog-mysql' 
           $pgsql_package_name     = 'rsyslog-pgsql'
           $gnutls_package_name    = false
-          $package_status         = 'latest'
+          $package_status         = 'present'
           $rsyslog_d              = '/etc/rsyslog.d/'
           $rsyslog_conf           = '/etc/rsyslog.conf'
           $rsyslog_default        = '/etc/conf.d/rsyslog'

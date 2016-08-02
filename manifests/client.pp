@@ -22,6 +22,7 @@
 # [*ssl_permitted_peer*]
 # [*ssl_
 # [*log_templates*]
+# [*log_filters*]
 # [*actionfiletemplate*]
 # [*rate_limit_burst*]
 # [*rate_limit_interval*]
@@ -52,10 +53,12 @@ class rsyslog::client (
   $ssl_permitted_peer        = undef,
   $ssl_auth_mode             = 'anon',
   $log_templates             = false,
+  $log_filters               = false,
   $actionfiletemplate        = false,
   $high_precision_timestamps = false,
   $rate_limit_burst          = undef,
-  $rate_limit_interval       = undef
+  $rate_limit_interval       = undef,
+  $imfiles                   = undef
 ) inherits rsyslog {
 
   if $custom_config {
@@ -118,6 +121,10 @@ class rsyslog::client (
 
   if $ssl_permitted_peer and $ssl_auth_mode != 'x509/name' {
     fail("You need to set auth_mode to 'x509/name' in order to use ssl_permitted_peers.")
+  }
+
+  if $imfiles {
+    create_resources(rsyslog::imfile, $imfiles)
   }
 
 }

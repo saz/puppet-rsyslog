@@ -50,6 +50,7 @@ or send some bitcoins to ```1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9```
     ssl_permitted_peer        => undef,
     ssl_auth_mode             => 'anon',
     log_templates             => false,
+    log_filters               => false,
     actionfiletemplate        => false,
     high_precision_timestamps => false,
     rate_limit_burst          => undef,
@@ -160,6 +161,7 @@ Declare the following to configure the connection:
     address                   => '*',
     high_precision_timestamps => false,
     log_templates             => false,
+    log_filters               => false,
     actionfiletemplate        => false,
     ssl_ca                    => undef,
     ssl_cert                  => undef,
@@ -181,6 +183,7 @@ The following lists all the class parameters this module accepts.
     omit_local_logging                  true,false          Turn off message reception via local log socket. Defaults to true only for RedHat 7+ and false elsewhere.
     preserve_fqdn                       true,false          Use full name of host even if sender and receiver are in the same domain. Defaults to false.
     local_host_name                     STRING              Use a custom local host name, instead of clients actual host name. Defaults to undef.
+    package_status                      STRING              Manages rsyslog package installation. Defaults to 'present'.
 
     RSYSLOG::SERVER CLASS PARAMETERS    VALUES              DESCRIPTION
     -------------------------------------------------------------------
@@ -195,6 +198,7 @@ The following lists all the class parameters this module accepts.
     address                             STRING              The IP address to bind to. Applies to UDP listener only. Defaults to '*'.
 
     log_templates                       HASH                Provides a has defining custom logging templates using the `$template` configuration parameter.
+    log_filters                         HASH                Provides a has defining custom logging filters using the `if/then` configurations parameter.
     actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging.
     high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
     ssl_ca                              STRING              Path to SSL CA certificate
@@ -220,6 +224,7 @@ The following lists all the class parameters this module accepts.
     ssl_permitted_peer                  STRING              List of permitted peers. Defaults to undef.
     ssl_auth_mode                       STRING              SSL auth mode. Defaults to anon.
     log_templates                       HASH                Provides a has defining custom logging templates using the `$template` configuration parameter.
+    log_filters                         HASH                Provides a has defining custom logging filters using the `if/then` configurations parameter.
     actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging.
     high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
     rate_limit_burst                    INTEGER             Specifies the number of messages in $rate_limit_interval before limiting begins. Defaults to undef.
@@ -251,3 +256,6 @@ manage the respective package:
 
 This can be used when using the adiscon PPA repository, that has merged rsyslog-gnutls
 with the main rsyslog package.
+
+Default package_status parameter for rsyslog class used to be 'latest'. However, it was
+against puppet best practices so it defaults to 'present' now.
