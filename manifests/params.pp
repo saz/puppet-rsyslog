@@ -28,7 +28,7 @@ class rsyslog::params {
   $im_journal_statefile                = false
 
   case $::osfamily {
-    debian: {
+    'Debian': {
       case $::operatingsystem {
         'Debian': {
           $log_user  = 'root'
@@ -70,7 +70,7 @@ class rsyslog::params {
       $service_hasstatus      = true
       $omit_local_logging     = false
     }
-    redhat: {
+    'RedHat': {
       if $::operatingsystem == 'Amazon' {
         $rsyslog_package_name   = 'rsyslog'
         $mysql_package_name     = 'rsyslog-mysql'
@@ -161,7 +161,7 @@ class rsyslog::params {
       $service_hasrestart     = true
       $service_hasstatus      = true
     }
-    suse: {
+    'Suse': {
       $rsyslog_package_name   = 'rsyslog'
       $relp_package_name      = false
       $mysql_package_name     = false
@@ -191,7 +191,7 @@ class rsyslog::params {
       ]
       $omit_local_logging     = false
     }
-    freebsd: {
+    'FreeBSD': {
       $rsyslog_package_name   = 'sysutils/rsyslog8'
       $relp_package_name      = false
       $mysql_package_name     = false 
@@ -226,7 +226,7 @@ class rsyslog::params {
     }
     default: {
       case $::operatingsystem {
-        gentoo: {
+        'Gentoo': {
           $rsyslog_package_name   = 'app-admin/rsyslog'
           $relp_package_name      = false
           $mysql_package_name     = 'rsyslog-mysql' 
