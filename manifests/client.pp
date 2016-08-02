@@ -120,7 +120,7 @@ class rsyslog::client (
   }
 
   if $ssl_permitted_peer and $ssl_auth_mode != 'x509/name' {
-    fail('You need to set auth_mode to 'x509/name' in order to use ssl_permitted_peers.')
+    fail('You need to set auth_mode to \'x509/name\' in order to use ssl_permitted_peers.')
   }
 
   if $imfiles {
