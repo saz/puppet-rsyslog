@@ -53,9 +53,6 @@
     }
   ],
   "description": "Manage rsyslog client and server via Puppet",
-  "types": [
-  
-  ],
   "dependencies": [
   
   ]
