@@ -6,5 +6,5 @@
 * [Option support for modules](https://github.com/crayfishx/puppet-rsyslog/pull/#6)
 * [Updated the action component to support logger facility](#9)
 * [Added more tests for the legacy_config / main_queue class](#10)
-* [Documentation Updates](#12)
+* [Documentation Updates](pull/12)
 * [Fixed the global params config styling](#13)
