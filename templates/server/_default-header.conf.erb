@@ -26,7 +26,7 @@ $template <%= log_template['name'] %>,"<%= log_template['template'] %>"
 
 # Define custom if/then log conditions
 <% scope.lookupvar('rsyslog::server::log_filters').each do |log_filter| -%>
-if <%= log_filter['expession'] %> then <%= log_filter['action'] %>
+if <%= log_filter['expression'] %> then <%= log_filter['action'] %>
 <% end -%>
 <% end -%>
 <% if scope.lookupvar('rsyslog::server::actionfiletemplate') -%>
