@@ -1,28 +1,47 @@
----
-branches:
-  only:
-    - master
+sudo: false
 language: ruby
-bundler_args: --without development
-script: bundle exec rake spec SPEC_OPTS='--format documentation'
-after_success:
-  - git clone -q git://github.com/puppetlabs/ghpublisher.git .forge-releng
-  - .forge-releng/publish
-rvm:
-  - 1.9.3
-  - 2.0.0
-  - 2.1.1
-env:
-  matrix:
-    - PUPPET_GEM_VERSION="~> 2.7.0"
-    - PUPPET_GEM_VERSION="~> 3.7.1"
-    - PUPPET_GEM_VERSION="~> 4.4.1"
-  global:
-  - PUBLISHER_LOGIN=saz
-  - secure: |-
-      EmipIx5A93xnHKwdHfuMPGNLjLz0M0wND0IyeucWhIHE+KtZ48oT+mO2XhnJSpu1DH
-      JaSoYgjQpCILvniWg76o+HY1bTDEP3AmUlxNFgfDAOAQfv0RHv2cEcgNxNrxsddx6S
-      Ks0FCvVkFgY703X+kBiYTpjP4SBzRe0y9OudSvk=
+cache: bundler
+bundler_args: "--without system_tests development"
+before_install:
+- bundle -v
+- rm Gemfile.lock || true
+- gem update --system
+- gem update bundler
+- gem --version
+- bundle -v
+script:
+- bundle exec rake $CHECK
+matrix:
+  fast_finish: true
+  include:
+  - rvm: 1.9.3
+    env: PUPPET_VERSION="~> 2.7" STRICT_VARIABLES="yes" CHECK=test
+  - rvm: 1.9.3
+    env: PUPPET_VERSION="~> 3.0" STRICT_VARIABLES="yes" CHECK=test
+  - rvm: 1.9.3
+    env: PUPPET_VERSION="~> 3.0" STRICT_VARIABLES="yes" FUTURE_PARSER="yes" CHECK=test
+  - rvm: 2.1
+    env: PUPPET_VERSION="~> 2.7" STRICT_VARIABLES="yes" CHECK=test
+  - rvm: 2.1
+    env: PUPPET_VERSION="~> 3.0" STRICT_VARIABLES="yes" CHECK=test
+  - rvm: 2.1
+    env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=test
+  - rvm: 2.2
+    env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=test
+  - rvm: 2.3.1
+    env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=build
+  - rvm: 2.3.1
+    env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=rubocop
+  - rvm: 2.3.1
+    env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=test
 notifications:
   email: false
-gemfile: Gemfile
+deploy:
+  provider: puppetforge
+  user: saz
+  password:
+    secure: jtU/pPAszngAz+79hyUd0Omc/2vfbT6PNEvyvZptu1Pb1otwXMPno8GB3pwI55ob65qT2M7ih4MQ11Tx8J6BkKpOaZr8Z0RiF5ZhdhvIRzTU5bSR1WebqngkBofqWZt7pxLeQ4rNN1MtCcFS0S6wxNWqzKHnHhc7freWlTincLY=
+  on:
+    tags: true
+    all_branches: true
+    rvm: 2.3.1
