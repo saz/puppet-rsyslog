@@ -15,13 +15,9 @@ matrix:
   fast_finish: true
   include:
   - rvm: 1.9.3
-    env: PUPPET_VERSION="~> 2.7" STRICT_VARIABLES="yes" CHECK=test
-  - rvm: 1.9.3
     env: PUPPET_VERSION="~> 3.0" STRICT_VARIABLES="yes" CHECK=test
   - rvm: 1.9.3
     env: PUPPET_VERSION="~> 3.0" STRICT_VARIABLES="yes" FUTURE_PARSER="yes" CHECK=test
-  - rvm: 2.1
-    env: PUPPET_VERSION="~> 2.7" STRICT_VARIABLES="yes" CHECK=test
   - rvm: 2.1
     env: PUPPET_VERSION="~> 3.0" STRICT_VARIABLES="yes" CHECK=test
   - rvm: 2.1
