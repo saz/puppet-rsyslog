@@ -37,7 +37,7 @@ define rsyslog::imfile(
   $imfile_template = 'rsyslog/imfile.erb',
 ) {
 
-  include rsyslog
+  include ::rsyslog
   $extra_modules = $rsyslog::extra_modules
 
   # This mode should defined when having multiline messages.

@@ -15,7 +15,7 @@ class rsyslog::params {
 
   $max_message_size                    = '2k'
   $system_log_rate_limit_interval      = '1'
-  $system_log_rateLimit_burst          = '100'
+  $system_log_rate_limit_burst         = '100'
   $purge_rsyslog_d                     = false
   $extra_modules                       = []
   $default_template                    = undef
@@ -30,7 +30,7 @@ class rsyslog::params {
   case $::osfamily {
     'Debian': {
       case $::operatingsystem {
-        'Debian': {
+        default: {
           $log_user  = 'root'
           $run_user  = 'root'
           $run_group = 'root'
@@ -194,7 +194,7 @@ class rsyslog::params {
     'FreeBSD': {
       $rsyslog_package_name   = 'sysutils/rsyslog8'
       $relp_package_name      = false
-      $mysql_package_name     = false 
+      $mysql_package_name     = false
       $pgsql_package_name     = false
       $gnutls_package_name    = false
       $package_status         = 'present'
@@ -229,7 +229,7 @@ class rsyslog::params {
         'Gentoo': {
           $rsyslog_package_name   = 'app-admin/rsyslog'
           $relp_package_name      = false
-          $mysql_package_name     = 'rsyslog-mysql' 
+          $mysql_package_name     = 'rsyslog-mysql'
           $pgsql_package_name     = 'rsyslog-pgsql'
           $gnutls_package_name    = false
           $package_status         = 'present'

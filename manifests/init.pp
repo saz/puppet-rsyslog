@@ -43,7 +43,7 @@ class rsyslog (
   $local_host_name                     = undef,
   $max_message_size                    = $rsyslog::params::max_message_size,
   $system_log_rate_limit_interval      = $rsyslog::params::system_log_rate_limit_interval,
-  $system_log_rateLimit_burst          = $rsyslog::params::system_log_rateLimit_burst,
+  $system_log_rate_limit_burst         = $rsyslog::params::system_log_rate_limit_burst,
   $extra_modules                       = $rsyslog::params::extra_modules,
   $default_template                    = $rsyslog::params::default_template,
   $msg_reduction                       = $rsyslog::params::msg_reduction,
@@ -54,12 +54,12 @@ class rsyslog (
   $im_journal_ratelimit_burst          = $rsyslog::params::im_journal_ratelimit_burst,
   $im_journal_ignore_previous_messages = $rsyslog::params::im_journal_ignore_previous_messages
 ) inherits rsyslog::params {
-  class { 'rsyslog::install': }
-  class { 'rsyslog::config': }
+  class { '::rsyslog::install': }
+  class { '::rsyslog::config': }
 
   if $extra_modules != [] {
-    class { 'rsyslog::modload': }
+    class { '::rsyslog::modload': }
   }
 
-  class { 'rsyslog::service': }
+  class { '::rsyslog::service': }
 }

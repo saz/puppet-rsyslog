@@ -33,8 +33,8 @@ class rsyslog::database (
   $db_module = "om${backend}"
 
   case $backend {
-    mysql: { $db_package = $rsyslog::mysql_package_name }
-    pgsql: { $db_package = $rsyslog::pgsql_package_name }
+    'mysql': { $db_package = $rsyslog::mysql_package_name }
+    'pgsql': { $db_package = $rsyslog::pgsql_package_name }
     default: { fail("Unsupported backend: ${backend}. Only MySQL (mysql) and PostgreSQL (pgsql) are supported.") }
   }
 

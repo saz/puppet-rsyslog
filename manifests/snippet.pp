@@ -22,7 +22,7 @@ define rsyslog::snippet(
   $ensure     = 'present',
   $file_mode  = 'undef'
 ) {
-  include rsyslog
+  include ::rsyslog
 
   if $file_mode == 'undef' {
     $file_mode_real = $rsyslog::perm_file

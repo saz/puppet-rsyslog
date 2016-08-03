@@ -116,7 +116,7 @@ class rsyslog::client (
   }
 
   if $ssl_auth_mode != 'anon' and $rsyslog::ssl == false {
-    fail("You need to enable SSL in order to use ssl_auth_mode.")
+    fail('You need to enable SSL in order to use ssl_auth_mode.')
   }
 
   if $ssl_permitted_peer and $ssl_auth_mode != 'x509/name' {
