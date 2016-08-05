@@ -6,9 +6,7 @@ RSpec.configure do |c|
   end
   c.include PuppetlabsSpec::Files
 
-  if ENV['PARSER'] == 'future'
-    c.parser = 'future'
-  end
+  c.parser = 'future' if ENV['PARSER'] == 'future'
 
   c.before :each do
     # Ensure that we don't accidentally cache facts and environment
@@ -19,10 +17,10 @@ RSpec.configure do |c|
 
     # Store any environment variables away to be restored later
     @old_env = {}
-    ENV.each_key {|k| @old_env[k] = ENV[k]}
+    ENV.each_key { |k| @old_env[k] = ENV[k] }
 
     if Gem::Version.new(`puppet --version`) >= Gem::Version.new('3.5')
-      Puppet.settings[:strict_variables]=true
+      Puppet.settings[:strict_variables] = true
     end
   end
 

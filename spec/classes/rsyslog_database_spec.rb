@@ -31,7 +31,7 @@ describe 'rsyslog::database', :type => :class do
           }
         }
 
-        it 'should compile' do
+        it 'compiles' do
           should contain_package('rsyslog-mysql')
           should contain_file('/etc/rsyslog.d/mysql.conf')
         end
@@ -50,7 +50,7 @@ describe 'rsyslog::database', :type => :class do
           }
         }
 
-        it 'should compile' do
+        it 'compiles' do
           should contain_package('rsyslog-pgsql')
           should contain_file('/etc/rsyslog.d/pgsql.conf')
         end
@@ -80,7 +80,7 @@ describe 'rsyslog::database', :type => :class do
           }
         }
 
-        it 'should compile' do
+        it 'compiles' do
           should contain_package('rsyslog-mysql')
           should contain_file('/etc/rsyslog.d/mysql.conf')
         end
@@ -99,7 +99,7 @@ describe 'rsyslog::database', :type => :class do
           }
         }
 
-        it 'should compile' do
+        it 'compiles' do
           should contain_package('rsyslog-pgsql')
           should contain_file('/etc/rsyslog.d/pgsql.conf')
         end
@@ -136,7 +136,7 @@ describe 'rsyslog::database', :type => :class do
           }
         }
 
-        it 'should compile' do
+        it 'compiles' do
           should contain_package('rsyslog-mysql')
           should contain_file('/etc/rsyslog.d/mysql.conf')
         end
@@ -155,7 +155,7 @@ describe 'rsyslog::database', :type => :class do
           }
         }
 
-        it 'should compile' do
+        it 'compiles' do
           should contain_package('rsyslog-pgsql')
           should contain_file('/etc/rsyslog.d/pgsql.conf')
         end
@@ -185,7 +185,7 @@ describe 'rsyslog::database', :type => :class do
           }
         }
 
-        it 'should compile' do
+        it 'compiles' do
           should contain_package('rsyslog-mysql')
           should contain_file('/etc/rsyslog.d/mysql.conf')
         end
@@ -204,7 +204,7 @@ describe 'rsyslog::database', :type => :class do
           }
         }
 
-        it 'should compile' do
+        it 'compiles' do
           should contain_package('rsyslog-pgsql')
           should contain_file('/etc/rsyslog.d/pgsql.conf')
         end

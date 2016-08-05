@@ -21,7 +21,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = RedHat)" do
         let(:title) { 'rsyslog-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_class('rsyslog::install')
           should contain_class('rsyslog::config')
           should contain_class('rsyslog::service')
@@ -40,7 +40,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = Debian)" do
         let(:title) { 'rsyslog-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_class('rsyslog::install')
           should contain_class('rsyslog::config')
           should contain_class('rsyslog::service')
@@ -59,7 +59,7 @@ describe 'rsyslog', :type => :class do
         context "when set" do
           let(:params) { { :local_host_name => 'example.dev' } }
 
-          it 'should compile' do
+          it 'compiles' do
             should contain_file('/etc/rsyslog.conf').with_content(/\$LocalHostName example.dev/)
           end
         end
@@ -77,7 +77,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_class('rsyslog::install')
           should contain_class('rsyslog::config')
           should contain_class('rsyslog::service')
@@ -97,7 +97,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = RedHat)" do
         let(:title) { 'rsyslog-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_file('/etc/rsyslog.conf')
           should contain_file('/etc/rsyslog.d/')
         end
@@ -115,7 +115,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = Debian)" do
         let(:title) { 'rsyslog-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_file('/etc/rsyslog.conf')
           should contain_file('/etc/rsyslog.d/')
         end
@@ -133,7 +133,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_file('/usr/local/etc/rsyslog.conf')
           should contain_file('/usr/local/etc/rsyslog.d/')
         end
@@ -152,7 +152,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = RedHat)" do
         let(:title) { 'rsyslog-install-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_package('rsyslog')
           should contain_package('rsyslog-relp')
         end
@@ -170,7 +170,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = Debian)" do
         let(:title) { 'rsyslog-install-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_package('rsyslog')
           should contain_package('rsyslog-relp')
         end
@@ -188,7 +188,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-install-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_package('sysutils/rsyslog8')
         end
       end
@@ -206,7 +206,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = RedHat)" do
         let(:title) { 'rsyslog-service-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_service('rsyslog')
         end
       end
@@ -223,7 +223,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = Debian)" do
         let(:title) { 'rsyslog-service-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_service('rsyslog')
         end
       end
@@ -240,7 +240,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-service-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_service('rsyslogd')
         end
       end
@@ -266,7 +266,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = RedHat)" do
         let(:title) { 'rsyslog-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_class('rsyslog::install')
           should contain_class('rsyslog::config')
           should contain_class('rsyslog::service')
@@ -285,7 +285,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = Debian)" do
         let(:title) { 'rsyslog-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_class('rsyslog::install')
           should contain_class('rsyslog::config')
           should contain_class('rsyslog::service')
@@ -304,7 +304,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_class('rsyslog::install')
           should contain_class('rsyslog::config')
           should contain_class('rsyslog::service')
@@ -324,7 +324,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = RedHat)" do
         let(:title) { 'rsyslog-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_file('/etc/rsyslog.conf')
           should contain_file('/etc/rsyslog.d/')
         end
@@ -342,7 +342,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = Debian)" do
         let(:title) { 'rsyslog-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_file('/etc/rsyslog.conf')
           should contain_file('/etc/rsyslog.d/')
         end
@@ -360,7 +360,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_file('/usr/local/etc/rsyslog.conf')
           should contain_file('/usr/local/etc/rsyslog.d/')
         end
@@ -379,7 +379,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = RedHat)" do
         let(:title) { 'rsyslog-install-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_package('rsyslog')
           should contain_package('rsyslog-relp')
         end
@@ -397,7 +397,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = Debian)" do
         let(:title) { 'rsyslog-install-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_package('rsyslog')
           should contain_package('rsyslog-relp')
         end
@@ -415,7 +415,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-install-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_package('sysutils/rsyslog8')
         end
       end
@@ -433,7 +433,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = RedHat)" do
         let(:title) { 'rsyslog-service-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_service('rsyslog')
         end
       end
@@ -450,7 +450,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = Debian)" do
         let(:title) { 'rsyslog-service-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_service('rsyslog')
         end
       end
@@ -467,7 +467,7 @@ describe 'rsyslog', :type => :class do
       context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-service-basic' }
   
-        it 'should compile' do
+        it 'compiles' do
           should contain_service('rsyslogd')
         end
       end
@@ -491,7 +491,7 @@ describe 'rsyslog', :type => :class do
       end
 
       context "default usage (osfamily = RedHat)" do
-        it 'should compile' do
+        it 'compiles' do
           should contain_file('/etc/rsyslog.conf')
           should contain_file('/etc/rsyslog.d/')
         end

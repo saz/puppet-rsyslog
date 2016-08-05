@@ -29,7 +29,7 @@ describe 'rsyslog::imfile', :type => :define do
       context "default usage (osfamily = RedHat)" do
         let(:title) { 'rsyslog-imfile-basic' }
 
-        it 'should compile' do
+        it 'compiles' do
           should contain_file('/etc/rsyslog.d/rsyslog-imfile-basic.conf')
         end
       end
@@ -54,7 +54,7 @@ describe 'rsyslog::imfile', :type => :define do
       context "default usage (osfamily = Debian)" do
         let(:title) { 'rsyslog-imfile-basic' }
 
-        it 'should compile' do
+        it 'compiles' do
           should contain_file('/etc/rsyslog.d/rsyslog-imfile-basic.conf')
         end
       end
@@ -79,7 +79,7 @@ describe 'rsyslog::imfile', :type => :define do
       context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-imfile-basic' }
 
-        it 'should compile' do
+        it 'compiles' do
           should contain_file('/usr/local/etc/rsyslog.d/rsyslog-imfile-basic.conf')
         end
       end
@@ -113,7 +113,7 @@ describe 'rsyslog::imfile', :type => :define do
       context "default usage (osfamily = RedHat)" do
         let(:title) { 'rsyslog-imfile-basic' }
 
-        it 'should compile' do
+        it 'compiles' do
           should contain_file('/etc/rsyslog.d/rsyslog-imfile-basic.conf')
         end
       end
@@ -138,7 +138,7 @@ describe 'rsyslog::imfile', :type => :define do
       context "default usage (osfamily = Debian)" do
         let(:title) { 'rsyslog-imfile-basic' }
 
-        it 'should compile' do
+        it 'compiles' do
           should contain_file('/etc/rsyslog.d/rsyslog-imfile-basic.conf')
         end
       end
@@ -163,7 +163,7 @@ describe 'rsyslog::imfile', :type => :define do
       context "default usage (osfamily = FreeBSD)" do
         let(:title) { 'rsyslog-imfile-basic' }
 
-        it 'should compile' do
+        it 'compiles' do
           should contain_file('/usr/local/etc/rsyslog.d/rsyslog-imfile-basic.conf')
         end
       end
