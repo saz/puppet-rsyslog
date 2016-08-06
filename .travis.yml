@@ -38,7 +38,7 @@ deploy:
     branch: ha-bug-puppet-forge
   user: saz
   password:
-    secure: jtU/pPAszngAz+79hyUd0Omc/2vfbT6PNEvyvZptu1Pb1otwXMPno8GB3pwI55ob65qT2M7ih4MQ11Tx8J6BkKpOaZr8Z0RiF5ZhdhvIRzTU5bSR1WebqngkBofqWZt7pxLeQ4rNN1MtCcFS0S6wxNWqzKHnHhc7freWlTincLY=
+    secure: "LBRZTMgpaFAfaasC+RovuMBUpz0JAuJ3hqLjgGWYQt2OX+6Tj/7CDpQ0S10jojVxMd7Yg06C1PVoupZJC3Pcb3ZE67hNXQxUukye5zTy9muUrOOKZbjBTrft2d6Utsx69x9cW1cINtYUj7byZig9up/Jk863lDuCQzz5OWkw7Rw="
   on:
     tags: true
     all_branches: true
