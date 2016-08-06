@@ -11,7 +11,8 @@ or send some bitcoins to ```1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9```
 
 ## REQUIREMENTS
 
-* Puppet >=2.7
+* Puppet >= 3.0
+* Starting with release 4.0.0 Puppet < 3.0 is not tested anymore
 
 ## Supported platforms
 * Debian-based distributions
