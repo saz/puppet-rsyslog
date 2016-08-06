@@ -32,10 +32,10 @@ matrix:
     env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=test
 notifications:
   email: false
-before_deploy:
-  - gem install json_pure -v '<= 2.0.1'
 deploy:
   provider: puppetforge
+  edge:
+    branch: ha-bug-puppet-forge
   user: saz
   password:
     secure: jtU/pPAszngAz+79hyUd0Omc/2vfbT6PNEvyvZptu1Pb1otwXMPno8GB3pwI55ob65qT2M7ih4MQ11Tx8J6BkKpOaZr8Z0RiF5ZhdhvIRzTU5bSR1WebqngkBofqWZt7pxLeQ4rNN1MtCcFS0S6wxNWqzKHnHhc7freWlTincLY=
