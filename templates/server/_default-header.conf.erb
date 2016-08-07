@@ -61,5 +61,7 @@ $InputTCPServerStreamDriverMode 1
 $InputTCPServerStreamDriverAuthMode anon
 <% end -%>
 
+<% if scope.lookupvar('rsyslog::server::relay_server') == false -%>
 # Switch to remote ruleset
 $RuleSet remote
+<% end -%>
