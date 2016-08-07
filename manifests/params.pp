@@ -68,7 +68,7 @@ class rsyslog::params {
       ]
       $service_hasrestart     = true
       $service_hasstatus      = true
-      $omit_local_logging     = false
+      $omit_local_logging     = 'on'
     }
     'RedHat': {
       if $::operatingsystem == 'Amazon' {

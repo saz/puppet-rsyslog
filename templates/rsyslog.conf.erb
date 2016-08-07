@@ -64,7 +64,7 @@ $Umask <%= scope.lookupvar('rsyslog::umask') %>
 <% if scope.lookupvar('rsyslog::omit_local_logging') -%>
 # Turn off message reception via local log socket;
 # local messages are retrieved through imjournal now.
-$OmitLocalLogging on
+$OmitLocalLogging <%= scope.lookupvar('rsyslog::omit_local_logging') %>
 <% end -%>
 
 # Settings for imjournal (If supported)
