@@ -5,8 +5,21 @@ rvm:
   - 2.1
   - 2.2
 env:
-  - PUPPET_GEM_VERSION="~> 4.0.0"
-  - PUPPET_GEM_VERSION="~> 4.1.0"
-  - PUPPET_GEM_VERSION="~> 4.2.0"
-  - PUPPET_GEM_VERSION="~> 4.3.0"
-  - PUPPET_GEM_VERSION="~> 4.4.1"
+  - PUPPET_VERSION="~> 3.7.0" FUTURE_PARSER=yes
+  - PUPPET_VERSION="~> 3.7.5" FUTURE_PARSER=yes
+  - PUPPET_VERSION="~> 3.8.0" FUTURE_PARSER=yes
+  - PUPPET_VERSION="~> 4.1.0"
+  - PUPPET_VERSION="~> 4.2.0"
+  - PUPPET_VERSION="~> 4.3.0"
+  - PUPPET_VERSION="~> 4.4.0"
+  - PUPPET_VERSION="~> 4.5.0"
+
+
+matrix:
+  exclude:
+    - rvm: 2.2
+      env: PUPPET_VERSION="~> 3.7.0" FUTURE_PARSER=yes
+    - rvm: 2.2
+      env: PUPPET_VERSION="~> 3.7.5" FUTURE_PARSER=yes
+    - rvm: 2.2
+      env: PUPPET_VERSION="~> 3.8.0" FUTURE_PARSER=yes
