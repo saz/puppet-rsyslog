@@ -4,9 +4,10 @@ PuppetLint.configuration.send('disable_80chars')
 PuppetLint.configuration.ignore_paths = ["spec/**/*.pp", "pkg/**/*.pp"]
 
 desc "Validate manifests, templates, and ruby files"
-task :validate do
+task :syntax_validate do
   Dir['manifests/**/*.pp'].each do |manifest|
-    sh "puppet parser validate --noop #{manifest}"
+    flags = ENV['FUTURE_PARSER'] == 'yes' ? '--parser future' : ''
+    sh "puppet parser validate  --noop #{flags}  #{manifest}"
   end
   Dir['spec/**/*.rb','lib/**/*.rb'].each do |ruby_file|
     sh "ruby -c #{ruby_file}" unless ruby_file =~ /spec\/fixtures/
@@ -16,9 +17,13 @@ task :validate do
   end
   #Validate epp template Checks
   Dir['templates/**/*.epp'].each do |template|
-    sh "puppet epp validate  #{template}"
+    # Although you can use epp with Puppet < 4 + future parser, the epp
+    # subcommand won't be available so we can't actually test these :(
+    if ENV['PUPPET_VERSION'] >= "4.0.0"
+      sh "puppet epp validate  #{template}"
+    end
   end
 
 end
 
-task :default => [:validate, :lint, :spec]
+task :default => [:syntax_validate, :lint, :spec]
