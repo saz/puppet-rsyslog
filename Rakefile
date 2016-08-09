@@ -19,7 +19,7 @@ task :syntax_validate do
   Dir['templates/**/*.epp'].each do |template|
     # Although you can use epp with Puppet < 4 + future parser, the epp
     # subcommand won't be available so we can't actually test these :(
-    if ENV['PUPPET_VERSION'] >= "4.0.0"
+    unless ENV['FUTURE_PARSER'] == "yes"
       sh "puppet epp validate  #{template}"
     end
   end
