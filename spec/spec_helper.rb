@@ -1,14 +1,10 @@
 require 'puppetlabs_spec_helper/module_spec_helper'
 require 'spec_helper'
+require 'puppet'
 
 RSpec.shared_context "rsyslog_class", :shared_context => :metadata do
 
 
-  # If we're testing on Puppet >=4.3 then data in modules will make
-  # sure that the defaults are set for the rsyslog class, otherwise
-  # we need to specifically declare it.
-  #
-  unless ENV['PUPPET_VERSION'].to_s >= '4.3'
     let(:pre_condition) { 
       <<-EOT
       class { 'rsyslog':
@@ -36,7 +32,6 @@ RSpec.shared_context "rsyslog_class", :shared_context => :metadata do
       }
       EOT
     }
-  end
 end
 
 RSpec.configure do |rspec|
