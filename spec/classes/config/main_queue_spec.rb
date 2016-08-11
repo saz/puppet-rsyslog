@@ -25,8 +25,8 @@ describe 'rsyslog::server', :include_rsyslog => true do
       it do
         is_expected.to contain_concat__fragment('rsyslog::config::main_queue').with_content(
           /(?x)\s*main_queue\s*\(\n
-          \s+queue.maxdiskspace="1000G"\s*\n
-          \s+queue.dequeuebatchsize="1000"\s*\n
+          \s*queue.maxdiskspace="1000G"\s*\n
+          \s*queue.dequeuebatchsize="1000"\s*\n
           \s*\)\s*/)
       end
     end
