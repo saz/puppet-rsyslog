@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'yaml'
 
-describe 'rsyslog::component::template' do
+describe 'rsyslog::component::template', :include_rsyslog => true do
   let(:title) { 'mytpl' }
 
   context 'string template' do

@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'yaml'
 
-describe 'rsyslog::component::global_config' do
+describe 'rsyslog::component::global_config', :include_rsyslog => true do
   let(:title) { 'configoption' }
 
   context 'when configuring a legacy type value' do
