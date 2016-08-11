@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'yaml'
 
-describe 'rsyslog::component::action' do
+describe 'rsyslog::component::action', :include_rsyslog => true do
   let(:title) { 'myaction' }
 
   context 'default action without facility' do

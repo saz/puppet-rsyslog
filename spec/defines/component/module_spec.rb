@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'yaml'
 
-describe 'rsyslog::component::module' do
+describe 'rsyslog::component::module', :include_rsyslog => true do
   let(:title) { 'impstats' }
 
   context 'string action' do

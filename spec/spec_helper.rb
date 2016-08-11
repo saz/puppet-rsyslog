@@ -1,1 +1,47 @@
 require 'puppetlabs_spec_helper/module_spec_helper'
+require 'spec_helper'
+
+RSpec.shared_context "rsyslog_class", :shared_context => :metadata do
+
+
+  # If we're testing on Puppet >=4.3 then data in modules will make
+  # sure that the defaults are set for the rsyslog class, otherwise
+  # we need to specifically declare it.
+  #
+  unless ENV['PUPPET_VERSION'].to_s >= '4.3'
+    let(:pre_condition) { 
+      <<-EOT
+      class { 'rsyslog':
+        confdir =>  '/etc/rsyslog.d',
+        package_name =>  'rsyslog',
+        package_version =>  'installed',
+        manage_package =>  true,
+        manage_confdir =>  true,
+        purge_config_files =>  true,
+        override_default_config =>  true,
+        config_file =>  '/etc/rsyslog.conf',
+        service_name =>  'rsyslog',
+        service_status =>  'running',
+        service_enabled =>  true,
+        feature_packages  => [],
+        global_config_priority =>  10,
+        module_load_priority =>  20,
+        input_priority =>  30,
+        main_queue_priority =>  40,
+        template_priority =>  50,
+        action_priority =>  60,
+        legacy_config_priority =>  70,
+        custom_priority =>  90,
+        target_file =>  '50_rsyslog.conf',
+      }
+      EOT
+    }
+  end
+end
+
+RSpec.configure do |rspec|
+  rspec.include_context "rsyslog_class", :include_rsyslog => true
+end
+
+
+

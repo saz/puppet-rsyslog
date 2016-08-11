@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'yaml'
 
-describe 'rsyslog::component::legacy_config' do
+describe 'rsyslog::component::legacy_config', :include_rsyslog => true do
   let(:title) { 'mylegacy_rules' }
 
   context 'key/value legacy rules' do

@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-describe 'rsyslog::server' do
+
+describe 'rsyslog::server', :include_rsyslog => true do
   let(:title) { 'main_queue' }
 
   let (:params) {{

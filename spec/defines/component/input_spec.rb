@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'yaml'
 
-describe 'rsyslog::component::input' do
+describe 'rsyslog::component::input', :include_rsyslog => true do
   let(:title) { 'myinput' }
 
   context 'string input' do
