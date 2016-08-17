@@ -68,18 +68,18 @@ $OmitLocalLogging on
 <% end -%>
 
 # Settings for imjournal (If supported)
-<% if scope.lookupvar('rsyslog::im_journal_statefile') -%>
+<% if scope.lookupvar('rsyslog::im_journal_statefile') != :undef -%>
 $IMJournalStateFile <%=scope.lookupvar('rsyslog::im_journal_statefile') %>
-<% end %>
-<% if scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') -%>
+<% end -%>
+<% if scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') != :undef -%>
 $ImjournalIgnorePreviousMessages <%=scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') %>
-<% end %>
-<% if scope.lookupvar('rsyslog::im_journal_ratelimit_interval') -%>
+<% end -%>
+<% if scope.lookupvar('rsyslog::im_journal_ratelimit_interval') != :undef -%>
 $imjournalRatelimitInterval <%=scope.lookupvar('rsyslog::im_journal_ratelimit_interval') %>
-<% end %>
-<% if scope.lookupvar('rsyslog::im_journal_ratelimit_burst') -%>
+<% end -%>
+<% if scope.lookupvar('rsyslog::im_journal_ratelimit_burst') != :undef -%>
 $imjournalRatelimitBurst <%=scope.lookupvar('rsyslog::im_journal_ratelimit_burst') %>
-<% end %>
+<% end -%>
 
 #
 # Include all config files in <%= scope.lookupvar('rsyslog::rsyslog_d') %>
