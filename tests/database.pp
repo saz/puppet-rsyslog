@@ -1,6 +1,6 @@
-include rsyslog
+include ::rsyslog
 
-class { 'rsyslog::database':
+class { '::rsyslog::database':
   backend  => 'mysql',
   server   => 'localhost',
   database => 'Syslog',
