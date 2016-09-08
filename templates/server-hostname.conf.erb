@@ -3,6 +3,7 @@
 <% # Common header across all templates -%>
 <%= scope.function_template(['rsyslog/server/_default-header.conf.erb']) %>
 
+<% if scope.lookupvar('rsyslog::server::relay_server') == false -%>
 # Log files are stored in directories matching the hostname
 <% if scope.lookupvar('rsyslog::server::enable_onefile') == false -%>
 
@@ -35,6 +36,7 @@ $Template dynAllMessages,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>
 
 # Rules
 *.*                 -?dynAllMessages
+<% end -%>
 <% end -%>
 
 <% # Common footer across all templates -%>
