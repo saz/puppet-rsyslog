@@ -88,6 +88,17 @@ mail.*                         -/var/log/maillog
 cron.*                         /var/log/cron
 
 # Everybody gets emergency messages
+<% if @rsyslog_version and @rsyslog_version.split('.')[0].to_i >= 7 -%>
+*.emerg       :omusrmsg:*
+<% else -%>
+*.emerg				*
+<% end -%>
+
+# Save news errors of level crit and higher in a special file.
+uucp,news.crit                 -/var/log/spooler
+
+# Save boot messages also to boot.log
+local7.*                       -/var/log/boot.log
 <% elsif scope.lookupvar('rsyslog::log_style') == 'freebsd' -%>
 *.err;kern.warning;auth.notice;mail.crit                /dev/console
 *.notice;authpriv.none;kern.debug;lpr.info;mail.crit;news.err   /var/log/messages
@@ -99,6 +110,7 @@ ftp.info                                        /var/log/xferlog
 cron.*                                          /var/log/cron
 !-devd
 *.=debug                                        /var/log/debug.log
+# Everybody gets emergency messages
 <% if @rsyslog_version and @rsyslog_version.split('.')[0].to_i >= 7 -%>
 *.emerg       :omusrmsg:*
 <% else -%>
