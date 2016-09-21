@@ -58,7 +58,8 @@ or send some bitcoins to ```1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9```
     rate_limit_interval       => undef
   }
 ```
-for read from file
+#### imfile entries
+Gathers log information from a file
 ```
   rsyslog::imfile { 'my-imfile':
     file_name     => '/some/file',
@@ -67,7 +68,15 @@ for read from file
   }
 
 ```
+#### rsyslog.d conf files
 
+e.g. rsyslog.d/10-puppetagent.conf - moves puppet-agent entries to a file and excludes from /var/log/messages 
+```
+  rsyslog::snippet { '10-puppetagent':
+    content => ":programname,contains,\"puppet-agent\" /var/log/puppetlabs/puppet/puppet-agent.log\n& ~",
+  }
+
+```
 #### Defining custom logging templates
 
 The `log_templates` parameter can be used to set up custom logging templates, which can be used for local and/or remote logging. More detail on template formats can be found in the [rsyslog documentation](http://www.rsyslog.com/doc/rsyslog_conf_templates.html).
