@@ -22,10 +22,18 @@ class rsyslog::params {
   $msg_reduction                       = false
   $non_kernel_facility                 = false
   $preserve_fqdn                       = false
-  $im_journal_ratelimit_interval       = '600'
-  $im_journal_ratelimit_burst          = '20000'
-  $im_journal_ignore_previous_messages = 'off'
   $im_journal_statefile                = false
+
+  if $::osfamily == 'RedHat' and versioncmp($::operatingsystemmajrelease, '7') >= 0 {
+    $im_journal_ratelimit_interval       = '600'
+    $im_journal_ratelimit_burst          = '20000'
+    $im_journal_ignore_previous_messages = 'off'
+  }
+  else {
+    $im_journal_ratelimit_interval       = undef
+    $im_journal_ratelimit_burst          = undef
+    $im_journal_ignore_previous_messages = undef
+  }
 
   case $::osfamily {
     'Debian': {
