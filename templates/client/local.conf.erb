@@ -99,6 +99,7 @@ ftp.info                                        /var/log/xferlog
 cron.*                                          /var/log/cron
 !-devd
 *.=debug                                        /var/log/debug.log
+<% end -%>
 <% if @rsyslog_version and @rsyslog_version.split('.')[0].to_i >= 7 -%>
 *.emerg       :omusrmsg:*
 <% else -%>
@@ -110,7 +111,6 @@ uucp,news.crit                 -/var/log/spooler
 
 # Save boot messages also to boot.log
 local7.*                       -/var/log/boot.log
-<% end -%>
 <% end -%>
 
 <% if @log_local_custom -%>
