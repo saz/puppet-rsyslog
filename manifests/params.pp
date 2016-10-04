@@ -205,7 +205,6 @@ class rsyslog::params {
       $client_conf                         = 'client'
       $server_conf                         = 'server'
       $modules                             = [
-      $im_journal_ignore_previous_messages = undef
         '$ModLoad imuxsock # provides support for local system logging',
         '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
         '#$ModLoad immark  # provides --MARK-- message capability',
