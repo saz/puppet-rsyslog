@@ -103,6 +103,25 @@ describe 'rsyslog', type: :class do
       end
     end
 
+    context 'osfamily = RedHat and operatingsystemmajrelease = 7' do
+      let :facts do
+        default_facts.merge!(
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemmajrelease: '7'
+        )
+      end
+
+      context 'default usage (osfamily = RedHat)' do
+        let(:title) { 'rsyslog-basic' }
+
+        it 'compiles' do
+          should contain_file('/etc/rsyslog.conf').with_content(%r{\$imjournalRatelimitBurst 20000})
+          should contain_file('/etc/rsyslog.d/')
+        end
+      end
+    end
+
     context 'osfamily = Debian' do
       let :facts do
         default_facts.merge!(
