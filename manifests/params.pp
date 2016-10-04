@@ -27,6 +27,11 @@ class rsyslog::params {
   $im_journal_ignore_previous_messages = 'off'
   $im_journal_statefile                = false
 
+  $imuxsock = '$ModLoad imuxsock  # provides support for local system logging'
+  $imklog   = '$ModLoad imklog    # provides kernel logging support (previously done by rklogd)'
+  $immark   = '$ModLoad immark    # provides --MARK-- message capability'
+  $imjournal= '$ModLoad imjournal # provides access to the systemd journal'
+
   case $::osfamily {
     'Debian': {
       case $::operatingsystem {
@@ -62,9 +67,9 @@ class rsyslog::params {
       $server_conf            = 'server'
       $ssl                    = false
       $modules                = [
-        '$ModLoad imuxsock # provides support for local system logging',
-        '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-        '#$ModLoad immark  # provides --MARK-- message capability',
+        $imuxsock,
+        $imklog,
+        $immark,
       ]
       $service_hasrestart     = true
       $service_hasstatus      = true
@@ -79,9 +84,9 @@ class rsyslog::params {
         $relp_package_name      = false
         $default_config_file    = 'rsyslog_default'
         $modules                = [
-          '$ModLoad imuxsock # provides support for local system logging',
-          '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-          '#$ModLoad immark  # provides --MARK-- message capability',
+          $imuxsock,
+          $imklog,
+          $immark,
         ]
         $omit_local_logging     = false
       }
@@ -93,9 +98,9 @@ class rsyslog::params {
         $relp_package_name      = false
         $default_config_file    = 'rsyslog_default'
         $modules                = [
-          '$ModLoad imuxsock # provides support for local system logging',
-          '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-          '#$ModLoad immark  # provides --MARK-- message capability',
+          $imuxsock,
+          $imklog,
+          $immark,
         ]
         $omit_local_logging     = false
       }
@@ -107,9 +112,9 @@ class rsyslog::params {
         $relp_package_name      = 'rsyslog-relp'
         $default_config_file    = 'rsyslog_default'
         $modules                = [
-          '$ModLoad imuxsock # provides support for local system logging',
-          '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-          '#$ModLoad immark  # provides --MARK-- message capability',
+          $imuxsock,
+          $imklog,
+          $immark,
         ]
         $omit_local_logging     = false
       }
@@ -121,10 +126,10 @@ class rsyslog::params {
         $relp_package_name                   = 'rsyslog-relp'
         $default_config_file                 = 'rsyslog_default_rhel7'
         $modules                             = [
-          '$ModLoad imuxsock # provides support for local system logging',
-          '$ModLoad imjournal # provides access to the systemd journal',
-          '#$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-          '#$ModLoad immark  # provides --MARK-- message capability',
+          $imuxsock,
+          $imjournal,
+          $imklog,
+          $immark,
         ]
         $omit_local_logging                  = true
       } else {
@@ -135,9 +140,9 @@ class rsyslog::params {
         $relp_package_name      = 'librelp'
         $default_config_file    = 'rsyslog_default'
         $modules                = [
-          '$ModLoad imuxsock # provides support for local system logging',
-          '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-          '#$ModLoad immark  # provides --MARK-- message capability',
+          $imuxsock,
+          $imklog,
+          $immark,
         ]
         $omit_local_logging     = false
       }
@@ -185,9 +190,9 @@ class rsyslog::params {
       $client_conf            = 'client'
       $server_conf            = 'server'
       $modules                = [
-        '$ModLoad imuxsock # provides support for local system logging',
-        '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-        '#$ModLoad immark  # provides --MARK-- message capability',
+        $imuxsock, 
+        $imklog, 
+        $immark,
       ]
       $omit_local_logging     = false
     }
@@ -216,9 +221,9 @@ class rsyslog::params {
       $server_conf            = 'server'
       $ssl                    = false
       $modules                = [
-        '$ModLoad imuxsock # provides support for local system logging',
-        '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-        '#$ModLoad immark  # provides --MARK-- message capability',
+        $imuxsock, 
+        $imklog, 
+        $immark,
       ]
       $service_hasrestart     = true
       $service_hasstatus      = true
@@ -251,9 +256,9 @@ class rsyslog::params {
           $server_conf            = 'server'
           $ssl                    = false
           $modules                = [
-            '$ModLoad imuxsock # provides support for local system logging',
-            '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-            '#$ModLoad immark  # provides --MARK-- message capability',
+            $imuxsock, 
+            $imklog, 
+            $immark,
           ]
           $service_hasrestart     = true
           $service_hasstatus      = true
