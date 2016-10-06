@@ -68,16 +68,16 @@ $OmitLocalLogging on
 <% end -%>
 
 # Settings for imjournal (If supported)
-<% if scope.lookupvar('rsyslog::im_journal_statefile') != :undef -%>
+<% if scope.lookupvar('rsyslog::im_journal_statefile') and scope.lookupvar('rsyslog::im_journal_statefile') != :undef -%>
 $imjournalStateFile <%=scope.lookupvar('rsyslog::im_journal_statefile') %>
 <% end -%>
-<% if scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') != :undef -%>
+<% if scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') and scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') != :undef -%>
 $imjournalIgnorePreviousMessages <%=scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') %>
 <% end -%>
-<% if scope.lookupvar('rsyslog::im_journal_ratelimit_interval') != :undef -%>
+<% if scope.lookupvar('rsyslog::im_journal_ratelimit_interval') and scope.lookupvar('rsyslog::im_journal_ratelimit_interval') != :undef -%>
 $imjournalRatelimitInterval <%=scope.lookupvar('rsyslog::im_journal_ratelimit_interval') %>
 <% end -%>
-<% if scope.lookupvar('rsyslog::im_journal_ratelimit_burst') != :undef -%>
+<% if scope.lookupvar('rsyslog::im_journal_ratelimit_burst') and scope.lookupvar('rsyslog::im_journal_ratelimit_burst') != :undef -%>
 $imjournalRatelimitBurst <%=scope.lookupvar('rsyslog::im_journal_ratelimit_burst') %>
 <% end -%>
 
