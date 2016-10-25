@@ -97,7 +97,7 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.conf')
+          should contain_file('/etc/rsyslog.conf').without_content(%r{\$imjournalRatelimitBurst})
           should contain_file('/etc/rsyslog.d/')
         end
       end
