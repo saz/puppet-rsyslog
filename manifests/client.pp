@@ -58,8 +58,10 @@ class rsyslog::client (
   $high_precision_timestamps = false,
   $rate_limit_burst          = undef,
   $rate_limit_interval       = undef,
-  $imfiles                   = undef
-) inherits rsyslog {
+  $imfiles                   = undef,
+  $client_conf               = $rsyslog::params::client_conf
+) inherits rsyslog::params {
+  include rsyslog
 
   if $custom_config {
     $content_real = template($custom_config)
@@ -74,7 +76,7 @@ class rsyslog::client (
   }
 
   if $content_real {
-    rsyslog::snippet { $rsyslog::client_conf:
+    rsyslog::snippet { $client_conf:
       ensure  => present,
       content => $content_real,
     }

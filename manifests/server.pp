@@ -56,8 +56,10 @@ class rsyslog::server (
   $log_templates             = false,
   $log_filters               = false,
   $actionfiletemplate        = false,
-  $rotate                    = undef
-) inherits rsyslog {
+  $rotate                    = undef,
+  $server_conf               = $rsyslog::params::server_conf,
+) inherits rsyslog::params {
+  include rsyslog
 
   ### Logrotate policy
   $logpath = $rotate ? {
@@ -81,7 +83,7 @@ class rsyslog::server (
     $real_content = template("${module_name}/server-default.conf.erb")
   }
 
-  rsyslog::snippet { $rsyslog::server_conf:
+  rsyslog::snippet { $server_conf:
     ensure  => present,
     content => $real_content,
   }
