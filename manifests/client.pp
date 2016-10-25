@@ -61,7 +61,7 @@ class rsyslog::client (
   $imfiles                   = undef,
   $client_conf               = $rsyslog::params::client_conf
 ) inherits rsyslog::params {
-  include rsyslog
+  include ::rsyslog
 
   if $custom_config {
     $content_real = template($custom_config)

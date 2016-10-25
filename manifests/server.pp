@@ -59,7 +59,7 @@ class rsyslog::server (
   $rotate                    = undef,
   $server_conf               = $rsyslog::params::server_conf,
 ) inherits rsyslog::params {
-  include rsyslog
+  include ::rsyslog
 
   ### Logrotate policy
   $logpath = $rotate ? {
