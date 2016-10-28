@@ -1,0 +1,19 @@
+# Custom fragment
+<% if scope.lookupvar('rsyslog::client::log_local_custom').class == String -%>
+ <%= @log_local_custom %>
+<% else -%>
+<% scope.lookupvar('rsyslog::client::log_local_custom').flatten.compact.each do |log_custom| -%>
+<% if log_custom['log_user'] -%>
+$FileOwner      <%= log_custom['log_user'] %>
+<% else -%>
+$FileOwner      <%= scope.lookupvar('rsyslog::log_user') %>
+<% end -%>
+<% if log_custom['perm_file'] -%>
+$FileCreateMode <%= log_custom['perm_file'] %>
+<% else -%>
+$FileCreateMode <%= scope.lookupvar('rsyslog::perm_file') %>
+<% end -%>
+<%= log_custom['facility'] %> <%= log_custom['file'] %>
+
+<% end -%>
+<% end -%>

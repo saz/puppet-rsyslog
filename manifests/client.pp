@@ -69,7 +69,8 @@ class rsyslog::client (
     $content_real = template(
       "${module_name}/client/config.conf.erb",
       "${module_name}/client/remote.conf.erb",
-      "${module_name}/client/local.conf.erb"
+      "${module_name}/client/local.conf.erb",
+      "${module_name}/client/local_custom.conf.erb"
     )
   } else {
     $content_real = undef
@@ -103,9 +104,14 @@ class rsyslog::client (
       content => template("${module_name}/client/remote.conf.erb"),
     }
 
-    rsyslog::snippet { "99_${rsyslog::client_conf}_local":
+    rsyslog::snippet { "70_${rsyslog::client_conf}_local":
       ensure  => $_local_ensure,
       content => template("${module_name}/client/local.conf.erb"),
+    }
+
+    rsyslog::snippet { "80_${rsyslog::client_conf}_local_custom":
+      ensure  => $_local_ensure,
+      content => template("${module_name}/client/local_custom.conf.erb"),
     }
   }
 
