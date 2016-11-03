@@ -23,7 +23,7 @@ describe 'rsyslog::imfile', type: :define do
         let(:title) { 'rsyslog-imfile-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/rsyslog-imfile-basic.conf')
+          is_expected.to contain_file('/etc/rsyslog.d/rsyslog-imfile-basic.conf')
         end
       end
     end
@@ -42,7 +42,7 @@ describe 'rsyslog::imfile', type: :define do
         let(:title) { 'rsyslog-imfile-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/rsyslog-imfile-basic.conf')
+          is_expected.to contain_file('/etc/rsyslog.d/rsyslog-imfile-basic.conf')
         end
       end
     end
@@ -61,7 +61,7 @@ describe 'rsyslog::imfile', type: :define do
         let(:title) { 'rsyslog-imfile-basic' }
 
         it 'compiles' do
-          should contain_file('/usr/local/etc/rsyslog.d/rsyslog-imfile-basic.conf')
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/rsyslog-imfile-basic.conf')
         end
       end
     end
@@ -89,7 +89,7 @@ describe 'rsyslog::imfile', type: :define do
         let(:title) { 'rsyslog-imfile-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/rsyslog-imfile-basic.conf')
+          is_expected.to contain_file('/etc/rsyslog.d/rsyslog-imfile-basic.conf')
         end
       end
     end
@@ -108,7 +108,7 @@ describe 'rsyslog::imfile', type: :define do
         let(:title) { 'rsyslog-imfile-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/rsyslog-imfile-basic.conf')
+          is_expected.to contain_file('/etc/rsyslog.d/rsyslog-imfile-basic.conf')
         end
       end
     end
@@ -127,7 +127,7 @@ describe 'rsyslog::imfile', type: :define do
         let(:title) { 'rsyslog-imfile-basic' }
 
         it 'compiles' do
-          should contain_file('/usr/local/etc/rsyslog.d/rsyslog-imfile-basic.conf')
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/rsyslog-imfile-basic.conf')
         end
       end
     end
