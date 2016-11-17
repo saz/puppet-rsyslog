@@ -21,7 +21,7 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/client.conf')
+          is_expected.to contain_file('/etc/rsyslog.d/client.conf')
         end
       end
 
@@ -30,19 +30,19 @@ describe 'rsyslog::client', type: :class do
         let(:params) { { split_config: true } }
 
         it 'does not manage client.conf' do
-          should_not contain_file('/etc/rsyslog.d/client.conf')
+          is_expected.not_to contain_file('/etc/rsyslog.d/client.conf')
         end
 
         it 'configures client' do
-          should contain_file('/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
+          is_expected.to contain_file('/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
         end
 
         it 'configures client remote logging' do
-          should contain_file('/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
+          is_expected.to contain_file('/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
         end
 
         it 'removes client local logging' do
-          should contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
+          is_expected.to contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
         end
       end
 
@@ -51,7 +51,7 @@ describe 'rsyslog::client', type: :class do
         let(:params) { { 'log_filters' => [{ 'expression' => '$msg contains \'error0\'', 'action' => '/var/log/err.log' }] } }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
+          is_expected.to contain_file('/etc/rsyslog.d/client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
         end
       end
     end
@@ -68,7 +68,7 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/client.conf')
+          is_expected.to contain_file('/etc/rsyslog.d/client.conf')
         end
       end
 
@@ -77,19 +77,19 @@ describe 'rsyslog::client', type: :class do
         let(:params) { { split_config: true } }
 
         it 'does not manage client.conf' do
-          should_not contain_file('/etc/rsyslog.d/client.conf')
+          is_expected.not_to contain_file('/etc/rsyslog.d/client.conf')
         end
 
         it 'configures client' do
-          should contain_file('/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
+          is_expected.to contain_file('/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
         end
 
         it 'configures client remote logging' do
-          should contain_file('/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
+          is_expected.to contain_file('/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
         end
 
         it 'removes client local logging' do
-          should contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
+          is_expected.to contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
         end
       end
 
@@ -98,7 +98,7 @@ describe 'rsyslog::client', type: :class do
         let(:params) { { 'log_filters' => [{ 'expression' => '$msg contains \'error0\'', 'action' => '/var/log/err.log' }] } }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
+          is_expected.to contain_file('/etc/rsyslog.d/client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
         end
       end
 
@@ -108,7 +108,7 @@ describe 'rsyslog::client', type: :class do
         context 'without SSL' do
           let(:params) { { ssl_auth_mode: 'x509/name' } }
           it 'fails' do
-            expect { should contain_class('rsyslog::client') }.to raise_error(Puppet::Error, %r{You need to enable SSL in order to use ssl_auth_mode.})
+            expect { is_expected.to contain_class('rsyslog::client') }.to raise_error(Puppet::Error, %r{You need to enable SSL in order to use ssl_auth_mode.})
           end
         end
 
@@ -123,7 +123,7 @@ describe 'rsyslog::client', type: :class do
             let(:params) { ssl_params }
 
             it 'compiles' do
-              should contain_file('/etc/rsyslog.d/client.conf').with_content(%r{\$ActionSendStreamDriverAuthMode anon}).without_content(%r{\$ActionSendStreamDriverPermittedPeer})
+              is_expected.to contain_file('/etc/rsyslog.d/client.conf').with_content(%r{\$ActionSendStreamDriverAuthMode anon}).without_content(%r{\$ActionSendStreamDriverPermittedPeer})
             end
           end
 
@@ -135,7 +135,7 @@ describe 'rsyslog::client', type: :class do
             end
 
             it 'contains ActionSendStreamDriverAuthMode' do
-              should contain_file('/etc/rsyslog.d/client.conf').with_content(%r{\$ActionSendStreamDriverAuthMode x509\/name}).without_content(%r{\$ActionSendStreamDriverPermittedPeer})
+              is_expected.to contain_file('/etc/rsyslog.d/client.conf').with_content(%r{\$ActionSendStreamDriverAuthMode x509\/name}).without_content(%r{\$ActionSendStreamDriverPermittedPeer})
             end
           end
 
@@ -147,7 +147,7 @@ describe 'rsyslog::client', type: :class do
             end
 
             it 'fails' do
-              expect { should contain_class('rsyslog::client') }.to raise_error(Puppet::Error, %r{You need to set auth_mode to 'x509\/name' in order to use ssl_permitted_peer.})
+              expect { is_expected.to contain_class('rsyslog::client') }.to raise_error(Puppet::Error, %r{You need to set auth_mode to 'x509\/name' in order to use ssl_permitted_peer.})
             end
           end
 
@@ -160,7 +160,7 @@ describe 'rsyslog::client', type: :class do
             end
 
             it 'contains ActionSendStreamDriverPermittedPeer' do
-              should contain_file('/etc/rsyslog.d/client.conf').with_content(%r{\$ActionSendStreamDriverAuthMode x509\/name}).with_content(%r{\$ActionSendStreamDriverPermittedPeer logs.example.com})
+              is_expected.to contain_file('/etc/rsyslog.d/client.conf').with_content(%r{\$ActionSendStreamDriverAuthMode x509\/name}).with_content(%r{\$ActionSendStreamDriverPermittedPeer logs.example.com})
             end
           end
         end
@@ -179,7 +179,7 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'compiles' do
-          should contain_file('/usr/local/etc/rsyslog.d/client.conf')
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/client.conf')
         end
       end
 
@@ -188,19 +188,19 @@ describe 'rsyslog::client', type: :class do
         let(:params) { { split_config: true } }
 
         it 'does not manage client.conf' do
-          should_not contain_file('/usr/local/etc/rsyslog.d/client.conf')
+          is_expected.not_to contain_file('/usr/local/etc/rsyslog.d/client.conf')
         end
 
         it 'configures client' do
-          should contain_file('/usr/local/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
         end
 
         it 'configures client remote logging' do
-          should contain_file('/usr/local/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
         end
 
         it 'removes client local logging' do
-          should contain_file('/usr/local/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
         end
       end
     end
@@ -226,7 +226,7 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/client.conf')
+          is_expected.to contain_file('/etc/rsyslog.d/client.conf')
         end
       end
 
@@ -235,19 +235,19 @@ describe 'rsyslog::client', type: :class do
         let(:params) { { split_config: true } }
 
         it 'does not manage client.conf' do
-          should_not contain_file('/etc/rsyslog.d/client.conf')
+          is_expected.not_to contain_file('/etc/rsyslog.d/client.conf')
         end
 
         it 'configures client' do
-          should contain_file('/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
+          is_expected.to contain_file('/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
         end
 
         it 'configures client remote logging' do
-          should contain_file('/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
+          is_expected.to contain_file('/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
         end
 
         it 'removes client local logging' do
-          should contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
+          is_expected.to contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
         end
       end
 
@@ -256,7 +256,7 @@ describe 'rsyslog::client', type: :class do
         let(:params) { { 'log_filters' => [{ 'expression' => '$msg contains \'error0\'', 'action' => '/var/log/err.log' }] } }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
+          is_expected.to contain_file('/etc/rsyslog.d/client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
         end
       end
     end
@@ -273,7 +273,7 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/client.conf')
+          is_expected.to contain_file('/etc/rsyslog.d/client.conf')
         end
       end
 
@@ -282,19 +282,19 @@ describe 'rsyslog::client', type: :class do
         let(:params) { { split_config: true } }
 
         it 'does not manage client.conf' do
-          should_not contain_file('/etc/rsyslog.d/client.conf')
+          is_expected.not_to contain_file('/etc/rsyslog.d/client.conf')
         end
 
         it 'configures client' do
-          should contain_file('/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
+          is_expected.to contain_file('/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
         end
 
         it 'configures client remote logging' do
-          should contain_file('/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
+          is_expected.to contain_file('/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
         end
 
         it 'removes client local logging' do
-          should contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
+          is_expected.to contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
         end
       end
 
@@ -303,7 +303,7 @@ describe 'rsyslog::client', type: :class do
         let(:params) { { 'log_filters' => [{ 'expression' => '$msg contains \'error0\'', 'action' => '/var/log/err.log' }] } }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
+          is_expected.to contain_file('/etc/rsyslog.d/client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
         end
       end
     end
@@ -320,7 +320,7 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'compiles' do
-          should contain_file('/usr/local/etc/rsyslog.d/client.conf')
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/client.conf')
         end
       end
 
@@ -329,19 +329,19 @@ describe 'rsyslog::client', type: :class do
         let(:params) { { split_config: true } }
 
         it 'does not manage client.conf' do
-          should_not contain_file('/usr/local/etc/rsyslog.d/client.conf')
+          is_expected.not_to contain_file('/usr/local/etc/rsyslog.d/client.conf')
         end
 
         it 'configures client' do
-          should contain_file('/usr/local/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
         end
 
         it 'configures client remote logging' do
-          should contain_file('/usr/local/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
         end
 
         it 'removes client local logging' do
-          should contain_file('/usr/local/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
         end
       end
     end
@@ -367,7 +367,7 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/client.conf')
+          is_expected.to contain_file('/etc/rsyslog.d/client.conf')
         end
       end
 
@@ -376,19 +376,19 @@ describe 'rsyslog::client', type: :class do
         let(:params) { { split_config: true } }
 
         it 'does not manage client.conf' do
-          should_not contain_file('/etc/rsyslog.d/client.conf')
+          is_expected.not_to contain_file('/etc/rsyslog.d/client.conf')
         end
 
         it 'configures client' do
-          should contain_file('/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
+          is_expected.to contain_file('/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
         end
 
         it 'configures client remote logging' do
-          should contain_file('/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
+          is_expected.to contain_file('/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
         end
 
         it 'removes client local logging' do
-          should contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
+          is_expected.to contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
         end
       end
     end
