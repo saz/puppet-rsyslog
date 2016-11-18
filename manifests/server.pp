@@ -11,6 +11,7 @@
 # [*relay_server*]
 # [*server_dir*]
 # [*custom_config*]
+# [*content*]
 # [*port*]
 # [*relp_port*]
 # [*address*]
@@ -56,8 +57,7 @@ class rsyslog::server (
   $log_templates             = false,
   $log_filters               = false,
   $actionfiletemplate        = false,
-  $rotate                    = undef,
-  $server_conf               = $rsyslog::params::server_conf,
+  $rotate                    = undef
 ) inherits rsyslog::params {
   include ::rsyslog
 
@@ -74,7 +74,7 @@ class rsyslog::server (
 
   if $content {
     if $custom_config {
-      fail 'Cannot set both $content and $custom_config'
+      fail '$content and $custom_config are mutually exclusive'
     }
     $real_content = $content
   } elsif $custom_config {
@@ -83,7 +83,7 @@ class rsyslog::server (
     $real_content = template("${module_name}/server-default.conf.erb")
   }
 
-  rsyslog::snippet { $server_conf:
+  rsyslog::snippet { '00_server':
     ensure  => present,
     content => $real_content,
   }

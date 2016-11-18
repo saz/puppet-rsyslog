@@ -1,6 +1,6 @@
 # == Class: rsyslog::client
 #
-# Full description of class role here.
+# Manages rsyslog as client
 #
 # === Parameters
 #
@@ -13,6 +13,7 @@
 # [*log_local_custom*]
 # [*log_auth_local*]
 # [*listen_localhost*]
+# [*split_config*]
 # [*custom_config*]
 # [*custom_params*]
 # [*server*]
@@ -20,12 +21,14 @@
 # [*remote_servers*]
 # [*ssl_ca*]
 # [*ssl_permitted_peer*]
-# [*ssl_
+# [*ssl_auth_mode*]
 # [*log_templates*]
 # [*log_filters*]
 # [*actionfiletemplate*]
+# [*high_precision_timestamps*]
 # [*rate_limit_burst*]
 # [*rate_limit_interval*]
+# [*imfiles*]
 #
 # === Variables
 #
@@ -58,8 +61,7 @@ class rsyslog::client (
   $high_precision_timestamps = false,
   $rate_limit_burst          = undef,
   $rate_limit_interval       = undef,
-  $imfiles                   = undef,
-  $client_conf               = $rsyslog::params::client_conf
+  $imfiles                   = undef
 ) inherits rsyslog::params {
   include ::rsyslog
 
@@ -76,7 +78,7 @@ class rsyslog::client (
   }
 
   if $content_real {
-    rsyslog::snippet { $client_conf:
+    rsyslog::snippet { '00_client':
       ensure  => present,
       content => $content_real,
     }
@@ -93,17 +95,17 @@ class rsyslog::client (
       $_local_ensure = 'absent'
     }
 
-    rsyslog::snippet { "00_${rsyslog::client_conf}_config":
+    rsyslog::snippet { '00_client_config':
       ensure  => present,
       content => template("${module_name}/client/config.conf.erb"),
     }
 
-    rsyslog::snippet { "50_${rsyslog::client_conf}_remote":
+    rsyslog::snippet { '50_client_remote':
       ensure  => $_remote_ensure,
       content => template("${module_name}/client/remote.conf.erb"),
     }
 
-    rsyslog::snippet { "99_${rsyslog::client_conf}_local":
+    rsyslog::snippet { '99_client_local':
       ensure  => $_local_ensure,
       content => template("${module_name}/client/local.conf.erb"),
     }

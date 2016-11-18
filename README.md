@@ -39,6 +39,7 @@ or send some bitcoins to ```1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9```
     remote_type               => 'tcp',
     remote_forward_format     => 'RSYSLOG_ForwardFormat',
     log_local                 => false,
+    log_local_custom          => undef,
     log_auth_local            => false,
     listen_localhost          => false,
     split_config              => false,
@@ -55,7 +56,8 @@ or send some bitcoins to ```1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9```
     actionfiletemplate        => false,
     high_precision_timestamps => false,
     rate_limit_burst          => undef,
-    rate_limit_interval       => undef
+    rate_limit_interval       => undef,
+    imfiles                   => undef
   }
 ```
 for read from file
@@ -158,16 +160,17 @@ Declare the following to configure the connection:
     relay_server              => false,
     server_dir                => '/srv/log/',
     custom_config             => undef,
+    content                   => undef,
     port                      => '514',
     relp_port                 => '20514',
     address                   => '*',
     high_precision_timestamps => false,
-    log_templates             => false,
-    log_filters               => false,
-    actionfiletemplate        => false,
     ssl_ca                    => undef,
     ssl_cert                  => undef,
     ssl_key                   => undef,
+    log_templates             => false,
+    log_filters               => false,
+    actionfiletemplate        => false,
     rotate                    => undef
   }
 ```
@@ -193,21 +196,21 @@ The following lists all the class parameters this module accepts.
     enable_udp                          true,false          Enable UDP listener. Defaults to true.
     enable_relp                         true,false          Enable RELP listener. Defaults to true.
     enable_onefile                      true,false          Only one logfile per remote host. Defaults to false.
-    relay_server                        true,false          If the server should be able to relay the received logs to another server. The rsyslog::client must also be set up.
+    relay_server                        true,false          If the server should be able to relay the received logs to another server. The rsyslog::client must also be set up. Defaults to false.
     server_dir                          STRING              Folder where logs will be stored on the server. Defaults to '/srv/log/'
     custom_config                       STRING              Specify your own template to use for server config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb'
+    content                             STRING              Specify the content of the server config, instead of using a template. Defaults to undef.
     port                                STRING/INTEGER      Port to listen on for messages via UDP and TCP. Defaults to 514
     relp_port                           STRING/INTEGER      Port to listen on for messages via RELP. Defaults to 20514
     address                             STRING              The IP address to bind to. Applies to UDP listener only. Defaults to '*'.
-
-    log_templates                       HASH                Provides a has defining custom logging templates using the `$template` configuration parameter.
-    log_filters                         HASH                Provides a has defining custom logging filters using the `if/then` configurations parameter.
-    actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging.
-    high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
-    ssl_ca                              STRING              Path to SSL CA certificate
-    ssl_cert                            STRING              Path to SSL certificate
-    ssl_key                             STRING              Path to SSL private key
-    rotate                              TODO                TODO
+    high_precision_timestamps           true,false          Whether or not to use high precision timestamps. Defaults to false.
+    ssl_ca                              STRING              Path to SSL CA certificate. Defaults to undef.
+    ssl_cert                            STRING              Path to SSL certificate. Defaults to undef.
+    ssl_key                             STRING              Path to SSL private key. Defaults to undef.
+    log_templates                       HASH                Provides a hash defining custom logging templates using the `$template` configuration parameter. Defaults to false.
+    log_filters                         HASH                Provides a hash defining custom logging filters using the `if/then` configurations parameter. Defaults to false.
+    actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging. Defaults to false.
+    rotate                              STRING              Enables rotation of logfiles. Valid values: year, month, day. Defaults to undef.
 
     RSYSLOG::CLIENT CLASS PARAMETERS    VALUES              DESCRIPTION
     -------------------------------------------------------------------

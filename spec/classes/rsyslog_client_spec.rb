@@ -21,7 +21,7 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/client.conf')
+          should contain_file('/etc/rsyslog.d/00_client.conf')
         end
       end
 
@@ -29,8 +29,8 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
         let(:params) { { split_config: true } }
 
-        it 'does not manage client.conf' do
-          should_not contain_file('/etc/rsyslog.d/client.conf')
+        it 'does not manage 00_client.conf' do
+          should_not contain_file('/etc/rsyslog.d/00_client.conf')
         end
 
         it 'configures client' do
@@ -51,7 +51,7 @@ describe 'rsyslog::client', type: :class do
         let(:params) { { 'log_filters' => [{ 'expression' => '$msg contains \'error0\'', 'action' => '/var/log/err.log' }] } }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
+          should contain_file('/etc/rsyslog.d/00_client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
         end
       end
     end
@@ -68,7 +68,7 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/client.conf')
+          should contain_file('/etc/rsyslog.d/00_client.conf')
         end
       end
 
@@ -76,8 +76,8 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
         let(:params) { { split_config: true } }
 
-        it 'does not manage client.conf' do
-          should_not contain_file('/etc/rsyslog.d/client.conf')
+        it 'does not manage 00_client.conf' do
+          should_not contain_file('/etc/rsyslog.d/00_client.conf')
         end
 
         it 'configures client' do
@@ -98,7 +98,7 @@ describe 'rsyslog::client', type: :class do
         let(:params) { { 'log_filters' => [{ 'expression' => '$msg contains \'error0\'', 'action' => '/var/log/err.log' }] } }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
+          should contain_file('/etc/rsyslog.d/00_client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
         end
       end
 
@@ -123,7 +123,7 @@ describe 'rsyslog::client', type: :class do
             let(:params) { ssl_params }
 
             it 'compiles' do
-              should contain_file('/etc/rsyslog.d/client.conf').with_content(%r{\$ActionSendStreamDriverAuthMode anon}).without_content(%r{\$ActionSendStreamDriverPermittedPeer})
+              should contain_file('/etc/rsyslog.d/00_client.conf').with_content(%r{\$ActionSendStreamDriverAuthMode anon}).without_content(%r{\$ActionSendStreamDriverPermittedPeer})
             end
           end
 
@@ -135,7 +135,7 @@ describe 'rsyslog::client', type: :class do
             end
 
             it 'contains ActionSendStreamDriverAuthMode' do
-              should contain_file('/etc/rsyslog.d/client.conf').with_content(%r{\$ActionSendStreamDriverAuthMode x509\/name}).without_content(%r{\$ActionSendStreamDriverPermittedPeer})
+              should contain_file('/etc/rsyslog.d/00_client.conf').with_content(%r{\$ActionSendStreamDriverAuthMode x509\/name}).without_content(%r{\$ActionSendStreamDriverPermittedPeer})
             end
           end
 
@@ -160,7 +160,7 @@ describe 'rsyslog::client', type: :class do
             end
 
             it 'contains ActionSendStreamDriverPermittedPeer' do
-              should contain_file('/etc/rsyslog.d/client.conf').with_content(%r{\$ActionSendStreamDriverAuthMode x509\/name}).with_content(%r{\$ActionSendStreamDriverPermittedPeer logs.example.com})
+              should contain_file('/etc/rsyslog.d/00_client.conf').with_content(%r{\$ActionSendStreamDriverAuthMode x509\/name}).with_content(%r{\$ActionSendStreamDriverPermittedPeer logs.example.com})
             end
           end
         end
@@ -179,7 +179,7 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'compiles' do
-          should contain_file('/usr/local/etc/rsyslog.d/client.conf')
+          should contain_file('/usr/local/etc/rsyslog.d/00_client.conf')
         end
       end
 
@@ -187,8 +187,8 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
         let(:params) { { split_config: true } }
 
-        it 'does not manage client.conf' do
-          should_not contain_file('/usr/local/etc/rsyslog.d/client.conf')
+        it 'does not manage 00_client.conf' do
+          should_not contain_file('/usr/local/etc/rsyslog.d/00_client.conf')
         end
 
         it 'configures client' do
@@ -226,7 +226,7 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/client.conf')
+          should contain_file('/etc/rsyslog.d/00_client.conf')
         end
       end
 
@@ -234,8 +234,8 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
         let(:params) { { split_config: true } }
 
-        it 'does not manage client.conf' do
-          should_not contain_file('/etc/rsyslog.d/client.conf')
+        it 'does not manage 00_client.conf' do
+          should_not contain_file('/etc/rsyslog.d/00_client.conf')
         end
 
         it 'configures client' do
@@ -256,7 +256,7 @@ describe 'rsyslog::client', type: :class do
         let(:params) { { 'log_filters' => [{ 'expression' => '$msg contains \'error0\'', 'action' => '/var/log/err.log' }] } }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
+          should contain_file('/etc/rsyslog.d/00_client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
         end
       end
     end
@@ -273,7 +273,7 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/client.conf')
+          should contain_file('/etc/rsyslog.d/00_client.conf')
         end
       end
 
@@ -281,8 +281,8 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
         let(:params) { { split_config: true } }
 
-        it 'does not manage client.conf' do
-          should_not contain_file('/etc/rsyslog.d/client.conf')
+        it 'does not manage 00_client.conf' do
+          should_not contain_file('/etc/rsyslog.d/00_client.conf')
         end
 
         it 'configures client' do
@@ -303,7 +303,7 @@ describe 'rsyslog::client', type: :class do
         let(:params) { { 'log_filters' => [{ 'expression' => '$msg contains \'error0\'', 'action' => '/var/log/err.log' }] } }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
+          should contain_file('/etc/rsyslog.d/00_client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
         end
       end
     end
@@ -320,7 +320,7 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'compiles' do
-          should contain_file('/usr/local/etc/rsyslog.d/client.conf')
+          should contain_file('/usr/local/etc/rsyslog.d/00_client.conf')
         end
       end
 
@@ -328,8 +328,8 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
         let(:params) { { split_config: true } }
 
-        it 'does not manage client.conf' do
-          should_not contain_file('/usr/local/etc/rsyslog.d/client.conf')
+        it 'does not manage 00_client.conf' do
+          should_not contain_file('/usr/local/etc/rsyslog.d/00_client.conf')
         end
 
         it 'configures client' do
@@ -367,7 +367,7 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.d/client.conf')
+          should contain_file('/etc/rsyslog.d/00_client.conf')
         end
       end
 
@@ -375,8 +375,8 @@ describe 'rsyslog::client', type: :class do
         let(:title) { 'rsyslog-client-basic' }
         let(:params) { { split_config: true } }
 
-        it 'does not manage client.conf' do
-          should_not contain_file('/etc/rsyslog.d/client.conf')
+        it 'does not manage 00_client.conf' do
+          should_not contain_file('/etc/rsyslog.d/00_client.conf')
         end
 
         it 'configures client' do
