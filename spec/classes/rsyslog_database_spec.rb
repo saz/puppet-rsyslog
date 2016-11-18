@@ -31,8 +31,8 @@ describe 'rsyslog::database', type: :class do
         end
 
         it 'compiles' do
-          should contain_package('rsyslog-mysql')
-          should contain_file('/etc/rsyslog.d/mysql.conf')
+          is_expected.to contain_package('rsyslog-mysql')
+          is_expected.to contain_file('/etc/rsyslog.d/mysql.conf')
         end
       end
 
@@ -50,8 +50,8 @@ describe 'rsyslog::database', type: :class do
         end
 
         it 'compiles' do
-          should contain_package('rsyslog-pgsql')
-          should contain_file('/etc/rsyslog.d/pgsql.conf')
+          is_expected.to contain_package('rsyslog-pgsql')
+          is_expected.to contain_file('/etc/rsyslog.d/pgsql.conf')
         end
       end
     end
@@ -78,8 +78,8 @@ describe 'rsyslog::database', type: :class do
         end
 
         it 'compiles' do
-          should contain_package('rsyslog-mysql')
-          should contain_file('/etc/rsyslog.d/mysql.conf')
+          is_expected.to contain_package('rsyslog-mysql')
+          is_expected.to contain_file('/etc/rsyslog.d/mysql.conf')
         end
       end
 
@@ -97,8 +97,8 @@ describe 'rsyslog::database', type: :class do
         end
 
         it 'compiles' do
-          should contain_package('rsyslog-pgsql')
-          should contain_file('/etc/rsyslog.d/pgsql.conf')
+          is_expected.to contain_package('rsyslog-pgsql')
+          is_expected.to contain_file('/etc/rsyslog.d/pgsql.conf')
         end
       end
     end
@@ -134,8 +134,8 @@ describe 'rsyslog::database', type: :class do
         end
 
         it 'compiles' do
-          should contain_package('rsyslog-mysql')
-          should contain_file('/etc/rsyslog.d/mysql.conf')
+          is_expected.to contain_package('rsyslog-mysql')
+          is_expected.to contain_file('/etc/rsyslog.d/mysql.conf')
         end
       end
 
@@ -153,8 +153,8 @@ describe 'rsyslog::database', type: :class do
         end
 
         it 'compiles' do
-          should contain_package('rsyslog-pgsql')
-          should contain_file('/etc/rsyslog.d/pgsql.conf')
+          is_expected.to contain_package('rsyslog-pgsql')
+          is_expected.to contain_file('/etc/rsyslog.d/pgsql.conf')
         end
       end
     end
@@ -181,8 +181,8 @@ describe 'rsyslog::database', type: :class do
         end
 
         it 'compiles' do
-          should contain_package('rsyslog-mysql')
-          should contain_file('/etc/rsyslog.d/mysql.conf')
+          is_expected.to contain_package('rsyslog-mysql')
+          is_expected.to contain_file('/etc/rsyslog.d/mysql.conf')
         end
       end
 
@@ -200,8 +200,8 @@ describe 'rsyslog::database', type: :class do
         end
 
         it 'compiles' do
-          should contain_package('rsyslog-pgsql')
-          should contain_file('/etc/rsyslog.d/pgsql.conf')
+          is_expected.to contain_package('rsyslog-pgsql')
+          is_expected.to contain_file('/etc/rsyslog.d/pgsql.conf')
         end
       end
     end
