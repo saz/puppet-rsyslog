@@ -229,8 +229,8 @@ The following lists all the class parameters this module accepts.
     ssl_ca                              STRING              SSL CA file location. Defaults to undef.
     ssl_permitted_peer                  STRING              List of permitted peers. Defaults to undef.
     ssl_auth_mode                       STRING              SSL auth mode. Defaults to anon.
-    log_templates                       HASH                Provides a has defining custom logging templates using the `$template` configuration parameter.
-    log_filters                         HASH                Provides a has defining custom logging filters using the `if/then` configurations parameter.
+    log_templates                       HASH                Provides a hash defining custom logging templates using the `$template` configuration parameter.
+    log_filters                         HASH                Provides a hash defining custom logging filters using the `if/then` configurations parameter.
     actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging.
     high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
     rate_limit_burst                    INTEGER             Specifies the number of messages in $rate_limit_interval before limiting begins. Defaults to undef.
