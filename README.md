@@ -150,6 +150,13 @@ Declare the following to configure the connection:
   class { 'rsyslog::server': }
 ```
 
+### Log filter example (for Hiera)
+```
+rsyslog::client::log_filters:
+  - expression: '$programname == "foo"'
+  -     action: /var/log/foo.log
+```
+
 #### Variables and default values
 ```
   class { 'rsyslog::server':
