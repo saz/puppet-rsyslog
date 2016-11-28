@@ -32,10 +32,16 @@ $MaxMessageSize <%= scope.lookupvar('rsyslog::max_message_size') %>
 $SystemLogRateLimitInterval <%= scope.lookupvar('rsyslog::system_log_rate_limit_interval') %>
 $SystemLogRateLimitBurst <%= scope.lookupvar('rsyslog::system_log_rate_limit_burst') %>
 
+<% if scope.lookupvar('rsyslog::default_template') and scope.lookupvar('rsyslog::default_template') != :undef and scope.lookupvar('rsyslog::default_template_customisation') and scope.lookupvar('rsyslog::default_template_customisation') != :undef -%>
+#
+# Custom setting for ActionFileDefaultTemplate
+#
+$template <%= scope.lookupvar('rsyslog::default_template') %>,<%= scope.lookupvar('rsyslog::default_template_customisation') %>
+
+<% end -%>
 <% if scope.lookupvar('rsyslog::default_template')  and scope.lookupvar('rsyslog::default_template') != :undef -%>
 #
-# Use traditional timestamp format.
-# To enable high precision timestamps, comment out the following line.
+# Sets a default template for file action
 #
 $ActionFileDefaultTemplate <%= scope.lookupvar('rsyslog::default_template') %>
 
