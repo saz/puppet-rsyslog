@@ -48,6 +48,7 @@ or send some bitcoins to ```1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9```
     server                    => 'log',
     port                      => '514',
     remote_servers            => false,
+    ssl                       => false,
     ssl_ca                    => undef,
     ssl_permitted_peer        => undef,
     ssl_auth_mode             => 'anon',
@@ -172,9 +173,12 @@ rsyslog::client::log_filters:
     relp_port                 => '20514',
     address                   => '*',
     high_precision_timestamps => false,
+    ssl                       => false,
     ssl_ca                    => undef,
     ssl_cert                  => undef,
     ssl_key                   => undef,
+    ssl_permitted_peer        => undef,
+    ssl_auth_mode             => 'anon',
     log_templates             => false,
     log_filters               => false,
     actionfiletemplate        => false,
@@ -211,9 +215,12 @@ The following lists all the class parameters this module accepts.
     relp_port                           STRING/INTEGER      Port to listen on for messages via RELP. Defaults to 20514
     address                             STRING              The IP address to bind to. Applies to UDP listener only. Defaults to '*'.
     high_precision_timestamps           true,false          Whether or not to use high precision timestamps. Defaults to false.
+    ssl                                 true,false          Enable SSL support. Defaults to false.
     ssl_ca                              STRING              Path to SSL CA certificate. Defaults to undef.
     ssl_cert                            STRING              Path to SSL certificate. Defaults to undef.
     ssl_key                             STRING              Path to SSL private key. Defaults to undef.
+    ssl_permitted_peer                  STRING              List of permitted peers. Defaults to undef.
+    ssl_auth_mode                       STRING              SSL auth mode. Defaults to anon.
     log_templates                       HASH                Provides a hash defining custom logging templates using the `$template` configuration parameter. Defaults to false.
     log_filters                         HASH                Provides a hash defining custom logging filters using the `if/then` configurations parameter. Defaults to false.
     actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging. Defaults to false.
@@ -233,7 +240,10 @@ The following lists all the class parameters this module accepts.
     server                              STRING              Rsyslog server to log to. Will be used in the client configuration file. Only used, if remote_servers is false.
     port                                '514'               Remote server port. Only used if remote_servers is false.
     remote_servers                      Array of hashes     Array of hashes with remote servers. See documentation above. Defaults to false.
+    ssl                                 true,false          Enable SSL support. Defaults to false.
     ssl_ca                              STRING              SSL CA file location. Defaults to undef.
+    ssl_cert                            STRING              Path to SSL certificate. Defaults to undef.
+    ssl_key                             STRING              Path to SSL private key. Defaults to undef.
     ssl_permitted_peer                  STRING              List of permitted peers. Defaults to undef.
     ssl_auth_mode                       STRING              SSL auth mode. Defaults to anon.
     log_templates                       HASH                Provides a hash defining custom logging templates using the `$template` configuration parameter.
