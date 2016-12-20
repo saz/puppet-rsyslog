@@ -64,10 +64,10 @@ $DirOwner <%= scope.lookupvar('rsyslog::log_user') %>
 $DirGroup <%= scope.lookupvar('rsyslog::log_group') %>
 <% end -%>
 $DirCreateMode <%= scope.lookupvar('rsyslog::perm_dir') %>
-<% if scope.lookupvar('rsyslog::run_user') -%>
+<% if scope.lookupvar('rsyslog::priv_drop_user') -%>
 $PrivDropToUser <%= scope.lookupvar('rsyslog::run_user') %>
 <% end -%>
-<% if scope.lookupvar('rsyslog::run_group') -%>
+<% if scope.lookupvar('rsyslog::priv_drop_group') -%>
 $PrivDropToGroup <%= scope.lookupvar('rsyslog::run_group') %>
 <% end -%>
 $WorkDirectory <%= scope.lookupvar('rsyslog::spool_dir') %>
