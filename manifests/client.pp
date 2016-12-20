@@ -58,7 +58,8 @@ class rsyslog::client (
   $high_precision_timestamps = false,
   $rate_limit_burst          = undef,
   $rate_limit_interval       = undef,
-  $imfiles                   = undef
+  $imfiles                   = undef,
+  $use_cron                  = true
 ) inherits rsyslog {
 
   if $custom_config {
