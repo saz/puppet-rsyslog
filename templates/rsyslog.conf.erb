@@ -24,13 +24,19 @@ $KLogPermitNonKernelFacility on
 #
 # Set max message size for sending and receiving
 #
+<% if scope.lookupvar('rsyslog::max_message_size') -%>
 $MaxMessageSize <%= scope.lookupvar('rsyslog::max_message_size') %>
+<% end -%>
 
 #
 # Set rate limit for messages received.
 # 
+<% if scope.lookupvar('rsyslog::system_log_rate_limit_interval') -%>
 $SystemLogRateLimitInterval <%= scope.lookupvar('rsyslog::system_log_rate_limit_interval') %>
+<% end -%>
+<% if scope.lookupvar('rsyslog::system_log_rate_limit_burst') -%>
 $SystemLogRateLimitBurst <%= scope.lookupvar('rsyslog::system_log_rate_limit_burst') %>
+<% end -%>
 
 <% if scope.lookupvar('rsyslog::default_template')  and scope.lookupvar('rsyslog::default_template') != :undef -%>
 #
@@ -51,11 +57,19 @@ $RepeatedMsgReduction on
 $FileOwner <%= scope.lookupvar('rsyslog::log_user') %>
 $FileGroup <%= scope.lookupvar('rsyslog::log_group') %>
 $FileCreateMode <%= scope.lookupvar('rsyslog::perm_file') %>
+<% if scope.lookupvar('rsyslog::log_user') -%>
 $DirOwner <%= scope.lookupvar('rsyslog::log_user') %>
+<% end -%>
+<% if scope.lookupvar('rsyslog::log_group') -%>
 $DirGroup <%= scope.lookupvar('rsyslog::log_group') %>
+<% end -%>
 $DirCreateMode <%= scope.lookupvar('rsyslog::perm_dir') %>
+<% if scope.lookupvar('rsyslog::run_user') -%>
 $PrivDropToUser <%= scope.lookupvar('rsyslog::run_user') %>
+<% end -%>
+<% if scope.lookupvar('rsyslog::run_group') -%>
 $PrivDropToGroup <%= scope.lookupvar('rsyslog::run_group') %>
+<% end -%>
 $WorkDirectory <%= scope.lookupvar('rsyslog::spool_dir') %>
 <% if scope.lookupvar('rsyslog::umask') -%>
 $Umask <%= scope.lookupvar('rsyslog::umask') %>
