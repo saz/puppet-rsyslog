@@ -1,21 +1,21 @@
 # An "In-Memory Queue" is created for remote logging.
 $WorkDirectory <%= scope.lookupvar('rsyslog::spool_dir') -%>    # where to place spool files
-<% if scope.lookupvar('rsyslog::client::action_queue_filename') -%>
+<% if scope.lookupvar('rsyslog::client::action_queue_filename') and scope.lookupvar('rsyslog::client::action_queue_filename') != :undef -%>
 $ActionQueueFileName <%= scope.lookupvar('rsyslog::client::action_queue_filename') -%>      # unique name prefix for spool files
 <% end -%>
-<% if scope.lookupvar('rsyslog::client::spool_size') -%>
+<% if scope.lookupvar('rsyslog::client::spool_size') and scope.lookupvar('rsyslog::client::spool_size') != :undef -%>
 $ActionQueueMaxDiskSpace <%= scope.lookupvar('rsyslog::client::spool_size') -%>     # spool space limit (use as much as possible)
 <% end -%>
-<% if scope.lookupvar('rsyslog::client::action_queue_save_on_shutdown') -%>
+<% if scope.lookupvar('rsyslog::client::action_queue_save_on_shutdown') and scope.lookupvar('rsyslog::client::action_queue_save_on_shutdown') != :undef -%>
 $ActionQueueSaveOnShutdown <%= scope.lookupvar('rsyslog::client::action_queue_save_on_shutdown') -%>   # whether to save messages to disk on shutdown
 <% end -%>
 <% if scope.lookupvar('rsyslog::client::spool_timeoutenqueue') -%>
 $ActionQueueTimeoutEnqueue <%= scope.lookupvar('rsyslog::client::spool_timeoutenqueue') -%>   # time to wait before discarding on full spool
 <% end -%>
-<% if scope.lookupvar('rsyslog::client::action_queue_type') -%>
+<% if scope.lookupvar('rsyslog::client::action_queue_type') and scope.lookupvar('rsyslog::client::action_queue_type') != :undef -%>
 $ActionQueueType <%= scope.lookupvar('rsyslog::client::action_queue_type') -%>     # processing type
 <% end -%>
-<% if scope.lookupvar('rsyslog::client::action_resume_retry_count') -%>
+<% if scope.lookupvar('rsyslog::client::action_resume_retry_count') and scope.lookupvar('rsyslog::client::action_resume_retry_count') != :undef -%>
 $ActionResumeRetryCount <%= scope.lookupvar('rsyslog::client::action_resume_retry_count') -%>      # retries if host is down
 <% end -%>
 <% if scope.lookupvar('rsyslog::client::log_templates') and ! scope.lookupvar('rsyslog::client::log_templates').empty?-%>
