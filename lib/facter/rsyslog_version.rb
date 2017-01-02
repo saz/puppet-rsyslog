@@ -14,9 +14,15 @@ Facter.add(:rsyslog_version) do
         Regexp.last_match(1)
       end
     when 'RedHat', 'Suse'
-      command = 'rpm -qa --qf "%{VERSION}" "rsyslog"'
-      version = Facter::Util::Resolution.exec(command)
-      Regexp.last_match(1) if version =~ %r{^(.+)$}
+      if File.exists? "/sbin/rsyslogd"
+        # Query rsyslogd binary for the version
+        Facter::Util::Resolution.exec("rsyslogd -v | head -n 1 | awk '{print $2}' | sed 's/,//g'")
+      else
+        # Fall back to rpm to determine version
+        command = 'rpm -qa --qf "%{VERSION}" "rsyslog"'
+        version = Facter::Util::Resolution.exec(command)
+        Regexp.last_match(1) if version =~ %r{^(.+)$}
+      end
     when 'FreeBSD'
       command = 'pkg query %v rsyslog8'
       version = Facter::Util::Resolution.exec(command)
