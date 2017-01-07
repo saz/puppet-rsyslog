@@ -48,7 +48,7 @@ $ActionFileDefaultTemplate RSYSLOG_FileFormat
 <% end -%>
 <% end -%>
 
-<% if scope.lookupvar('rsyslog::ssl') -%>
+<% if scope.lookupvar('rsyslog::server::ssl') -%>
 # Server side SSL.
 $DefaultNetstreamDriver gtls
 
@@ -58,7 +58,10 @@ $DefaultNetstreamDriverCertFile <%= scope.lookupvar('rsyslog::server::ssl_cert')
 $DefaultNetstreamDriverKeyFile <%= scope.lookupvar('rsyslog::server::ssl_key') %>
 
 $InputTCPServerStreamDriverMode 1
-$InputTCPServerStreamDriverAuthMode anon
+$InputTCPServerStreamDriverAuthMode <%= scope.lookupvar('rsyslog::server::ssl_auth_mode') %>
+<% if @ssl_permitted_peer -%>
+$ActionSendStreamDriverPermittedPeer <%= scope.lookupvar('rsyslog::server::ssl_permitted_peer') %>
+<% end -%>
 <% end -%>
 
 <% if scope.lookupvar('rsyslog::server::relay_server') == false -%>

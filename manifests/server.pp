@@ -19,6 +19,8 @@
 # [*ssl_ca*]
 # [*ssl_cert*]
 # [*ssl_key*]
+# [*ssl_permitted_peer*]
+# [*ssl_auth_mode*]
 # [*log_templates*]
 # [*log_filters*]
 # [*actionfiletemplate_cust*]
@@ -52,9 +54,12 @@ class rsyslog::server (
   $relp_port                 = '20514',
   $address                   = '*',
   $high_precision_timestamps = false,
+  $ssl                       = false,
   $ssl_ca                    = undef,
   $ssl_cert                  = undef,
   $ssl_key                   = undef,
+  $ssl_permitted_peer        = undef,
+  $ssl_auth_mode             = 'anon',
   $log_templates             = false,
   $log_filters               = false,
   $actionfiletemplate_cust   = false,
@@ -90,7 +95,15 @@ class rsyslog::server (
     content => $real_content,
   }
 
-  if $rsyslog::ssl and (!$enable_tcp or $ssl_ca == undef or $ssl_cert == undef or $ssl_key == undef) {
+  if $ssl and (!$enable_tcp or $ssl_ca == undef or $ssl_cert == undef or $ssl_key == undef) {
     fail('You need to define all the ssl options and enable tcp in order to use SSL.')
+  }
+
+  if $ssl_auth_mode != 'anon' and $ssl == false {
+    fail('You need to enable SSL in order to use ssl_auth_mode.')
+  }
+
+  if $ssl_permitted_peer and $ssl_auth_mode != 'x509/name' {
+    fail('You need to set auth_mode to \'x509/name\' in order to use ssl_permitted_peers.')
   }
 }

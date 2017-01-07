@@ -56,10 +56,14 @@ $UDPServerAddress 127.0.0.1
 $UDPServerRun 514
 <% end %>
 
-<% if scope.lookupvar('rsyslog::ssl') -%>
+<% if scope.lookupvar('rsyslog::client::ssl') -%>
 # Setup SSL connection.
 # CA/Cert
 $DefaultNetStreamDriverCAFile <%= scope.lookupvar('rsyslog::client::ssl_ca') %>
+<% if scope.lookupvar('rsyslog::client::ssl_cert') -%>
+$DefaultNetstreamDriverCertFile <%= scope.lookupvar('rsyslog::client::ssl_cert') %>
+$DefaultNetstreamDriverKeyFile <%= scope.lookupvar('rsyslog::client::ssl_key') %>
+<% end -%>
 
 # Connection settings.
 $DefaultNetstreamDriver gtls
