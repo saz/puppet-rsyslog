@@ -24,6 +24,7 @@
 # [*ssl_auth_mode*]
 # [*log_templates*]
 # [*log_filters*]
+# [*actionfiletemplate_cust*]
 # [*actionfiletemplate*]
 # [*high_precision_timestamps*]
 # [*rate_limit_burst*]
@@ -57,6 +58,7 @@ class rsyslog::client (
   $ssl_auth_mode             = 'anon',
   $log_templates             = false,
   $log_filters               = false,
+  $actionfiletemplate_cust   = false,
   $actionfiletemplate        = false,
   $high_precision_timestamps = false,
   $rate_limit_burst          = undef,

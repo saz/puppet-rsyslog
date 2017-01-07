@@ -21,6 +21,7 @@
 # [*ssl_key*]
 # [*log_templates*]
 # [*log_filters*]
+# [*actionfiletemplate_cust*]
 # [*actionfiletemplate*]
 # [*rotate*]
 #
@@ -56,6 +57,7 @@ class rsyslog::server (
   $ssl_key                   = undef,
   $log_templates             = false,
   $log_filters               = false,
+  $actionfiletemplate_cust   = false,
   $actionfiletemplate        = false,
   $rotate                    = undef
 ) inherits rsyslog::params {
