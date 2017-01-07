@@ -96,6 +96,11 @@ class rsyslog::server (
     $real_content = template("${module_name}/server-default.conf.erb")
   }
 
+  # Remove old server.conf file
+  file { "${rsyslog::params::rsyslog_d}server.conf":
+    ensure => absent,
+  }
+
   rsyslog::snippet { '00_server':
     ensure  => present,
     content => $real_content,

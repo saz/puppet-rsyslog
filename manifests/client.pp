@@ -103,6 +103,11 @@ class rsyslog::client (
       $_local_ensure = 'absent'
     }
 
+    # remove old client.conf file
+    file { "${rsyslog::params::rsyslog_d}client.conf":
+      ensure => absent,
+    }
+
     rsyslog::snippet { '00_client_config':
       ensure  => present,
       content => template("${module_name}/client/config.conf.erb"),
