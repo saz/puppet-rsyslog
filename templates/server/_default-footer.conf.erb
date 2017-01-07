@@ -3,19 +3,25 @@
 $RuleSet RSYSLOG_DefaultRuleset
 
 <% if scope.lookupvar('rsyslog::server::enable_udp') -%>
+<% if scope.lookupvar('rsyslog::server::remote_ruleset_udp') -%>
 $InputUDPServerBindRuleset remote
+<% end -%>
 $UDPServerRun <%= scope.lookupvar('rsyslog::server::port') %>
 $UDPServerAddress <%= scope.lookupvar('rsyslog::server::address') %>
 <% end -%>
 
 <% if scope.lookupvar('rsyslog::server::enable_tcp') -%>
+<% if scope.lookupvar('rsyslog::server::remote_ruleset_tcp') -%>
 $InputTCPServerBindRuleset remote
+<% end -%>
 $InputTCPServerRun <%= scope.lookupvar('rsyslog::server::port') %>
 <% end -%>
 
 <% if scope.lookupvar('rsyslog::server::enable_relp') -%>
 <% if (@rsyslog_version and (scope.function_versioncmp([@rsyslog_version, '6.3.6']) >= 0)) -%>
+<% if scope.lookupvar('rsyslog::server::remote_ruleset_relp') -%>
 $InputRELPServerBindRuleset remote
+<% end -%>
 $InputRELPServerRun <%= scope.lookupvar('rsyslog::server::relp_port') %>
 <% end -%>
 <% end -%>

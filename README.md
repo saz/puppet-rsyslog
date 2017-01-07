@@ -165,6 +165,9 @@ rsyslog::client::log_filters:
     enable_tcp                => true,
     enable_udp                => true,
     enable_relp               => true,
+    remote_ruleset_tcp        => true,
+    remote_ruleset_udp        => true,
+    remote_ruleset_relp       => true,
     enable_onefile            => false,
     relay_server              => false,
     server_dir                => '/srv/log/',
@@ -207,7 +210,10 @@ The following lists all the class parameters this module accepts.
     -------------------------------------------------------------------
     enable_tcp                          true,false          Enable TCP listener. Defaults to true.
     enable_udp                          true,false          Enable UDP listener. Defaults to true.
-    enable_relp                         true,false          Enable RELP listener. Defaults to true.
+    enable_relp                         true,false          Enable RELP listener. Defaults to true (v6.3.6+).
+    remote_ruleset_tcp                  true,false          Disables the remote ruleset when the TCP listener is enabled.
+    remote_ruleset_udp                  true,false          Disables the remote ruleset when the UDP listener is enabled.
+    remote_ruleset_relp                 true,false          Disables the remote ruleset when the RELP listener is enabled.
     enable_onefile                      true,false          Only one logfile per remote host. Defaults to false.
     relay_server                        true,false          If the server should be able to relay the received logs to another server. The rsyslog::client must also be set up. Defaults to false.
     server_dir                          STRING              Folder where logs will be stored on the server. Defaults to '/srv/log/'
