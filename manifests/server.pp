@@ -7,6 +7,9 @@
 # [*enable_tcp*]
 # [*enable_udp*]
 # [*enable_relp*]
+# [*remote_ruleset_tcp*]
+# [*remote_ruleset_udp*]
+# [*remote_ruleset_relp*]
 # [*enable_onefile*]
 # [*relay_server*]
 # [*server_dir*]
@@ -45,6 +48,9 @@ class rsyslog::server (
   $enable_tcp                = true,
   $enable_udp                = true,
   $enable_relp               = true,
+  $remote_ruleset_tcp        = true,
+  $remote_ruleset_udp        = true,
+  $remote_ruleset_relp       = true,
   $enable_onefile            = false,
   $relay_server              = false,
   $server_dir                = '/srv/log/',
