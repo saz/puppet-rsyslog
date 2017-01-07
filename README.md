@@ -156,7 +156,7 @@ Declare the following to configure the connection:
 ```
 rsyslog::client::log_filters:
   - expression: '$programname == "foo"'
-  -     action: /var/log/foo.log
+    action: /var/log/foo.log
 ```
 
 #### Variables and default values
