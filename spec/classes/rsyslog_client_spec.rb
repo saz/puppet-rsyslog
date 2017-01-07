@@ -113,11 +113,8 @@ describe 'rsyslog::client', type: :class do
         end
 
         context 'with SSL' do
-          let :pre_condition do
-            "class { 'rsyslog': ssl => true }"
-          end
-
-          ssl_params = { ssl_ca: '/tmp/cert.pem' }
+          ssl_params = { ssl: true,
+                         ssl_ca: '/tmp/cert.pem' }
 
           context 'with default auth_mode' do
             let(:params) { ssl_params }
@@ -161,6 +158,49 @@ describe 'rsyslog::client', type: :class do
 
             it 'contains ActionSendStreamDriverPermittedPeer' do
               is_expected.to contain_file('/etc/rsyslog.d/00_client.conf').with_content(%r{\$ActionSendStreamDriverAuthMode x509\/name}).with_content(%r{\$ActionSendStreamDriverPermittedPeer logs.example.com})
+            end
+          end
+
+          context 'ssl_cert but not ssl_key' do
+            let(:params) do
+              ssl_params.merge(
+                ssl_cert: '/tmp/cert.crt'
+              )
+            end
+
+            it 'fails' do
+              expect { is_expected.to contain_class('rsyslog::client') }.to raise_error(Puppet::Error, %r{If using client side certificates, you must define both the cert and the key.})
+            end
+          end
+
+          context 'ssl_key but not ssl_cert' do
+            let(:params) do
+              ssl_params.merge(
+                ssl_key: '/tmp/cert.key'
+              )
+            end
+
+            it 'fails' do
+              expect { is_expected.to contain_class('rsyslog::client') }.to raise_error(Puppet::Error, %r{If using client side certificates, you must define both the cert and the key.})
+            end
+          end
+
+          context 'without SSL client cert and key' do
+            it 'does not contain DefaultNetstreamDriverCertFile or DefaultNetstreamDriverKeyFile' do
+              is_expected.to contain_file('/etc/rsyslog.d/00_client.conf').without_content(%r{\$DefaultNetstreamDriverCertFile}).without_content(%r{\$DefaultNetstreamDriverKeyFile})
+            end
+          end
+
+          context 'with SSL client cert and key' do
+            let(:params) do
+              ssl_params.merge(
+                ssl_cert: '/tmp/cert.crt',
+                ssl_key: '/tmp/cert.key'
+              )
+            end
+
+            it 'contains DefaultNetstreamDriverCertFile and DefaultNetstreamDriverKeyFile' do
+              is_expected.to contain_file('/etc/rsyslog.d/00_client.conf').with_content(%r{\$DefaultNetstreamDriverCertFile /tmp/cert.crt}).with_content(%r{\$DefaultNetstreamDriverKeyFile /tmp/cert.key})
             end
           end
         end

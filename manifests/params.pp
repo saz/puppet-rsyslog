@@ -55,7 +55,6 @@ class rsyslog::params {
       $perm_dir                            = '0755'
       $spool_dir                           = '/var/spool/rsyslog'
       $service_name                        = 'rsyslog'
-      $ssl                                 = false
       $modules                             = [
         '$ModLoad imuxsock # provides support for local system logging',
         '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
@@ -174,7 +173,6 @@ class rsyslog::params {
       $perm_dir               = '0750'
       $spool_dir              = '/var/lib/rsyslog'
       $service_name           = 'rsyslog'
-      $ssl                    = false
       $service_hasrestart     = true
       $service_hasstatus      = true
     }
@@ -231,7 +229,6 @@ class rsyslog::params {
       $perm_dir                            = '0755'
       $spool_dir                           = '/var/spool/rsyslog'
       $service_name                        = 'rsyslogd'
-      $ssl                                 = false
       $modules                             = [
         '$ModLoad imuxsock # provides support for local system logging',
         '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
@@ -268,7 +265,6 @@ class rsyslog::params {
           $perm_dir                            = '0755'
           $spool_dir                           = '/var/spool/rsyslog'
           $service_name                        = 'rsyslog'
-          $ssl                                 = false
           $modules                             = [
             '$ModLoad imuxsock # provides support for local system logging',
             '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',

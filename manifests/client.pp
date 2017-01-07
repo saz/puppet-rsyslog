@@ -19,7 +19,10 @@
 # [*server*]
 # [*port*]
 # [*remote_servers*]
+# [*ssl*]
 # [*ssl_ca*]
+# [*ssl_cert*]
+# [*ssl_key*]
 # [*ssl_permitted_peer*]
 # [*ssl_auth_mode*]
 # [*log_templates*]
@@ -53,7 +56,10 @@ class rsyslog::client (
   $server                    = 'log',
   $port                      = '514',
   $remote_servers            = false,
+  $ssl                       = false,
   $ssl_ca                    = undef,
+  $ssl_cert                  = undef,
+  $ssl_key                   = undef,
   $ssl_permitted_peer        = undef,
   $ssl_auth_mode             = 'anon',
   $log_templates             = false,
@@ -113,20 +119,24 @@ class rsyslog::client (
     }
   }
 
-  if $rsyslog::ssl and $ssl_ca == undef {
+  if $ssl and $ssl_ca == undef {
     fail('You need to define $ssl_ca in order to use SSL.')
   }
 
-  if $rsyslog::ssl and $remote_type != 'tcp' {
+  if $ssl and $remote_type != 'tcp' {
     fail('You need to enable tcp in order to use SSL.')
   }
 
-  if $ssl_auth_mode != 'anon' and $rsyslog::ssl == false {
+  if $ssl_auth_mode != 'anon' and $ssl == false {
     fail('You need to enable SSL in order to use ssl_auth_mode.')
   }
 
   if $ssl_permitted_peer and $ssl_auth_mode != 'x509/name' {
     fail('You need to set auth_mode to \'x509/name\' in order to use ssl_permitted_peers.')
+  }
+
+  if $ssl and ($ssl_cert and ! $ssl_key) or (! $ssl_cert and $ssl_key) {
+    fail('If using client side certificates, you must define both the cert and the key.')
   }
 
   if $imfiles {
