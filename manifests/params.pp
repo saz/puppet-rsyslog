@@ -18,6 +18,7 @@ class rsyslog::params {
   $system_log_rate_limit_burst    = '100'
   $purge_rsyslog_d                = false
   $extra_modules                  = []
+  $default_template_customisation = undef
   $default_template               = undef
   $msg_reduction                  = false
   $non_kernel_facility            = false

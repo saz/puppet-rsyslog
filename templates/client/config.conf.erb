@@ -22,6 +22,11 @@ $template <%= log_template['name'] %>,"<%= log_template['template'] %>"
 if <%= log_filter['expression'] %> then <%= log_filter['action'] %>
 <% end -%>
 <% end -%>
+<% if scope.lookupvar('rsyslog::client::actionfiletemplate_cust') and scope.lookupvar('rsyslog::client::actionfiletemplate') -%>
+
+# Setting custom action file formatting
+$template <%= scope.lookupvar('rsyslog::client::actionfiletemplate') %>, <%= scope.lookupvar('rsyslog::client::actionfiletemplate_cust') %>
+<% end -%>
 <% if scope.lookupvar('rsyslog::client::actionfiletemplate') -%>
 
 # Using specified format for default logging format:

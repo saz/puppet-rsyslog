@@ -53,6 +53,7 @@ or send some bitcoins to ```1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9```
     ssl_auth_mode             => 'anon',
     log_templates             => false,
     log_filters               => false,
+    actionfiletemplate_cust   => false,
     actionfiletemplate        => false,
     high_precision_timestamps => false,
     rate_limit_burst          => undef,
@@ -177,6 +178,7 @@ rsyslog::client::log_filters:
     ssl_key                   => undef,
     log_templates             => false,
     log_filters               => false,
+    actionfiletemplate_cust   => false,
     actionfiletemplate        => false,
     rotate                    => undef
   }
@@ -216,6 +218,7 @@ The following lists all the class parameters this module accepts.
     ssl_key                             STRING              Path to SSL private key. Defaults to undef.
     log_templates                       HASH                Provides a hash defining custom logging templates using the `$template` configuration parameter. Defaults to false.
     log_filters                         HASH                Provides a hash defining custom logging filters using the `if/then` configurations parameter. Defaults to false.
+    actionfiletemplate_cust             STRING              If set this defines the `ActionFileDefaultTemplate custom formatting` which sets customisations over the default log format for remote and local logging. Must be used with actionfiletemplate to take effect. Defaults to false.
     actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging. Defaults to false.
     rotate                              STRING              Enables rotation of logfiles. Valid values: year, month, day. Defaults to undef.
 
@@ -238,6 +241,7 @@ The following lists all the class parameters this module accepts.
     ssl_auth_mode                       STRING              SSL auth mode. Defaults to anon.
     log_templates                       HASH                Provides a hash defining custom logging templates using the `$template` configuration parameter.
     log_filters                         HASH                Provides a hash defining custom logging filters using the `if/then` configurations parameter.
+    actionfiletemplate_cust             STRING              If set this defines the `ActionFileDefaultTemplate custom formatting` which sets customisations over the default log format for remote and local logging. Must be used with actionfiletemplate to take effect. Defaults to false.
     actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging.
     high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
     rate_limit_burst                    INTEGER             Specifies the number of messages in $rate_limit_interval before limiting begins. Defaults to undef.
