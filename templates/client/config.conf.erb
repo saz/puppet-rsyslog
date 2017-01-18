@@ -42,13 +42,6 @@ $ActionFileDefaultTemplate RSYSLOG_FileFormat
 <% end -%>
 <% end -%>
 
-<% if scope.lookupvar('rsyslog::client::rate_limit_burst') and scope.lookupvar('rsyslog::client::rate_limit_burst') != :undef -%>
-$SystemLogRateLimitBurst <%= scope.lookupvar('rsyslog::client::rate_limit_burst') %>
-<% end -%>
-<% if scope.lookupvar('rsyslog::client::rate_limit_interval') and scope.lookupvar('rsyslog::client::rate_limit_interval') != :undef -%>
-$SystemLogRateLimitInterval <%= scope.lookupvar('rsyslog::client::rate_limit_interval') %>
-<% end -%>
-
 <% if scope.lookupvar('rsyslog::client::listen_localhost') -%>
 # Provides UDP syslog reception
 $ModLoad imudp

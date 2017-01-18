@@ -29,8 +29,12 @@ $MaxMessageSize <%= scope.lookupvar('rsyslog::max_message_size') %>
 #
 # Set rate limit for messages received.
 # 
+<%- if @system_log_rate_limit_interval -%>
 $SystemLogRateLimitInterval <%= scope.lookupvar('rsyslog::system_log_rate_limit_interval') %>
+<%- end -%>
+<%- if @system_log_rate_limit_burst -%>
 $SystemLogRateLimitBurst <%= scope.lookupvar('rsyslog::system_log_rate_limit_burst') %>
+<%- end -%>
 
 <% if scope.lookupvar('rsyslog::default_template') and scope.lookupvar('rsyslog::default_template') != :undef and scope.lookupvar('rsyslog::default_template_customisation') and scope.lookupvar('rsyslog::default_template_customisation') != :undef -%>
 #

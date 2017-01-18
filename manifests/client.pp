@@ -30,8 +30,6 @@
 # [*actionfiletemplate_cust*]
 # [*actionfiletemplate*]
 # [*high_precision_timestamps*]
-# [*rate_limit_burst*]
-# [*rate_limit_interval*]
 # [*imfiles*]
 #
 # === Variables
@@ -68,8 +66,6 @@ class rsyslog::client (
   $actionfiletemplate_cust   = false,
   $actionfiletemplate        = false,
   $high_precision_timestamps = false,
-  $rate_limit_burst          = undef,
-  $rate_limit_interval       = undef,
   $imfiles                   = undef
 ) inherits rsyslog::params {
   include ::rsyslog
