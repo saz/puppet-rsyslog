@@ -39,6 +39,7 @@ or send some bitcoins to ```1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9```
     remote_type               => 'tcp',
     remote_forward_format     => 'RSYSLOG_ForwardFormat',
     log_local                 => false,
+    disable_xconsole          => false,
     log_local_custom          => undef,
     log_auth_local            => false,
     listen_localhost          => false,
