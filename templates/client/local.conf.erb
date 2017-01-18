@@ -115,7 +115,13 @@ uucp,news.crit                 -/var/log/spooler
 local7.*                       -/var/log/boot.log
 <% end -%>
 
-<% if @log_local_custom -%>
- # Custom fragment
- <%= @log_local_custom %>
-<% end -%>
+<%- if log_local_custom -%>
+    # Custom fragment
+    <%- if log_local_custom.is_a?(Array) -%>
+        <%- log_local_custom.each do |line| -%>
+            <%= line %>
+        <%- end -%>
+    <%- else -%>
+        <%= log_local_custom %>
+    <%- end -%>
+<%- end -%>
