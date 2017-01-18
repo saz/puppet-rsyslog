@@ -14,7 +14,7 @@ Facter.add(:rsyslog_version) do
         Regexp.last_match(1)
       end
     when 'RedHat', 'Suse'
-      if File.exists? "/sbin/rsyslogd"
+      if File.exist? '/sbin/rsyslogd'
         # Query rsyslogd binary for the version
         Facter::Util::Resolution.exec("rsyslogd -v | head -n 1 | awk '{print $2}' | sed 's/,//g'")
       else
