@@ -64,13 +64,16 @@ Metrics/MethodLength:
 Metrics/ModuleLength:
   Enabled: false
 
+Metrics/BlockLength:
+  Enabled: false
+
 Style/WhileUntilModifier:
   Enabled: true
 
 Lint/AmbiguousRegexpLiteral:
   Enabled: true
 
-Lint/Eval:
+Security/Eval:
   Enabled: true
 
 Lint/BlockAlignment:
@@ -504,3 +507,5 @@ RSpec/DescribeClass:
 RSpec/ExampleLength:
   Enabled: False
 
+RSpec/NestedGroups:
+  Enabled: False
