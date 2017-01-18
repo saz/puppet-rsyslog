@@ -67,10 +67,12 @@ news.notice                     -/var/log/news/news.notice
 # NOTE: adjust the list below, or you'll go crazy if you have a reasonably
 #      busy site..
 #
+<% if not @disable_xconsole -%>
 daemon.*;mail.*;\
         news.err;\
         *.=debug;*.=info;\
         *.=notice;*.=warn       |/dev/xconsole
+<% end -%>
 <% elsif scope.lookupvar('rsyslog::log_style') == 'redhat' -%>
 # Log all kernel messages to the console.
 # Logging much else clutters up the screen.
