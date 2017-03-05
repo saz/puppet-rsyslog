@@ -22,8 +22,8 @@ describe 'rsyslog', type: :class do
 
         it 'compiles' do
           is_expected.to contain_class('rsyslog::install')
-          is_expected.to contain_class('rsyslog::config')
-          is_expected.to contain_class('rsyslog::service')
+          is_expected.to contain_class('rsyslog::config').that_requires('Class[rsyslog::install]')
+          is_expected.to contain_class('rsyslog::service').that_subscribes_to('Class[rsyslog::config]')
         end
       end
     end
@@ -41,8 +41,8 @@ describe 'rsyslog', type: :class do
 
         it 'compiles' do
           is_expected.to contain_class('rsyslog::install')
-          is_expected.to contain_class('rsyslog::config')
-          is_expected.to contain_class('rsyslog::service')
+          is_expected.to contain_class('rsyslog::config').that_requires('Class[rsyslog::install]')
+          is_expected.to contain_class('rsyslog::service').that_subscribes_to('Class[rsyslog::config]')
         end
       end
 
@@ -78,8 +78,8 @@ describe 'rsyslog', type: :class do
 
         it 'compiles' do
           is_expected.to contain_class('rsyslog::install')
-          is_expected.to contain_class('rsyslog::config')
-          is_expected.to contain_class('rsyslog::service')
+          is_expected.to contain_class('rsyslog::config').that_requires('Class[rsyslog::install]')
+          is_expected.to contain_class('rsyslog::service').that_subscribes_to('Class[rsyslog::config]')
         end
       end
     end
@@ -286,8 +286,8 @@ describe 'rsyslog', type: :class do
 
         it 'compiles' do
           is_expected.to contain_class('rsyslog::install')
-          is_expected.to contain_class('rsyslog::config')
-          is_expected.to contain_class('rsyslog::service')
+          is_expected.to contain_class('rsyslog::config').that_requires('Class[rsyslog::install]')
+          is_expected.to contain_class('rsyslog::service').that_subscribes_to('Class[rsyslog::config]')
         end
       end
     end
@@ -305,8 +305,8 @@ describe 'rsyslog', type: :class do
 
         it 'compiles' do
           is_expected.to contain_class('rsyslog::install')
-          is_expected.to contain_class('rsyslog::config')
-          is_expected.to contain_class('rsyslog::service')
+          is_expected.to contain_class('rsyslog::config').that_requires('Class[rsyslog::install]')
+          is_expected.to contain_class('rsyslog::service').that_subscribes_to('Class[rsyslog::config]')
         end
       end
     end
@@ -324,8 +324,8 @@ describe 'rsyslog', type: :class do
 
         it 'compiles' do
           is_expected.to contain_class('rsyslog::install')
-          is_expected.to contain_class('rsyslog::config')
-          is_expected.to contain_class('rsyslog::service')
+          is_expected.to contain_class('rsyslog::config').that_requires('Class[rsyslog::install]')
+          is_expected.to contain_class('rsyslog::service').that_subscribes_to('Class[rsyslog::config]')
         end
       end
     end
