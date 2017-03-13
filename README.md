@@ -58,6 +58,7 @@ or send some bitcoins to ```1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9```
     actionfiletemplate_cust   => false,
     actionfiletemplate        => false,
     high_precision_timestamps => false,
+    custom_catchall           => false,
     rate_limit_burst          => undef,
     rate_limit_interval       => undef,
     imfiles                   => undef
@@ -75,7 +76,7 @@ Gathers log information from a file
 ```
 #### rsyslog.d conf files
 
-e.g. rsyslog.d/10-puppetagent.conf - moves puppet-agent entries to a file and excludes from /var/log/messages 
+e.g. rsyslog.d/10-puppetagent.conf - moves puppet-agent entries to a file and excludes from /var/log/messages
 ```
   rsyslog::snippet { '10-puppetagent':
     content => ":programname,contains,\"puppet-agent\" /var/log/puppetlabs/puppet/puppet-agent.log\n& ~",
@@ -270,6 +271,7 @@ The following lists all the class parameters this module accepts.
     actionfiletemplate_cust             STRING              If set this defines the `ActionFileDefaultTemplate custom formatting` which sets customisations over the default log format for remote and local logging. Must be used with actionfiletemplate to take effect. Defaults to false.
     actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging.
     high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
+    custom_catchall                     STRING              Custom rule for the distro-default catchall rule. Defaults to distro-default.
 
     RSYSLOG::DATABASE CLASS PARAMETERS  VALUES              DESCRIPTION
     -------------------------------------------------------------------
