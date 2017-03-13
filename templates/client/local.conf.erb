@@ -42,6 +42,9 @@ news.notice                     -/var/log/news/news.notice
 #
 # Some "catch-all" log files.
 #
+<% if @custom_catchall -%>
+<%= @custom_catchall -%>
+<% else -%>
 *.=debug;\
        auth,authpriv.none;\
        news.none;mail.none     -/var/log/debug
@@ -49,6 +52,7 @@ news.notice                     -/var/log/news/news.notice
        auth,authpriv.none;\
        cron,daemon.none;\
        mail,news.none          -/var/log/messages
+<%- end -%>
 
 #
 # I like to have messages displayed on the console, but only on a virtual
@@ -80,7 +84,11 @@ daemon.*;mail.*;\
 
 # Log anything (except mail) of level info or higher.
 # Don't log private authentication messages!
+<% if @custom_catchall -%>
+<%= @custom_catchall -%>
+<% else -%>
 *.info;mail.none;authpriv.none;cron.none                /var/log/messages
+<%- end -%>
 
 # Log all the mail messages in one place.
 mail.*                         -/var/log/maillog
