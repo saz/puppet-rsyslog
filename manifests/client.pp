@@ -31,6 +31,7 @@
 # [*actionfiletemplate*]
 # [*high_precision_timestamps*]
 # [*imfiles*]
+# [*use_cron*]
 #
 # === Variables
 #
@@ -66,7 +67,8 @@ class rsyslog::client (
   $actionfiletemplate_cust   = false,
   $actionfiletemplate        = false,
   $high_precision_timestamps = false,
-  $imfiles                   = undef
+  $imfiles                   = undef,
+  $use_cron                  = true
 ) inherits rsyslog::params {
   include ::rsyslog
 
