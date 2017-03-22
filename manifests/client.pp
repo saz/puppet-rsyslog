@@ -31,6 +31,7 @@
 # [*actionfiletemplate*]
 # [*high_precision_timestamps*]
 # [*imfiles*]
+# [*use_cron*]
 #
 # === Variables
 #
