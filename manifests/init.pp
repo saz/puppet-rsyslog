@@ -50,7 +50,8 @@ class rsyslog (
   $im_journal_ratelimit_interval       = $rsyslog::params::im_journal_ratelimit_interval,
   $im_journal_statefile                = $rsyslog::params::im_journal_statefile,
   $im_journal_ratelimit_burst          = $rsyslog::params::im_journal_ratelimit_burst,
-  $im_journal_ignore_previous_messages = $rsyslog::params::im_journal_ignore_previous_messages
+  $im_journal_ignore_previous_messages = $rsyslog::params::im_journal_ignore_previous_messages,
+  $rsyslog_conf_ext_template           = $rsyslog::params::rsyslog_conf_ext_template
 ) inherits rsyslog::params {
   class { '::rsyslog::install': }
   class { '::rsyslog::config': }
