@@ -23,6 +23,7 @@ class rsyslog::params {
   $msg_reduction                  = false
   $non_kernel_facility            = false
   $preserve_fqdn                  = false
+  $rsyslog_conf_ext_template      = "${module_name}/rsyslog.conf.erb"
 
   case $::osfamily {
     'Debian': {
