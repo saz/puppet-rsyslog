@@ -28,9 +28,8 @@ class rsyslog::database (
   $database,
   $username,
   $password
-) inherits rsyslog {
-
-  $db_module = "om${backend}"
+) {
+  include ::rsyslog
 
   case $backend {
     'mysql': { $db_package = $rsyslog::mysql_package_name }
@@ -40,13 +39,13 @@ class rsyslog::database (
 
   package { $db_package:
     ensure => $rsyslog::package_status,
-    before => Rsyslog::Snippet[$backend],
   }
 
   rsyslog::snippet { $backend:
     ensure    => present,
     file_mode => '0600',
     content   => template("${module_name}/database.conf.erb"),
+    require   => Package[$db_package],
   }
 
 }

@@ -2,7 +2,7 @@
 #
 
 class rsyslog::modload (
-  $modload_filename = '10-modload.conf',
+  $modload_filename = '10-modload',
 ) {
   rsyslog::snippet { $modload_filename:
     ensure  => present,

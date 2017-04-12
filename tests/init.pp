@@ -1,1 +1,1 @@
-include rsyslog
+include ::rsyslog

@@ -22,8 +22,8 @@ describe 'rsyslog::server', type: :class do
           let(:title) { 'rsyslog-server-basic' }
 
           it 'compiles' do
-            should contain_file('/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
-            should contain_file('/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
+            is_expected.to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
+            is_expected.to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
           end
         end
 
@@ -32,8 +32,8 @@ describe 'rsyslog::server', type: :class do
           let(:params) { { 'enable_onefile' => 'true' } }
 
           it 'compiles' do
-            should_not contain_file('/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
-            should contain_file('/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
+            is_expected.not_to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
+            is_expected.to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
           end
         end
 
@@ -42,8 +42,8 @@ describe 'rsyslog::server', type: :class do
           let(:params) { { 'custom_config' => 'rsyslog/server-hostname.conf.erb' } }
 
           it 'compiles' do
-            should contain_file('/etc/rsyslog.d/server.conf').with_content(%r{%hostname%\/auth.log})
-            should contain_file('/etc/rsyslog.d/server.conf').with_content(%r{%hostname%\/messages})
+            is_expected.to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{%hostname%\/auth.log})
+            is_expected.to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{%hostname%\/messages})
           end
         end
 
@@ -52,7 +52,7 @@ describe 'rsyslog::server', type: :class do
           let(:params) { { 'log_filters' => [{ 'expression' => '$msg contains \'error0\'', 'action' => '/var/log/err.log' }] } }
 
           it 'compiles' do
-            should contain_file('/etc/rsyslog.d/server.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
+            is_expected.to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
           end
         end
       end
@@ -70,8 +70,8 @@ describe 'rsyslog::server', type: :class do
         let(:title) { 'rsyslog-server-basic' }
 
         it 'compiles' do
-          should contain_file('/usr/local/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
-          should contain_file('/usr/local/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
         end
       end
 
@@ -80,8 +80,8 @@ describe 'rsyslog::server', type: :class do
         let(:params) { { 'enable_onefile' => 'true' } }
 
         it 'compiles' do
-          should_not contain_file('/usr/local/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
-          should contain_file('/usr/local/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
+          is_expected.not_to contain_file('/usr/local/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
         end
       end
 
@@ -90,8 +90,8 @@ describe 'rsyslog::server', type: :class do
         let(:params) { { 'custom_config' => 'rsyslog/server-hostname.conf.erb' } }
 
         it 'compiles' do
-          should contain_file('/usr/local/etc/rsyslog.d/server.conf').with_content(%r{%hostname%\/auth.log})
-          should contain_file('/usr/local/etc/rsyslog.d/server.conf').with_content(%r{%hostname%\/messages})
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_server.conf').with_content(%r{%hostname%\/auth.log})
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_server.conf').with_content(%r{%hostname%\/messages})
         end
       end
     end
@@ -118,8 +118,8 @@ describe 'rsyslog::server', type: :class do
           let(:title) { 'rsyslog-server-basic' }
 
           it 'compiles' do
-            should contain_file('/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
-            should contain_file('/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
+            is_expected.to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
+            is_expected.to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
           end
         end
 
@@ -128,8 +128,8 @@ describe 'rsyslog::server', type: :class do
           let(:params) { { 'enable_onefile' => 'true' } }
 
           it 'compiles' do
-            should_not contain_file('/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
-            should contain_file('/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
+            is_expected.not_to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
+            is_expected.to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
           end
         end
 
@@ -138,8 +138,8 @@ describe 'rsyslog::server', type: :class do
           let(:params) { { 'custom_config' => 'rsyslog/server-hostname.conf.erb' } }
 
           it 'compiles' do
-            should contain_file('/etc/rsyslog.d/server.conf').with_content(%r{%hostname%\/auth.log})
-            should contain_file('/etc/rsyslog.d/server.conf').with_content(%r{%hostname%\/messages})
+            is_expected.to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{%hostname%\/auth.log})
+            is_expected.to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{%hostname%\/messages})
           end
         end
 
@@ -148,7 +148,7 @@ describe 'rsyslog::server', type: :class do
           let(:params) { { 'log_filters' => [{ 'expression' => '$msg contains \'error0\'', 'action' => '/var/log/err.log' }] } }
 
           it 'compiles' do
-            should contain_file('/etc/rsyslog.d/server.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
+            is_expected.to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
           end
         end
       end
@@ -166,8 +166,8 @@ describe 'rsyslog::server', type: :class do
         let(:title) { 'rsyslog-server-basic' }
 
         it 'compiles' do
-          should contain_file('/usr/local/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
-          should contain_file('/usr/local/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
         end
       end
 
@@ -176,8 +176,8 @@ describe 'rsyslog::server', type: :class do
         let(:params) { { 'enable_onefile' => 'true' } }
 
         it 'compiles' do
-          should_not contain_file('/usr/local/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
-          should contain_file('/usr/local/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
+          is_expected.not_to contain_file('/usr/local/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
         end
       end
 
@@ -186,8 +186,8 @@ describe 'rsyslog::server', type: :class do
         let(:params) { { 'custom_config' => 'rsyslog/server-hostname.conf.erb' } }
 
         it 'compiles' do
-          should contain_file('/usr/local/etc/rsyslog.d/server.conf').with_content(%r{%hostname%\/auth.log})
-          should contain_file('/usr/local/etc/rsyslog.d/server.conf').with_content(%r{%hostname%\/messages})
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_server.conf').with_content(%r{%hostname%\/auth.log})
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_server.conf').with_content(%r{%hostname%\/messages})
         end
       end
     end
@@ -214,8 +214,8 @@ describe 'rsyslog::server', type: :class do
           let(:title) { 'rsyslog-server-basic' }
 
           it 'compiles' do
-            should contain_file('/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
-            should contain_file('/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
+            is_expected.to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
+            is_expected.to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
           end
         end
 
@@ -224,8 +224,8 @@ describe 'rsyslog::server', type: :class do
           let(:params) { { 'enable_onefile' => 'true' } }
 
           it 'compiles' do
-            should_not contain_file('/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
-            should contain_file('/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
+            is_expected.not_to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
+            is_expected.to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
           end
         end
 
@@ -234,8 +234,8 @@ describe 'rsyslog::server', type: :class do
           let(:params) { { 'custom_config' => 'rsyslog/server-hostname.conf.erb' } }
 
           it 'compiles' do
-            should contain_file('/etc/rsyslog.d/server.conf').with_content(%r{%hostname%\/auth.log})
-            should contain_file('/etc/rsyslog.d/server.conf').with_content(%r{%hostname%\/messages})
+            is_expected.to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{%hostname%\/auth.log})
+            is_expected.to contain_file('/etc/rsyslog.d/00_server.conf').with_content(%r{%hostname%\/messages})
           end
         end
       end
@@ -253,8 +253,8 @@ describe 'rsyslog::server', type: :class do
         let(:title) { 'rsyslog-server-basic' }
 
         it 'compiles' do
-          should contain_file('/usr/local/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
-          should contain_file('/usr/local/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
         end
       end
 
@@ -263,8 +263,8 @@ describe 'rsyslog::server', type: :class do
         let(:params) { { 'enable_onefile' => 'true' } }
 
         it 'compiles' do
-          should_not contain_file('/usr/local/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
-          should contain_file('/usr/local/etc/rsyslog.d/server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
+          is_expected.not_to contain_file('/usr/local/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_server.conf').with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
         end
       end
 
@@ -273,8 +273,8 @@ describe 'rsyslog::server', type: :class do
         let(:params) { { 'custom_config' => 'rsyslog/server-hostname.conf.erb' } }
 
         it 'compiles' do
-          should contain_file('/usr/local/etc/rsyslog.d/server.conf').with_content(%r{%hostname%\/auth.log})
-          should contain_file('/usr/local/etc/rsyslog.d/server.conf').with_content(%r{%hostname%\/messages})
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_server.conf').with_content(%r{%hostname%\/auth.log})
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_server.conf').with_content(%r{%hostname%\/messages})
         end
       end
     end

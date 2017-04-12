@@ -21,9 +21,9 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-basic' }
 
         it 'compiles' do
-          should contain_class('rsyslog::install')
-          should contain_class('rsyslog::config')
-          should contain_class('rsyslog::service')
+          is_expected.to contain_class('rsyslog::install')
+          is_expected.to contain_class('rsyslog::config')
+          is_expected.to contain_class('rsyslog::service')
         end
       end
     end
@@ -40,9 +40,9 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-basic' }
 
         it 'compiles' do
-          should contain_class('rsyslog::install')
-          should contain_class('rsyslog::config')
-          should contain_class('rsyslog::service')
+          is_expected.to contain_class('rsyslog::install')
+          is_expected.to contain_class('rsyslog::config')
+          is_expected.to contain_class('rsyslog::service')
         end
       end
 
@@ -51,7 +51,7 @@ describe 'rsyslog', type: :class do
 
         context 'with defaults' do
           it 'is not set' do
-            should contain_file('/etc/rsyslog.conf').without_content(%r{\$LocalHostName})
+            is_expected.to contain_file('/etc/rsyslog.conf').without_content(%r{\$LocalHostName})
           end
         end
 
@@ -59,7 +59,7 @@ describe 'rsyslog', type: :class do
           let(:params) { { local_host_name: 'example.dev' } }
 
           it 'compiles' do
-            should contain_file('/etc/rsyslog.conf').with_content(%r{\$LocalHostName example.dev})
+            is_expected.to contain_file('/etc/rsyslog.conf').with_content(%r{\$LocalHostName example.dev})
           end
         end
       end
@@ -77,9 +77,9 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-basic' }
 
         it 'compiles' do
-          should contain_class('rsyslog::install')
-          should contain_class('rsyslog::config')
-          should contain_class('rsyslog::service')
+          is_expected.to contain_class('rsyslog::install')
+          is_expected.to contain_class('rsyslog::config')
+          is_expected.to contain_class('rsyslog::service')
         end
       end
     end
@@ -97,8 +97,27 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.conf')
-          should contain_file('/etc/rsyslog.d/')
+          is_expected.to contain_file('/etc/rsyslog.conf').without_content(%r{\$imjournalRatelimitBurst})
+          is_expected.to contain_file('/etc/rsyslog.d/')
+        end
+      end
+    end
+
+    context 'osfamily = RedHat and operatingsystemmajrelease = 7' do
+      let :facts do
+        default_facts.merge!(
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemmajrelease: '7'
+        )
+      end
+
+      context 'default usage (osfamily = RedHat)' do
+        let(:title) { 'rsyslog-basic' }
+
+        it 'compiles' do
+          is_expected.to contain_file('/etc/rsyslog.conf').with_content(%r{\$imjournalRatelimitBurst 20000})
+          is_expected.to contain_file('/etc/rsyslog.d/')
         end
       end
     end
@@ -115,8 +134,8 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.conf')
-          should contain_file('/etc/rsyslog.d/')
+          is_expected.to contain_file('/etc/rsyslog.conf')
+          is_expected.to contain_file('/etc/rsyslog.d/')
         end
       end
     end
@@ -133,8 +152,8 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-basic' }
 
         it 'compiles' do
-          should contain_file('/usr/local/etc/rsyslog.conf')
-          should contain_file('/usr/local/etc/rsyslog.d/')
+          is_expected.to contain_file('/usr/local/etc/rsyslog.conf')
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/')
         end
       end
     end
@@ -152,8 +171,8 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-install-basic' }
 
         it 'compiles' do
-          should contain_package('rsyslog')
-          should contain_package('rsyslog-relp')
+          is_expected.to contain_package('rsyslog')
+          is_expected.to contain_package('rsyslog-relp')
         end
       end
     end
@@ -170,8 +189,8 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-install-basic' }
 
         it 'compiles' do
-          should contain_package('rsyslog')
-          should contain_package('rsyslog-relp')
+          is_expected.to contain_package('rsyslog')
+          is_expected.to contain_package('rsyslog-relp')
         end
       end
     end
@@ -188,7 +207,7 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-install-basic' }
 
         it 'compiles' do
-          should contain_package('sysutils/rsyslog8')
+          is_expected.to contain_package('sysutils/rsyslog8')
         end
       end
     end
@@ -206,7 +225,7 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-service-basic' }
 
         it 'compiles' do
-          should contain_service('rsyslog')
+          is_expected.to contain_service('rsyslog')
         end
       end
     end
@@ -223,7 +242,7 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-service-basic' }
 
         it 'compiles' do
-          should contain_service('rsyslog')
+          is_expected.to contain_service('rsyslog')
         end
       end
     end
@@ -240,7 +259,7 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-service-basic' }
 
         it 'compiles' do
-          should contain_service('rsyslogd')
+          is_expected.to contain_service('rsyslogd')
         end
       end
     end
@@ -266,9 +285,9 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-basic' }
 
         it 'compiles' do
-          should contain_class('rsyslog::install')
-          should contain_class('rsyslog::config')
-          should contain_class('rsyslog::service')
+          is_expected.to contain_class('rsyslog::install')
+          is_expected.to contain_class('rsyslog::config')
+          is_expected.to contain_class('rsyslog::service')
         end
       end
     end
@@ -285,9 +304,9 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-basic' }
 
         it 'compiles' do
-          should contain_class('rsyslog::install')
-          should contain_class('rsyslog::config')
-          should contain_class('rsyslog::service')
+          is_expected.to contain_class('rsyslog::install')
+          is_expected.to contain_class('rsyslog::config')
+          is_expected.to contain_class('rsyslog::service')
         end
       end
     end
@@ -304,9 +323,9 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-basic' }
 
         it 'compiles' do
-          should contain_class('rsyslog::install')
-          should contain_class('rsyslog::config')
-          should contain_class('rsyslog::service')
+          is_expected.to contain_class('rsyslog::install')
+          is_expected.to contain_class('rsyslog::config')
+          is_expected.to contain_class('rsyslog::service')
         end
       end
     end
@@ -324,8 +343,8 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.conf')
-          should contain_file('/etc/rsyslog.d/')
+          is_expected.to contain_file('/etc/rsyslog.conf')
+          is_expected.to contain_file('/etc/rsyslog.d/')
         end
       end
     end
@@ -342,8 +361,8 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-basic' }
 
         it 'compiles' do
-          should contain_file('/etc/rsyslog.conf')
-          should contain_file('/etc/rsyslog.d/')
+          is_expected.to contain_file('/etc/rsyslog.conf')
+          is_expected.to contain_file('/etc/rsyslog.d/')
         end
       end
     end
@@ -360,8 +379,8 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-basic' }
 
         it 'compiles' do
-          should contain_file('/usr/local/etc/rsyslog.conf')
-          should contain_file('/usr/local/etc/rsyslog.d/')
+          is_expected.to contain_file('/usr/local/etc/rsyslog.conf')
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/')
         end
       end
     end
@@ -379,8 +398,8 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-install-basic' }
 
         it 'compiles' do
-          should contain_package('rsyslog')
-          should contain_package('rsyslog-relp')
+          is_expected.to contain_package('rsyslog')
+          is_expected.to contain_package('rsyslog-relp')
         end
       end
     end
@@ -397,8 +416,8 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-install-basic' }
 
         it 'compiles' do
-          should contain_package('rsyslog')
-          should contain_package('rsyslog-relp')
+          is_expected.to contain_package('rsyslog')
+          is_expected.to contain_package('rsyslog-relp')
         end
       end
     end
@@ -415,7 +434,7 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-install-basic' }
 
         it 'compiles' do
-          should contain_package('sysutils/rsyslog8')
+          is_expected.to contain_package('sysutils/rsyslog8')
         end
       end
     end
@@ -433,7 +452,7 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-service-basic' }
 
         it 'compiles' do
-          should contain_service('rsyslog')
+          is_expected.to contain_service('rsyslog')
         end
       end
     end
@@ -450,7 +469,7 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-service-basic' }
 
         it 'compiles' do
-          should contain_service('rsyslog')
+          is_expected.to contain_service('rsyslog')
         end
       end
     end
@@ -467,7 +486,7 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-service-basic' }
 
         it 'compiles' do
-          should contain_service('rsyslogd')
+          is_expected.to contain_service('rsyslogd')
         end
       end
     end
@@ -491,8 +510,8 @@ describe 'rsyslog', type: :class do
 
       context 'default usage (osfamily = RedHat)' do
         it 'compiles' do
-          should contain_file('/etc/rsyslog.conf')
-          should contain_file('/etc/rsyslog.d/')
+          is_expected.to contain_file('/etc/rsyslog.conf')
+          is_expected.to contain_file('/etc/rsyslog.d/')
         end
       end
     end
