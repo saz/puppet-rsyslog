@@ -28,7 +28,7 @@ class rsyslog::config {
 
   file { $rsyslog::rsyslog_conf:
     ensure  => file,
-    content => template("$rsyslog_conf_ext_template"),
+    content => template("${rsyslog_conf_ext_template}"),
   }
 
   file { $rsyslog::rsyslog_default:
