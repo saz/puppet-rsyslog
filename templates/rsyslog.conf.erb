@@ -64,8 +64,10 @@ $FileCreateMode <%= scope.lookupvar('rsyslog::perm_file') %>
 $DirOwner <%= scope.lookupvar('rsyslog::log_user') %>
 $DirGroup <%= scope.lookupvar('rsyslog::log_group') %>
 $DirCreateMode <%= scope.lookupvar('rsyslog::perm_dir') %>
+<% if Gem::Version.new(scope.lookupvar('::rsyslog_version')) >= Gem::Version.new('4.1.1') -%>
 $PrivDropToUser <%= scope.lookupvar('rsyslog::run_user') %>
 $PrivDropToGroup <%= scope.lookupvar('rsyslog::run_group') %>
+<% end -%>
 $WorkDirectory <%= scope.lookupvar('rsyslog::spool_dir') %>
 <% if scope.lookupvar('rsyslog::umask') -%>
 $Umask <%= scope.lookupvar('rsyslog::umask') %>
