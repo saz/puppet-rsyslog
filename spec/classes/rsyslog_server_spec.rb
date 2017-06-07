@@ -8,7 +8,7 @@ describe 'rsyslog::server', type: :class do
       }
     end
 
-    %w(RedHat Debian).each do |osfamily|
+    %w[RedHat Debian].each do |osfamily|
       context "osfamily = #{osfamily}" do
         let :facts do
           default_facts.merge!(
@@ -104,7 +104,7 @@ describe 'rsyslog::server', type: :class do
       }
     end
 
-    %w(RedHat Debian).each do |osfamily|
+    %w[RedHat Debian].each do |osfamily|
       context "osfamily = #{osfamily}" do
         let :facts do
           default_facts.merge!(
@@ -200,7 +200,7 @@ describe 'rsyslog::server', type: :class do
       }
     end
 
-    %w(RedHat Debian).each do |osfamily|
+    %w[RedHat Debian].each do |osfamily|
       context "osfamily = #{osfamily}" do
         let :facts do
           default_facts.merge!(
