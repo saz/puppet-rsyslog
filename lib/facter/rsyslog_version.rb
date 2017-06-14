@@ -19,7 +19,7 @@ Facter.add(:rsyslog_version) do
         Facter::Util::Resolution.exec("rsyslogd -v | head -n 1 | awk '{print $2}' | sed 's/,//g'")
       else
         # Fall back to rpm to determine version
-        command = 'rpm -qa --qf "%{VERSION}" "rsyslog"'
+        command = 'rpm -q --qf "%{VERSION}" "rsyslog"'
         version = Facter::Util::Resolution.exec(command)
         Regexp.last_match(1) if version =~ %r{^(.+)$}
       end
