@@ -4,6 +4,7 @@ class rsyslog::config::modules{
       * => {
         'priority' => $::rsyslog::module_load_priority,
         'target'   => $::rsyslog::target_file,
+        'confdir'  => $::rsyslog::confdir,
       } + $config,
     }
   }

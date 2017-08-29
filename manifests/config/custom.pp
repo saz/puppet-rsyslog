@@ -3,7 +3,8 @@ class rsyslog::config::custom {
     rsyslog::component::custom_config { $conf_name:
       * => {
       'priority' => $::rsyslog::custom_priority,
-      'target'   => $::rsyslog::target_file
+      'target'   => $::rsyslog::target_file,
+      'confdir'  => $::rsyslog::confdir,
       } + $config,
     }
   }

@@ -1,14 +1,37 @@
 language: ruby
-rvm:
-  - 1.9.3
-  - 2.0
-  - 2.1
-  - 2.2
-env:
-  - PUPPET_VERSION="~> 4.1.0"
-  - PUPPET_VERSION="~> 4.2.0"
-  - PUPPET_VERSION="~> 4.3.0"
-  - PUPPET_VERSION="~> 4.4.0"
-  - PUPPET_VERSION="~> 4.5.0"
 
+cache: bundler
 
+before_install:
+  - bundle -v
+  - rm Gemfile.lock || true
+  - gem update --system
+  - gem update bundler
+  - gem --version
+  - bundle -v
+
+script: 'SPE_OPTS="--format documentation" bundle exec rake default'
+
+matrix:
+  fast_finish: true
+  include:
+  - rvm: 2.1.9
+    env: PUPPET_VERSION="~> 4.4.0"
+  - rvm: 2.1.9
+    env: PUPPET_VERSION="~> 4.5.0"
+  - rvm: 2.1.9
+    env: PUPPET_VERSION="~> 4.6.0"
+  - rvm: 2.1.9
+    env: PUPPET_VERSION="~> 4.7.0"
+  - rvm: 2.1.9
+    env: PUPPET_VERSION="~> 4.8.0"
+  - rvm: 2.1.9
+    env: PUPPET_VERSION="~> 4.9.0"
+  - rvm: 2.1.9
+    env: PUPPET_VERSION="~> 4.10.0"
+  - rvm: 2.1.9
+    env: PUPPET_VERSION="~> 4"
+  - rvm: 2.4.1
+    env: PUPPET_VERSION="~> 5.0.0"
+  - rvm: 2.4.1
+    env: PUPPET_VERSION="~> 5"

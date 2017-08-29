@@ -9,6 +9,7 @@ describe 'rsyslog::component::template', :include_rsyslog => true do
       :type     => 'string',
       :priority => 30,
       :target   => '50_rsyslog.conf',
+      :confdir  => '/etc/rsyslog.d',
       :string   => '/var/log/rsyslog/logs/%fromhost-ip%/%fromhost-ip%.log'
     }}
 
@@ -24,6 +25,7 @@ describe 'rsyslog::component::template', :include_rsyslog => true do
       :type     => 'plugin',
       :priority => 30,
       :target   => '50_rsyslog.conf',
+      :confdir  => '/etc/rsyslog.d',
       :plugin   => 'mystringgen'
     }}
 
@@ -36,9 +38,10 @@ describe 'rsyslog::component::template', :include_rsyslog => true do
 
   context 'subtree template' do
     let(:params) { {
-      :type     => 'subtree',
-      :priority => 30,
-      :target   => '50_rsyslog.conf',
+      :type      => 'subtree',
+      :priority  => 30,
+      :target    => '50_rsyslog.conf',
+      :confdir   => '/etc/rsyslog.d',
       :subtree   => '$!usr!tpl2'
     }}
 
@@ -54,6 +57,7 @@ describe 'rsyslog::component::template', :include_rsyslog => true do
       :type     => 'string',
       :priority => 30,
       :target   => '50_rsyslog.conf',
+      :confdir  => '/etc/rsyslog.d',
       :string   => '/var/log/rsyslog/logs/%fromhost-ip%/%fromhost-ip%.log',
       :options  => { 'sql' => 'on' }
     }}
@@ -71,6 +75,7 @@ describe 'rsyslog::component::template', :include_rsyslog => true do
       :type => 'list',
       :priority => 30,
       :target   => '50_rsyslog.conf',
+      :confdir  => '/etc/rsyslog.d',
       :list_descriptions => [
         { 'constant' => { 'value' => '{' } },
         { 'constant' => { 'value' => '\"@timestamp\":\"' } },

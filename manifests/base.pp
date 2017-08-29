@@ -55,9 +55,11 @@ class rsyslog::base {
     }
   }
 
-  service { $::rsyslog::service_name:
-    ensure => $::rsyslog::service_status,
-    enable => $::rsyslog::service_enabled,
+  if $::rsyslog::manage_service {
+    service { $::rsyslog::service_name:
+      ensure => $::rsyslog::service_status,
+      enable => $::rsyslog::service_enabled,
+    }
   }
 
 }

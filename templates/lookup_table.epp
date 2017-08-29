@@ -1,0 +1,12 @@
+<%- |
+$lookup_table_name,
+$file,
+$reload_on_hup
+| -%>
+# <%= $lookup_table_name %>
+<% if $reload_on_hup == true { -%>
+<% $hup = 'on' -%>
+<% } else { -%>
+<% $hup = 'off' -%>
+<%}-%>
+lookup_table(name="<%= $lookup_table_name %>" file="<%= $file %>.json" reloadOnHUP="<%= $hup %>")

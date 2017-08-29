@@ -9,6 +9,7 @@ describe 'rsyslog::component::module', :include_rsyslog => true do
       :type     => 'external',
       :priority => 20,
       :target   => '50_rsyslog.conf',
+      :confdir  => '/etc/rsyslog.d',
       :config   => {
         "interval"    => "60",
         "severity"    => "7",

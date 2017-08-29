@@ -86,6 +86,9 @@ Location of rsyslog main configuration file (default: /etc/rsyslog.conf)
 ##### `rsyslog::override_default_config`
 When set to true, the default configuration file is overridden with just an include statement to the configuration directory .d (default: true)
 
+##### `rsyslog::manage_service`
+Manage the service or not (default: true)
+
 ##### `rsyslog::service_name`
 Name of the service (default: rsyslog)
 
@@ -105,6 +108,12 @@ eg:
 ```yaml
 rsyslog::target_file: 50_rsyslog.conf
 ```
+You can, however, define custom confdirs and/or custom paths for configuration files. All configuration options have the following global options you can add to their hiera keys:
+
+* `priority` - Order in the file to place the config value relative to the other config options in the file. Takes an integer. Defaults to the priority set for the configuration type. See [Ordering](#Ordering) for more.
+* `target` - Target file to place the config values in. Defaults to 50_rsyslog.conf in the default `$confdir`.
+* `confdir` - Target configuration directory. Defaults to `/etc/rsyslog.d`.
+
 
 
 ##### Ordering 
@@ -133,6 +142,7 @@ Configuration objects are written to the configuration file in rainerscript form
 * [Templates](#rsyslogservertemplates)
 * [Actions](#rsyslogserveractions-rsyslogclientactions)
 * [Inputs](#rsyslogserverinputs-rsyslogclientinputs)
+* [Lookup_tables](#rsyslogserverlookup_tables)
 * [legacy_config](#rsyslogserverlegacy_config)
 
 Configuration objects should be declared in the rsyslog::server or rsyslog::client namespaces accordingly.
@@ -424,6 +434,66 @@ input(type="imudp"
   port="514"
 )
 ```
+
+##### `rsyslog::server::lookup_tables`
+Configures lookup_tables objects in rainerscript AND generates the JSON lookup_table file. Each key of the hash contains the name of the lookup/lookup_table.
+The elements of the hash contain a `json` hash containing the values for the JSON file, a lookup_file element that is the path to where the JSON file will be stored,
+and a reload_on_hup boolean.
+
+The json hash contains 4 elements: `version`, `nolookup`, `type`, and `table`. They **MUST** be specified in this order as per the
+[lookup_tables documentation](http://www.rsyslog.com/doc/v8-stable/configuration/lookup_tables.html):
+
+* `version` - Integer denoting the version/revision of the lookup_table file.
+* `nolookup` - String denoting what should be returned if a lookup doesn't find a match in the table.
+* `type` - Enumerable denoting the type of lookup table. This can be `string`, `array`, or `sparseArray`.
+* `table` - An Array of hashes containing the table index and value for each lookup.
+
+
+```yaml
+rsyslog::server::lookup_tables:
+  ip_lookup:
+    json:
+      version: 1
+      nolookup: 'unk'
+      type: 'string'
+      table:
+        - index: '1.1.1.1'
+          value: 'AB'
+        - index: '2.2.2.2'
+          value: 'CD'
+    lookup_file: '/etc/rsyslog.d/tables/ip_lookup.json'
+    reload_on_hup: true
+```
+
+will produce
+
+```json
+# /etc/rsyslog.d/tables/ip_lookup.json
+{
+  "version": 1,
+  "nomatch": "unk",
+  "type": "string",
+  "table": [
+    {
+      "index": "1.1.1.1",
+      "value": "A"
+    },
+    {
+      "index": "2.2.2.2",
+      "value": "B"
+    }
+  ]
+}
+```
+
+and
+
+```
+lookup_table(name="ip_lookup" file="/etc/rsyslog.d/tables/ip_lookup.json" reloadOnHUP="on")
+```
+
+NOTE: This does not create the actual `lookup()` call in the Rsyslog configuration file(s). Currently that is only supported via
+the `rsyslog::server::custom_config` and `rsyslog::client::custom_config` resources as it requires setting rsyslog variables (I.E. - `set $.iplook = lookup('ip_lookup', $hostname)`).
 
 ##### `rsyslog::server::legacy_config`
 

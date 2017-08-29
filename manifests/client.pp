@@ -5,6 +5,7 @@ class rsyslog::client (
   Optional[Hash]  $inputs          = {},
   Optional[Hash]  $custom_config   = {},
   Optional[Hash]  $modules         = {},
+  Optional[Hash]  $lookup_tables   = {},
 ) {
 
   include rsyslog
@@ -16,6 +17,7 @@ class rsyslog::client (
     inputs        => $inputs,
     custom_config => $custom_config,
     modules       => $modules,
+    lookup_tables => $lookup_tables,
   }
 
 

@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "nomatch": "unk",
+  "type": "string",
+  "table": [
+    {
+      "index": "1.1.1.1",
+      "value": "A"
+    },
+    {
+      "index": "2.2.2.2",
+      "value": "B"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 define rsyslog::component::action (
   Integer           $priority,
   String            $target,
+  String            $confdir,
   String            $type,
   Optional[Hash]    $config,
   Optional[String]  $facility = 'default',
@@ -15,6 +16,12 @@ define rsyslog::component::action (
         'facility'    => $facility,
         'config'      => $config,
   })
+
+  rsyslog::generate_concat { "rsyslog::concat::action::${name}":
+    confdir => $confdir,
+    target  => $target,
+    before  => Concat::Fragment["rsyslog::component::action::${name}"],
+  }
 
   concat::fragment {"rsyslog::component::action::${name}":
     target  => "${::rsyslog::confdir}/${target}",

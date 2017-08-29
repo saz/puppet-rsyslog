@@ -1,6 +1,7 @@
 define rsyslog::component::module (
   Integer           $priority,
   String            $target,
+  String            $confdir,
   Optional[Hash]    $config = {},
   Optional[String]  $type = 'external',
   Optional[String]  $format = '<%= $content %>'
@@ -13,6 +14,12 @@ define rsyslog::component::module (
         'type'        => $type,
         'config'      => $config,
   })
+
+  rsyslog::generate_concat { "rsyslog::concat::module::${name}":
+    confdir => $confdir,
+    target  => $target,
+    before  => Concat::Fragment["rsyslog::component::module::${name}"],
+  }
 
   concat::fragment {"rsyslog::component::module::${name}":
     target  => "${::rsyslog::confdir}/${target}",

@@ -1,6 +1,7 @@
 define rsyslog::component::template (
   Integer           $priority,
   String            $target,
+  String            $confdir,
   Enum[
     'string',
     'list',
@@ -28,8 +29,14 @@ define rsyslog::component::template (
         'options'           => $options,
   })
 
+  rsyslog::generate_concat { "rsyslog::concat::template::${name}":
+    confdir => $confdir,
+    target  => $target,
+    before  => Concat::Fragment["rsyslog::component::template::${name}"],
+  }
+
   concat::fragment {"rsyslog::component::template::${name}":
-    target  => "${::rsyslog::confdir}/${target}",
+    target  => "${confdir}/${target}",
     content => inline_epp($format),
     order   => $priority,
   }

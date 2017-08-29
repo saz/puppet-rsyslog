@@ -7,12 +7,8 @@ class rsyslog::config (
   Optional[Hash] $custom_config = {},
   Optional[Hash] $main_queue_opts = {},
   Optional[Hash] $modules = {},
+  Optional[Hash] $lookup_tables = {},
 ) {
-
-  concat { "${::rsyslog::confdir}/${::rsyslog::target_file}":
-    owner  => 'root',
-    notify => Service[$::rsyslog::service_name],
-  }
 
   include rsyslog::config::modules
   include rsyslog::config::global
@@ -22,7 +18,7 @@ class rsyslog::config (
   include rsyslog::config::actions
   include rsyslog::config::inputs
   include rsyslog::config::custom
-
+  include rsyslog::config::lookup_tables
 
 }
 

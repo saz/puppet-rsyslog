@@ -8,6 +8,7 @@ describe 'rsyslog::component::legacy_config', :include_rsyslog => true do
     let(:params) {{
       :priority     => 40,
       :target       => '50_rsyslog.conf',
+      :confdir      => '/etc/rsyslog.d',
       :key          => "auth,authpriv.*",
       :value        => "/var/log/auth.log",
     }}
@@ -24,6 +25,7 @@ describe 'rsyslog::component::legacy_config', :include_rsyslog => true do
       let(:params) {{
         :priority     => 40,
         :target       => '50_rsyslog.conf',
+        :confdir      => '/etc/rsyslog.d',
         :type         => 'legacy',
         :value        => "*.* @@logmonster.cloud.local",
       }}

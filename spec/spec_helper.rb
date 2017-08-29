@@ -11,6 +11,7 @@ RSpec.shared_context "rsyslog_class", :shared_context => :metadata do
         confdir =>  '/etc/rsyslog.d',
         package_name =>  'rsyslog',
         package_version =>  'installed',
+        manage_service => true,
         manage_package =>  true,
         manage_confdir =>  true,
         purge_config_files =>  true,

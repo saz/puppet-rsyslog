@@ -1,2 +1,6 @@
 spec/fixtures/modules/*
 *.swp
+.idea/
+bin/
+spec/fixtures/manifests/*
+Gemfile.lock

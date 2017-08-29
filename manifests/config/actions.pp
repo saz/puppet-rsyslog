@@ -4,6 +4,7 @@ class rsyslog::config::actions {
       * => {
         'priority' => $::rsyslog::action_priority,
         'target'   => $::rsyslog::target_file,
+        'confdir'  => $::rsyslog::confdir,
       } + $config,
     }
   }

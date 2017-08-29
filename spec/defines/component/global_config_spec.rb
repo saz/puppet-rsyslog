@@ -10,6 +10,7 @@ describe 'rsyslog::component::global_config', :include_rsyslog => true do
       :value    => "on",
       :priority => 40,
       :target   => '50_rsyslog.conf',
+      :confdir  => '/etc/rsyslog.d',
 
     }}
 

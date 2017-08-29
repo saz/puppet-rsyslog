@@ -4,6 +4,7 @@ class rsyslog::config::templates {
       * => {
         'priority' => $::rsyslog::template_priority,
         'target'   => $::rsyslog::target_file,
+        'confdir'  => $::rsyslog::confdir,
       } + $config,
     }
   }

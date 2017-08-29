@@ -1,6 +1,7 @@
 define rsyslog::component::input (
   Integer           $priority,
   String            $target,
+  String            $confdir,
   String            $type,
   Optional[Hash]    $config,
   Optional[String]  $format = '<%= $content %>'
@@ -13,6 +14,12 @@ define rsyslog::component::input (
         'type'        => $type,
         'config'      => $config
   })
+
+  rsyslog::generate_concat { "rsyslog::concat::input::${name}":
+    confdir => $confdir,
+    target  => $target,
+    before  => Concat::Fragment["rsyslog::component::input::${name}"],
+  }
 
   concat::fragment {"rsyslog::component::input::${name}":
     target  => "${::rsyslog::confdir}/${target}",

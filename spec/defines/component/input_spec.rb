@@ -9,6 +9,7 @@ describe 'rsyslog::component::input', :include_rsyslog => true do
       :type     => 'imudp',
       :priority => 40,
       :target   => '50_rsyslog.conf',
+      :confdir  => '/etc/rsyslog.d',
       :config   => {
         'port' => '514',
       }

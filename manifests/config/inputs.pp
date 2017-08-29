@@ -4,6 +4,7 @@ class rsyslog::config::inputs {
       * => {
         'priority' => $::rsyslog::input_priority,
         'target'   => $::rsyslog::target_file,
+        'confdir'  => $::rsyslog::confdir,
       } + $config,
     }
   }

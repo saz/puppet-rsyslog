@@ -4,6 +4,7 @@ class rsyslog::config::legacy {
       * => {
         'priority' => $::rsyslog::legacy_config_priority,
         'target'   => $::rsyslog::target_file,
+        'confdir'  => $::rsyslog::confdir,
       } + $config,
     }
   }
