@@ -24,7 +24,7 @@ define rsyslog::component::action (
   }
 
   concat::fragment {"rsyslog::component::action::${name}":
-    target  => "${::rsyslog::confdir}/${target}",
+    target  => "${confdir}/${target}",
     content => inline_epp($format),
     order   => $priority,
   }

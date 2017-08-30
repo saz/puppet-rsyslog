@@ -24,7 +24,7 @@ define rsyslog::component::legacy_config (
   }
 
   concat::fragment {"rsyslog::component::legacy_config::${name}":
-    target  => "${::rsyslog::confdir}/${target}",
+    target  => "${confdir}/${target}",
     content => inline_epp($format),
     order   => $priority,
   }

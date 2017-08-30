@@ -22,7 +22,7 @@ define rsyslog::component::input (
   }
 
   concat::fragment {"rsyslog::component::input::${name}":
-    target  => "${::rsyslog::confdir}/${target}",
+    target  => "${confdir}/${target}",
     content => inline_epp($format),
     order   => $priority,
   }

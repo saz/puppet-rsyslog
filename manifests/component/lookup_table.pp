@@ -31,7 +31,7 @@ define rsyslog::component::lookup_table (
   }
 
   concat::fragment {"rsyslog::component::lookup_table::${name}":
-    target  => "${::rsyslog::confdir}/${target}",
+    target  => "${confdir}/${target}",
     content => inline_epp($format),
     order   => $priority,
     require => File["rsyslog::component::lookup_table_json::${title}"],
