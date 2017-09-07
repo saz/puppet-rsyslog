@@ -19,6 +19,8 @@
     * [Templates](#rsyslogservertemplates)
     * [Actions](#rsyslogserveractions-rsyslogclientactions)
     * [Inputs](#rsyslogserverinputs-rsyslogclientinputs)
+    * [Lookup_tables](#rsyslogserverlookup_tables)
+    * [Parser](#rsyslogserverparser)
     * [legacy_config](#rsyslogserverlegacy_config)
   * [Positioning](#positioning)
   * [Formatting](#formatting)
@@ -126,9 +128,11 @@ rsyslog::global_config_priority: 10
 rsyslog::module_load_priority: 20
 rsyslog::input_priority: 30
 rsyslog::main_queue_priority: 40
+rsyslog::parser_priority: 45
 rsyslog::template_priority: 50
 rsyslog::action_priority: 60
-rsyslog::legacy_config_priority: 70
+rsyslog::lookup_table_priority: 70
+rsyslog::legacy_config_priority: 80
 rsyslog::custom_priority: 90
 ```
 
@@ -143,6 +147,7 @@ Configuration objects are written to the configuration file in rainerscript form
 * [Actions](#rsyslogserveractions-rsyslogclientactions)
 * [Inputs](#rsyslogserverinputs-rsyslogclientinputs)
 * [Lookup_tables](#rsyslogserverlookup_tables)
+* [Parser](#rsyslogserverparser)
 * [legacy_config](#rsyslogserverlegacy_config)
 
 Configuration objects should be declared in the rsyslog::server or rsyslog::client namespaces accordingly.
@@ -494,6 +499,27 @@ lookup_table(name="ip_lookup" file="/etc/rsyslog.d/tables/ip_lookup.json" reload
 
 NOTE: This does not create the actual `lookup()` call in the Rsyslog configuration file(s). Currently that is only supported via
 the `rsyslog::server::custom_config` and `rsyslog::client::custom_config` resources as it requires setting rsyslog variables (I.E. - `set $.iplook = lookup('ip_lookup', $hostname)`).
+
+##### `rsyslog::server::parser`
+
+Configures parser objects in rainerscript. Each Element of te hash contains the type of parser, followed by a hash of configuration options. Eg:
+
+```yaml
+rsyslog::server::parser:
+  pmrfc3164_hostname_with_slashes:
+    type: pmrfc3164
+    config:
+      permit.slashesinhostname: 'on'
+```
+
+will produce
+
+```
+parser(name="pmrfc3164_hostname_with_slashes"
+       type="pmrfc3164"
+       permit.slashesinhostname="on"
+)
+```
 
 ##### `rsyslog::server::legacy_config`
 

@@ -25,5 +25,3 @@ describe 'rsyslog::component::input', :include_rsyslog => true do
   end
 
 end
-    
-

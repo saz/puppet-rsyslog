@@ -8,6 +8,7 @@ class rsyslog::server (
   Optional[Hash]  $main_queue_opts = {},
   Optional[Hash]  $modules         = {},
   Optional[Hash]  $lookup_tables   = {},
+  Optional[Hash]  $parsers         = {},
 ) {
 
   include rsyslog
@@ -23,6 +24,7 @@ class rsyslog::server (
     main_queue_opts => $main_queue_opts,
     modules         => $modules,
     lookup_tables   => $lookup_tables,
+    parsers         => $parsers,
   }
 
 

@@ -1,0 +1,12 @@
+<%- |
+$parser_name,
+$type,
+$config
+| -%>
+# <%= $parser_name %>
+parser(name="<%= $parser_name %>"
+       type="<%= $type %>"
+<% $config.each |$k, $v| { -%>
+       <%= $k %>="<%= $v %>"
+<%}-%>
+)
