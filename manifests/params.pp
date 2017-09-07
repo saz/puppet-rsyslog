@@ -202,6 +202,8 @@ class rsyslog::params {
         '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
         '#$ModLoad immark  # provides --MARK-- message capability',
       ]
+      $service_hasrestart                  = true
+      $service_hasstatus                   = true
       $omit_local_logging                  = false
       $im_journal_ratelimit_interval       = undef
       $im_journal_ratelimit_burst          = undef
