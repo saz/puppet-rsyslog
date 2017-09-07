@@ -21,6 +21,7 @@
     * [Inputs](#rsyslogserverinputs-rsyslogclientinputs)
     * [Lookup_tables](#rsyslogserverlookup_tables)
     * [Parser](#rsyslogserverparser)
+    * [Rulesets](#rsyslogserverrulesets)
     * [legacy_config](#rsyslogserverlegacy_config)
   * [Positioning](#positioning)
   * [Formatting](#formatting)
@@ -131,6 +132,7 @@ rsyslog::main_queue_priority: 40
 rsyslog::parser_priority: 45
 rsyslog::template_priority: 50
 rsyslog::action_priority: 60
+rsyslog::ruleset_priority: 65
 rsyslog::lookup_table_priority: 70
 rsyslog::legacy_config_priority: 80
 rsyslog::custom_priority: 90
@@ -148,6 +150,7 @@ Configuration objects are written to the configuration file in rainerscript form
 * [Inputs](#rsyslogserverinputs-rsyslogclientinputs)
 * [Lookup_tables](#rsyslogserverlookup_tables)
 * [Parser](#rsyslogserverparser)
+* [Rulesets](#rsyslogserverrulesets)
 * [legacy_config](#rsyslogserverlegacy_config)
 
 Configuration objects should be declared in the rsyslog::server or rsyslog::client namespaces accordingly.
@@ -502,7 +505,7 @@ the `rsyslog::server::custom_config` and `rsyslog::client::custom_config` resour
 
 ##### `rsyslog::server::parser`
 
-Configures parser objects in rainerscript. Each Element of te hash contains the type of parser, followed by a hash of configuration options. Eg:
+Configures parser objects in rainerscript. Each Element of the hash contains the type of parser, followed by a hash of configuration options. Eg:
 
 ```yaml
 rsyslog::server::parser:
@@ -519,6 +522,86 @@ parser(name="pmrfc3164_hostname_with_slashes"
        type="pmrfc3164"
        permit.slashesinhostname="on"
 )
+```
+
+##### `rsyslog::server::rulesets`
+
+Configures Rsyslog ruleset blocks in rainerscript. There are two elements in the rulesets hash:
+* `parameters` - settings to pass to the ruleset determining things such as which rsyslog parser to use or the ruleset's queue size.
+* `rules` - the actual content that goes inside the ruleset. Currently the following are supported:
+    * `action` - rsyslog actions defined inside of the ruleset.
+    * `lookup` - Sets a variable to the results of an rsyslog lookup.
+    * `set` - Set an rsyslog variable
+    * `call` - call a specific action.
+    
+```yaml
+ag_analyzer::rulesets:
+  ruleset_eth0_514_tcp:
+    parameters:
+      parser: pmrfc3164.hostname_with_slashes
+      queue.size: '10000'
+    rules:
+      - set:
+          rcv_time: 'exec_template("s_rcv_time")'
+      - set:
+          utime_gen: 'exec_template("s_unixtime_generated")'
+      - set:
+          uuid: '$uuid'
+      - action:
+          name: utf8-fix
+          type: mmutf8fix
+      - action:
+          name: test-action
+          type: omfile
+          facility: "*.*;auth,authpriv.none"
+          config:
+            dynaFile: "remoteSyslog"
+            specifics: "/var/log/test"
+      - action:
+          name: test-action2
+          type: omfile
+          config:
+            dynaFile: "remoteSyslog"
+            specifics: "/var/log/test"
+      - lookup:
+          var: srv
+          lookup_table: srv-map
+          expr: '$fromhost-ip'
+      - call: 'action.parse.rawmsg'
+      - call: 'action.parse.r_msg'
+```
+
+Will produce:
+
+```
+ruleset (name="ruleset_eth0_514_tcp"
+  parser="pmrfc3164.hostname_with_slashes"
+  queue.size="10000"
+) {
+  set $.rcv_time = exec_template("s_rcv_time");
+  set $.utime_gen = exec_template("s_unixtime_generated");
+  set $.uuid = $uuid;
+  # utf8-fix action
+  action(type="mmutf8fix"
+    name="utf8-fix"
+  )
+  # test-action action
+*.*;auth,authpriv.none         action(type="omfile" 
+                                 name="test-action"
+                                 dynaFile="remoteSyslog"
+                                 specifics="/var/log/test"
+                               )
+  # test-action2 action
+  action(type="omfile"
+    name="test-action2"
+    dynaFile="remoteSyslog"
+    specifics="/var/log/test"
+  )
+  set $.srv = lookup("srv-map", $fromhost-ip);
+  call action.parse.rawmsg
+  call action.parse.r_msg
+}
+
 ```
 
 ##### `rsyslog::server::legacy_config`

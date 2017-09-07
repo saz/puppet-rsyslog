@@ -9,6 +9,7 @@ class rsyslog::server (
   Optional[Hash]  $modules         = {},
   Optional[Hash]  $lookup_tables   = {},
   Optional[Hash]  $parsers         = {},
+  Optional[Hash]  $rulesets        = {},
 ) {
 
   include rsyslog
@@ -25,6 +26,7 @@ class rsyslog::server (
     modules         => $modules,
     lookup_tables   => $lookup_tables,
     parsers         => $parsers,
+    rulesets        => $rulesets,
   }
 
 

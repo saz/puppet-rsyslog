@@ -1,0 +1,48 @@
+<%- |
+$ruleset_name,
+$parameters,
+$rules
+| -%>
+ruleset (name="<%= $ruleset_name %>"
+<% $parameters.each |$key, $value| { -%>
+  <%= $key %>="<%= $value %>"<%-%>
+<%}-%>
+) {
+<% $rules.each |$rule| { -%>
+<% $rule.each |$key, $params| { -%>
+<% if $key == 'set' { -%>
+<%- $params.each |$var, $value| { -%>
+  set $.<%= $var %> = <%= $value %><%-%>;
+<%}-%>
+<%}-%>
+<% elsif $key == 'call' { -%>
+  call <%= $params %><%-%>
+<%}-%>
+<% elsif $key == 'lookup' { -%>
+  set $.<%= $params['var'] %> = lookup("<%= $params['lookup_table'] %>", <%= $params['expr'] %>);
+<%}-%>
+<% elsif $key == 'action' { -%>
+  # <%= $params['name'] %> action
+<% if $params['facility'] { -%>
+<%= sprintf( '%-30s %s%s%s', $params['facility'], 'action(type="',$params['type'],'" ' )%>
+<%= sprintf('%33s%-s="%s"',' ','name',$params['name'])%>
+<% if $params['config'] { -%>
+<% $params['config'].each |$k, $v| { -%>
+<%= sprintf('%33s%-s="%s"',' ',$k,$v)%>
+<%}-%>
+<%}-%>
+<%= sprintf('%32s',')') %>
+<% } else { -%>
+  action(type="<%= $params['type'] %>"
+    name="<%= $params['name'] %>"
+<% if $params['config'] { -%>
+<% $params['config'].each |$k, $v| { -%>
+    <%= $k %>="<%= $v %>"
+<%}-%>
+<%}-%>
+  )
+<%}-%>
+<%}-%>
+<%}-%>
+<%}-%>
+}
