@@ -65,6 +65,7 @@ describe 'rsyslog::component::ruleset', :include_rsyslog => true do
     it do
       is_expected.to contain_concat__fragment('rsyslog::component::ruleset::myruleset').with_content(
 <<-EOS
+# myruleset ruleset
 ruleset (name="myruleset"
   parser="pmrfc3164.hostname_with_slashes"
   queue.size="10000"
@@ -85,6 +86,7 @@ EOS
             'parser'     => 'pmrfc3164.hostname_with_slashes',
             'queue.size' => '10000'
         },
+        :stop       => true,
         :rules      => [
             {
               'action' => {
@@ -113,12 +115,13 @@ EOS
                 }
               }
             }
-        ]
+        ],
     }}
 
     it do
       is_expected.to contain_concat__fragment('rsyslog::component::ruleset::myruleset').with_content(
 <<-EOF
+# myruleset ruleset
 ruleset (name="myruleset"
   parser="pmrfc3164.hostname_with_slashes"
   queue.size="10000"
@@ -139,9 +142,22 @@ ruleset (name="myruleset"
     dynaFile="remoteSyslog"
     specifics="/var/log/test"
   )
+  stop
 }
 EOF
       )
+    end
+  end
+
+  context 'error test' do
+    let(:params) { {
+      :priority   => 65,
+      :target     => '50_rsyslog.conf',
+      :confdir    => '/etc/rsyslog.d',
+    }}
+
+    it do
+      is_expected.to compile.and_raise_error(/Ruleset MUST have at least one of: action, stop, set, call, or lookup/)
     end
   end
 end

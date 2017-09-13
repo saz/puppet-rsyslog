@@ -1,8 +1,10 @@
 <%- |
 $ruleset_name,
 $parameters,
-$rules
+$rules,
+$stop
 | -%>
+# <%= $ruleset_name %> ruleset
 ruleset (name="<%= $ruleset_name %>"
 <% $parameters.each |$key, $value| { -%>
   <%= $key %>="<%= $value %>"<%-%>
@@ -44,5 +46,8 @@ ruleset (name="<%= $ruleset_name %>"
 <%}-%>
 <%}-%>
 <%}-%>
+<%}-%>
+<% if $stop { -%>
+  stop
 <%}-%>
 }

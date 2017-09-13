@@ -533,6 +533,7 @@ Configures Rsyslog ruleset blocks in rainerscript. There are two elements in the
     * `lookup` - Sets a variable to the results of an rsyslog lookup.
     * `set` - Set an rsyslog variable
     * `call` - call a specific action.
+* `stop` - a Boolean to set if the ruleset ends with a stop or not.
     
 ```yaml
 ag_analyzer::rulesets:
@@ -569,6 +570,7 @@ ag_analyzer::rulesets:
           expr: '$fromhost-ip'
       - call: 'action.parse.rawmsg'
       - call: 'action.parse.r_msg'
+    stop: true
 ```
 
 Will produce:
@@ -600,6 +602,7 @@ ruleset (name="ruleset_eth0_514_tcp"
   set $.srv = lookup("srv-map", $fromhost-ip);
   call action.parse.rawmsg
   call action.parse.r_msg
+  stop
 }
 
 ```
