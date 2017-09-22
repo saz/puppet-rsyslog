@@ -215,6 +215,7 @@ The following lists all the class parameters this module accepts.
     preserve_fqdn                       true,false          Use full name of host even if sender and receiver are in the same domain. Defaults to false.
     local_host_name                     STRING              Use a custom local host name, instead of clients actual host name. Defaults to undef.
     package_status                      STRING              Manages rsyslog package installation. Defaults to 'present'.
+    usrmsg_users                        Array               Array of user names that will receive messages when logged, Defaults to ['*'] (all users)
 
     RSYSLOG::SERVER CLASS PARAMETERS    VALUES              DESCRIPTION
     -------------------------------------------------------------------
