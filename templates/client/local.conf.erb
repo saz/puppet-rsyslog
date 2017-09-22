@@ -103,7 +103,7 @@ cron.*                                          /var/log/cron
 *.=debug                                        /var/log/debug.log
 <% end -%>
 <% if @rsyslog_version and @rsyslog_version.split('.')[0].to_i >= 7 -%>
-*.emerg       :omusrmsg:*
+*.emerg       :omusrmsg:<%= scope.lookupvar('rsyslog::usrmsg_users').join(',') %>
 <% else -%>
 *.emerg				*
 <% end -%>
