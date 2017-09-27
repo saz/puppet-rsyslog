@@ -10,7 +10,7 @@ before_install:
   - gem --version
   - bundle -v
 
-script: 'SPE_OPTS="--format documentation" bundle exec rake default'
+script: 'SPEC_OPTS="--format documentation" bundle exec rake default'
 
 matrix:
   fast_finish: true

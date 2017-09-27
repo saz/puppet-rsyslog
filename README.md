@@ -101,6 +101,9 @@ State of the service (default: running)
 ##### `rsyslog::service_enabled`
 Whether or not to enable the service (default: true)
 
+##### `rsyslog::external_service`
+Whether or not to use an external service, be it managed by another module (such as a container service managed by `garethr-docker`) or unmanaged. MUST be used with `rsyslog::service_name` and cannot be used with `rsyslog::manage_service`. (default: false)
+
 ### Rsyslog Configuration Directives
 
 ##### Config file

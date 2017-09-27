@@ -56,6 +56,7 @@ class rsyslog (
   Boolean $manage_package,
   Boolean $manage_confdir,
   Boolean $manage_service,
+  Boolean $external_service,
   Boolean $purge_config_files,
   Integer $global_config_priority,
   Integer $legacy_config_priority,
@@ -70,7 +71,10 @@ class rsyslog (
   String  $target_file,
 ) {
 
-
-  class { 'rsyslog::base': }
+  if $manage_service == true and $external_service == true {
+    fail('manage_service and external_service cannot be set at the same time!')
+  } else {
+    class { 'rsyslog::base': }
+  }
 
 }

@@ -11,6 +11,7 @@ rsyslog::manage_service: true
 rsyslog::service_name: rsyslog
 rsyslog::service_status: running
 rsyslog::service_enabled: true
+rsyslog::external_service: false
 
 ## This can be an array of extra "feature" packages to install for rsyslog
 rsyslog::feature_packages: []
