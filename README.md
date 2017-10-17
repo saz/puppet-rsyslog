@@ -539,7 +539,7 @@ Configures Rsyslog ruleset blocks in rainerscript. There are two elements in the
 * `stop` - a Boolean to set if the ruleset ends with a stop or not.
     
 ```yaml
-ag_analyzer::rulesets:
+rsyslog::server::rulesets:
   ruleset_eth0_514_tcp:
     parameters:
       parser: pmrfc3164.hostname_with_slashes
