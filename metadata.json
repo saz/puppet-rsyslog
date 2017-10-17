@@ -1,6 +1,6 @@
 {
   "name": "crayfishx/rsyslog",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "crayfishx",
   "summary": "Manage rsyslog v8 configuration",
   "license": "Apache-2.0",

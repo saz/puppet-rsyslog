@@ -1,4 +1,5 @@
 spec/fixtures/modules/*
+pkg/
 *.swp
 .idea/
 bin/
