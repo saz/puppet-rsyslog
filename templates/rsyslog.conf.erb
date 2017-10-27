@@ -2,7 +2,7 @@
 <% if scope.lookupvar('rsyslog::preserve_fqdn') -%>
 $PreserveFQDN on
 <% end -%>
-<% if scope.lookupvar('rsyslog::local_host_name') and scope.lookupvar('rsyslog::local_host_name') != :undef -%>
+<% if scope.lookupvar('rsyslog::local_host_name') and scope.lookupvar('rsyslog::local_host_name') != nil -%>
 $LocalHostName <%= scope.lookupvar('rsyslog::local_host_name') %>
 <% end -%>
 #################
@@ -36,14 +36,14 @@ $SystemLogRateLimitInterval <%= scope.lookupvar('rsyslog::system_log_rate_limit_
 $SystemLogRateLimitBurst <%= scope.lookupvar('rsyslog::system_log_rate_limit_burst') %>
 <%- end -%>
 
-<% if scope.lookupvar('rsyslog::default_template') and scope.lookupvar('rsyslog::default_template') != :undef and scope.lookupvar('rsyslog::default_template_customisation') and scope.lookupvar('rsyslog::default_template_customisation') != :undef -%>
+<% if scope.lookupvar('rsyslog::default_template') and scope.lookupvar('rsyslog::default_template') != nil and scope.lookupvar('rsyslog::default_template_customisation') and scope.lookupvar('rsyslog::default_template_customisation') != nil -%>
 #
 # Custom setting for ActionFileDefaultTemplate
 #
 $template <%= scope.lookupvar('rsyslog::default_template') %>,<%= scope.lookupvar('rsyslog::default_template_customisation') %>
 
 <% end -%>
-<% if scope.lookupvar('rsyslog::default_template')  and scope.lookupvar('rsyslog::default_template') != :undef -%>
+<% if scope.lookupvar('rsyslog::default_template')  and scope.lookupvar('rsyslog::default_template') != nil -%>
 #
 # Sets a default template for file action
 #
@@ -78,16 +78,16 @@ $OmitLocalLogging on
 <% end -%>
 
 # Settings for imjournal (If supported)
-<% if scope.lookupvar('rsyslog::im_journal_statefile') and scope.lookupvar('rsyslog::im_journal_statefile') != :undef -%>
+<% if scope.lookupvar('rsyslog::im_journal_statefile') and scope.lookupvar('rsyslog::im_journal_statefile') != nil -%>
 $imjournalStateFile <%=scope.lookupvar('rsyslog::im_journal_statefile') %>
 <% end -%>
-<% if scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') and scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') != :undef -%>
+<% if scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') and scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') != nil -%>
 $imjournalIgnorePreviousMessages <%=scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') %>
 <% end -%>
-<% if scope.lookupvar('rsyslog::im_journal_ratelimit_interval') and scope.lookupvar('rsyslog::im_journal_ratelimit_interval') != :undef -%>
+<% if scope.lookupvar('rsyslog::im_journal_ratelimit_interval') and scope.lookupvar('rsyslog::im_journal_ratelimit_interval') != nil -%>
 $imjournalRatelimitInterval <%=scope.lookupvar('rsyslog::im_journal_ratelimit_interval') %>
 <% end -%>
-<% if scope.lookupvar('rsyslog::im_journal_ratelimit_burst') and scope.lookupvar('rsyslog::im_journal_ratelimit_burst') != :undef -%>
+<% if scope.lookupvar('rsyslog::im_journal_ratelimit_burst') and scope.lookupvar('rsyslog::im_journal_ratelimit_burst') != nil -%>
 $imjournalRatelimitBurst <%=scope.lookupvar('rsyslog::im_journal_ratelimit_burst') %>
 <% end -%>
 
