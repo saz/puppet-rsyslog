@@ -175,7 +175,7 @@ ruleset (name="myruleset"
   parser="pmrfc3164.hostname_with_slashes"
   queue.size="10000"
 ) {
-  if $hostname == 'rsyslog_test' then {
+  if ($hostname == 'rsyslog_test') then {
     call action.ruleset.test
     stop
   }
