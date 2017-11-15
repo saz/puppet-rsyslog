@@ -466,7 +466,7 @@ The json hash contains 4 elements: `version`, `nolookup`, `type`, and `table`. T
 ```yaml
 rsyslog::server::lookup_tables:
   ip_lookup:
-    json:
+    lookup_json:
       version: 1
       nolookup: 'unk'
       type: 'string'
@@ -613,6 +613,133 @@ ruleset (name="ruleset_eth0_514_tcp"
 
 ```
 
+Rulesets can also contain filtering logic for calling other rulesets, setting other variables, or even dropping logs based on specific values. Filtering logic is required to utilize `lookup_tables` and `lookup` calls.
+
+
+Example:
+```yaml
+rsyslog::server::rulesets:
+  ruleset_eth0_514_udp:
+    parameters:
+      queue.type: LinkedList
+    rules:
+      - filter:
+          if:
+            filter: "$fromhost-ip"
+            operator: "=="
+            expression: "192.168.255.1"
+            tasks:
+              call: "ruleset.action.rawlog.standard"
+              stop: true
+      - call: "ruleset.client.log.standard"
+      - call: "ruleset.unknown.standard"
+    stop: true
+```
+
+will produce:
+
+```
+ruleset (name="ruleset_eth0_514_tcp"
+  queue.type="LinkedList"
+) {
+  if $fromhost-ip == "192.168.255.1" then {
+    call ruleset.action.rawlog.standard
+    stop
+  }
+  call ruleset.client.log.standard
+  call ruleset.unknown.standard
+  stop
+}
+```
+
+Example with lookup:
+```yaml
+rsyslog::server::lookup_tables:
+  srv-map:
+    lookup_json:
+      version: 1
+      nolookup: 'unk'
+      type: 'string'
+      table:
+        - index: '192.168.255.10'
+          value: 'windows'
+        - index: '192.168.255.11'
+          value: 'windows'
+        - index: '192.168.255.12'
+          value: 'linux'
+      lookup_file: '/etc/rsyslog.d/tables/srv-map.json'
+      reload_on_hup: true
+rsyslog::server::rulesets:
+  ruleset_lookup_set_windows_by_ip:
+    rules:
+      - lookup:
+          var: srv
+          lookup_table: srv-map
+          expr: '$fromhost-ip'
+      - filter:
+          if:
+            filter: "$.srv"
+            operator: "=="
+            expression: "windows"
+            tasks:
+              call: "ruleset.action.forward.windows"
+              stop: true
+          "else if":
+            filter: "$.srv"
+            operator: "=="
+            expression: "unk"
+            tasks:
+              call: "ruleset.action.drop.unknown"
+              stop: true
+          else:
+            tasks:
+              stop: true
+    stop: true          
+```
+
+Will produce:
+
+```json
+#/etc/rsyslog.d/tables/srv-map.json
+{
+  "version": 1,
+  "nomatch": "unk",
+  "type": "string",
+  "table": [
+    {
+      "index": "192.168.255.10",
+      "value": "windows"
+    },
+    {
+      "index": "192.168.255.11",
+      "value": "windows"
+    },
+    {
+      "index": "192.168.255.12",
+      "value": "linux"
+    }
+  ]
+}
+```
+
+```
+#rsyslog.conf
+lookup_table(name="srv-map" file="/etc/rsyslog.d/tables/srv-map.json" reloadOnHUP=on)
+
+ruleset(name="ruleset_lookup_set_windows_by_ip"
+) {
+  set $.srv = lookup("srv-map", $fromhost-ip);
+  if ($.srv == "windows") then {
+    call ruleset.action.forward.windows
+    stop
+  } else if ($.srv == "unk") then {
+    call ruleset.action.drop.unknown
+    stop
+  } else {
+    stop
+  }
+}
+```
 ##### `rsyslog::server::legacy_config`
 
 Legacy config support is provided to facilitate backwards compatibility with `sysklogd` format as this module mainly supports `rainerscript` format.
