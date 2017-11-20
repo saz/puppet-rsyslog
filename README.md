@@ -615,6 +615,16 @@ ruleset (name="ruleset_eth0_514_tcp"
 
 Rulesets can also contain filtering logic for calling other rulesets, setting other variables, or even dropping logs based on specific values. Filtering logic is required to utilize `lookup_tables` and `lookup` calls.
 
+Rsyslog puppet supports two kinds of filters:
+
+* `expression_filter`
+* `property_filter`
+
+More information about Rsyslog Filters can be found at: http://www.rsyslog.com/doc/v8-stable/configuration/filters.html
+
+###### Expression Filter
+
+Expression filters use traditional `if/else` and `if/else if/else` logic to execute rules on specific return values. `lookup_tables` are compatible ONLY with `expression_filters`
 
 Example:
 ```yaml
@@ -623,7 +633,7 @@ rsyslog::server::rulesets:
     parameters:
       queue.type: LinkedList
     rules:
-      - filter:
+      - expression_filter:
           if:
             filter: "$fromhost-ip"
             operator: "=="
@@ -676,7 +686,7 @@ rsyslog::server::rulesets:
           var: srv
           lookup_table: srv-map
           expr: '$fromhost-ip'
-      - filter:
+      - expression_filter:
           if:
             filter: "$.srv"
             operator: "=="
@@ -740,6 +750,39 @@ ruleset(name="ruleset_lookup_set_windows_by_ip"
   }
 }
 ```
+
+###### Property Filters
+
+`property_filters` are unique to rsyslogd. They allow to filter on any property, like HOSTNAME, syslogtag and msg. `property_filters` are faster than `expression_filters` as they us built-in rsyslog properties to lookup and match data.
+
+Example:
+```yaml
+rsyslog::server::rulesets:
+  ruleset_msg_check_for_error:
+    rules:
+      - expression_filter:
+          property: 'msg'
+          operator: 'contains'
+          value: 'error'
+          tasks:
+            call: 'ruleset.action.error'
+            stop: true
+```
+
+Will Generate:
+
+```
+#rsyslog.conf
+ruleset(name="ruleset_msg_check_for_error"
+) {
+  :msg, contains, "informational" {
+    call ruleset.action.error
+    stop
+  }
+}
+```
+
+
 ##### `rsyslog::server::legacy_config`
 
 Legacy config support is provided to facilitate backwards compatibility with `sysklogd` format as this module mainly supports `rainerscript` format.
