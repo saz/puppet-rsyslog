@@ -4,6 +4,9 @@
 
 # rsyslog
 
+This module was first published as `crayfishx/rsyslog`.  It has now moved to `puppet/rsyslog` and is managed by the community group [Vox Pupuli](https://voxpupuli.org).
+
+
 #### Table of Contents
 
 * [Description](#description)
