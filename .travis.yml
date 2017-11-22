@@ -1,7 +1,8 @@
+---
+sudo: false
+dist: trusty
 language: ruby
-
 cache: bundler
-
 before_install:
   - bundle -v
   - rm Gemfile.lock || true
@@ -9,29 +10,42 @@ before_install:
   - gem update bundler
   - gem --version
   - bundle -v
-
-script: 'SPEC_OPTS="--format documentation" bundle exec rake default'
-
+script:
+  - 'bundle exec rake $CHECK'
 matrix:
   fast_finish: true
   include:
   - rvm: 2.1.9
-    env: PUPPET_VERSION="~> 4.4.0"
-  - rvm: 2.1.9
-    env: PUPPET_VERSION="~> 4.5.0"
-  - rvm: 2.1.9
-    env: PUPPET_VERSION="~> 4.6.0"
-  - rvm: 2.1.9
-    env: PUPPET_VERSION="~> 4.7.0"
-  - rvm: 2.1.9
-    env: PUPPET_VERSION="~> 4.8.0"
-  - rvm: 2.1.9
-    env: PUPPET_VERSION="~> 4.9.0"
-  - rvm: 2.1.9
-    env: PUPPET_VERSION="~> 4.10.0"
-  - rvm: 2.1.9
-    env: PUPPET_VERSION="~> 4"
-  - rvm: 2.4.1
-    env: PUPPET_VERSION="~> 5.0.0"
-  - rvm: 2.4.1
-    env: PUPPET_VERSION="~> 5"
+    bundler_args: --without system_tests development release
+    env: PUPPET_VERSION="~> 4.0" CHECK=test PARALLEL_TEST_PROCESSORS=16
+  - rvm: 2.4.2
+    bundler_args: --without system_tests development release
+    env: PUPPET_VERSION="~> 5.0" CHECK=test_with_coveralls
+  - rvm: 2.4.2
+    bundler_args: --without system_tests development release
+    env: PUPPET_VERSION="~> 5.0" CHECK=rubocop
+  - rvm: 2.4.2
+    bundler_args: --without system_tests development release
+    env: PUPPET_VERSION="~> 5.0" CHECK=build DEPLOY_TO_FORGE=yes
+branches:
+  only:
+  - master
+  - /^v\d/
+notifications:
+  email: false
+  irc:
+    on_success: always
+    on_failure: always
+    channels:
+      - "chat.freenode.org#voxpupuli-notifications"
+deploy:
+  provider: puppetforge
+  user: puppet
+  password:
+    secure: "d532jz5QRujx8orG3QPdhtU6bYOkEpSqj4AeC2h8cyDyyzi0JcbnTWUmhpx69jcS7WvAkj4fPYdYQbE/OxdgFegVaG5jmvG0rfFOPJsLKpgXKAHy3cCS2VFQcNXUHwFoDbTxW13aemR1Qy7Cw+WvnNzgoCoL1vTSGR/T81k5+tBfScQIzM7rs5fVctxNngWij7iEQSU2NQKCwhPB80G5ZdN4INb+K69sDKu4KkybulzrYEI6ZPX6FGEImkGf3ub8Qa3o3wy3l3bknxDfqi1WYdict8WZdr/et9hUIicLdLEypCCAzsc7fLKzVrfuXJMvivaFW2VMes1c/cVHBC5c+9eFP/vTREGa7HeWuvhLTTUUc5gzfUPYIbdAaulQs+cXaoWouTThZN7JEL1XZRZQ7vhbSylob+6UeKc27vmjL37kixY3iUN0hIumvpKQDB27tvJHcH6JAxZ8UWZ/VIeenqalLWFHyLe8GJnHkKHdCllW7cl0bVL9HR+1HY2RHJgCR7oWi/+CCn+0D48D1hx88gH9nXk6E9RXbTRlE4bZFs0Q0EGF1j6vNNwDtZO1cPeJnwM0LX3jSLL1uS1O2oeR+V66sFDCEccYtPZOPsIz3fcQPHv+Cfv7KlHrIn24YIPT6EI6VdhEAzuFfVMOWnAq0qAL5J8rjF6ssZK6QvTm/sA="
+  on:
+    tags: true
+    # all_branches is required to use tags
+    all_branches: true
+    # Only publish the build marked with "DEPLOY_TO_FORGE"
+    condition: "$DEPLOY_TO_FORGE = yes"

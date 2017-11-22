@@ -2,12 +2,7 @@ define rsyslog::component::template (
   Integer           $priority,
   String            $target,
   String            $confdir,
-  Enum[
-    'string',
-    'list',
-    'subtree',
-    'plugin'
-  ]                 $type,
+  Enum['string', 'list', 'subtree', 'plugin'] $type,
   Optional[Array]   $list_descriptions = [],
   Optional[String]  $string = '',
   Optional[String]  $subtree = '',

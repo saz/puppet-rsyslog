@@ -1,12 +1,12 @@
 {
-  "name": "crayfishx/rsyslog",
+  "name": "puppet-rsyslog",
   "version": "1.1.0",
-  "author": "crayfishx",
+  "author": "Vox Pupuli",
   "summary": "Manage rsyslog v8 configuration",
   "license": "Apache-2.0",
-  "source": "https://github.com/crayfishx/puppet-rsyslog",
-  "project_page": "https://github.com/crayfishx/puppet-rsyslog",
-  "issues_url": "https://github.com/crayfishx/puppet-rsyslog/issues",
+  "source": "https://github.com/voxpupuli/puppet-rsyslog",
+  "project_page": "https://github.com/voxpupuli/puppet-rsyslog",
+  "issues_url": "https://github.com/voxpupuli/puppet-rsyslog/issues",
   "dependencies": [
     {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0 < 5.0.0"},
     {"name":"puppetlabs-concat","version_requirement":">= 2.0.0 < 5.0.0"}

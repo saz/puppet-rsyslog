@@ -51,7 +51,7 @@ class rsyslog::base {
 
     file { $::rsyslog::config_file:
       ensure  => 'file',
-      content => "${message}\n\$IncludeConfig ${::rsyslog::confdir}/*.conf"
+      content => "${message}\n\$IncludeConfig ${::rsyslog::confdir}/*.conf",
     }
   }
 
