@@ -7,10 +7,10 @@ describe 'rsyslog::component::lookup_table', include_rsyslog: true do
   context 'default lookup table example' do
     let(:params) do
       {
-        :priority    => 40,
-        :target      => '50_rsyslog.conf',
-        :confdir     => '/etc/rsyslog.d',
-        :lookup_json => {
+        priority: 40,
+        target: '50_rsyslog.conf',
+        confdir: '/etc/rsyslog.d',
+        lookup_json: {
           'version' => 1,
           'nomatch' => 'unk',
           'type'    => 'string',
@@ -19,8 +19,8 @@ describe 'rsyslog::component::lookup_table', include_rsyslog: true do
             { 'index' => '2.2.2.2', 'value' => 'B' }
           ]
         },
-        :lookup_file => '/etc/rsyslog.d/example_lookup',
-        :reload_on_hup => true
+        lookup_file: '/etc/rsyslog.d/example_lookup',
+        reload_on_hup: true
       }
     end
 
