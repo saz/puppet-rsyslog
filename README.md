@@ -1,6 +1,8 @@
-[![Build Status](https://travis-ci.org/crayfishx/puppet-rsyslog.svg?branch=master)](https://travis-ci.org/crayfishx/puppet-rsyslog)
-
-
+[![Build Status](https://img.shields.io/travis/voxpupuli/puppet-rsyslog/master.svg?style=flat-square)](https://travis-ci.org/voxpupuli/puppet-rsyslog)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/rsyslog.svg?style=flat-square)](https://forge.puppetlabs.com/puppet/rsyslog)
+[![Puppet Forge](https://img.shields.io/puppetforge/dt/puppet/rsyslog.svg?style=flat-square)](https://forge.puppet.com/puppet/rsyslog)
+[![Puppet Forge](https://img.shields.io/puppetforge/e/puppet/rsyslog.svg?style=flat-square)](https://forge.puppet.com/puppet/rsyslog)
+[![Puppet Forge](https://img.shields.io/puppetforge/f/puppet/rsyslog.svg?style=flat-square)](https://forge.puppet.com/puppet/rsyslog)
 
 # rsyslog
 
