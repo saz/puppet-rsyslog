@@ -28,6 +28,7 @@
 # [*log_filters*]
 # [*actionfiletemplate_cust*]
 # [*actionfiletemplate*]
+# [*msg_reduction*]
 # [*rotate*]
 #
 # === Variables
@@ -70,6 +71,7 @@ class rsyslog::server (
   $log_filters               = false,
   $actionfiletemplate_cust   = false,
   $actionfiletemplate        = false,
+  $msg_reduction             = false,
   $rotate                    = undef
 ) inherits rsyslog::params {
   include ::rsyslog
