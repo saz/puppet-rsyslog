@@ -36,6 +36,13 @@ $SystemLogRateLimitInterval <%= scope.lookupvar('rsyslog::system_log_rate_limit_
 $SystemLogRateLimitBurst <%= scope.lookupvar('rsyslog::system_log_rate_limit_burst') %>
 <%- end -%>
 
+<% if scope.lookupvar('rsyslog::server::msg_reduction') == true or scope.lookupvar('rsyslog::client::msg_reduction') == true -%>
+#
+# Set message reduction to avoid duplicate messages
+#
+$RepeatedMsgReduction on
+
+<% end -%>
 <% if scope.lookupvar('rsyslog::default_template') and scope.lookupvar('rsyslog::default_template') != :undef and scope.lookupvar('rsyslog::default_template_customisation') and scope.lookupvar('rsyslog::default_template_customisation') != :undef -%>
 #
 # Custom setting for ActionFileDefaultTemplate
