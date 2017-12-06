@@ -1,6 +1,6 @@
 {
   "name": "puppet-rsyslog",
-  "version": "2.0.0",
+  "version": "2.0.1-rc0",
   "author": "Vox Pupuli",
   "summary": "Manage rsyslog v8 configuration",
   "license": "Apache-2.0",
@@ -8,15 +8,20 @@
   "project_page": "https://github.com/voxpupuli/puppet-rsyslog",
   "issues_url": "https://github.com/voxpupuli/puppet-rsyslog/issues",
   "dependencies": [
-    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0 < 5.0.0"},
-    {"name":"puppetlabs-concat","version_requirement":">= 2.0.0 < 5.0.0"}
+    {
+      "name": "puppetlabs-stdlib",
+      "version_requirement": ">= 1.0.0 < 5.0.0"
+    },
+    {
+      "name": "puppetlabs-concat",
+      "version_requirement": ">= 2.0.0 < 5.0.0"
+    }
   ],
   "requirements": [
-    { 
+    {
       "name": "puppet",
       "version_requirement": ">= 4.4.0 < 6.0.0"
     }
   ],
   "data_provider": "hiera"
 }
-
