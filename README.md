@@ -489,7 +489,7 @@ The json hash contains 4 elements: `version`, `nolookup`, `type`, and `table`. T
 ```yaml
 rsyslog::server::lookup_tables:
   ip_lookup:
-    json:
+    lookup_json:
       version: 1
       nolookup: 'unk'
       type: 'string'
@@ -636,6 +636,176 @@ ruleset (name="ruleset_eth0_514_tcp"
 }
 
 ```
+
+Rulesets can also contain filtering logic for calling other rulesets, setting other variables, or even dropping logs based on specific values. Filtering logic is required to utilize `lookup_tables` and `lookup` calls.
+
+Rsyslog puppet supports two kinds of filters:
+
+* `expression_filter`
+* `property_filter`
+
+More information about Rsyslog Filters can be found at: http://www.rsyslog.com/doc/v8-stable/configuration/filters.html
+
+###### Expression Filter
+
+Expression filters use traditional `if/else` and `if/else if/else` logic to execute rules on specific return values. `lookup_tables` are compatible ONLY with `expression_filters`
+
+Example:
+```yaml
+rsyslog::server::rulesets:
+  ruleset_eth0_514_udp:
+    parameters:
+      queue.type: LinkedList
+    rules:
+      - expression_filter:
+          if:
+            filter: "$fromhost-ip"
+            operator: "=="
+            expression: "192.168.255.1"
+            tasks:
+              call: "ruleset.action.rawlog.standard"
+              stop: true
+      - call: "ruleset.client.log.standard"
+      - call: "ruleset.unknown.standard"
+    stop: true
+```
+
+will produce:
+
+```
+ruleset (name="ruleset_eth0_514_tcp"
+  queue.type="LinkedList"
+) {
+  if $fromhost-ip == "192.168.255.1" then {
+    call ruleset.action.rawlog.standard
+    stop
+  }
+  call ruleset.client.log.standard
+  call ruleset.unknown.standard
+  stop
+}
+```
+
+Example with lookup:
+```yaml
+rsyslog::server::lookup_tables:
+  srv-map:
+    lookup_json:
+      version: 1
+      nolookup: 'unk'
+      type: 'string'
+      table:
+        - index: '192.168.255.10'
+          value: 'windows'
+        - index: '192.168.255.11'
+          value: 'windows'
+        - index: '192.168.255.12'
+          value: 'linux'
+      lookup_file: '/etc/rsyslog.d/tables/srv-map.json'
+      reload_on_hup: true
+rsyslog::server::rulesets:
+  ruleset_lookup_set_windows_by_ip:
+    rules:
+      - lookup:
+          var: srv
+          lookup_table: srv-map
+          expr: '$fromhost-ip'
+      - expression_filter:
+          if:
+            filter: "$.srv"
+            operator: "=="
+            expression: "windows"
+            tasks:
+              call: "ruleset.action.forward.windows"
+              stop: true
+          "else if":
+            filter: "$.srv"
+            operator: "=="
+            expression: "unk"
+            tasks:
+              call: "ruleset.action.drop.unknown"
+              stop: true
+          else:
+            tasks:
+              stop: true
+    stop: true          
+```
+
+Will produce:
+
+```json
+#/etc/rsyslog.d/tables/srv-map.json
+{
+  "version": 1,
+  "nomatch": "unk",
+  "type": "string",
+  "table": [
+    {
+      "index": "192.168.255.10",
+      "value": "windows"
+    },
+    {
+      "index": "192.168.255.11",
+      "value": "windows"
+    },
+    {
+      "index": "192.168.255.12",
+      "value": "linux"
+    }
+  ]
+}
+```
+
+```
+#rsyslog.conf
+lookup_table(name="srv-map" file="/etc/rsyslog.d/tables/srv-map.json" reloadOnHUP=on)
+
+ruleset(name="ruleset_lookup_set_windows_by_ip"
+) {
+  set $.srv = lookup("srv-map", $fromhost-ip);
+  if ($.srv == "windows") then {
+    call ruleset.action.forward.windows
+    stop
+  } else if ($.srv == "unk") then {
+    call ruleset.action.drop.unknown
+    stop
+  } else {
+    stop
+  }
+}
+```
+
+###### Property Filters
+
+`property_filters` are unique to rsyslogd. They allow to filter on any property, like HOSTNAME, syslogtag and msg. `property_filters` are faster than `expression_filters` as they us built-in rsyslog properties to lookup and match data.
+
+Example:
+```yaml
+rsyslog::server::rulesets:
+  ruleset_msg_check_for_error:
+    rules:
+      - expression_filter:
+          property: 'msg'
+          operator: 'contains'
+          value: 'error'
+          tasks:
+            call: 'ruleset.action.error'
+            stop: true
+```
+
+Will Generate:
+
+```
+#rsyslog.conf
+ruleset(name="ruleset_msg_check_for_error"
+) {
+  :msg, contains, "informational" {
+    call ruleset.action.error
+    stop
+  }
+}
+```
+
 
 ##### `rsyslog::server::legacy_config`
 

@@ -140,6 +140,98 @@ EOF
     end
   end
 
+  context 'ruleset with expression-filter' do
+    let(:facts) { { hostname: 'rsyslog_test' } }
+    let(:params) do
+      {
+        priority: 65,
+        target: '50_rsyslog.conf',
+        confdir: '/etc/rsyslog.d',
+        parameters: {
+          'parser' => 'pmrfc3164.hostname_with_slashes',
+          'queue.size' => '10000'
+        },
+        rules: [
+          {
+            'expression_filter' => {
+              'if' => {
+                'filter'     => '$hostname',
+                'operator'   => '==',
+                'expression' => 'rsyslog_test',
+                'tasks'      => {
+                  'call'        => 'action.ruleset.test',
+                  'stop'        => true
+                }
+              }
+            }
+          }
+        ]
+      }
+    end
+
+    it do
+      is_expected.to contain_concat__fragment('rsyslog::component::ruleset::myruleset').with_content(
+        <<-EOF
+# myruleset ruleset
+ruleset (name="myruleset"
+  parser="pmrfc3164.hostname_with_slashes"
+  queue.size="10000"
+) {
+  if ($hostname == 'rsyslog_test') then {
+    call action.ruleset.test
+    stop
+  }
+}
+      EOF
+      )
+    end
+  end
+
+  context 'ruleset with property-filter' do
+    let(:facts) { { hostname: 'rsyslog_test' } }
+    let(:params) do
+      {
+        priority: 65,
+        target: '50_rsyslog.conf',
+        confdir: '/etc/rsyslog.d',
+        parameters: {
+          'parser' => 'pmrfc3164.hostname_with_slashes',
+          'queue.size' => '10000'
+        },
+        rules: [
+          {
+            'property_filter' => {
+              'property' => 'msg',
+              'operator' => 'contains',
+              'value'    => 'error',
+              'tasks'    => {
+                'call'      => 'action.ruleset.test',
+                'stop'      => true
+              }
+            }
+          }
+        ]
+      }
+    end
+
+    it do
+      is_expected.to contain_concat__fragment('rsyslog::component::ruleset::myruleset').with_content(
+        <<-EOF
+# myruleset ruleset
+ruleset (name="myruleset"
+  parser="pmrfc3164.hostname_with_slashes"
+  queue.size="10000"
+) {
+  :msg, contains, "error" {
+    call action.ruleset.test
+    stop
+  }
+}
+      EOF
+      )
+    end
+  end
+
   context 'error test' do
     let(:params) do
       {

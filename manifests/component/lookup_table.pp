@@ -11,7 +11,7 @@ define rsyslog::component::lookup_table (
   include rsyslog
 
   file { "rsyslog::component::lookup_table_json::${title}":
-    path    => "${target}.json",
+    path    => $lookup_file,
     content => inline_template('<%= JSON.pretty_generate @lookup_json %>'),
     owner   => 'root',
     group   => 'root',
