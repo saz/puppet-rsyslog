@@ -1,15 +1,15 @@
 [![Build Status](https://img.shields.io/travis/voxpupuli/puppet-rsyslog/master.svg?style=flat-square)](https://travis-ci.org/voxpupuli/puppet-rsyslog)
+[![License](https://img.shields.io/github/license/voxpupuli/puppet-rsyslog.svg)](https://github.com/voxpupuli/puppet-rsyslog/blob/master/LICENSE)
 [![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/rsyslog.svg?style=flat-square)](https://forge.puppetlabs.com/puppet/rsyslog)
 [![Puppet Forge](https://img.shields.io/puppetforge/dt/puppet/rsyslog.svg?style=flat-square)](https://forge.puppet.com/puppet/rsyslog)
 [![Puppet Forge](https://img.shields.io/puppetforge/e/puppet/rsyslog.svg?style=flat-square)](https://forge.puppet.com/puppet/rsyslog)
 [![Puppet Forge](https://img.shields.io/puppetforge/f/puppet/rsyslog.svg?style=flat-square)](https://forge.puppet.com/puppet/rsyslog)
 
-# rsyslog
+# puppet-rsyslog
 
 This module was first published as `crayfishx/rsyslog`.  It has now moved to `puppet/rsyslog` and is managed by the community group [Vox Pupuli](https://voxpupuli.org).
 
-
-#### Table of Contents
+## Table of Contents
 
 * [Description](#description)
 * [Usage](#usage)
@@ -30,8 +30,6 @@ This module was first published as `crayfishx/rsyslog`.  It has now moved to `pu
     * [legacy_config](#rsyslogserverlegacy_config)
   * [Positioning](#positioning)
   * [Formatting](#formatting)
-
-    
 
 ## Description
 
@@ -67,67 +65,81 @@ Configuration options should be configured in Hiera.  Defaults are defined in da
 
 ### Main system configuration
 
-##### `rsyslog::confdir`
+#### `rsyslog::confdir`
+
 Specifies the main directory where the module will place all configuration files (default: rsyslogd)
 
-##### `rsyslog::package_name`
+#### `rsyslog::package_name`
+
 The package to install (default: rsyslog)
 
-##### `rsyslog::package_version`
+#### `rsyslog::package_version`
+
 Package version/state to install, (default: installed)
 
-##### `rsyslog::feature_packages`
+#### `rsyslog::feature_packages`
+
 An array containing a list of extra packages (features) to install.
 
-##### `rsyslog::manage_package`
+#### `rsyslog::manage_package`
+
 Enable or disable managing the package (default: true)
 
-##### `rsyslog::manage_confdir`
+#### `rsyslog::manage_confdir`
+
 Enable or disable managing the configuration directory (confdir) (default: true)
 
-##### `rsyslog::purge_config_files`
+#### `rsyslog::purge_config_files`
+
 When `rsyslog::manage_confdir` is set to true, this option defines whether or not to purge unmanaged files within the configuration directory (default: true)
 
-##### `rsyslog::config_file`
+#### `rsyslog::config_file`
+
 Location of rsyslog main configuration file (default: /etc/rsyslog.conf)
 
-##### `rsyslog::override_default_config`
+#### `rsyslog::override_default_config`
+
 When set to true, the default configuration file is overridden with just an include statement to the configuration directory .d (default: true)
 
-##### `rsyslog::manage_service`
+#### `rsyslog::manage_service`
+
 Manage the service or not (default: true)
 
-##### `rsyslog::service_name`
+#### `rsyslog::service_name`
+
 Name of the service (default: rsyslog)
 
-##### `rsyslog::service_status`
+#### `rsyslog::service_status`
+
 State of the service (default: running)
 
-##### `rsyslog::service_enabled`
+#### `rsyslog::service_enabled`
+
 Whether or not to enable the service (default: true)
 
-##### `rsyslog::external_service`
+#### `rsyslog::external_service`
+
 Whether or not to use an external service, be it managed by another module (such as a container service managed by `garethr-docker`) or unmanaged. MUST be used with `rsyslog::service_name` and cannot be used with `rsyslog::manage_service`. (default: false)
 
 ### Rsyslog Configuration Directives
 
-##### Config file
+#### Config file
 
 By default, everything is configured in a single file under `$confdir` called 50_rsyslog.conf.  This means that packages and other OS specific configurations can also be included (see purge_config_files above).  The default file can be changed using the `rsyslog::target_file` directive and is relative to the confdir.
 
 eg:
+
 ```yaml
 rsyslog::target_file: 50_rsyslog.conf
 ```
+
 You can, however, define custom confdirs and/or custom paths for configuration files. All configuration options have the following global options you can add to their hiera keys:
 
 * `priority` - Order in the file to place the config value relative to the other config options in the file. Takes an integer. Defaults to the priority set for the configuration type. See [Ordering](#Ordering) for more.
 * `target` - Target file to place the config values in. Defaults to 50_rsyslog.conf in the default `$confdir`.
 * `confdir` - Target configuration directory. Defaults to `/etc/rsyslog.d`.
 
-
-
-##### Ordering 
+##### Ordering
 
 The following configuration parameters are defaults for the order of configuration object types within the configuration file.  They can be overriden for individual object definitions (see configuring objects below)
 
@@ -163,15 +175,17 @@ Configuration objects are written to the configuration file in rainerscript form
 
 Configuration objects should be declared in the rsyslog::server or rsyslog::client namespaces accordingly.
 
-##### `rsyslog::server::modules`
+#### `rsyslog::server::modules`
 
 A hash of hashes, hash key represents the module name and accepts a hash with values or an empty hash as its value.
 The hash accepts the following three values:
+
 * `type`: values can be `external or builtin` the default value is external and need not be specified explicitly.
 * `config`: its a hash which provides optional parameters to the module loaded.
 * `priority`: The module load order can be priortised based on the optional `priority` value.
 
 eg:
+
 ```yaml
 rsyslog::server::modules:
   imuxsock: {}
@@ -189,7 +203,7 @@ rsyslog::server::modules:
       fileGroup: "adm"
       dirGroup: "adm"
       fileCreateMode: "0640"
-      dirCreateMode: "0755" 
+      dirCreateMode: "0755"
   impstats:
     type: "external"
     priority: 29
@@ -233,10 +247,12 @@ module (load="impstats"
 ##### `rsyslog::server::global_config` `rsyslog::client::global_config`
 
 A hash of hashes, they key represents the configuration setting and the value is a hash with the following keys:
+
 * `value`: the value of the setting
 * `type`: the type of format to use (legacy or rainerscript), if omitted rainerscript is used.
 
 eg:
+
 ```yaml
 rsyslog::server::global_config:
   umask:
@@ -271,11 +287,11 @@ global (
     parser.escapeControlCharactersOnReceive="on"
     workDirectory="/var/spool/rsyslog"
     maxMessageSize="64k"
-  
 )
 ```
 
 ##### `rsyslog::server::main_queue_opts`
+
 Configures the `main_queue` object in rsyslog as a hash. eg:
 
 ```yaml
@@ -294,9 +310,11 @@ main_queue(
 ```
 
 ##### `rsyslog::server::templates`
+
 Configures `template` objects in rsyslog.  Each element is a hash containing the name of the template, the type and the template data.    The type parameter can be one of `string`, `subtree`, `plugin` or `list`
 
 eg:
+
 ```yaml
 rsyslog::server::templates:
   remote:
@@ -321,6 +339,7 @@ template (name="remote" type="string"
 When using `list`, the `list_descriptions` hash should contain an array of single element hashes, the key should be `constant` or `property` with their corresponding parameters in a sub hash.
 
 eg:
+
 ```yaml
   plain-syslog:
     type: list
@@ -383,10 +402,12 @@ template (name="plain-syslog" type="list"
 ```
 
 ##### `rsyslog::server::actions` `rsyslog::client::actions`
+
 Configures action objects in rainerscript.  Each element of the hash contains the type of action, followed by a hash of configuration options.
 It also accepts an optional facility parameter and the content is formatted based on the no of config options passed and if the facility option is present.
 
 eg:
+
 ```yaml
 rsyslog::server::actions:
   all_logs:
@@ -431,8 +452,8 @@ action(type="omelasticsearch"
 )
 ```
 
-
 ##### `rsyslog::server::inputs` `rsyslog::client::inputs`
+
 Configures input objects in rainerscript.  Each element of the hash contains the type of input, followed by a hash of configuration options. Eg:
 
 ```yaml
@@ -452,6 +473,7 @@ input(type="imudp"
 ```
 
 ##### `rsyslog::server::lookup_tables`
+
 Configures lookup_tables objects in rainerscript AND generates the JSON lookup_table file. Each key of the hash contains the name of the lookup/lookup_table.
 The elements of the hash contain a `json` hash containing the values for the JSON file, a lookup_file element that is the path to where the JSON file will be stored,
 and a reload_on_hup boolean.
@@ -463,7 +485,6 @@ The json hash contains 4 elements: `version`, `nolookup`, `type`, and `table`. T
 * `nolookup` - String denoting what should be returned if a lookup doesn't find a match in the table.
 * `type` - Enumerable denoting the type of lookup table. This can be `string`, `array`, or `sparseArray`.
 * `table` - An Array of hashes containing the table index and value for each lookup.
-
 
 ```yaml
 rsyslog::server::lookup_tables:
@@ -535,14 +556,15 @@ parser(name="pmrfc3164_hostname_with_slashes"
 ##### `rsyslog::server::rulesets`
 
 Configures Rsyslog ruleset blocks in rainerscript. There are two elements in the rulesets hash:
+
 * `parameters` - settings to pass to the ruleset determining things such as which rsyslog parser to use or the ruleset's queue size.
 * `rules` - the actual content that goes inside the ruleset. Currently the following are supported:
-    * `action` - rsyslog actions defined inside of the ruleset.
-    * `lookup` - Sets a variable to the results of an rsyslog lookup.
-    * `set` - Set an rsyslog variable
-    * `call` - call a specific action.
+  * `action` - rsyslog actions defined inside of the ruleset.
+  * `lookup` - Sets a variable to the results of an rsyslog lookup.
+  * `set` - Set an rsyslog variable
+  * `call` - call a specific action.
 * `stop` - a Boolean to set if the ruleset ends with a stop or not.
-    
+
 ```yaml
 rsyslog::server::rulesets:
   ruleset_eth0_514_tcp:
@@ -596,7 +618,7 @@ ruleset (name="ruleset_eth0_514_tcp"
     name="utf8-fix"
   )
   # test-action action
-*.*;auth,authpriv.none         action(type="omfile" 
+*.*;auth,authpriv.none         action(type="omfile"
                                  name="test-action"
                                  dynaFile="remoteSyslog"
                                  specifics="/var/log/test"
@@ -620,11 +642,13 @@ ruleset (name="ruleset_eth0_514_tcp"
 Legacy config support is provided to facilitate backwards compatibility with `sysklogd` format as this module mainly supports `rainerscript` format.
 
 A hash of hashes, each hash name is used as the comment/reference for the setting and the hash will have the following values:
+
 * `key`: the key/logger rule setting
 * `value`: the value/target of the setting
 * `type`: the type of format to use (legacy or sysklogd), if omitted sysklogd is used. If legacy type is used `key` can be skipped and one long string can be provided as value.
 
 eg:
+
 ```yaml
 rsyslog::client::legacy_config:
   auth_priv_rule:
@@ -663,9 +687,12 @@ mail.err    /var/log/mail.err
 news.crit    /var/log/news/news.crit
 
 ```
-legacy type values can be passed as one long string skipping the key parameter like below and you can also override the priority in the hash to rearrange the contents 
+
+legacy type values can be passed as one long string skipping the key parameter like below and you can also override the priority in the hash to rearrange the contents
 eg:
+
 ```
+
   emergency_rule:
     key: "*.emerg"
     value: ":omusrmsg:*"
@@ -694,9 +721,11 @@ will produce
 ```
 
 ### Positioning
+
 All rsyslog object types are positioned according to the default variables (see [Ordering](#ordering)).  The position can be overridden for any object by adding the optional `priority` parameter.
 
 eg:
+
 ```yaml
 rsyslog::server::actions:
   elasticsearch:
@@ -712,6 +741,7 @@ rsyslog::server::actions:
 This module attempts to abstract rainerscript objects into data structures that can be handled easily within hiera, however there are clearly times when you need to add some more code structure around an object, such as conditionals.  For simple code additions, the `template`, `action`, `input` and `global_config` object types support the optional parameter of `format` which takes Puppet EPP formatted template as a value, using the variable `$content` to signify the object itself.   For example, to wrap an action in a simple conditional you could format it as
 
 eg:
+
 ```yaml
 rsyslog::server::actions:
   elasticsearch:
@@ -749,10 +779,10 @@ rsyslog::server::custom_config:
 
 ### License
 
-* This module is licensed under Apache 2.0, see LICENSE.txt for more details
+* This module is licensed under Apache 2.0, see LICENSE for more details
 
 ### Maintainer
 
-* Written and maintained by Craig Dunn (craig@craigdunn.org) @crayfishx
+* This module is maintained by Vox Pupuli.  It was originally written by Craig Dunn (craig@craigdunn.org) @crayfishx.
 * Sponsored by [Skyscape Cloud Services](http://www.skyscapecloud.com)
 
