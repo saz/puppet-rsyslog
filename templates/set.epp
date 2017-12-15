@@ -1,0 +1,5 @@
+<%- |
+String $name,
+String $value
+| -%>
+set $.<%= $name %> = <%= $value %>;

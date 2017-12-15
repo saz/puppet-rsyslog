@@ -1,18 +1,11 @@
 <%- |
+$filter_name,
 $property,
 $operator,
 $value,
 $tasks
 | -%>
-:<%= $property %>, <% = $operator %>, "<%= $value %>"
-  <% $tasks.each |$config, $value| { -%>
-    <% if $config == 'call' { -%>
-  <%= epp('rsyslog/call.epp', { 'value' => $value, }) %><%-%>
-    <% } elsif $config == 'lookup'{ -%>
-  <%= epp('rsyslog/lookup.epp', { 'var' => $config['var'], 'lookup_table' => $config['lookup_table'], 'expr' => $config['expr'], }) %><%-%>
-    <% } elsif $config == 'set' { -%>
-  <%= epp('rsyslog/set.epp', { 'var_name' => $config['var_name'], 'value' => $config['value'] }) %><%-%>
-    <% } elsif $config == 'action' { -%>
-  <%= epp('rsyslog/action.epp', { 'action_name' => $config['name'], 'type' => $config['type'], 'facility' => $config['facility'], 'config' => $config['config'],}) %><%-%>
-    <% }-%>
-  <%}-%>
+# <%= $filter_name %>
+:<%= $property %>, <%= $operator %>, "<%= $value %>" {
+<%= epp('rsyslog/tasks.epp', { 'tasks' => $tasks }) -%>
+}

@@ -11,6 +11,7 @@ class rsyslog::config (
   Optional[Hash] $parsers = {},
   Optional[Hash] $rulesets = {},
   Optional[Hash] $property_filters = {},
+  Optional[Hash] $expression_filters = {},
 ) {
 
   include rsyslog::config::modules
@@ -25,6 +26,7 @@ class rsyslog::config (
   include rsyslog::config::parsers
   include rsyslog::config::rulesets
   include rsyslog::config::property_filters
+  include rsyslog::config::expression_filters
 
 }
 

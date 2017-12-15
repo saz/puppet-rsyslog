@@ -15,7 +15,7 @@ describe 'rsyslog::component::property_filter', include_rsyslog: true do
         value: 'val',
         tasks: {
           action: {
-            name: 'test_action',
+            name: 'myaction',
             type: 'omfile',
             config: {
               dynaFile: 'remoteSyslog'
@@ -28,12 +28,15 @@ describe 'rsyslog::component::property_filter', include_rsyslog: true do
     it do
       is_expected.to contain_concat__fragment('rsyslog::component::property_filter::mypropertyfilter').with_content(
         <<-CONTENT
-:msg, contains, "val"
-  action(type="omfile"
-    name="test-action"
-    dynaFile="remoteSyslog"
-  )
-      CONTENT
+# mypropertyfilter
+:msg, contains, "val" {
+# myaction
+action(type="omfile"
+  dynaFile="remoteSyslog"
+)
+
+}
+        CONTENT
       )
     end
   end

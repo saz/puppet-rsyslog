@@ -11,10 +11,11 @@ define rsyslog::component::property_filter (
   include rsyslog
 
   $content = epp('rsyslog/property_filter.epp', {
-    'property' => $property,
-    'operator' => $operator,
-    'value'    => $value,
-    'tasks'    => $tasks,
+    'filter_name' => $name,
+    'property'    => $property,
+    'operator'    => $operator,
+    'value'       => $value,
+    'tasks'       => $tasks,
   })
 
   rsyslog::generate_concat { "rsyslog::concat::property_filter::${name}":
@@ -23,7 +24,7 @@ define rsyslog::component::property_filter (
     before  => Concat::Fragment["rsyslog::component::property_filter::${name}"],
   }
 
-  concat::fragment {"rsyslog::component::property_filter::${name}":
+  concat::fragment { "rsyslog::component::property_filter::${name}":
     target  => "${confdir}/${target}",
     content => inline_epp($format),
     order   => $priority,
