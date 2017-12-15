@@ -5,7 +5,7 @@ class rsyslog::config::property_filters {
         'priority' => $::rsyslog::filter_priority,
         'target'   => $::rsyslog::target_file,
         'confdir'  => $::rsyslog::confdir,
-      } + $config
+      } + $config,
     }
   }
 }
