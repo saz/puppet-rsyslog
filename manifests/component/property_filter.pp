@@ -5,8 +5,8 @@ define rsyslog::component::property_filter (
   String $property,
   Enum[ 'contains', 'isequal', 'startswith', 'regex', 'ereregex'] $operator,
   String $value,
-  Optional[Hash] $tasks = {},
-  Optional[String] $format = '<%= $content %>'
+  Hash $tasks    = {},
+  String $format = '<%= $content %>'
 ) {
   include rsyslog
 

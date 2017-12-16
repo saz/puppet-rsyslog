@@ -3,7 +3,7 @@ define rsyslog::component::expression_filter (
   String $target,
   String $confdir,
   Hash $conditionals,
-  Optional[String] $format = '<%= $content %>'
+  String $format = '<%= $content %>'
 ) {
   include rsyslog
 
