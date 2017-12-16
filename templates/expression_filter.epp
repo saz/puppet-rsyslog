@@ -1,0 +1,14 @@
+<%- |
+$filter_name,
+$conditionals
+| -%>
+# <%= $filter_name %>
+<%- $conditionals.each |$conditional, $options| { -%>
+  <%- if $conditional == 'else' { -%>
+<%= $conditional %> {
+  <%- } else { -%>
+<%= "${conditional} ${options['expression']}" %> {
+  <%-}-%>
+<%= epp('rsyslog/tasks.epp', { 'tasks' => $options['tasks'] }) -%>
+}
+<%}-%>

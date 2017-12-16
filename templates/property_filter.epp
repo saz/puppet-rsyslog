@@ -1,0 +1,11 @@
+<%- |
+$filter_name,
+$property,
+$operator,
+$value,
+$tasks
+| -%>
+# <%= $filter_name %>
+:<%= $property %>, <%= $operator %>, "<%= $value %>" {
+<%= epp('rsyslog/tasks.epp', { 'tasks' => $tasks }) -%>
+}

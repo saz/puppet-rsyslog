@@ -10,6 +10,8 @@ class rsyslog::config (
   Optional[Hash] $lookup_tables = {},
   Optional[Hash] $parsers = {},
   Optional[Hash] $rulesets = {},
+  Hash $property_filters = {},
+  Hash $expression_filters = {},
 ) {
 
   include rsyslog::config::modules
@@ -23,6 +25,8 @@ class rsyslog::config (
   include rsyslog::config::lookup_tables
   include rsyslog::config::parsers
   include rsyslog::config::rulesets
+  include rsyslog::config::property_filters
+  include rsyslog::config::expression_filters
 
 }
 

@@ -1,0 +1,6 @@
+<%- |
+String $variable_name,
+String $lookup_table,
+String $lookup_expr
+| -%>
+set $.<%= $variable_name %> = lookup("<%= $lookup_table %>", <%= $lookup_expr %>);

@@ -1,0 +1,15 @@
+<%- |
+Hash $tasks
+| -%>
+<%- $tasks.each |$config, $cfgval| { -%>
+  <%- if $config == 'call' { -%>
+<%= epp('rsyslog/call.epp', { 'value' => $cfgval, }) %><%-%>
+  <%- } elsif $config == 'lookup'{ -%>
+<%= epp('rsyslog/lookup.epp', { 'variable_name' => $cfgval['var'], 'lookup_table' => $cfgval['lookup_table'], 'lookup_expr' => $cfgval['expr'], }) %><%-%>
+  <%- } elsif $config == 'set' { -%>
+<%= epp('rsyslog/set.epp', { 'name' => $cfgval['var_name'], 'value' => $cfgval['value'] }) %><%-%>
+  <%- } elsif $config == 'action' { -%>
+    <%- if $cfgval['facility'] == undef or '' { $facility = 'default' } else { $facility = $cfgval['faclility'] } -%>
+<%= epp('rsyslog/action.epp', { 'action_name' => $cfgval['name'], 'type' => $cfgval['type'], 'facility' => $facility, 'config' => $cfgval['config'],}) %>
+  <%-}-%>
+<%-}-%>
