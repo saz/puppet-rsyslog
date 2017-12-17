@@ -201,6 +201,7 @@ ruleset (name="myruleset"
         rules: [
           {
             'property_filter' => {
+              'name'     => 'mypropertyfilter',
               'property' => 'msg',
               'operator' => 'contains',
               'value'    => 'error',
@@ -222,10 +223,12 @@ ruleset (name="myruleset"
   parser="pmrfc3164.hostname_with_slashes"
   queue.size="10000"
 ) {
-  :msg, contains, "error" {
-    call action.ruleset.test
-    stop
+# mypropertyfilter
+:msg, contains, "error" {
+call action.ruleset.test
+stop
   }
+
 }
       EOF
       )

@@ -11,5 +11,7 @@ Hash $tasks
   <%- } elsif $config == 'action' { -%>
     <%- if $cfgval['facility'] == undef or '' { $facility = 'default' } else { $facility = $cfgval['faclility'] } -%>
 <%= epp('rsyslog/action.epp', { 'action_name' => $cfgval['name'], 'type' => $cfgval['type'], 'facility' => $facility, 'config' => $cfgval['config'],}) %>
-  <%-}-%>
+  <%-} elsif $config == 'stop' { -%>
+stop
+  <%}-%>
 <%-}-%>
