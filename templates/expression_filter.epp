@@ -7,7 +7,7 @@ $conditionals
   <%- if $conditional == 'else' { -%>
 <%= $conditional %> {
   <%- } else { -%>
-<%= "${conditional} ${options['expression']}" %> {
+<%= "${conditional} ${options['expression']} then" %> {
   <%-}-%>
 <%= epp('rsyslog/tasks.epp', { 'tasks' => $options['tasks'] }) -%>
 }

@@ -76,7 +76,8 @@ ruleset (name="myruleset"
   parser="pmrfc3164.hostname_with_slashes"
   queue.size="10000"
 ) {
-  set $.srv = lookup("srv-map", $fromhost-ip);
+
+set $.srv = lookup("srv-map", $fromhost-ip);
 }
 EOS
       )
@@ -97,8 +98,11 @@ EOS
         rules: [
           {
             'action' => {
-              'name' => 'utf8-fix',
-              'type' => 'mmutf8fix'
+              'name'   => 'utf8-fix',
+              'type'   => 'mmutf8fix',
+              'config' => {
+                'file' => '/var/log/fix'
+              }
             }
           },
           {
@@ -123,16 +127,19 @@ ruleset (name="myruleset"
   parser="pmrfc3164.hostname_with_slashes"
   queue.size="10000"
 ) {
-  # utf8-fix action
-  action(type="mmutf8fix"
-    name="utf8-fix"
-  )
-  # myaction2 action
-  action(type="omfile"
-    name="myaction2"
-    dynaFile="remoteSyslog"
-    specifics="/var/log/test"
-  )
+
+# utf8-fix
+action(type="mmutf8fix"
+  file="/var/log/fix"
+)
+
+
+# myaction2
+action(type="omfile"
+  dynaFile="remoteSyslog"
+  specifics="/var/log/test"
+)
+
   stop
 }
 EOF
@@ -154,13 +161,14 @@ EOF
         rules: [
           {
             'expression_filter' => {
-              'if' => {
-                'filter'     => '$hostname',
-                'operator'   => '==',
-                'expression' => 'rsyslog_test',
-                'tasks'      => {
-                  'call'        => 'action.ruleset.test',
-                  'stop'        => true
+              'name' => 'myexpressionfilter',
+              'filter' => {
+                'if' => {
+                  'expression' => '$hostname == "rsyslog_test"',
+                  'tasks'      => {
+                    'call'        => 'action.ruleset.test',
+                    'stop'        => true
+                  }
                 }
               }
             }
@@ -177,9 +185,10 @@ ruleset (name="myruleset"
   parser="pmrfc3164.hostname_with_slashes"
   queue.size="10000"
 ) {
-  if ($hostname == 'rsyslog_test') then {
-    call action.ruleset.test
-    stop
+# myexpressionfilter
+if $hostname == "rsyslog_test" then {
+call action.ruleset.test
+stop
   }
 }
       EOF
@@ -201,6 +210,7 @@ ruleset (name="myruleset"
         rules: [
           {
             'property_filter' => {
+              'name'     => 'mypropertyfilter',
               'property' => 'msg',
               'operator' => 'contains',
               'value'    => 'error',
@@ -222,10 +232,12 @@ ruleset (name="myruleset"
   parser="pmrfc3164.hostname_with_slashes"
   queue.size="10000"
 ) {
-  :msg, contains, "error" {
-    call action.ruleset.test
-    stop
+# mypropertyfilter
+:msg, contains, "error" {
+call action.ruleset.test
+stop
   }
+
 }
       EOF
       )
