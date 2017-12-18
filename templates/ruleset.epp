@@ -10,18 +10,18 @@ ruleset (name="<%= $ruleset_name %>"
   <%= $key %>="<%= $value %>"<%-%>
 <%}-%>
 ) {
-<% $rules.each |$rule| { -%>
-  <% $rule.each |$key, $params| { -%>
-    <% if $key == 'property_filter' { -%>
+<%- $rules.each |$rule| { -%>
+  <%- $rule.each |$key, $params| { -%>
+    <%- if $key == 'property_filter' { -%>
 <%= epp('rsyslog/property_filter.epp', { 'filter_name' => $params['name'], 'property' => $params['property'], 'operator' => $params['operator'], 'value' => $params['value'], 'tasks' => $params['tasks']}) %>
-    <% } elsif $key == 'expression_filter' { -%>
+    <%- } elsif $key == 'expression_filter' { -%>
 <%= epp('rsyslog/expression_filter.epp', { 'filter_name' => $params['name'], 'conditionals' => $params['filter'] }) -%>
-    <% } else {  %>
+    <%- } else {  %>
 <%= epp('rsyslog/tasks.epp', { 'tasks' => $rule }) -%>
-    <%}-%>
-  <%}-%>
-<%}-%>
-<% if $stop { -%>
+    <%-}-%>
+  <%-}-%>
+<%-}-%>
+<%- if $stop { -%>
   stop
-<% }-%>
+<%-}-%>
 }
