@@ -154,13 +154,14 @@ EOF
         rules: [
           {
             'expression_filter' => {
-              'if' => {
-                'filter'     => '$hostname',
-                'operator'   => '==',
-                'expression' => 'rsyslog_test',
-                'tasks'      => {
-                  'call'        => 'action.ruleset.test',
-                  'stop'        => true
+              'name' => 'myexpressionfilter',
+              'filter' => {
+                'if' => {
+                  'expression' => '$hostname == "rsyslog_test"',
+                  'tasks'      => {
+                    'call'        => 'action.ruleset.test',
+                    'stop'        => true
+                  }
                 }
               }
             }
@@ -177,9 +178,10 @@ ruleset (name="myruleset"
   parser="pmrfc3164.hostname_with_slashes"
   queue.size="10000"
 ) {
-  if ($hostname == 'rsyslog_test') then {
-    call action.ruleset.test
-    stop
+# myexpressionfilter
+if $hostname == "rsyslog_test" then {
+call action.ruleset.test
+stop
   }
 }
       EOF
