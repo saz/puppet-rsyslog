@@ -11,45 +11,16 @@ ruleset (name="<%= $ruleset_name %>"
 <%}-%>
 ) {
 <% $rules.each |$rule| { -%>
-<%   $rule.each |$key, $params| { -%>
-<%     if $key == 'property_filter' { -%>
+  <% $rule.each |$key, $params| { -%>
+    <% if $key == 'property_filter' { -%>
 <%= epp('rsyslog/property_filter.epp', { 'filter_name' => $params['name'], 'property' => $params['property'], 'operator' => $params['operator'], 'value' => $params['value'], 'tasks' => $params['tasks']}) %>
-<%     } elsif $key == 'expression_filter' { -%>
+    <% } elsif $key == 'expression_filter' { -%>
 <%= epp('rsyslog/expression_filter.epp', { 'filter_name' => $params['name'], 'conditionals' => $params['filter'] }) -%>
-<%     } elsif $key == 'set' { -%>
-<%-       $params.each |$name, $value| { -%>
-<%= epp('rsyslog/set.epp', { 'name' => $name, 'value' => $value}) -%>
-<%        }-%>
-<%     } elsif $key == 'call' { -%>
-  call <%= $params %><%-%>
-<%     }-%>
-<%     elsif $key == 'lookup' { -%>
-  set $.<%= $params['var'] %> = lookup("<%= $params['lookup_table'] %>", <%= $params['expr'] %>);
-<%     }-%>
-<%     elsif $key == 'action' { -%>
-  # <%= $params['name'] %> action
-<%       if $params['facility'] { -%>
-<%= sprintf( '%-30s %s%s%s', $params['facility'], 'action(type="',$params['type'],'" ' )%>
-<%= sprintf('%33s%-s="%s"',' ','name',$params['name'])%>
-<%         if $params['config'] { -%>
-<%           $params['config'].each |$k, $v| { -%>
-<%= sprintf('%33s%-s="%s"',' ',$k,$v)%>
-<%           }-%>
-<%         }-%>
-<%= sprintf('%32s',')') %>
-<%       } else { -%>
-  action(type="<%= $params['type'] %>"
-    name="<%= $params['name'] %>"
-<%         if $params['config'] { -%>
-<%           $params['config'].each |$k, $v| { -%>
-    <%= $k %>="<%= $v %>"
-<%           }-%>
-<%         }-%>
-  )
-<%       }-%>
-<%     }-%>
-<%   }-%>
-<% }-%>
+    <% } else {  %>
+<%= epp('rsyslog/tasks.epp', { 'tasks' => $rule }) -%>
+    <%}-%>
+  <%}-%>
+<%}-%>
 <% if $stop { -%>
   stop
 <% }-%>
