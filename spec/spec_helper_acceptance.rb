@@ -6,9 +6,6 @@ require 'beaker/module_install_helper'
 run_puppet_install_helper unless ENV['BEAKER_provision'] == 'no'
 
 RSpec.configure do |c|
-  # Project root
-  module_root = File.expand_path(File.join(File.dirname(__FILE__), '..'))
-
   # Configure all nodes in nodeset
   c.before :suite do
     install_module_on(hosts)
