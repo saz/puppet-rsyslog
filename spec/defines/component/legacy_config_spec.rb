@@ -22,6 +22,10 @@ describe 'rsyslog::component::legacy_config', include_rsyslog: true do
         }
       )
     end
+
+    it { is_expected.to contain_class('rsyslog') }
+    it { is_expected.to contain_concat('/etc/rsyslog.d/50_rsyslog.conf') }
+    it { is_expected.to contain_rsyslog__generate_concat('rsyslog::concat::legacy_config::mylegacy_rules') }
   end
 
   context 'oneline legacy rules' do

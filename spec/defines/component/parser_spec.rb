@@ -26,5 +26,9 @@ describe 'rsyslog::component::parser', include_rsyslog: true do
         \s*\)\s*}
       )
     end
+
+    it { is_expected.to contain_class('rsyslog') }
+    it { is_expected.to contain_concat('/etc/rsyslog.d/50_rsyslog.conf') }
+    it { is_expected.to contain_rsyslog__generate_concat('rsyslog::concat::parser::pmrfc3164.hostname_with_slashes') }
   end
 end

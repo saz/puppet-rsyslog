@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'yaml'
 
-describe 'rsyslog::component::action', include_rsyslog: true do
+describe 'Rsyslog::Component::Action', include_rsyslog: true do
   let(:title) { 'myaction' }
 
   context 'default action without facility' do
@@ -27,6 +27,9 @@ describe 'rsyslog::component::action', include_rsyslog: true do
         \s*\)\s*}
       )
     end
+
+    it { is_expected.to contain_concat('/etc/rsyslog.d/50_rsyslog.conf') }
+    it { is_expected.to contain_rsyslog__generate_concat('rsyslog::concat::action::myaction') }
   end
 
   context 'facility with single line action' do

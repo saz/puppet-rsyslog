@@ -59,5 +59,9 @@ action(type="omfwd"
       CONTENT
       )
     end
+
+    it { is_expected.to contain_class('rsyslog') }
+    it { is_expected.to contain_concat('/etc/rsyslog.d/50_rsyslog.conf') }
+    it { is_expected.to contain_rsyslog__generate_concat('rsyslog::concat::expression_filter::myexpressionfilter') }
   end
 end
