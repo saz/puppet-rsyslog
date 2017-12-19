@@ -1,7 +1,10 @@
 require 'spec_helper_acceptance'
 
-describe 'rsyslog::component::ruleset' do
-  it 'applies' do
+describe 'Rsyslog::Component::Ruleset' do
+  before(:context) do
+    cleanup_helper
+  end
+  it 'applies a ruleset' do
     pp = <<-MANIFEST
       class { 'rsyslog::server':
         rulesets => {
