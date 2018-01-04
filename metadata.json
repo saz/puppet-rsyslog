@@ -83,7 +83,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.4.0 < 6.0.0"
+      "version_requirement": ">= 4.10.9 < 6.0.0"
     }
   ],
   "data_provider": "hiera"
