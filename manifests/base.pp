@@ -40,11 +40,11 @@ class rsyslog::base {
     }
 
     file { $::rsyslog::confdir:
-      ensure  => directory,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0755',
-      *       => $purge_params + $require_package,
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
+      *      => $purge_params + $require_package,
     }
   }
 
