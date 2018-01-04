@@ -32,6 +32,10 @@ describe 'rsyslog::component::main_queue', include_rsyslog: true do
           \s*\)\s*}
         )
       end
+
+      it { is_expected.to contain_class('rsyslog') }
+      it { is_expected.to contain_concat('/etc/rsyslog.d/50_rsyslog.conf') }
+      it { is_expected.to contain_rsyslog__generate_concat('rsyslog::concat::main_queue::main_queue_opts') }
     end
   end
 end

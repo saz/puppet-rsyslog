@@ -40,5 +40,9 @@ describe 'rsyslog::component::module', include_rsyslog: true do
         'order'  => 20
       )
     end
+
+    it { is_expected.to contain_class('rsyslog') }
+    it { is_expected.to contain_concat('/etc/rsyslog.d/50_rsyslog.conf') }
+    it { is_expected.to contain_rsyslog__generate_concat('rsyslog::concat::module::impstats') }
   end
 end

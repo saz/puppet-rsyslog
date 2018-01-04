@@ -32,13 +32,19 @@ class rsyslog::base {
       false => {}
     }
 
+    $require_package = $::rsyslog::manage_package ? {
+      true => {
+        'require' => Package[$::rsyslog::package_name],
+      },
+      false => {}
+    }
+
     file { $::rsyslog::confdir:
-      ensure  => directory,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0755',
-      *       => $purge_params,
-      require => Package[$::rsyslog::package_name],
+      ensure => directory,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
+      *      => $purge_params + $require_package,
     }
   }
 

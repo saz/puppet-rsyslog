@@ -35,5 +35,9 @@ describe 'rsyslog::component::lookup_table', include_rsyslog: true do
         File.read('spec/fixtures/test_files/lookup_table.conf')
       )
     end
+
+    it { is_expected.to contain_class('rsyslog') }
+    it { is_expected.to contain_concat('/etc/rsyslog.d/50_rsyslog.conf') }
+    it { is_expected.to contain_rsyslog__generate_concat('rsyslog::concat::lookup_table::mylookuptable') }
   end
 end

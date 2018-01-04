@@ -20,5 +20,9 @@ describe 'rsyslog::component::global_config', include_rsyslog: true do
         %r{(?x)\$configoption\s+on\s*\n}
       )
     end
+
+    it { is_expected.to contain_class('rsyslog') }
+    it { is_expected.to contain_concat('/etc/rsyslog.d/50_rsyslog.conf') }
+    it { is_expected.to contain_rsyslog__generate_concat('rsyslog::concat::global_config::configoption') }
   end
 end

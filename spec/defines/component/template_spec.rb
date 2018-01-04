@@ -21,6 +21,10 @@ describe 'rsyslog::component::template', include_rsyslog: true do
         \s+string="\/var\/log\/rsyslog\/logs\/%fromhost-ip%\/%fromhost-ip%.log"\s*\)\s*$}
       )
     end
+
+    it { is_expected.to contain_class('rsyslog') }
+    it { is_expected.to contain_concat('/etc/rsyslog.d/50_rsyslog.conf') }
+    it { is_expected.to contain_rsyslog__generate_concat('rsyslog::concat::template::mytpl') }
   end
 
   context 'plugin template' do

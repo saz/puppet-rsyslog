@@ -39,5 +39,9 @@ action(type="omfile"
         CONTENT
       )
     end
+
+    it { is_expected.to contain_class('rsyslog') }
+    it { is_expected.to contain_concat('/etc/rsyslog.d/50_rsyslog.conf') }
+    it { is_expected.to contain_rsyslog__generate_concat('rsyslog::concat::property_filter::mypropertyfilter') }
   end
 end
