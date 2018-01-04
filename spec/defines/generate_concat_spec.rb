@@ -12,6 +12,6 @@ describe 'Rsyslog::Generate_concat', include_rsyslog: true do
   end
 
   context 'with defaults' do
-    it { is_expected.to contain_concat('/etc/rsyslog.d/50-rsyslog.conf').that_notifies('Service[rsyslog]')}
+    it { is_expected.to contain_concat('/etc/rsyslog.d/50-rsyslog.conf').that_notifies('Service[rsyslog]') }
   end
 end

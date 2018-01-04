@@ -30,7 +30,7 @@ describe 'Rsyslog expression filters' do
     end
 
     describe file('/etc/rsyslog.d/50_rsyslog.conf') do
-      its(:content) { is_expected.to contain('if msg == "test" then {\ncall ruleset\.action\.test\nstop\n\s*}')}
+      its(:content) { is_expected.to contain('if msg == "test" then {\ncall ruleset\.action\.test\nstop\n\s*}') }
     end
   end
 end

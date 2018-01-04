@@ -5,14 +5,16 @@ describe 'Rsyslog::Client', include_rsyslog: true do
 
   context 'with defaults' do
     it { is_expected.to contain_class('rsyslog::client') }
-    it { is_expected.to contain_class('rsyslog::config').with(
-           global_config: {},
-           legacy_config: {},
-           actions: {},
-           inputs: {},
-           custom_config: {},
-           modules: {},
-           lookup_tables: {}
-    )}
+    it {
+      is_expected.to contain_class('rsyslog::config').with(
+        global_config: {},
+        legacy_config: {},
+        actions: {},
+        inputs: {},
+        custom_config: {},
+        modules: {},
+        lookup_tables: {}
+      )
+    }
   end
 end
