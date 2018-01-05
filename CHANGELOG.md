@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v2.2.1](https://github.com/voxpupuli/puppet-rsyslog/tree/v2.2.1) (2018-01-05)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-rsyslog/compare/v2.2.0...v2.2.1)
+
+**Closed issues:**
+
+- Dependency circle with action class [\#47](https://github.com/voxpupuli/puppet-rsyslog/issues/47)
+- Document ordering / sort algorithm [\#45](https://github.com/voxpupuli/puppet-rsyslog/issues/45)
+
+**Merged pull requests:**
+
+- Set concat order numeric [\#51](https://github.com/voxpupuli/puppet-rsyslog/pull/51) ([dhollinger](https://github.com/dhollinger))
+- Updated docs to correctly reflect the priority functionality [\#50](https://github.com/voxpupuli/puppet-rsyslog/pull/50) ([dhollinger](https://github.com/dhollinger))
+- release 2.2.0 [\#49](https://github.com/voxpupuli/puppet-rsyslog/pull/49) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v2.2.0](https://github.com/voxpupuli/puppet-rsyslog/tree/v2.2.0) (2018-01-04)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-rsyslog/compare/v2.1.0...v2.2.0)
