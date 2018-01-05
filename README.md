@@ -158,11 +158,7 @@ rsyslog::legacy_config_priority: 80
 rsyslog::custom_priority: 90
 ```
 
-Ordering uses the `order` attribute from [puppetlabs-concat](https://forge.puppet.com/puppetlabs/concat)'s `concat::fragment` defined type. This means that the ordering numbers are limited to integers between `0..99`. Any additional digits after the first two will be utilized to "sub-order" the base first two digits.
-
-Example:
-
-`priority => 111` will order after a priority of `10` but before a priority of `20`. Likewise, a priority of `112` will order after a priority of `111`, but before a priority of `20`. A priority of `60` still comes after a priority of `59`. This is a limitation of the attributes provided by [puppetlabs-concat](https://forge.puppet.com/puppetlabs/concat).
+Ordering is done numerically. I.E. 111 is after 110 is after 99.
 
 ### Configuring Objects
 
