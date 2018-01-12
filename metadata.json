@@ -1,6 +1,6 @@
 {
   "name": "puppet-rsyslog",
-  "version": "2.2.1",
+  "version": "2.2.2-rc0",
   "author": "Vox Pupuli",
   "summary": "Manage rsyslog v8 configuration",
   "license": "Apache-2.0",
