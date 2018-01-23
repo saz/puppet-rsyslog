@@ -3,7 +3,7 @@ define rsyslog::component::property_filter (
   String $target,
   String $confdir,
   String $property,
-  Enum[ 'contains', 'isequal', 'startswith', 'regex', 'ereregex', 'startswith_i', 'contains_i' ] $operator,
+  Rsyslog::PropertyOperator $operator,
   String $value,
   Hash $tasks    = {},
   String $format = '<%= $content %>'
