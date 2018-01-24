@@ -4,13 +4,9 @@ type Rsyslog::PropertyOperator = Enum[ 'contains',
   'startswith',
   'regex',
   'ereregex',
-  'startswith_i',
-  'contains_i',
   '!contains',
   '!isequal',
   '!startswith',
   '!regex',
   '!ereregex',
-  '!startswith_i',
-  '!contain_i'
 ]

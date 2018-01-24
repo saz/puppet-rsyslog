@@ -70,7 +70,7 @@ action(type="omfile"
   end
 
   context 'with valid operators' do
-    operators = %w[contains contains_i !contains !contains_i startswith startswith_i !startswith !startswith_i isequal !isequal regex !regex ereregex !ereregex]
+    operators = %w[contains !contains startswith !startswith isequal !isequal regex !regex ereregex !ereregex]
     operators.each do |operator|
       let(:params) do
         {
