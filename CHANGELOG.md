@@ -4,7 +4,24 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v2.2.1](https://github.com/voxpupuli/puppet-rsyslog/tree/v2.2.1) (2018-01-12)
+## [v2.3.0](https://github.com/voxpupuli/puppet-rsyslog/tree/v2.3.0) (2018-01-24)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-rsyslog/compare/v2.2.1...v2.3.0)
+
+**Implemented enhancements:**
+
+- Add new data type for property filter operators [\#54](https://github.com/voxpupuli/puppet-rsyslog/pull/54) ([dhollinger](https://github.com/dhollinger))
+
+**Fixed bugs:**
+
+- Remove invalid property filter operators [\#55](https://github.com/voxpupuli/puppet-rsyslog/pull/55) ([dhollinger](https://github.com/dhollinger))
+
+**Merged pull requests:**
+
+- Update documentation around filters [\#56](https://github.com/voxpupuli/puppet-rsyslog/pull/56) ([dhollinger](https://github.com/dhollinger))
+- Property filter operators [\#53](https://github.com/voxpupuli/puppet-rsyslog/pull/53) ([dhollinger](https://github.com/dhollinger))
+
+## [v2.2.1](https://github.com/voxpupuli/puppet-rsyslog/tree/v2.2.1) (2018-01-05)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-rsyslog/compare/v2.2.0...v2.2.1)
 
