@@ -655,9 +655,14 @@ Rsyslog puppet supports two kinds of filters:
 
 More information about Rsyslog Filters can be found at: http://www.rsyslog.com/doc/v8-stable/configuration/filters.html
 
-###### Expression Filter
+###### Ruleset Expression Filter
 
 Expression filters use traditional `if/else` and `if/else if/else` logic to execute rules on specific return values. `lookup_tables` are compatible ONLY with `expression_filters`
+
+The Ruleset `expression_filter` key has a few different keys than the `rsyslog::server::expression_filters` parameter:
+
+* `name` - Currently required to prevent errors. This is logical and only used by Puppet.
+* `filter` - The `filter` key is synonymous with the `conditionals` key found in the `rsyslog::server::expression_filters` parameter. See the [Expression Filter Docs](#expression-based-filters) for more info. 
 
 Example:
 ```yaml
@@ -881,6 +886,14 @@ will produce
 Expression-based filters allow filtering on arbitrary complex expressions, which can include boolean, arithmetic and string operations.
 
 Expression-based filters are also what are used to match against lookup_table data.
+
+The `rsyslog::server::expression_filters` parameter is a Hash of hashes where the hash-key is the logical name for the filter. This name is for Puppet resource naming purposes only and has no other function. The filter name has a few additional child keys as well:
+
+* `conditionals` - Hash containing one of three keys (`if`, `else if`, and `else`), which are hashes of hashes.
+  * `if`/`else if`/`else` - Hash of hashes. Must be one of `if`, `else if`, or `else`
+    * `expression` - The string "expression" that will be used to match values. With all the potential options for logic, this was the easiest way to provide everyone with what they may need.
+    * `tasks` -  A hash of actions to take in the event of a filter match.
+      * All sub-keys for the `tasks` hash maps to another rsyslog configuration object.
 
 eg:
 
