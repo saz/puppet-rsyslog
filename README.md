@@ -569,7 +569,7 @@ Configures Rsyslog ruleset blocks in rainerscript. There are two elements in the
   * `set` - Set an rsyslog variable
   * `call` - call a specific action.
   * `expression_filter` - Filter based on one or more expressions.
-  * `property_filter` - Filter based on one or more RsysloD properties.
+  * `property_filter` - Filter based on one or more RsyslogD properties.
 * `stop` - a Boolean to set if the ruleset ends with a stop or not.
 
 **NOTE: For any `rule` key that can also be a standalone rsyslog resource (`action`, `expression_filter`, or `property_filter`), the user MUST define a name key that will be passed as the resource name to the template. This will be simplified in a future release.**
