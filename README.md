@@ -27,6 +27,7 @@ This module was first published as `crayfishx/rsyslog`.  It has now moved to `pu
     * [Lookup_tables](#rsyslogserverlookup_tables)
     * [Parser](#rsyslogserverparser)
     * [Rulesets](#rsyslogserverrulesets)
+    * [Filters](#rsyslogserverproperty_filters-rsyslogserverexpression_filters)
     * [legacy_config](#rsyslogserverlegacy_config)
   * [Positioning](#positioning)
   * [Formatting](#formatting)
@@ -151,6 +152,7 @@ rsyslog::input_priority: 30
 rsyslog::main_queue_priority: 40
 rsyslog::parser_priority: 45
 rsyslog::template_priority: 50
+rsyslog::filter_priority: 55
 rsyslog::action_priority: 60
 rsyslog::ruleset_priority: 65
 rsyslog::lookup_table_priority: 70
@@ -173,6 +175,7 @@ Configuration objects are written to the configuration file in rainerscript form
 * [Lookup_tables](#rsyslogserverlookup_tables)
 * [Parser](#rsyslogserverparser)
 * [Rulesets](#rsyslogserverrulesets)
+* [Filters](#rsyslogserverproperty_filters-rsyslogserverexpression_filters)
 * [legacy_config](#rsyslogserverlegacy_config)
 
 Configuration objects should be declared in the rsyslog::server or rsyslog::client namespaces accordingly.
@@ -565,7 +568,11 @@ Configures Rsyslog ruleset blocks in rainerscript. There are two elements in the
   * `lookup` - Sets a variable to the results of an rsyslog lookup.
   * `set` - Set an rsyslog variable
   * `call` - call a specific action.
+  * `expression_filter` - Filter based on one or more expressions.
+  * `property_filter` - Filter based on one or more RsyslogD properties.
 * `stop` - a Boolean to set if the ruleset ends with a stop or not.
+
+**NOTE: For any `rule` key that can also be a standalone rsyslog resource (`action`, `expression_filter`, or `property_filter`), the user MUST define a name key that will be passed as the resource name to the template. This will be simplified in a future release.**
 
 ```yaml
 rsyslog::server::rulesets:
@@ -648,9 +655,14 @@ Rsyslog puppet supports two kinds of filters:
 
 More information about Rsyslog Filters can be found at: http://www.rsyslog.com/doc/v8-stable/configuration/filters.html
 
-###### Expression Filter
+###### Ruleset Expression Filter
 
 Expression filters use traditional `if/else` and `if/else if/else` logic to execute rules on specific return values. `lookup_tables` are compatible ONLY with `expression_filters`
+
+The Ruleset `expression_filter` key has a few different keys than the `rsyslog::server::expression_filters` parameter:
+
+* `name` - Currently required to prevent errors. This is logical and only used by Puppet.
+* `filter` - The `filter` key is synonymous with the `conditionals` key found in the `rsyslog::server::expression_filters` parameter. See the [Expression Filter Docs](#expression-based-filters) for more info. 
 
 Example:
 ```yaml
@@ -660,10 +672,9 @@ rsyslog::server::rulesets:
       queue.type: LinkedList
     rules:
       - expression_filter:
+          name: host_ip_filter
           if:
-            filter: "$fromhost-ip"
-            operator: "=="
-            expression: "192.168.255.1"
+            expression: '$fromhost-ip == "192.168.255.1"'
             tasks:
               call: "ruleset.action.rawlog.standard"
               stop: true
@@ -713,17 +724,14 @@ rsyslog::server::rulesets:
           lookup_table: srv-map
           expr: '$fromhost-ip'
       - expression_filter:
+          name: filter_on_srv
           if:
-            filter: "$.srv"
-            operator: "=="
-            expression: "windows"
+            expression: '$.srv == "windows"'
             tasks:
               call: "ruleset.action.forward.windows"
               stop: true
           "else if":
-            filter: "$.srv"
-            operator: "=="
-            expression: "unk"
+            expression: '$.srv == "unk"'
             tasks:
               call: "ruleset.action.drop.unknown"
               stop: true
@@ -777,7 +785,7 @@ ruleset(name="ruleset_lookup_set_windows_by_ip"
 }
 ```
 
-###### Property Filters
+###### Ruleset Property Filters
 
 `property_filters` are unique to rsyslogd. They allow to filter on any property, like HOSTNAME, syslogtag and msg. `property_filters` are faster than `expression_filters` as they us built-in rsyslog properties to lookup and match data.
 
@@ -786,7 +794,8 @@ Example:
 rsyslog::server::rulesets:
   ruleset_msg_check_for_error:
     rules:
-      - expression_filter:
+      - property_filter:
+          name: msg_contains_error
           property: 'msg'
           operator: 'contains'
           value: 'error'
@@ -808,6 +817,138 @@ ruleset(name="ruleset_msg_check_for_error"
 }
 ```
 
+##### `rsyslog::server::property_filters` `rsyslog::server::expression_filters`
+
+Rsyslog has the ability to filter each log line based on log properties and/or variables. 
+
+There are four kinds of filters in Rsyslog:
+
+* "traditional" severity/facility based Selectors - handled in the [Actions](#rsyslogserveractions-rsyslogclientactions) parameter.
+* BSD-style blocks - not supported in Rsyslog 7+ and as such are not supported in this module.
+* Property-based Filters
+* Expression-based Filters
+
+This section covers Property and Expression based filters.
+
+###### Property-based Filters
+
+Property-based filters are unique to rsyslogd. They allow to filter on any property, like HOSTNAME, syslogtag and msg.
+Property-based filters are only supported with native properties in Rsyslog. See [Rsyslog Properties](http://www.rsyslog.com/doc/v8-stable/configuration/property_replacer.html) for a list of supported properties.
+
+The `rsyslog::server::property_filters` parameter is a Hash of hashes where the hash-key is the logical name for the filter. This name is for Puppet resource naming purposes only and has no other function. The filter name has several additional child keys as well:
+
+* `property` - the Rsyslogd property the filter will lookup.
+* `operator` - the Rsyslogd property filter-supported operator to compare the property value with the expected value. See [Rsyslog Property Compare-Operations](http://www.rsyslog.com/doc/v8-stable/configuration/filters.html#compare-operations) for a list of supported operators. These operators are validated with the `Rsyslog::PropertyOperator` data type.
+* `value` - the value that the property filter will match against.
+* `tasks` - A hash of actions to take in the event of a filter match.
+  * All sub-keys for the `tasks` hash maps to another rsyslog configuration object.
+
+eg:
+
+```yaml
+rsyslog::server::property_filters:
+  hostname_filter:
+    property: hostname
+    operator: contains
+    value: some_hostname
+    tasks:
+      action:
+        name: omfile_defaults
+        type: omfile
+        facility: "*.*;auth,authpriv.none"
+          config:
+            dynaFile: "remoteSyslog"
+            specifics: "/var/log/test"
+      stop: true
+  ip_filter:
+    property: fromhost-ip
+    operator: startswith
+    value: '192'
+    tasks:
+      stop: true
+```
+
+will produce
+
+```
+:hostname, contains, "some_hostname" {
+  *.*;auth,authpriv.none        action(type="omfile" dynaFile="remoteSyslog" specifics="/var/log/test")
+  stop
+}
+
+:fromhost-ip, startswith, "192" {
+  stop
+}
+```
+
+###### Expression-based Filters
+
+Expression-based filters allow filtering on arbitrary complex expressions, which can include boolean, arithmetic and string operations.
+
+Expression-based filters are also what are used to match against lookup_table data.
+
+The `rsyslog::server::expression_filters` parameter is a Hash of hashes where the hash-key is the logical name for the filter. This name is for Puppet resource naming purposes only and has no other function. The filter name has a few additional child keys as well:
+
+* `conditionals` - Hash containing one of three keys (`if`, `else if`, and `else`), which are hashes of hashes.
+  * `if`/`else if`/`else` - Hash of hashes. Must be one of `if`, `else if`, or `else`
+    * `expression` - The string "expression" that will be used to match values. With all the potential options for logic, this was the easiest way to provide everyone with what they may need.
+    * `tasks` -  A hash of actions to take in the event of a filter match.
+      * All sub-keys for the `tasks` hash maps to another rsyslog configuration object.
+
+eg:
+
+```yaml
+rsyslog::server::expression_filters:
+  hostname_filter:
+    conditionals:
+      if:
+        expression: '$msg contains "error"'
+        tasks:
+          action:
+            name: omfile_error
+            type: omfile
+            config:
+              specifics: /var/log/errlog
+```
+
+will produce
+
+```
+if $msg contains "error" then {
+  action(type="omfile" specifics="/var/log/errlog")
+}
+```
+
+NOTE: Due to the amount of potential options available to the user, the `expression` key is a plain text string field and the expression logic must be written out. See next example for more details.
+
+eg:
+
+```yaml
+rsyslog::server::expression_filters:
+  complex_filter:
+    if:
+      expression: '$syslogfacility-text == "local0" and $msg startswith "DEVNAME" and ($msg contains "error1" or $msg contains "error0")'
+      tasks:
+        stop: true
+    else:
+      tasks:
+        action:
+          name: error_log
+          type: omfile
+          config:
+            specifics: /var/log/errlog
+```
+
+will produce:
+
+```
+if $syslogfacility-text == "local0" and $msg startswith "DEVNAME" and ($msg contains "error1" or $msg contains "error0") then {
+  stop
+}
+else {
+  action(type="omfile" specifics="/var/log/errlog")
+}
+```
 
 ##### `rsyslog::server::legacy_config`
 
