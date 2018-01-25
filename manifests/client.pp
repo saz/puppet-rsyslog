@@ -89,7 +89,7 @@ class rsyslog::client (
   }
 
   if $content_real {
-    rsyslog::snippet { '00_client':
+    rsyslog::snippet { '01_client':
       ensure  => present,
       content => $content_real,
     }
@@ -111,7 +111,7 @@ class rsyslog::client (
       ensure => absent,
     }
 
-    rsyslog::snippet { '00_client_config':
+    rsyslog::snippet { '01_client_config':
       ensure  => present,
       content => template("${module_name}/client/config.conf.erb"),
     }
