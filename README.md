@@ -36,6 +36,9 @@ or send some bitcoins to ```1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9```
     log_remote                => true,
     spool_size                => '1g',
     spool_timeoutenqueue      => false,
+    spool_queuesize           => 1200000,
+    spool_discardmark         => undef,
+    spool_discardseverity     => undef,
     remote_type               => 'tcp',
     remote_forward_format     => 'RSYSLOG_ForwardFormat',
     log_local                 => false,
@@ -249,6 +252,9 @@ The following lists all the class parameters this module accepts.
     -------------------------------------------------------------------
     log_remote                          true,false          Log Remotely. Defaults to true.
     spool_size                          STRING              Max size for disk queue if remote server failed. Defaults to '1g'.
+    spool_queuesize                     STRING              Maximum number of entries waiting in queue
+    spool_discardmark                   STRING              Start discarding messages after some number of msgs in queue
+    spool_discardseverity               STRING              Which severity of messages to discard when watermark is hit
     remote_type                         'tcp','udp','relp'  Which protocol to use when logging remotely. Defaults to 'tcp'.
     remote_forward_format               STRING              Which forward format for remote servers should be used. Only used if remote_servers is false.
     log_local                           true,false          Log locally. Defaults to false.

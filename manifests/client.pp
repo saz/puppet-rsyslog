@@ -7,6 +7,9 @@
 # [*log_remote*]
 # [*spool_size*]
 # [*spool_timeoutenqueue*]
+# [*spool_queuesize*]
+# [*spool_discardmark*]
+# [*spool_discardseverity*]
 # [*remote_type*]
 # [*remote_forward_format*]
 # [*log_local*]
@@ -42,6 +45,9 @@ class rsyslog::client (
   $log_remote                = true,
   $spool_size                = '1g',
   $spool_timeoutenqueue      = false,
+  $spool_queuesize           = 1200000,
+  $spool_discardmark         = undef,
+  $spool_discardseverity     = undef,
   $remote_type               = 'tcp',
   $remote_forward_format     = 'RSYSLOG_ForwardFormat',
   $log_local                 = false,
@@ -119,6 +125,10 @@ class rsyslog::client (
       ensure  => $_local_ensure,
       content => template("${module_name}/client/local.conf.erb"),
     }
+  }
+
+  if $spool_discard_severity and ! $spool_discardmark {
+    fail('You cannot use spool discard severity without discard mark set.')
   }
 
   if $ssl and $ssl_ca == undef {
