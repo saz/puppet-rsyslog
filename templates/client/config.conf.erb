@@ -6,6 +6,13 @@ $ActionQueueSaveOnShutdown on   # save messages to disk on shutdown
 <% if scope.lookupvar('rsyslog::client::spool_timeoutenqueue') -%>
 $ActionQueueTimeoutEnqueue <%= scope.lookupvar('rsyslog::client::spool_timeoutenqueue') -%>   # time to wait before discarding on full spool
 <% end -%>
+$ActionQueueSize <%= scope.lookupvar('rsyslog::client::spool_queuesize') %>   # Maximum number of entries waiting in queue
+<% if scope.lookupvar('rsyslog::client::spool_discardmark') -%>
+$ActionQueueDiscardMark <%= scope.lookupvar('rsyslog::client::spool_discardmark') %>  # Start discarding messages after NUM msgs in queue
+<% end -%>
+<% if scope.lookupvar('rsyslog::client::spool_discardseverity') -%>
+$ActionQueueDiscardSeverity <%= scope.lookupvar('rsyslog::client::spool_discardseverity') %>       # Which messages to discard when watermark is hit
+<% end -%>
 $ActionQueueType LinkedList     # run asynchronously
 $ActionResumeRetryCount -1      # infinety retries if host is down
 <% if scope.lookupvar('rsyslog::client::log_templates') and ! scope.lookupvar('rsyslog::client::log_templates').empty?-%>
