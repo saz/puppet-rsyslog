@@ -42,7 +42,7 @@ $Template auditFormat,"%msg%\n"
 
 <% else -%>
 # Template
-$Template dynAllMessages,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:[^.]*\.([^.]*)\.--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>/%FROMHOST%/%PROGRAMNAME%.log"
+$Template dynAllMessages,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%FROMHOST:R,ERE,1,DFLT:[^.]*\.([^.]*)\.--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>/%FROMHOST%/%PROGRAMNAME%.log"
 <% if scope.lookupvar('rsyslog::server::custom_templates') -%>
 <% scope.lookupvar('rsyslog::server::custom_templates').each do |template| -%>
 $Template <%= template %>
