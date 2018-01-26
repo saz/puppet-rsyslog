@@ -48,6 +48,8 @@ class rsyslog::server (
   $enable_tcp                = true,
   $enable_udp                = true,
   $enable_relp               = true,
+  $custom_templates          = [],
+  $custom_rules              = [],
   $remote_ruleset_tcp        = true,
   $remote_ruleset_udp        = true,
   $remote_ruleset_relp       = true,
