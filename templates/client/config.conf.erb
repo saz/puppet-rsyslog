@@ -68,6 +68,18 @@ $ActionSendStreamDriverPermittedPeer <%= scope.lookupvar('rsyslog::client::ssl_p
 <% end -%>
 
 <% if scope.lookupvar('rsyslog::client::remote_type') == 'relp' -%>
+<% load_omrelp = true -%>
+<% else -%>
+<% if scope.lookupvar('rsyslog::client::remote_servers') -%>
+<% scope.lookupvar('rsyslog::client::remote_servers').flatten.compact.each do |server| -%>
+<% if server['protocol'] == 'RELP' or server['protocol'] == 'relp'-%>
+<% load_omrelp = true -%>
+<% break -%>
+<% end -%>
+<% end -%>
+<% end -%>
+<% end -%>
+<% if load_omrelp -%>
 # Load RELP module.
 $ModLoad omrelp
 <% end -%>
