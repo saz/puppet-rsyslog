@@ -1,5 +1,5 @@
 <% if scope.lookupvar('rsyslog::client::remote_servers') -%>
-<% scope.lookupvar('rsyslog::client::remote_servers').flatten.compact.each do |server| -%>
+<% scope.lookupvar('rsyslog::client::remote_servers').flatten.compact.each_with_index do |server, index| -%>
 <% if server['pattern'] and server['pattern'] != ''-%>
 <% pattern = server['pattern'] -%>
 <% else -%>
@@ -44,12 +44,28 @@
 <% dropaction = '' -%>
 <% end -%>
 # Sending logs that match <%= pattern %> to <%= host %> via <%= protocol_type %> on <%= port %> using <%=format_type %> format.
+$ActionQueueFileName queue.<%= index %>    # unique name prefix for spool files
+$ActionQueueMaxDiskSpace <%= scope.lookupvar('rsyslog::client::spool_size') -%>     # spool space limit (use as much as possible)
+$ActionQueueSaveOnShutdown on   # save messages to disk on shutdown
+<% if scope.lookupvar('rsyslog::client::spool_timeoutenqueue') -%>
+$ActionQueueTimeoutEnqueue <%= scope.lookupvar('rsyslog::client::spool_timeoutenqueue') -%>   # time to wait before discarding on full spool
+<% end -%>
+$ActionQueueType LinkedList     # run asynchronously
+$ActionResumeRetryCount -1      # infinety retries if host is down
 <%= pattern %> <%= protocol %><%= host %>:<%= port %><%= format %>
 <%= dropaction %>
 <% end -%>
 <% elsif scope.lookupvar('rsyslog::client::log_remote') -%>
 
 # Log to remote syslog server using <%= scope.lookupvar('rsyslog::client::remote_type') %>
+$ActionQueueFileName queue      # unique name prefix for spool files
+$ActionQueueMaxDiskSpace <%= scope.lookupvar('rsyslog::client::spool_size') -%>     # spool space limit (use as much as possible)
+$ActionQueueSaveOnShutdown on   # save messages to disk on shutdown
+<% if scope.lookupvar('rsyslog::client::spool_timeoutenqueue') -%>
+$ActionQueueTimeoutEnqueue <%= scope.lookupvar('rsyslog::client::spool_timeoutenqueue') -%>   # time to wait before discarding on full spool
+<% end -%>
+$ActionQueueType LinkedList     # run asynchronously
+$ActionResumeRetryCount -1      # infinety retries if host is down
 <% if scope.lookupvar('rsyslog::client::remote_type') == 'tcp' -%>
 *.* @@<%= scope.lookupvar('rsyslog::client::server') -%>:<%= scope.lookupvar('rsyslog::client::port') -%>;<%= scope.lookupvar('rsyslog::client::remote_forward_format') -%>
 <% else -%>
