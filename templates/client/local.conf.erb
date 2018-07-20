@@ -7,6 +7,7 @@ auth,authpriv.*                 /var/log/auth.log
 <% elsif scope.lookupvar('rsyslog::log_style') == 'redhat' -%>
 # Log auth messages locally
 auth,authpriv.*                 /var/log/secure
+&~
 <% elsif scope.lookupvar('rsyslog::log_style') == 'freebsd' -%>
 # Log auth messages locally
 auth.info;authpriv.info		/var/log/auth.log
