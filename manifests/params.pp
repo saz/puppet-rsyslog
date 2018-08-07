@@ -75,7 +75,11 @@ class rsyslog::params {
         $pgsql_package_name                  = 'rsyslog-pgsql'
         $gnutls_package_name                 = 'rsyslog-gnutls'
         $relp_package_name                   = false
-        $default_config_file                 = 'rsyslog_default'
+        if versioncmp($::operatingsystemmajrelease, '4') >= 0 {
+          $default_config_file                 = 'rsyslog_default_rhel7'
+        } else {
+          $default_config_file                 = 'rsyslog_default'
+        }
         $modules                             = [
           '$ModLoad imuxsock # provides support for local system logging',
           '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
