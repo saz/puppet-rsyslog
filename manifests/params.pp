@@ -77,6 +77,9 @@ class rsyslog::params {
         $relp_package_name                   = false
         if versioncmp($::operatingsystemmajrelease, '4') >= 0 {
           $default_config_file                 = 'rsyslog_default_rhel7'
+        }
+        elsif versioncmp($::operatingsystemmajrelease, '2') >= 0 {
+          $default_config_file                 = 'rsyslog_default_rhel7'
         } else {
           $default_config_file                 = 'rsyslog_default'
         }
