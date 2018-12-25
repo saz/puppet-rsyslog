@@ -207,6 +207,9 @@ class rsyslog::params {
       $im_journal_ratelimit_burst          = undef
       $im_journal_ignore_previous_messages = undef
       $im_journal_statefile                = undef
+      $service_hasrestart                  = true
+      $service_hasstatus                   = true
+      $ssl                                 = false
     }
     'FreeBSD': {
       $rsyslog_package_name                = 'sysutils/rsyslog8'
