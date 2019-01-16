@@ -75,7 +75,7 @@ Gathers log information from a file
 ```
 #### rsyslog.d conf files
 
-e.g. rsyslog.d/10-puppetagent.conf - moves puppet-agent entries to a file and excludes from /var/log/messages 
+e.g. rsyslog.d/10-puppetagent.conf - moves puppet-agent entries to a file and excludes from /var/log/messages
 ```
   rsyslog::snippet { '10-puppetagent':
     content => ":programname,contains,\"puppet-agent\" /var/log/puppetlabs/puppet/puppet-agent.log\n& ~",
@@ -300,3 +300,17 @@ with the main rsyslog package.
 
 Default package_status parameter for rsyslog class used to be 'latest'. However, it was
 against puppet best practices so it defaults to 'present' now.
+
+#### Relationships
+
+Be sure to make a relationship to the `rsyslog` class if you need something to happen before or after Puppet manages rsyslog. Even if you're just using `rsyslog::client` or `rsyslog::server`.
+
+For example, if you want to make sure the EPEL YUM repositories are managed by Puppet before trying to setup an rsyslog client, do the following:
+
+```puppet
+include epel                       # This is from the stahnma/epel Forge module
+include rsyslog::client
+
+Class['epel'] -> Class['rsyslog']  # Note this forms a relationship to rsyslog, not rsyslog::client
+```
+
