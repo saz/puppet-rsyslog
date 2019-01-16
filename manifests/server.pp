@@ -70,7 +70,8 @@ class rsyslog::server (
   $log_filters               = false,
   $actionfiletemplate_cust   = false,
   $actionfiletemplate        = false,
-  $rotate                    = undef
+  $rotate                    = undef,
+  $rules                     = undef
 ) inherits rsyslog::params {
   include ::rsyslog
 
