@@ -58,8 +58,6 @@ or send some bitcoins to ```1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9```
     actionfiletemplate_cust   => false,
     actionfiletemplate        => false,
     high_precision_timestamps => false,
-    rate_limit_burst          => undef,
-    rate_limit_interval       => undef,
     imfiles                   => undef
   }
 ```
@@ -247,6 +245,8 @@ The following lists all the class parameters this module accepts.
     preserve_fqdn                       true,false          Use full name of host even if sender and receiver are in the same domain. Defaults to false.
     local_host_name                     STRING              Use a custom local host name, instead of clients actual host name. Defaults to undef.
     package_status                      STRING              Manages rsyslog package installation. Defaults to 'present'.
+    system_log_rate_limit_interval      INTEGER             Specifies the number of seconds per rate limit interval. Defaults to 1.
+    system_log_rate_limit_burst         INTEGER             Specifies the number of messages before limiting begins. Defaults to 100.
 
     RSYSLOG::SERVER CLASS PARAMETERS    VALUES              DESCRIPTION
     -------------------------------------------------------------------
