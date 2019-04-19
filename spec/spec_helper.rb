@@ -1,32 +1,25 @@
-require 'puppetlabs_spec_helper/module_spec_helper'
+require 'rspec'
+require 'puppet'
+require 'rspec-puppet'
+require 'mocha'
 
-RSpec.configure do |c|
-  c.mock_with :rspec do |mock|
-    mock.syntax = [:expect, :should]
-  end
-  c.include PuppetlabsSpec::Files
+PROJECT_ROOT = File.expand_path('..', File.dirname(__FILE__))
+$LOAD_PATH.unshift(File.join(PROJECT_ROOT, 'lib'))
 
-  if ENV['PARSER'] == 'future'
-    c.parser = 'future'
-  end
+fixture_path = File.expand_path(File.join('spec', 'fixtures'), PROJECT_ROOT)
 
-  c.before :each do
-    # Ensure that we don't accidentally cache facts and environment
-    # between test cases.
-    Facter::Util::Loader.any_instance.stubs(:load_all)
-    Facter.clear
-    Facter.clear_messages
+RSpec.configure do |config|
+  config.mock_with :mocha
 
-    # Store any environment variables away to be restored later
-    @old_env = {}
-    ENV.each_key {|k| @old_env[k] = ENV[k]}
+  # ---
+  # Configuration for puppet-rspec
 
-    if Gem::Version.new(`puppet --version`) >= Gem::Version.new('3.5')
-      Puppet.settings[:strict_variables]=true
-    end
-  end
-
-  c.after :each do
-    PuppetlabsSpec::Files.cleanup
-  end
+  config.module_path = File.join(fixture_path, 'modules')
+  config.manifest_dir = File.join(fixture_path, 'manifests')
+  config.environmentpath = File.expand_path(File.join(Dir.pwd, 'spec'))
 end
+
+# ---
+# Add the fixture module libdirs to the modulepath
+
+$LOAD_PATH.concat(Dir.glob(File.join(fixture_path, 'modules', '*', 'lib')))

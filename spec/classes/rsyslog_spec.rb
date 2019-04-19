@@ -1,501 +1,517 @@
 require 'spec_helper'
 
-describe 'rsyslog', :type => :class do
-
-  context "Rsyslog version >= 8" do
+describe 'rsyslog', type: :class do
+  context 'Rsyslog version >= 8' do
     let(:default_facts) do
       {
-        :rsyslog_version => '8.1.2'
+        rsyslog_version: '8.1.2'
       }
     end
 
-    context "osfamily = RedHat" do
+    context 'osfamily = RedHat' do
       let :facts do
-        default_facts.merge!({
-          :osfamily                  => 'RedHat',
-          :operatingsystem           => 'RedHat',
-          :operatingsystemmajrelease => '6',
-        })
+        default_facts.merge!(
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemmajrelease: '6'
+        )
       end
-  
-      context "default usage (osfamily = RedHat)" do
+
+      context 'default usage (osfamily = RedHat)' do
         let(:title) { 'rsyslog-basic' }
-  
-        it 'should compile' do
-          should contain_class('rsyslog::install')
-          should contain_class('rsyslog::config')
-          should contain_class('rsyslog::service')
+
+        it 'compiles' do
+          is_expected.to contain_class('rsyslog::install')
+          is_expected.to contain_class('rsyslog::config').that_requires('Class[rsyslog::install]')
+          is_expected.to contain_class('rsyslog::service').that_subscribes_to('Class[rsyslog::config]')
         end
       end
     end
-  
-    context "osfamily = Debian" do
+
+    context 'osfamily = Debian' do
       let :facts do
-        default_facts.merge!({
-          :osfamily        => 'Debian',
-          :operatingsystem => 'Debian',
-        })
+        default_facts.merge!(
+          osfamily: 'Debian',
+          operatingsystem: 'Debian'
+        )
       end
-  
-      context "default usage (osfamily = Debian)" do
+
+      context 'default usage (osfamily = Debian)' do
         let(:title) { 'rsyslog-basic' }
-  
-        it 'should compile' do
-          should contain_class('rsyslog::install')
-          should contain_class('rsyslog::config')
-          should contain_class('rsyslog::service')
+
+        it 'compiles' do
+          is_expected.to contain_class('rsyslog::install')
+          is_expected.to contain_class('rsyslog::config').that_requires('Class[rsyslog::install]')
+          is_expected.to contain_class('rsyslog::service').that_subscribes_to('Class[rsyslog::config]')
         end
       end
 
-      context "local host name (osfamily = Debian)" do
+      context 'local host name (osfamily = Debian)' do
         let(:title) { 'rsyslog-local-hostname' }
 
-        context "with defaults" do
+        context 'with defaults' do
           it 'is not set' do
-            should contain_file('/etc/rsyslog.conf').without_content(/\$LocalHostName/)
+            is_expected.to contain_file('/etc/rsyslog.conf').without_content(%r{\$LocalHostName})
           end
         end
 
-        context "when set" do
-          let(:params) { { :local_host_name => 'example.dev' } }
+        context 'when set' do
+          let(:params) { { local_host_name: 'example.dev' } }
 
-          it 'should compile' do
-            should contain_file('/etc/rsyslog.conf').with_content(/\$LocalHostName example.dev/)
+          it 'compiles' do
+            is_expected.to contain_file('/etc/rsyslog.conf').with_content(%r{\$LocalHostName example.dev})
           end
         end
       end
     end
-  
-    context "osfamily = FreeBSD" do
+
+    context 'osfamily = FreeBSD' do
       let :facts do
-        default_facts.merge!({
-          :osfamily        => 'FreeBSD',
-          :operatingsystem => 'FreeBSD',
-        })
+        default_facts.merge!(
+          osfamily: 'FreeBSD',
+          operatingsystem: 'FreeBSD'
+        )
       end
-  
-      context "default usage (osfamily = FreeBSD)" do
+
+      context 'default usage (osfamily = FreeBSD)' do
         let(:title) { 'rsyslog-basic' }
-  
-        it 'should compile' do
-          should contain_class('rsyslog::install')
-          should contain_class('rsyslog::config')
-          should contain_class('rsyslog::service')
+
+        it 'compiles' do
+          is_expected.to contain_class('rsyslog::install')
+          is_expected.to contain_class('rsyslog::config').that_requires('Class[rsyslog::install]')
+          is_expected.to contain_class('rsyslog::service').that_subscribes_to('Class[rsyslog::config]')
         end
       end
     end
-  
-    context "osfamily = RedHat" do
+
+    context 'osfamily = RedHat' do
       let :facts do
-        default_facts.merge!({
-          :osfamily                  => 'RedHat',
-          :operatingsystem           => 'RedHat',
-          :operatingsystemmajrelease => '6',
-        })
+        default_facts.merge!(
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemmajrelease: '6'
+        )
       end
-  
-      context "default usage (osfamily = RedHat)" do
+
+      context 'default usage (osfamily = RedHat)' do
         let(:title) { 'rsyslog-basic' }
-  
-        it 'should compile' do
-          should contain_file('/etc/rsyslog.conf')
-          should contain_file('/etc/rsyslog.d/')
+
+        it 'compiles' do
+          is_expected.to contain_file('/etc/rsyslog.conf').without_content(%r{\$imjournalRatelimitBurst})
+          is_expected.to contain_file('/etc/rsyslog.d/')
         end
       end
     end
-  
-    context "osfamily = Debian" do
+
+    context 'osfamily = RedHat and operatingsystemmajrelease = 7' do
       let :facts do
-        default_facts.merge!({
-          :osfamily        => 'Debian',
-          :operatingsystem => 'Debian',
-        })
+        default_facts.merge!(
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemmajrelease: '7'
+        )
       end
-  
-      context "default usage (osfamily = Debian)" do
+
+      context 'default usage (osfamily = RedHat)' do
         let(:title) { 'rsyslog-basic' }
-  
-        it 'should compile' do
-          should contain_file('/etc/rsyslog.conf')
-          should contain_file('/etc/rsyslog.d/')
+
+        it 'compiles' do
+          is_expected.to contain_file('/etc/rsyslog.conf').with_content(%r{\$imjournalRatelimitBurst 20000})
+          is_expected.to contain_file('/etc/rsyslog.d/')
         end
       end
     end
-  
-    context "osfamily = FreeBSD" do
+
+    context 'osfamily = Debian' do
       let :facts do
-        default_facts.merge!({
-          :osfamily        => 'FreeBSD',
-          :operatingsystem => 'FreeBSD',
-        })
+        default_facts.merge!(
+          osfamily: 'Debian',
+          operatingsystem: 'Debian'
+        )
       end
-  
-      context "default usage (osfamily = FreeBSD)" do
+
+      context 'default usage (osfamily = Debian)' do
         let(:title) { 'rsyslog-basic' }
-  
-        it 'should compile' do
-          should contain_file('/etc/syslog.conf')
-          should contain_file('/etc/syslog.d/')
+
+        it 'compiles' do
+          is_expected.to contain_file('/etc/rsyslog.conf')
+          is_expected.to contain_file('/etc/rsyslog.d/')
         end
       end
     end
-  
-    context "osfamily = RedHat" do
+
+    context 'osfamily = FreeBSD' do
       let :facts do
-        default_facts.merge!({
-          :osfamily                  => 'RedHat',
-          :operatingsystem           => 'RedHat',
-          :operatingsystemmajrelease => '6',
-        })
+        default_facts.merge!(
+          osfamily: 'FreeBSD',
+          operatingsystem: 'FreeBSD'
+        )
       end
-  
-      context "default usage (osfamily = RedHat)" do
+
+      context 'default usage (osfamily = FreeBSD)' do
+        let(:title) { 'rsyslog-basic' }
+
+        it 'compiles' do
+          is_expected.to contain_file('/usr/local/etc/rsyslog.conf')
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/')
+        end
+      end
+    end
+
+    context 'osfamily = RedHat' do
+      let :facts do
+        default_facts.merge!(
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemmajrelease: '6'
+        )
+      end
+
+      context 'default usage (osfamily = RedHat)' do
         let(:title) { 'rsyslog-install-basic' }
-  
-        it 'should compile' do
-          should contain_package('rsyslog')
-          should contain_package('rsyslog-relp')
+
+        it 'compiles' do
+          is_expected.to contain_package('rsyslog')
+          is_expected.to contain_package('rsyslog-relp')
         end
       end
     end
-  
-    context "osfamily = Debian" do
+
+    context 'osfamily = Debian' do
       let :facts do
-        default_facts.merge!({
-          :osfamily        => 'Debian',
-          :operatingsystem => 'Debian',
-        })
+        default_facts.merge!(
+          osfamily: 'Debian',
+          operatingsystem: 'Debian'
+        )
       end
-  
-      context "default usage (osfamily = Debian)" do
+
+      context 'default usage (osfamily = Debian)' do
         let(:title) { 'rsyslog-install-basic' }
-  
-        it 'should compile' do
-          should contain_package('rsyslog')
-          should contain_package('rsyslog-relp')
+
+        it 'compiles' do
+          is_expected.to contain_package('rsyslog')
+          is_expected.to contain_package('rsyslog-relp')
         end
       end
     end
-  
-    context "osfamily = FreeBSD" do
+
+    context 'osfamily = FreeBSD' do
       let :facts do
-        default_facts.merge!({
-          :osfamily        => 'FreeBSD',
-          :operatingsystem => 'FreeBSD',
-        })
+        default_facts.merge!(
+          osfamily: 'FreeBSD',
+          operatingsystem: 'FreeBSD'
+        )
       end
-  
-      context "default usage (osfamily = FreeBSD)" do
+
+      context 'default usage (osfamily = FreeBSD)' do
         let(:title) { 'rsyslog-install-basic' }
-  
-        it 'should compile' do
-          should contain_package('sysutils/rsyslog5')
-          should contain_package('sysutils/rsyslog5-relp')
+
+        it 'compiles' do
+          is_expected.to contain_package('sysutils/rsyslog8')
         end
       end
     end
-  
-    context "osfamily = RedHat" do
+
+    context 'osfamily = RedHat' do
       let :facts do
-        default_facts.merge!({
-          :osfamily                  => 'RedHat',
-          :operatingsystem           => 'RedHat',
-          :operatingsystemmajrelease => '6',
-        })
+        default_facts.merge!(
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemmajrelease: '6'
+        )
       end
-  
-      context "default usage (osfamily = RedHat)" do
+
+      context 'default usage (osfamily = RedHat)' do
         let(:title) { 'rsyslog-service-basic' }
-  
-        it 'should compile' do
-          should contain_service('rsyslog')
+
+        it 'compiles' do
+          is_expected.to contain_service('rsyslog')
         end
       end
     end
-  
-    context "osfamily = Debian" do
+
+    context 'osfamily = Debian' do
       let :facts do
-        default_facts.merge!({
-          :osfamily        => 'Debian',
-          :operatingsystem => 'Debian',
-        })
+        default_facts.merge!(
+          osfamily: 'Debian',
+          operatingsystem: 'Debian'
+        )
       end
-  
-      context "default usage (osfamily = Debian)" do
+
+      context 'default usage (osfamily = Debian)' do
         let(:title) { 'rsyslog-service-basic' }
-  
-        it 'should compile' do
-          should contain_service('rsyslog')
+
+        it 'compiles' do
+          is_expected.to contain_service('rsyslog')
         end
       end
     end
-  
-    context "osfamily = FreeBSD" do
+
+    context 'osfamily = FreeBSD' do
       let :facts do
-        default_facts.merge!({
-          :osfamily        => 'FreeBSD',
-          :operatingsystem => 'FreeBSD',
-        })
+        default_facts.merge!(
+          osfamily: 'FreeBSD',
+          operatingsystem: 'FreeBSD'
+        )
       end
-  
-      context "default usage (osfamily = FreeBSD)" do
+
+      context 'default usage (osfamily = FreeBSD)' do
         let(:title) { 'rsyslog-service-basic' }
-  
-        it 'should compile' do
-          should contain_service('syslogd')
+
+        it 'compiles' do
+          is_expected.to contain_service('rsyslogd')
         end
       end
     end
   end
 
-  context "Rsyslog version =< 8" do
+  context 'Rsyslog version =< 8' do
     let(:default_facts) do
       {
-        :rsyslog_version => '7.1.2'
+        rsyslog_version: '7.1.2'
       }
     end
 
-    context "osfamily = RedHat" do
+    context 'osfamily = RedHat' do
       let :facts do
-        default_facts.merge!({
-          :osfamily                  => 'RedHat',
-          :operatingsystem           => 'RedHat',
-          :operatingsystemmajrelease => '6',
-        })
+        default_facts.merge!(
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemmajrelease: '6'
+        )
       end
-  
-      context "default usage (osfamily = RedHat)" do
+
+      context 'default usage (osfamily = RedHat)' do
         let(:title) { 'rsyslog-basic' }
-  
-        it 'should compile' do
-          should contain_class('rsyslog::install')
-          should contain_class('rsyslog::config')
-          should contain_class('rsyslog::service')
+
+        it 'compiles' do
+          is_expected.to contain_class('rsyslog::install')
+          is_expected.to contain_class('rsyslog::config').that_requires('Class[rsyslog::install]')
+          is_expected.to contain_class('rsyslog::service').that_subscribes_to('Class[rsyslog::config]')
         end
       end
     end
-  
-    context "osfamily = Debian" do
+
+    context 'osfamily = Debian' do
       let :facts do
-        default_facts.merge!({
-          :osfamily        => 'Debian',
-          :operatingsystem => 'Debian',
-        })
+        default_facts.merge!(
+          osfamily: 'Debian',
+          operatingsystem: 'Debian'
+        )
       end
-  
-      context "default usage (osfamily = Debian)" do
+
+      context 'default usage (osfamily = Debian)' do
         let(:title) { 'rsyslog-basic' }
-  
-        it 'should compile' do
-          should contain_class('rsyslog::install')
-          should contain_class('rsyslog::config')
-          should contain_class('rsyslog::service')
+
+        it 'compiles' do
+          is_expected.to contain_class('rsyslog::install')
+          is_expected.to contain_class('rsyslog::config').that_requires('Class[rsyslog::install]')
+          is_expected.to contain_class('rsyslog::service').that_subscribes_to('Class[rsyslog::config]')
         end
       end
     end
-  
-    context "osfamily = FreeBSD" do
+
+    context 'osfamily = FreeBSD' do
       let :facts do
-        default_facts.merge!({
-          :osfamily        => 'FreeBSD',
-          :operatingsystem => 'FreeBSD',
-        })
+        default_facts.merge!(
+          osfamily: 'FreeBSD',
+          operatingsystem: 'FreeBSD'
+        )
       end
-  
-      context "default usage (osfamily = FreeBSD)" do
+
+      context 'default usage (osfamily = FreeBSD)' do
         let(:title) { 'rsyslog-basic' }
-  
-        it 'should compile' do
-          should contain_class('rsyslog::install')
-          should contain_class('rsyslog::config')
-          should contain_class('rsyslog::service')
+
+        it 'compiles' do
+          is_expected.to contain_class('rsyslog::install')
+          is_expected.to contain_class('rsyslog::config').that_requires('Class[rsyslog::install]')
+          is_expected.to contain_class('rsyslog::service').that_subscribes_to('Class[rsyslog::config]')
         end
       end
     end
-  
-    context "osfamily = RedHat" do
+
+    context 'osfamily = RedHat' do
       let :facts do
-        default_facts.merge!({
-          :osfamily                  => 'RedHat',
-          :operatingsystem           => 'RedHat',
-          :operatingsystemmajrelease => '6',
-        })
+        default_facts.merge!(
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemmajrelease: '6'
+        )
       end
-  
-      context "default usage (osfamily = RedHat)" do
+
+      context 'default usage (osfamily = RedHat)' do
         let(:title) { 'rsyslog-basic' }
-  
-        it 'should compile' do
-          should contain_file('/etc/rsyslog.conf')
-          should contain_file('/etc/rsyslog.d/')
+
+        it 'compiles' do
+          is_expected.to contain_file('/etc/rsyslog.conf')
+          is_expected.to contain_file('/etc/rsyslog.d/')
         end
       end
     end
-  
-    context "osfamily = Debian" do
+
+    context 'osfamily = Debian' do
       let :facts do
-        default_facts.merge!({
-          :osfamily        => 'Debian',
-          :operatingsystem => 'Debian',
-        })
+        default_facts.merge!(
+          osfamily: 'Debian',
+          operatingsystem: 'Debian'
+        )
       end
-  
-      context "default usage (osfamily = Debian)" do
+
+      context 'default usage (osfamily = Debian)' do
         let(:title) { 'rsyslog-basic' }
-  
-        it 'should compile' do
-          should contain_file('/etc/rsyslog.conf')
-          should contain_file('/etc/rsyslog.d/')
+
+        it 'compiles' do
+          is_expected.to contain_file('/etc/rsyslog.conf')
+          is_expected.to contain_file('/etc/rsyslog.d/')
         end
       end
     end
-  
-    context "osfamily = FreeBSD" do
+
+    context 'osfamily = FreeBSD' do
       let :facts do
-        default_facts.merge!({
-          :osfamily        => 'FreeBSD',
-          :operatingsystem => 'FreeBSD',
-        })
+        default_facts.merge!(
+          osfamily: 'FreeBSD',
+          operatingsystem: 'FreeBSD'
+        )
       end
-  
-      context "default usage (osfamily = FreeBSD)" do
+
+      context 'default usage (osfamily = FreeBSD)' do
         let(:title) { 'rsyslog-basic' }
-  
-        it 'should compile' do
-          should contain_file('/etc/syslog.conf')
-          should contain_file('/etc/syslog.d/')
+
+        it 'compiles' do
+          is_expected.to contain_file('/usr/local/etc/rsyslog.conf')
+          is_expected.to contain_file('/usr/local/etc/rsyslog.d/')
         end
       end
     end
-  
-    context "osfamily = RedHat" do
+
+    context 'osfamily = RedHat' do
       let :facts do
-        default_facts.merge!({
-          :osfamily                  => 'RedHat',
-          :operatingsystem           => 'RedHat',
-          :operatingsystemmajrelease => '6',
-        })
+        default_facts.merge!(
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemmajrelease: '6'
+        )
       end
-  
-      context "default usage (osfamily = RedHat)" do
+
+      context 'default usage (osfamily = RedHat)' do
         let(:title) { 'rsyslog-install-basic' }
-  
-        it 'should compile' do
-          should contain_package('rsyslog')
-          should contain_package('rsyslog-relp')
+
+        it 'compiles' do
+          is_expected.to contain_package('rsyslog')
+          is_expected.to contain_package('rsyslog-relp')
         end
       end
     end
-  
-    context "osfamily = Debian" do
+
+    context 'osfamily = Debian' do
       let :facts do
-        default_facts.merge!({
-          :osfamily        => 'Debian',
-          :operatingsystem => 'Debian',
-        })
+        default_facts.merge!(
+          osfamily: 'Debian',
+          operatingsystem: 'Debian'
+        )
       end
-  
-      context "default usage (osfamily = Debian)" do
+
+      context 'default usage (osfamily = Debian)' do
         let(:title) { 'rsyslog-install-basic' }
-  
-        it 'should compile' do
-          should contain_package('rsyslog')
-          should contain_package('rsyslog-relp')
+
+        it 'compiles' do
+          is_expected.to contain_package('rsyslog')
+          is_expected.to contain_package('rsyslog-relp')
         end
       end
     end
-  
-    context "osfamily = FreeBSD" do
+
+    context 'osfamily = FreeBSD' do
       let :facts do
-        default_facts.merge!({
-          :osfamily        => 'FreeBSD',
-          :operatingsystem => 'FreeBSD',
-        })
+        default_facts.merge!(
+          osfamily: 'FreeBSD',
+          operatingsystem: 'FreeBSD'
+        )
       end
-  
-      context "default usage (osfamily = FreeBSD)" do
+
+      context 'default usage (osfamily = FreeBSD)' do
         let(:title) { 'rsyslog-install-basic' }
-  
-        it 'should compile' do
-          should contain_package('sysutils/rsyslog5')
-          should contain_package('sysutils/rsyslog5-relp')
+
+        it 'compiles' do
+          is_expected.to contain_package('sysutils/rsyslog8')
         end
       end
     end
-  
-    context "osfamily = RedHat" do
+
+    context 'osfamily = RedHat' do
       let :facts do
-        default_facts.merge!({
-          :osfamily                  => 'RedHat',
-          :operatingsystem           => 'RedHat',
-          :operatingsystemmajrelease => '6',
-        })
+        default_facts.merge!(
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemmajrelease: '6'
+        )
       end
-  
-      context "default usage (osfamily = RedHat)" do
+
+      context 'default usage (osfamily = RedHat)' do
         let(:title) { 'rsyslog-service-basic' }
-  
-        it 'should compile' do
-          should contain_service('rsyslog')
+
+        it 'compiles' do
+          is_expected.to contain_service('rsyslog')
         end
       end
     end
-  
-    context "osfamily = Debian" do
+
+    context 'osfamily = Debian' do
       let :facts do
-        default_facts.merge!({
-          :osfamily        => 'Debian',
-          :operatingsystem => 'Debian',
-        })
+        default_facts.merge!(
+          osfamily: 'Debian',
+          operatingsystem: 'Debian'
+        )
       end
-  
-      context "default usage (osfamily = Debian)" do
+
+      context 'default usage (osfamily = Debian)' do
         let(:title) { 'rsyslog-service-basic' }
-  
-        it 'should compile' do
-          should contain_service('rsyslog')
+
+        it 'compiles' do
+          is_expected.to contain_service('rsyslog')
         end
       end
     end
-  
-    context "osfamily = FreeBSD" do
+
+    context 'osfamily = FreeBSD' do
       let :facts do
-        default_facts.merge!({
-          :osfamily        => 'FreeBSD',
-          :operatingsystem => 'FreeBSD',
-        })
+        default_facts.merge!(
+          osfamily: 'FreeBSD',
+          operatingsystem: 'FreeBSD'
+        )
       end
-  
-      context "default usage (osfamily = FreeBSD)" do
+
+      context 'default usage (osfamily = FreeBSD)' do
         let(:title) { 'rsyslog-service-basic' }
-  
-        it 'should compile' do
-          should contain_service('syslogd')
+
+        it 'compiles' do
+          is_expected.to contain_service('rsyslogd')
         end
       end
     end
   end
 
-  context "Rsyslog version >= 8" do
+  context 'Rsyslog version >= 8' do
     let(:default_facts) do
       {
-        :rsyslog_version => nil
+        rsyslog_version: nil
       }
     end
 
-    context "osfamily = RedHat" do
+    context 'osfamily = RedHat' do
       let :facts do
-        default_facts.merge!({
-          :osfamily                  => 'RedHat',
-          :operatingsystem           => 'RedHat',
-          :operatingsystemmajrelease => '6',
-        })
+        default_facts.merge!(
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemmajrelease: '6'
+        )
       end
 
-      context "default usage (osfamily = RedHat)" do
-        it 'should compile' do
-          should contain_file('/etc/rsyslog.conf')
-          should contain_file('/etc/rsyslog.d/')
+      context 'default usage (osfamily = RedHat)' do
+        it 'compiles' do
+          is_expected.to contain_file('/etc/rsyslog.conf')
+          is_expected.to contain_file('/etc/rsyslog.d/')
         end
       end
     end

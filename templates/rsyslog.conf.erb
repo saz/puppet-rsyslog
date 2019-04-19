@@ -26,10 +26,26 @@ $KLogPermitNonKernelFacility on
 #
 $MaxMessageSize <%= scope.lookupvar('rsyslog::max_message_size') %>
 
+#
+# Set rate limit for messages received.
+#
+<%- if scope.lookupvar('rsyslog::system_log_rate_limit_interval') and scope.lookupvar('rsyslog::system_log_rate_limit_interval') != :undef-%>
+$SystemLogRateLimitInterval <%= scope.lookupvar('rsyslog::system_log_rate_limit_interval') %>
+<%- end -%>
+<%- if scope.lookupvar('rsyslog::system_log_rate_limit_burst') and scope.lookupvar('rsyslog::system_log_rate_limit_burst') != :undef -%>
+$SystemLogRateLimitBurst <%= scope.lookupvar('rsyslog::system_log_rate_limit_burst') %>
+<%- end -%>
+
+<% if scope.lookupvar('rsyslog::default_template') and scope.lookupvar('rsyslog::default_template') != :undef and scope.lookupvar('rsyslog::default_template_customisation') and scope.lookupvar('rsyslog::default_template_customisation') != :undef -%>
+#
+# Custom setting for ActionFileDefaultTemplate
+#
+$template <%= scope.lookupvar('rsyslog::default_template') %>,<%= scope.lookupvar('rsyslog::default_template_customisation') %>
+
+<% end -%>
 <% if scope.lookupvar('rsyslog::default_template')  and scope.lookupvar('rsyslog::default_template') != :undef -%>
 #
-# Use traditional timestamp format.
-# To enable high precision timestamps, comment out the following line.
+# Sets a default template for file action
 #
 $ActionFileDefaultTemplate <%= scope.lookupvar('rsyslog::default_template') %>
 
@@ -59,6 +75,20 @@ $Umask <%= scope.lookupvar('rsyslog::umask') %>
 # Turn off message reception via local log socket;
 # local messages are retrieved through imjournal now.
 $OmitLocalLogging on
+<% end -%>
+
+# Settings for imjournal (If supported)
+<% if scope.lookupvar('rsyslog::im_journal_statefile') and scope.lookupvar('rsyslog::im_journal_statefile') != :undef -%>
+$imjournalStateFile <%=scope.lookupvar('rsyslog::im_journal_statefile') %>
+<% end -%>
+<% if scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') and scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') != :undef -%>
+$imjournalIgnorePreviousMessages <%=scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') %>
+<% end -%>
+<% if scope.lookupvar('rsyslog::im_journal_ratelimit_interval') and scope.lookupvar('rsyslog::im_journal_ratelimit_interval') != :undef -%>
+$imjournalRatelimitInterval <%=scope.lookupvar('rsyslog::im_journal_ratelimit_interval') %>
+<% end -%>
+<% if scope.lookupvar('rsyslog::im_journal_ratelimit_burst') and scope.lookupvar('rsyslog::im_journal_ratelimit_burst') != :undef -%>
+$imjournalRatelimitBurst <%=scope.lookupvar('rsyslog::im_journal_ratelimit_burst') %>
 <% end -%>
 
 #

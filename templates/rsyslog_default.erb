@@ -6,7 +6,7 @@ RSYSLOGD_OPTIONS="-c4"
 <% else -%>
 RSYSLOGD_OPTIONS=""
 <% end -%>
-<% if @osfamily.casecmp('redhat') -%>
+<% if @osfamily.casecmp('redhat') == 0 -%>
 # CentOS, RedHat, Fedora
 SYSLOGD_OPTIONS="${RSYSLOGD_OPTIONS}"
 <% end -%>

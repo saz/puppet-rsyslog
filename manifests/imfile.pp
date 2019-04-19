@@ -34,9 +34,10 @@ define rsyslog::imfile(
   $file_severity = 'notice',
   $run_file_monitor = true,
   $persist_state_interval = 0,
+  $imfile_template = 'rsyslog/imfile.erb',
 ) {
 
-  include rsyslog
+  include ::rsyslog
   $extra_modules = $rsyslog::extra_modules
 
   # This mode should defined when having multiline messages.
@@ -51,7 +52,7 @@ define rsyslog::imfile(
 
   rsyslog::snippet { $name:
     ensure  => $ensure,
-    content => template('rsyslog/imfile.erb'),
+    content => template($imfile_template),
   }
 
 }

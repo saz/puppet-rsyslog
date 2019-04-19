@@ -5,8 +5,8 @@
 #
 # === Parameters
 #
-# [*content*] - The actual content to place in the file.
-# [*ensure*]  - How to enforce the file (default: present)
+# [*content*]   - The actual content to place in the file. (default: empty sting)
+# [*ensure*]    - How to enforce the file (default: present)
 # [*file_mode*] - The mode of the file snippet (default: $rsyslog::perm_file)
 #
 # === Variables
@@ -18,11 +18,11 @@
 #  }
 #
 define rsyslog::snippet(
-  $content,
+  $content    = '',
   $ensure     = 'present',
   $file_mode  = 'undef'
 ) {
-  include rsyslog
+  include ::rsyslog
 
   if $file_mode == 'undef' {
     $file_mode_real = $rsyslog::perm_file
@@ -30,7 +30,8 @@ define rsyslog::snippet(
     $file_mode_real = $file_mode
   }
 
-  file { "${rsyslog::rsyslog_d}${name}.conf":
+  $name_real = regsubst($name,'[/ ]','-','G')
+  file { "${rsyslog::rsyslog_d}${name_real}.conf":
     ensure  => $ensure,
     owner   => 'root',
     group   => $rsyslog::run_group,
