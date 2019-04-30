@@ -31,6 +31,10 @@ Facter.add(:rsyslog_version) do
       command = 'equery -q -C list -F \'$version\' rsyslog'
       version = Facter::Util::Resolution.exec(command)
       Regexp.last_match(1) if version =~ %r{^(.+)$}
+    when "Solaris"
+      command='pkg info rsyslog 2>/dev/null| grep Version:'
+      version = Facter::Util::Resolution.exec(command).strip.split[1]
+      Regexp.last_match(1) if version =~ %r{^([\d.]+)$}
     end
   end
 end

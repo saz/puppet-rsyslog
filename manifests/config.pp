@@ -31,9 +31,15 @@ class rsyslog::config {
     content => template("${module_name}/rsyslog.conf.erb"),
   }
 
-  file { $rsyslog::rsyslog_default:
-    ensure  => file,
-    content => template("${module_name}/${rsyslog::rsyslog_default_file}.erb"),
+  if $rsyslog::rsyslog_default_file {
+    file { $rsyslog::rsyslog_default:
+      ensure  => file,
+      owner   => 'root',
+      group   => $rsyslog::run_group,
+      content => template("${module_name}/${rsyslog::rsyslog_default_file}.erb"),
+      require => Class['rsyslog::install'],
+      notify  => Class['rsyslog::service'],
+    }
   }
 
   file { $rsyslog::spool_dir:
