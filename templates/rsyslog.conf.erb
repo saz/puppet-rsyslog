@@ -64,12 +64,12 @@ $FileCreateMode <%= scope.lookupvar('rsyslog::perm_file') %>
 $DirOwner <%= scope.lookupvar('rsyslog::log_user') %>
 $DirGroup <%= scope.lookupvar('rsyslog::log_group') %>
 $DirCreateMode <%= scope.lookupvar('rsyslog::perm_dir') %>
-$PrivDropToUser <%= scope.lookupvar('rsyslog::run_user') %>
-$PrivDropToGroup <%= scope.lookupvar('rsyslog::run_group') %>
-$WorkDirectory <%= scope.lookupvar('rsyslog::spool_dir') %>
 <% if scope.lookupvar('rsyslog::umask') -%>
 $Umask <%= scope.lookupvar('rsyslog::umask') %>
 <% end -%>
+$PrivDropToUser <%= scope.lookupvar('rsyslog::run_user') %>
+$PrivDropToGroup <%= scope.lookupvar('rsyslog::run_group') %>
+$WorkDirectory <%= scope.lookupvar('rsyslog::spool_dir') %>
 
 <% if scope.lookupvar('rsyslog::omit_local_logging') -%>
 # Turn off message reception via local log socket;
@@ -100,7 +100,7 @@ $IncludeConfig <%= scope.lookupvar('rsyslog::rsyslog_d') -%>*.conf
 # Emergencies are sent to everybody logged in.
 #
 <% if @rsyslog_version and @rsyslog_version.split('.')[0].to_i >= 7 -%>
-*.emerg	:omusrmsg:*
+#*.emerg	:omusrmsg:*
 <% else -%>
-*.emerg	*
+#*.emerg	*
 <% end -%>
