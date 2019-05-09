@@ -17,7 +17,7 @@ $Template dynKernLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%sou
 $Template dynLprLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>lpr.log"
 $Template dynMailLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>mail.log"
 $Template dynNewsLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>news.log"
-$Template dynSyslog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>syslog"
+$Template dynSysLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>syslog"
 $Template dynUserLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>user.log"
 $Template dynUucpLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>uucp.log"
 $Template dynLocal0Log,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>local0.log"
@@ -37,7 +37,7 @@ kern.*              -?dynKernLog
 lpr.*               -?dynLprLog
 mail.*              -?dynMailLog
 news.*              -?dynNewsLog
-syslog.*            -?dynSyslogLog
+syslog.*            -?dynSysLog
 user.*              -?dynUserLog
 uucp.*              -?dynUucpLog
 local0.*            -?dynLocal0Log
