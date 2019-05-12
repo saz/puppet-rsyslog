@@ -18,16 +18,30 @@
 #  }
 #
 define rsyslog::snippet(
-  $content    = '',
-  $ensure     = 'present',
-  $file_mode  = 'undef'
+  $ensure    = 'present',
+  $content   = undef,
+  $source    = undef,
+  $file_mode = 'undef'
 ) {
   include ::rsyslog
+
+  if ! ($content or $source) {
+    fail("rsyslog::snippet['${title}']: No 'content' or 'source' provided.")
+  } elsif ($content and $source) {
+    fail("rsyslog::snippet['${title}']: Can't use 'content' and 'source' at the same time.")
+  }
 
   if $file_mode == 'undef' {
     $file_mode_real = $rsyslog::perm_file
   } else {
     $file_mode_real = $file_mode
+  }
+
+  # Add header to content
+  if $content {
+    $content_real = "# This file is managed by Puppet, changes may be overwritten\n${content}\n"
+  } else {
+    $content_real = undef
   }
 
   $name_real = regsubst($name,'[/ ]','-','G')
@@ -36,7 +50,8 @@ define rsyslog::snippet(
     owner   => 'root',
     group   => $rsyslog::run_group,
     mode    => $file_mode_real,
-    content => "# This file is managed by Puppet, changes may be overwritten\n${content}\n",
+    content => $content_real,
+    source  => $source,
     require => Class['rsyslog::config'],
     notify  => Class['rsyslog::service'],
   }
