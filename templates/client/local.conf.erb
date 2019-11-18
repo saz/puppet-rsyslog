@@ -17,7 +17,9 @@ auth.info;authpriv.info		/var/log/auth.log
 # First some standard log files.  Log by facility.
 #
 *.*;auth,authpriv.none         -/var/log/syslog
+<% if scope.lookupvar('rsyslog::client::use_cron') -%>
 cron.*                          /var/log/cron.log
+<% end -%>
 daemon.*                       -/var/log/daemon.log
 kern.*                         -/var/log/kern.log
 #lpr.*                          -/var/log/lpr.log
