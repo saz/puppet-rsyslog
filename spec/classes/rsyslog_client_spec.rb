@@ -107,6 +107,7 @@ describe 'rsyslog::client', type: :class do
 
         context 'without SSL' do
           let(:params) { { ssl_auth_mode: 'x509/name' } }
+
           it 'fails' do
             expect { is_expected.to contain_class('rsyslog::client') }.to raise_error(Puppet::Error, %r{You need to enable SSL in order to use ssl_auth_mode.})
           end

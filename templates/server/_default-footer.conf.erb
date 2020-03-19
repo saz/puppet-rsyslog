@@ -6,8 +6,8 @@ $RuleSet RSYSLOG_DefaultRuleset
 <% if scope.lookupvar('rsyslog::server::remote_ruleset_udp') -%>
 $InputUDPServerBindRuleset remote
 <% end -%>
-$UDPServerRun <%= scope.lookupvar('rsyslog::server::port') %>
 $UDPServerAddress <%= scope.lookupvar('rsyslog::server::address') %>
+$UDPServerRun <%= scope.lookupvar('rsyslog::server::port') %>
 <% end -%>
 
 <% if scope.lookupvar('rsyslog::server::enable_tcp') -%>

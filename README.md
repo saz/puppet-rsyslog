@@ -58,8 +58,6 @@ or send some bitcoins to ```1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9```
     actionfiletemplate_cust   => false,
     actionfiletemplate        => false,
     high_precision_timestamps => false,
-    rate_limit_burst          => undef,
-    rate_limit_interval       => undef,
     imfiles                   => undef
   }
 ```
@@ -75,7 +73,7 @@ Gathers log information from a file
 ```
 #### rsyslog.d conf files
 
-e.g. rsyslog.d/10-puppetagent.conf - moves puppet-agent entries to a file and excludes from /var/log/messages 
+e.g. rsyslog.d/10-puppetagent.conf - moves puppet-agent entries to a file and excludes from /var/log/messages
 ```
   rsyslog::snippet { '10-puppetagent':
     content => ":programname,contains,\"puppet-agent\" /var/log/puppetlabs/puppet/puppet-agent.log\n& ~",
@@ -101,7 +99,7 @@ class{'rsyslog::client':
 
 #### Logging to multiple remote servers
 
-The `remote_servers` parameter can be used to set up logging to multiple remote servers which are supplied as a list of key value pairs for each remote. There is an example configuration provided in `./test/multiple_hosts.pp`
+The `remote_servers` parameter can be used to set up logging to multiple remote servers which are supplied as a list of key value pairs for each remote. There is an example configuration provided in `./tests/multiple_hosts.pp`
 
 Using the `remote_servers` parameter over-rides the other remote sever parameters, and they will not be used in the client configuration file:
 * `log_remote`
@@ -112,7 +110,7 @@ Using the `remote_servers` parameter over-rides the other remote sever parameter
 The following example sets up three remote logging hosts for the client:
 
 ```puppet
-class{'rsyslog::client':
+class { 'rsyslog::client':
   remote_servers => [
     {
       host => 'logs.example.org',
@@ -197,11 +195,43 @@ rsyslog::client::log_filters:
     log_filters               => false,
     actionfiletemplate_cust   => false,
     actionfiletemplate        => false,
-    rotate                    => undef
+    rotate                    => undef,
+    rules                     => undef
   }
 ```
 
 Both can be installed at the same time.
+
+#### Defining custom rules
+
+The `rules` parameter can be used to set up custom rules. There is an example configuration provided in `./tests/rules.pp`
+
+Using the `rules` parameter overrides the default rules. Each rule must have a selector and an action.
+
+The following example sets up a server with three rules:
+
+```puppet
+class { '::rsyslog::server':
+  rules => [
+    {
+      selector => 'auth,authpriv.*',
+      action   => '?dynAuthLog',
+    },
+    {
+      selector => 'cron.*',
+      action   => '?dynCronLog',
+    },
+    {
+      selector => '*.*;auth,authpriv.none,mail.none,cron.none',
+      action   => '-?dynSyslog',
+    },
+  ],
+}
+```
+
+Each rule has the following parameters:
+* *selector*: Sets the selector field of the rule. Defaults to `undef`
+* *action*: Sets the action field of the rule. Defaults to `undef`
 
 ## PARAMETERS
 
@@ -215,6 +245,8 @@ The following lists all the class parameters this module accepts.
     preserve_fqdn                       true,false          Use full name of host even if sender and receiver are in the same domain. Defaults to false.
     local_host_name                     STRING              Use a custom local host name, instead of clients actual host name. Defaults to undef.
     package_status                      STRING              Manages rsyslog package installation. Defaults to 'present'.
+    system_log_rate_limit_interval      INTEGER             Specifies the number of seconds per rate limit interval. Defaults to 1.
+    system_log_rate_limit_burst         INTEGER             Specifies the number of messages before limiting begins. Defaults to 100.
 
     RSYSLOG::SERVER CLASS PARAMETERS    VALUES              DESCRIPTION
     -------------------------------------------------------------------
@@ -244,6 +276,7 @@ The following lists all the class parameters this module accepts.
     actionfiletemplate_cust             STRING              If set this defines the `ActionFileDefaultTemplate custom formatting` which sets customisations over the default log format for remote and local logging. Must be used with actionfiletemplate to take effect. Defaults to false.
     actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging. Defaults to false.
     rotate                              STRING              Enables rotation of logfiles. Valid values: year, month, day. Defaults to undef.
+    rules                               Array of hashes     Array of hashes for configuring custom rules for the server. If set, this replaces the default rules. See documentation above. Defaults to undef.
 
     RSYSLOG::CLIENT CLASS PARAMETERS    VALUES              DESCRIPTION
     -------------------------------------------------------------------
@@ -300,3 +333,17 @@ with the main rsyslog package.
 
 Default package_status parameter for rsyslog class used to be 'latest'. However, it was
 against puppet best practices so it defaults to 'present' now.
+
+#### Relationships
+
+Be sure to make a relationship to the `rsyslog` class if you need something to happen before or after Puppet manages rsyslog. Even if you're just using `rsyslog::client` or `rsyslog::server`.
+
+For example, if you want to make sure the EPEL YUM repositories are managed by Puppet before trying to setup an rsyslog client, do the following:
+
+```puppet
+include epel                       # This is from the stahnma/epel Forge module
+include rsyslog::client
+
+Class['epel'] -> Class['rsyslog']  # Note this forms a relationship to rsyslog, not rsyslog::client
+```
+

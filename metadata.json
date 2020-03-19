@@ -44,16 +44,12 @@
   ],
   "requirements": [
     {
-      "name": "pe",
-      "version_requirement": ">= 3.2.0 < 3.4.0"
-    },
-    {
       "name": "puppet",
-      "version_requirement": ">= 3.0.0 < 5.0.0"
+      "version_requirement": ">= 3.4.0 < 5.0.0"
     }
   ],
   "description": "Manage rsyslog client and server via Puppet",
   "dependencies": [
-  
+
   ]
 }

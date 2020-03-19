@@ -21,6 +21,13 @@ $Template dynDebug,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%sourc
 $Template dynMessages,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>messages"
 
 # Rules
+<% if scope.lookupvar('rsyslog::server::rules') and scope.lookupvar('rsyslog::server::rules') != :undef -%>
+<% scope.lookupvar('rsyslog::server::rules').flatten.compact.each do |rules| -%>
+<% if rules['selector'] and rules['selector'] != '' and rules['action'] and rules['action'] != '' -%>
+<%= rules['selector'] %> <%= rules['action'] %>
+<% end -%>
+<% end -%>
+<% else -%>
 auth,authpriv.*         ?dynAuthLog
 *.*;auth,authpriv.none,mail.none,cron.none      -?dynSyslog
 cron.*              ?dynCronLog
@@ -32,6 +39,7 @@ user.*              -?dynUserLog
     auth.none,authpriv.none;\
     cron.none,daemon.none;\
     mail.none,news.none     -?dynMessages
+<% end -%>
 
 # Special format to keep audit logs as sent.
 $Template auditFormat,"%msg%\n"
