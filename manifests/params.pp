@@ -58,7 +58,7 @@ class rsyslog::params {
       $modules                             = [
         '$ModLoad imuxsock # provides support for local system logging',
         '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-        '#$ModLoad immark  # provides --MARK-- message capability',
+        '$ModLoad immark   # provides --MARK-- message capability',
       ]
       $service_hasrestart                  = true
       $service_hasstatus                   = true
@@ -79,7 +79,7 @@ class rsyslog::params {
         $modules                             = [
           '$ModLoad imuxsock # provides support for local system logging',
           '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-          '#$ModLoad immark  # provides --MARK-- message capability',
+          '$ModLoad immark   # provides --MARK-- message capability',
         ]
         $omit_local_logging                  = false
         $im_journal_ratelimit_interval       = undef
@@ -97,7 +97,7 @@ class rsyslog::params {
         $modules                             = [
           '$ModLoad imuxsock # provides support for local system logging',
           '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-          '#$ModLoad immark  # provides --MARK-- message capability',
+          '$ModLoad immark   # provides --MARK-- message capability',
         ]
         $omit_local_logging                  = false
         $im_journal_ratelimit_interval       = undef
@@ -115,7 +115,7 @@ class rsyslog::params {
         $modules                             = [
           '$ModLoad imuxsock # provides support for local system logging',
           '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-          '#$ModLoad immark  # provides --MARK-- message capability',
+          '$ModLoad immark   # provides --MARK-- message capability',
         ]
         $omit_local_logging                  = false
         $im_journal_ratelimit_interval       = undef
@@ -134,7 +134,7 @@ class rsyslog::params {
           '$ModLoad imuxsock # provides support for local system logging',
           '$ModLoad imjournal # provides access to the systemd journal',
           '#$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-          '#$ModLoad immark  # provides --MARK-- message capability',
+          '$ModLoad immark    # provides --MARK-- message capability',
         ]
         $omit_local_logging                  = true
         $im_journal_ratelimit_interval       = '600'
@@ -151,7 +151,7 @@ class rsyslog::params {
         $modules                             = [
           '$ModLoad imuxsock # provides support for local system logging',
           '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-          '#$ModLoad immark  # provides --MARK-- message capability',
+          '$ModLoad immark   # provides --MARK-- message capability',
         ]
         $omit_local_logging                  = false
         $im_journal_ratelimit_interval       = undef
@@ -200,7 +200,7 @@ class rsyslog::params {
       $modules                             = [
         '$ModLoad imuxsock # provides support for local system logging',
         '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-        '#$ModLoad immark  # provides --MARK-- message capability',
+        '$ModLoad immark   # provides --MARK-- message capability',
       ]
       $omit_local_logging                  = false
       $im_journal_ratelimit_interval       = undef
@@ -232,7 +232,7 @@ class rsyslog::params {
       $modules                             = [
         '$ModLoad imuxsock # provides support for local system logging',
         '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-        '#$ModLoad immark  # provides --MARK-- message capability',
+        '$ModLoad immark   # provides --MARK-- message capability',
       ]
       $service_hasrestart                  = true
       $service_hasstatus                   = true
@@ -268,7 +268,7 @@ class rsyslog::params {
           $modules                             = [
             '$ModLoad imuxsock # provides support for local system logging',
             '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-            '#$ModLoad immark  # provides --MARK-- message capability',
+            '$ModLoad immark   # provides --MARK-- message capability',
           ]
           $service_hasrestart                  = true
           $service_hasstatus                   = true
