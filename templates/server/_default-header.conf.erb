@@ -17,6 +17,9 @@ $ModLoad imrelp
 
 <% if scope.lookupvar('rsyslog::server::log_templates') and ! scope.lookupvar('rsyslog::server::log_templates').empty?-%>
 
+# Switch to remote ruleset
+$RuleSet remote
+
 # Define custom logging templates
 <% scope.lookupvar('rsyslog::server::log_templates').flatten.compact.each do |log_template| -%>
 $template <%= log_template['name'] %>,"<%= log_template['template'] %>"
@@ -65,6 +68,4 @@ $ActionSendStreamDriverPermittedPeer <%= scope.lookupvar('rsyslog::server::ssl_p
 <% end -%>
 
 <% if scope.lookupvar('rsyslog::server::relay_server') == false -%>
-# Switch to remote ruleset
-$RuleSet remote
 <% end -%>
