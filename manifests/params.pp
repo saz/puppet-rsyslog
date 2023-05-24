@@ -43,6 +43,7 @@ class rsyslog::params {
       $mysql_package_name                  = 'rsyslog-mysql'
       $pgsql_package_name                  = 'rsyslog-pgsql'
       $gnutls_package_name                 = 'rsyslog-gnutls'
+      $logrotate_package_name              = false
       $package_status                      = 'present'
       $rsyslog_d                           = '/etc/rsyslog.d/'
       $rsyslog_conf                        = '/etc/rsyslog.conf'
@@ -75,6 +76,7 @@ class rsyslog::params {
         $pgsql_package_name                  = 'rsyslog-pgsql'
         $gnutls_package_name                 = 'rsyslog-gnutls'
         $relp_package_name                   = false
+        $logrotate_package_name              = false
         $default_config_file                 = 'rsyslog_default'
         $modules                             = [
           '$ModLoad imuxsock # provides support for local system logging',
@@ -92,6 +94,7 @@ class rsyslog::params {
         $mysql_package_name                  = 'rsyslog-mysql'
         $pgsql_package_name                  = 'rsyslog-pgsql'
         $gnutls_package_name                 = 'rsyslog-gnutls'
+        $logrotate_package_name              = false
         $relp_package_name                   = false
         $default_config_file                 = 'rsyslog_default'
         $modules                             = [
@@ -111,6 +114,7 @@ class rsyslog::params {
         $pgsql_package_name                  = 'rsyslog-pgsql'
         $gnutls_package_name                 = 'rsyslog-gnutls'
         $relp_package_name                   = 'rsyslog-relp'
+        $logrotate_package_name              = false
         $default_config_file                 = 'rsyslog_default'
         $modules                             = [
           '$ModLoad imuxsock # provides support for local system logging',
@@ -123,12 +127,14 @@ class rsyslog::params {
         $im_journal_ignore_previous_messages = undef
         $im_journal_statefile                = undef
       }
-      elsif versioncmp($::operatingsystemmajrelease, '7') >= 0 {
+      elsif versioncmp($::operatingsystemmajrelease, '7') == 0 or
+        versioncmp($::operatingsystemmajrelease, '8') == 0 {
         $rsyslog_package_name                = 'rsyslog'
         $mysql_package_name                  = 'rsyslog-mysql'
         $pgsql_package_name                  = 'rsyslog-pgsql'
         $gnutls_package_name                 = 'rsyslog-gnutls'
         $relp_package_name                   = 'rsyslog-relp'
+        $logrotate_package_name              = false
         $default_config_file                 = 'rsyslog_default_rhel7'
         $modules                             = [
           '$ModLoad imuxsock # provides support for local system logging',
@@ -141,6 +147,26 @@ class rsyslog::params {
         $im_journal_ratelimit_burst          = '20000'
         $im_journal_ignore_previous_messages = 'off'
         $im_journal_statefile                = 'imjournal.state'
+      } elsif versioncmp($::operatingsystemmajrelease, '9') >= 0 {
+        $rsyslog_package_name                = 'rsyslog'
+        $mysql_package_name                  = 'rsyslog-mysql'
+        $pgsql_package_name                  = 'rsyslog-pgsql'
+        $gnutls_package_name                 = 'rsyslog-gnutls'
+        $relp_package_name                   = 'rsyslog-relp'
+        $logrotate_package_name              = 'rsyslog-logrotate'
+        $default_config_file                 = 'rsyslog_default_rhel7'
+        $modules                             = [
+          '$ModLoad imuxsock # provides support for local system logging',
+          '$ModLoad imjournal # provides access to the systemd journal',
+          '#$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
+          '#$ModLoad immark  # provides --MARK-- message capability',
+        ]
+        $omit_local_logging                  = true
+        $im_journal_ratelimit_interval       = '600'
+        $im_journal_ratelimit_burst          = '20000'
+        $im_journal_ignore_previous_messages = 'off'
+        $im_journal_statefile                = 'imjournal.state'
+
       } else {
         $rsyslog_package_name                = 'rsyslog5'
         $mysql_package_name                  = 'rsyslog5-mysql'
@@ -182,6 +208,7 @@ class rsyslog::params {
       $mysql_package_name                  = false
       $pgsql_package_name                  = false
       $gnutls_package_name                 = false
+      $logrotate_package_name              = false
       $package_status                      = 'present'
       $rsyslog_d                           = '/etc/rsyslog.d/'
       $rsyslog_conf                        = '/etc/rsyslog.conf'
@@ -217,6 +244,7 @@ class rsyslog::params {
       $mysql_package_name                  = false
       $pgsql_package_name                  = false
       $gnutls_package_name                 = false
+      $logrotate_package_name              = false
       $package_status                      = 'present'
       $rsyslog_d                           = '/usr/local/etc/rsyslog.d/'
       $rsyslog_conf                        = '/usr/local/etc/rsyslog.conf'
@@ -253,6 +281,7 @@ class rsyslog::params {
           $mysql_package_name                  = 'rsyslog-mysql'
           $pgsql_package_name                  = 'rsyslog-pgsql'
           $gnutls_package_name                 = false
+          $logrotate_package_name              = false
           $package_status                      = 'present'
           $rsyslog_d                           = '/etc/rsyslog.d/'
           $rsyslog_conf                        = '/etc/rsyslog.conf'

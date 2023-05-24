@@ -32,4 +32,10 @@ class rsyslog::install {
     }
   }
 
+  if $rsyslog::logrotate_package_name != false {
+    package { $rsyslog::logrotate_package_name:
+      ensure => $rsyslog::package_status,
+    }
+  }
+
 }

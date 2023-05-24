@@ -17,6 +17,7 @@ class rsyslog (
   $mysql_package_name                  = $rsyslog::params::mysql_package_name,
   $pgsql_package_name                  = $rsyslog::params::pgsql_package_name,
   $gnutls_package_name                 = $rsyslog::params::gnutls_package_name,
+  $logrotate_package_name              = $rsyslog::params::logrotate_package_name,
   $package_status                      = $rsyslog::params::package_status,
   $rsyslog_d                           = $rsyslog::params::rsyslog_d,
   $purge_rsyslog_d                     = $rsyslog::params::purge_rsyslog_d,
