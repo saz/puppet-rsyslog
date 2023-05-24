@@ -118,6 +118,47 @@ describe 'rsyslog', type: :class do
         it 'compiles' do
           is_expected.to contain_file('/etc/rsyslog.conf').with_content(%r{\$imjournalRatelimitBurst 20000})
           is_expected.to contain_file('/etc/rsyslog.d/')
+          is_expected.not_to contain_package('rsyslog-logrotate')
+        end
+      end
+    end
+
+    context 'osfamily = RedHat and operatingsystemmajrelease = 8' do
+      let :facts do
+        default_facts.merge!(
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemmajrelease: '8'
+        )
+      end
+
+      context 'default usage (osfamily = RedHat)' do
+        let(:title) { 'rsyslog-basic' }
+
+        it 'compiles' do
+          is_expected.to contain_file('/etc/rsyslog.conf').with_content(%r{\$imjournalRatelimitBurst 20000})
+          is_expected.to contain_file('/etc/rsyslog.d/')
+          is_expected.not_to contain_package('rsyslog-logrotate')
+        end
+      end
+    end
+
+    context 'osfamily = RedHat and operatingsystemmajrelease = 9' do
+      let :facts do
+        default_facts.merge!(
+          osfamily: 'RedHat',
+          operatingsystem: 'RedHat',
+          operatingsystemmajrelease: '9'
+        )
+      end
+
+      context 'default usage (osfamily = RedHat)' do
+        let(:title) { 'rsyslog-basic' }
+
+        it 'compiles' do
+          is_expected.to contain_file('/etc/rsyslog.conf').with_content(%r{\$imjournalRatelimitBurst 20000})
+          is_expected.to contain_file('/etc/rsyslog.d/')
+          is_expected.to contain_package('rsyslog-logrotate').with_ensure('present')
         end
       end
     end
@@ -136,6 +177,7 @@ describe 'rsyslog', type: :class do
         it 'compiles' do
           is_expected.to contain_file('/etc/rsyslog.conf')
           is_expected.to contain_file('/etc/rsyslog.d/')
+          is_expected.not_to contain_package('rsyslog-logrotate')
         end
       end
     end
