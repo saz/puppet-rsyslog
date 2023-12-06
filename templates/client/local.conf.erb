@@ -102,11 +102,6 @@ cron.*                                          /var/log/cron
 !-devd
 *.=debug                                        /var/log/debug.log
 <% end -%>
-<% if @rsyslog_version and @rsyslog_version.split('.')[0].to_i >= 7 -%>
-*.emerg       :omusrmsg:*
-<% else -%>
-*.emerg				*
-<% end -%>
 
 # Save news errors of level crit and higher in a special file.
 uucp,news.crit                 -/var/log/spooler
