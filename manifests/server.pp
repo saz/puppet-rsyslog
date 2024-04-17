@@ -71,7 +71,8 @@ class rsyslog::server (
   $actionfiletemplate_cust   = false,
   $actionfiletemplate        = false,
   $rotate                    = undef,
-  $rules                     = undef
+  $rules                     = undef,
+  Optional[Integer] $tcp_max_sessions = undef,
 ) inherits rsyslog::params {
   include ::rsyslog
 

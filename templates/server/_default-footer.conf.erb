@@ -14,6 +14,9 @@ $UDPServerRun <%= scope.lookupvar('rsyslog::server::port') %>
 <% if scope.lookupvar('rsyslog::server::remote_ruleset_tcp') -%>
 $InputTCPServerBindRuleset remote
 <% end -%>
+<% unless @tcp_max_sessions.nil? -%>
+$InputTCPMaxSessions <%= @tcp_max_sessions %>
+<% end -%>
 $InputTCPServerRun <%= scope.lookupvar('rsyslog::server::port') %>
 <% end -%>
 
