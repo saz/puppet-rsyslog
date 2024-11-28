@@ -132,7 +132,8 @@ class rsyslog::params {
         $default_config_file                 = 'rsyslog_default_rhel7'
         $modules                             = [
           '$ModLoad imuxsock # provides support for local system logging',
-          '$ModLoad imjournal # provides access to the systemd journal',
+          '#$ModLoad imjournal # provides access to the systemd journal',
+          'module(load="imjournal" FileCreateMode="0600") # workaround for https://github.com/rsyslog/rsyslog/issues/5375',
           '#$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
           '$ModLoad immark    # provides --MARK-- message capability',
         ]
