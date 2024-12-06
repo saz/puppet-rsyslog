@@ -5,7 +5,7 @@
 
 Facter.add(:rsyslog_version) do
   setcode do
-    osfamily = Facter.value('osfamily')
+    osfamily = Facter.value('os')['family']
     case osfamily
     when 'Debian'
       command = '/usr/bin/dpkg-query -f \'${Status};${Version};\' -W rsyslog 2>/dev/null'
