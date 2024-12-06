@@ -24,9 +24,9 @@ class rsyslog::params {
   $non_kernel_facility            = false
   $preserve_fqdn                  = false
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'Debian': {
-      case $::operatingsystem {
+      case $facts['os']['name'] {
         default: {
           $log_user  = 'root'
           $run_user  = 'root'
@@ -69,7 +69,7 @@ class rsyslog::params {
       $im_journal_statefile                = undef
     }
     'RedHat': {
-      if $::operatingsystem == 'Amazon' {
+      if $facts['os']['name'] == 'Amazon' {
         $rsyslog_package_name                = 'rsyslog'
         $mysql_package_name                  = 'rsyslog-mysql'
         $pgsql_package_name                  = 'rsyslog-pgsql'
@@ -87,7 +87,7 @@ class rsyslog::params {
         $im_journal_ignore_previous_messages = undef
         $im_journal_statefile                = undef
       }
-      elsif versioncmp($::operatingsystemmajrelease, '5') == 0 {
+      elsif versioncmp($facts['os']['release']['major'], '5') == 0 {
         $rsyslog_package_name                = 'rsyslog'
         $mysql_package_name                  = 'rsyslog-mysql'
         $pgsql_package_name                  = 'rsyslog-pgsql'
@@ -105,7 +105,7 @@ class rsyslog::params {
         $im_journal_ignore_previous_messages = undef
         $im_journal_statefile                = undef
       }
-      elsif versioncmp($::operatingsystemmajrelease, '6') == 0 {
+      elsif versioncmp($facts['os']['release']['major'], '6') == 0 {
         $rsyslog_package_name                = 'rsyslog'
         $mysql_package_name                  = 'rsyslog-mysql'
         $pgsql_package_name                  = 'rsyslog-pgsql'
@@ -123,7 +123,7 @@ class rsyslog::params {
         $im_journal_ignore_previous_messages = undef
         $im_journal_statefile                = undef
       }
-      elsif versioncmp($::operatingsystemmajrelease, '7') >= 0 {
+      elsif versioncmp($facts['os']['release']['major'], '7') >= 0 {
         $rsyslog_package_name                = 'rsyslog'
         $mysql_package_name                  = 'rsyslog-mysql'
         $pgsql_package_name                  = 'rsyslog-pgsql'
@@ -246,7 +246,7 @@ class rsyslog::params {
       $im_journal_statefile                = undef
     }
     default: {
-      case $::operatingsystem {
+      case $facts['os']['name'] {
         'Gentoo': {
           $rsyslog_package_name                = 'app-admin/rsyslog'
           $relp_package_name                   = false
@@ -282,7 +282,7 @@ class rsyslog::params {
           $im_journal_statefile                = undef
         }
         default: {
-          fail("The ${module_name} module is not supported on ${::osfamily}/${::operatingsystem}.")
+          fail("The ${module_name} module is not supported on ${facts['os']['family']}/${facts['os']['name']}.")
         }
       }
     }
