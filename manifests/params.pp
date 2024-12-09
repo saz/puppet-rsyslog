@@ -281,6 +281,39 @@ class rsyslog::params {
           $im_journal_ignore_previous_messages = undef
           $im_journal_statefile                = undef
         }
+        solaris: {
+          $rsyslog_package_name   = 'rsyslog'
+          $relp_package_name      = false
+          $mysql_package_name     = false
+          $pgsql_package_name     = false
+          $gnutls_package_name    = false
+          $package_status         = 'latest'
+          $rsyslog_d              = '/etc/rsyslog.d/'
+          $rsyslog_conf           = '/etc/rsyslog.conf'
+          $rsyslog_default        = false
+          $default_config_file    = false
+          $run_user               = 'root'
+          $run_group              = 'root'
+          $log_user               = 'root'
+          $log_group              = 'sys'
+          $log_style              = 'debian'
+          $umask                  = false
+          $perm_file              = '0640'
+          $perm_dir               = '0755'
+          $spool_dir              = '/var/spool/rsyslog'
+          $service_name           = 'rsyslog'
+          $client_conf            = 'client'
+          $server_conf            = 'server'
+          $ssl                    = false
+          $modules                = [
+            '#$ModLoad immark    # provides --MARK-- message capability',
+            '#$ModLoad imuxsock  # can be used for rate-limiting and flow-control',
+            '$ModLoad imsolaris  # for Solaris kernel logging',
+          ]
+          $service_hasrestart     = true
+          $service_hasstatus      = true
+          $omit_local_logging     = false
+        }
         default: {
           fail("The ${module_name} module is not supported on ${facts['os']['family']}/${facts['os']['name']}.")
         }
