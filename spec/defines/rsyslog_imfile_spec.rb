@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'rsyslog::imfile', type: :define do
@@ -11,12 +13,12 @@ describe 'rsyslog::imfile', type: :define do
         facts
       end
 
-      case facts[:os]['family']
-      when 'FreeBSD'
-        rsyslog_d = '/usr/local/etc/rsyslog.d/'
-      else
-        rsyslog_d = '/etc/rsyslog.d/'
-      end
+      rsyslog_d = case facts[:os]['family']
+                  when 'FreeBSD'
+                    '/usr/local/etc/rsyslog.d/'
+                  else
+                    '/etc/rsyslog.d/'
+                  end
 
       context 'default usage' do
         let(:title) { 'rsyslog-imfile-basic' }

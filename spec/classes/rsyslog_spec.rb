@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'rsyslog', type: :class do
@@ -36,7 +38,7 @@ describe 'rsyslog', type: :class do
         when 'Amazon'
           relp_package = nil
         else
-          im_journal_ratelimit_burst = 20000
+          im_journal_ratelimit_burst = 20_000
         end
       end
 
@@ -48,9 +50,7 @@ describe 'rsyslog', type: :class do
           is_expected.to contain_class('rsyslog::config').that_requires('Class[rsyslog::install]')
           is_expected.to contain_class('rsyslog::service').that_subscribes_to('Class[rsyslog::config]')
           is_expected.to contain_package(rsyslog_package)
-          if relp_package
-            is_expected.to contain_package(relp_package)
-          end
+          is_expected.to contain_package(relp_package) if relp_package
           is_expected.to contain_file(rsyslog_d)
           is_expected.to contain_service(service_name)
           if im_journal_ratelimit_burst

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Fact: :syslog_package
 #
 # Purpose: retrieve installed rsyslog version
@@ -10,9 +12,7 @@ Facter.add(:rsyslog_version) do
     when 'Debian'
       command = '/usr/bin/dpkg-query -f \'${Status};${Version};\' -W rsyslog 2>/dev/null'
       version = Facter::Util::Resolution.exec(command)
-      if version =~ %r{.*[install|hold] ok installed;([^;]+);.*}
-        Regexp.last_match(1)
-      end
+      Regexp.last_match(1) if version =~ %r{.*[instal|hod] ok installed;([^;]+);.*}
     when 'RedHat', 'Suse'
       if File.exist? '/sbin/rsyslogd'
         # Query rsyslogd binary for the version

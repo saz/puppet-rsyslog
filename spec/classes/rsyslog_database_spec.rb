@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'rsyslog::database', type: :class do
@@ -40,9 +42,7 @@ describe 'rsyslog::database', type: :class do
         end
 
         it 'compiles' do
-          if mysql_package
-            is_expected.to contain_package('rsyslog-mysql')
-          end
+          is_expected.to contain_package('rsyslog-mysql') if mysql_package
           is_expected.to contain_file("#{rsyslog_d}mysql.conf")
         end
       end
@@ -61,9 +61,7 @@ describe 'rsyslog::database', type: :class do
         end
 
         it 'compiles' do
-          if pgsql_package
-            is_expected.to contain_package('rsyslog-pgsql')
-          end
+          is_expected.to contain_package('rsyslog-pgsql') if pgsql_package
           is_expected.to contain_file("#{rsyslog_d}pgsql.conf")
         end
       end

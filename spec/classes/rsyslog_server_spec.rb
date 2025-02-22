@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'rsyslog::server', type: :class do
@@ -22,8 +24,8 @@ describe 'rsyslog::server', type: :class do
         let(:title) { 'rsyslog-server-basic' }
 
         it 'compiles' do
-          is_expected.to contain_file(server_conf).with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
-          is_expected.to contain_file(server_conf).with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
+          is_expected.to contain_file(server_conf).with_content(%r{\(\[A-Za-z-\]\*\)--end%/auth.log})
+          is_expected.to contain_file(server_conf).with_content(%r{\(\[A-Za-z-\]\*\)--end%/messages})
         end
       end
 
@@ -32,8 +34,8 @@ describe 'rsyslog::server', type: :class do
         let(:params) { { 'enable_onefile' => 'true' } }
 
         it 'compiles' do
-          is_expected.not_to contain_file(server_conf).with_content(%r{\(\[A-Za-z-\]\*\)--end%\/auth.log})
-          is_expected.to contain_file(server_conf).with_content(%r{\(\[A-Za-z-\]\*\)--end%\/messages})
+          is_expected.not_to contain_file(server_conf).with_content(%r{\(\[A-Za-z-\]\*\)--end%/auth.log})
+          is_expected.to contain_file(server_conf).with_content(%r{\(\[A-Za-z-\]\*\)--end%/messages})
         end
       end
 
@@ -42,8 +44,8 @@ describe 'rsyslog::server', type: :class do
         let(:params) { { 'custom_config' => 'rsyslog/server-hostname.conf.erb' } }
 
         it 'compiles' do
-          is_expected.to contain_file(server_conf).with_content(%r{%hostname%\/auth.log})
-          is_expected.to contain_file(server_conf).with_content(%r{%hostname%\/messages})
+          is_expected.to contain_file(server_conf).with_content(%r{%hostname%/auth.log})
+          is_expected.to contain_file(server_conf).with_content(%r{%hostname%/messages})
         end
       end
 
@@ -57,4 +59,4 @@ describe 'rsyslog::server', type: :class do
       end
     end
   end
-end # describe 'rsyslog::server'
+end
