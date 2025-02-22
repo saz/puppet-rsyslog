@@ -43,7 +43,7 @@ class rsyslog::params {
       $pgsql_package_name                  = 'rsyslog-pgsql'
       $gnutls_package_name                 = 'rsyslog-gnutls'
       $package_status                      = 'present'
-      $rsyslog_d                           = '/etc/rsyslog.d/'
+      $rsyslog_d                           = '/etc/rsyslog.d'
       $rsyslog_conf                        = '/etc/rsyslog.conf'
       $rsyslog_default                     = '/etc/default/rsyslog'
       $default_config_file                 = 'rsyslog_default'
@@ -159,7 +159,7 @@ class rsyslog::params {
         $im_journal_statefile                = undef
       }
       $package_status         = 'present'
-      $rsyslog_d              = '/etc/rsyslog.d/'
+      $rsyslog_d              = '/etc/rsyslog.d'
       $rsyslog_conf           = '/etc/rsyslog.conf'
       $rsyslog_default        = '/etc/sysconfig/rsyslog'
       $run_user               = 'root'
@@ -182,7 +182,7 @@ class rsyslog::params {
       $pgsql_package_name                  = false
       $gnutls_package_name                 = false
       $package_status                      = 'present'
-      $rsyslog_d                           = '/etc/rsyslog.d/'
+      $rsyslog_d                           = '/etc/rsyslog.d'
       $rsyslog_conf                        = '/etc/rsyslog.conf'
       $rsyslog_default                     = '/etc/sysconfig/syslog'
       $default_config_file                 = 'rsyslog_default_suse'
@@ -194,7 +194,7 @@ class rsyslog::params {
       $umask                               = false
       $perm_file                           = '0600'
       $perm_dir                            = '0750'
-      $spool_dir                           = '/var/spool/rsyslog/'
+      $spool_dir                           = '/var/spool/rsyslog'
       $service_name                        = 'syslog'
       $modules                             = [
         '$ModLoad imuxsock # provides support for local system logging',
@@ -217,7 +217,7 @@ class rsyslog::params {
       $pgsql_package_name                  = false
       $gnutls_package_name                 = false
       $package_status                      = 'present'
-      $rsyslog_d                           = '/usr/local/etc/rsyslog.d/'
+      $rsyslog_d                           = '/usr/local/etc/rsyslog.d'
       $rsyslog_conf                        = '/usr/local/etc/rsyslog.conf'
       $rsyslog_default                     = '/etc/defaults/syslogd'
       $default_config_file                 = 'rsyslog_default'
@@ -253,7 +253,7 @@ class rsyslog::params {
           $pgsql_package_name                  = 'rsyslog-pgsql'
           $gnutls_package_name                 = false
           $package_status                      = 'present'
-          $rsyslog_d                           = '/etc/rsyslog.d/'
+          $rsyslog_d                           = '/etc/rsyslog.d'
           $rsyslog_conf                        = '/etc/rsyslog.conf'
           $rsyslog_default                     = '/etc/conf.d/rsyslog'
           $default_config_file                 = 'rsyslog_default_gentoo'

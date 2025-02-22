@@ -13,12 +13,12 @@ describe 'rsyslog::client', type: :class do
         facts
       end
 
-      rsyslog_d = '/etc/rsyslog.d/'
+      rsyslog_d = '/etc/rsyslog.d'
       case facts[:os]['family']
       when 'FreeBSD'
-        rsyslog_d = '/usr/local/etc/rsyslog.d/'
+        rsyslog_d = '/usr/local/etc/rsyslog.d'
       end
-      client_conf = "#{rsyslog_d}00_client.conf"
+      client_conf = "#{rsyslog_d}/00_client.conf"
 
       context 'default usage' do
         let(:title) { 'rsyslog-client-basic' }
@@ -37,15 +37,15 @@ describe 'rsyslog::client', type: :class do
         end
 
         it 'configures client' do
-          is_expected.to contain_file("#{rsyslog_d}00_client_config.conf").with_ensure('present')
+          is_expected.to contain_file("#{rsyslog_d}/00_client_config.conf").with_ensure('present')
         end
 
         it 'configures client remote logging' do
-          is_expected.to contain_file("#{rsyslog_d}50_client_remote.conf").with_ensure('present')
+          is_expected.to contain_file("#{rsyslog_d}/50_client_remote.conf").with_ensure('present')
         end
 
         it 'removes client local logging' do
-          is_expected.to contain_file("#{rsyslog_d}99_client_local.conf").with_ensure('absent')
+          is_expected.to contain_file("#{rsyslog_d}/99_client_local.conf").with_ensure('absent')
         end
       end
 
@@ -77,7 +77,7 @@ describe 'rsyslog::client', type: :class do
             let(:params) { ssl_params }
 
             it 'compiles' do
-              is_expected.to contain_file("#{rsyslog_d}00_client.conf").with_content(%r{\$ActionSendStreamDriverAuthMode anon}).without_content(%r{\$ActionSendStreamDriverPermittedPeer})
+              is_expected.to contain_file("#{rsyslog_d}/00_client.conf").with_content(%r{\$ActionSendStreamDriverAuthMode anon}).without_content(%r{\$ActionSendStreamDriverPermittedPeer})
             end
           end
 
@@ -89,7 +89,7 @@ describe 'rsyslog::client', type: :class do
             end
 
             it 'contains ActionSendStreamDriverAuthMode' do
-              is_expected.to contain_file("#{rsyslog_d}00_client.conf").with_content(%r{\$ActionSendStreamDriverAuthMode x509/name}).without_content(%r{\$ActionSendStreamDriverPermittedPeer})
+              is_expected.to contain_file("#{rsyslog_d}/00_client.conf").with_content(%r{\$ActionSendStreamDriverAuthMode x509/name}).without_content(%r{\$ActionSendStreamDriverPermittedPeer})
             end
           end
 
@@ -114,7 +114,7 @@ describe 'rsyslog::client', type: :class do
             end
 
             it 'contains ActionSendStreamDriverPermittedPeer' do
-              is_expected.to contain_file("#{rsyslog_d}00_client.conf").with_content(%r{\$ActionSendStreamDriverAuthMode x509/name}).with_content(%r{\$ActionSendStreamDriverPermittedPeer logs.example.com})
+              is_expected.to contain_file("#{rsyslog_d}/00_client.conf").with_content(%r{\$ActionSendStreamDriverAuthMode x509/name}).with_content(%r{\$ActionSendStreamDriverPermittedPeer logs.example.com})
             end
           end
 
@@ -144,7 +144,7 @@ describe 'rsyslog::client', type: :class do
 
           context 'without SSL client cert and key' do
             it 'does not contain DefaultNetstreamDriverCertFile or DefaultNetstreamDriverKeyFile' do
-              is_expected.to contain_file("#{rsyslog_d}00_client.conf").without_content(%r{\$DefaultNetstreamDriverCertFile}).without_content(%r{\$DefaultNetstreamDriverKeyFile})
+              is_expected.to contain_file("#{rsyslog_d}/00_client.conf").without_content(%r{\$DefaultNetstreamDriverCertFile}).without_content(%r{\$DefaultNetstreamDriverKeyFile})
             end
           end
 
@@ -157,7 +157,7 @@ describe 'rsyslog::client', type: :class do
             end
 
             it 'contains DefaultNetstreamDriverCertFile and DefaultNetstreamDriverKeyFile' do
-              is_expected.to contain_file("#{rsyslog_d}00_client.conf").with_content(%r{\$DefaultNetstreamDriverCertFile /tmp/cert.crt}).with_content(%r{\$DefaultNetstreamDriverKeyFile /tmp/cert.key})
+              is_expected.to contain_file("#{rsyslog_d}/00_client.conf").with_content(%r{\$DefaultNetstreamDriverCertFile /tmp/cert.crt}).with_content(%r{\$DefaultNetstreamDriverKeyFile /tmp/cert.key})
             end
           end
         end

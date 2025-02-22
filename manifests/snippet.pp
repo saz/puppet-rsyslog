@@ -31,7 +31,7 @@ define rsyslog::snippet (
   }
 
   $name_real = regsubst($name,'[/ ]','-','G')
-  file { "${rsyslog::rsyslog_d}${name_real}.conf":
+  file { "${rsyslog::rsyslog_d}/${name_real}.conf":
     ensure  => $ensure,
     owner   => 'root',
     group   => $rsyslog::run_group,

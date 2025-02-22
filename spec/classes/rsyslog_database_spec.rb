@@ -17,15 +17,15 @@ describe 'rsyslog::database', type: :class do
       when 'Suse'
         mysql_package = false
         pgsql_package = false
-        rsyslog_d = '/etc/rsyslog.d/'
+        rsyslog_d = '/etc/rsyslog.d'
       when 'FreeBSD'
         mysql_package = false
         pgsql_package = false
-        rsyslog_d = '/usr/local/etc/rsyslog.d/'
+        rsyslog_d = '/usr/local/etc/rsyslog.d'
       else
         mysql_package = true
         pgsql_package = true
-        rsyslog_d = '/etc/rsyslog.d/'
+        rsyslog_d = '/etc/rsyslog.d'
       end
 
       context 'default usage mysql' do
@@ -43,7 +43,7 @@ describe 'rsyslog::database', type: :class do
 
         it 'compiles' do
           is_expected.to contain_package('rsyslog-mysql') if mysql_package
-          is_expected.to contain_file("#{rsyslog_d}mysql.conf")
+          is_expected.to contain_file("#{rsyslog_d}/mysql.conf")
         end
       end
 
@@ -62,7 +62,7 @@ describe 'rsyslog::database', type: :class do
 
         it 'compiles' do
           is_expected.to contain_package('rsyslog-pgsql') if pgsql_package
-          is_expected.to contain_file("#{rsyslog_d}pgsql.conf")
+          is_expected.to contain_file("#{rsyslog_d}/pgsql.conf")
         end
       end
     end

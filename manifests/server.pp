@@ -53,7 +53,7 @@ class rsyslog::server (
   $remote_ruleset_relp       = true,
   $enable_onefile            = false,
   $relay_server              = false,
-  $server_dir                = '/srv/log/',
+  $server_dir                = '/srv/log',
   $custom_config             = undef,
   $content                   = undef,
   $port                      = '514',

@@ -15,7 +15,7 @@ describe 'rsyslog', type: :class do
 
       rsyslog_package = 'rsyslog'
       relp_package = 'rsyslog-relp'
-      rsyslog_d = '/etc/rsyslog.d/'
+      rsyslog_d = '/etc/rsyslog.d'
       service_name = 'rsyslog'
       rsyslog_conf = '/etc/rsyslog.conf'
       im_journal_ratelimit_burst = nil
@@ -24,7 +24,7 @@ describe 'rsyslog', type: :class do
       when 'FreeBSD'
         rsyslog_package = 'sysutils/rsyslog8'
         relp_package = nil
-        rsyslog_d = '/usr/local/etc/rsyslog.d/'
+        rsyslog_d = '/usr/local/etc/rsyslog.d'
         service_name = 'rsyslogd'
         rsyslog_conf = '/usr/local/etc/rsyslog.conf'
       when 'Gentoo'

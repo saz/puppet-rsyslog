@@ -13,12 +13,12 @@ describe 'rsyslog::server', type: :class do
         facts
       end
 
-      rsyslog_d = '/etc/rsyslog.d/'
+      rsyslog_d = '/etc/rsyslog.d'
       case facts[:os]['family']
       when 'FreeBSD'
-        rsyslog_d = '/usr/local/etc/rsyslog.d/'
+        rsyslog_d = '/usr/local/etc/rsyslog.d'
       end
-      server_conf = "#{rsyslog_d}00_server.conf"
+      server_conf = "#{rsyslog_d}/00_server.conf"
 
       context 'default usage' do
         let(:title) { 'rsyslog-server-basic' }

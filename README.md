@@ -2,13 +2,6 @@
 
 Manage rsyslog client and server via Puppet
 
-### Donate
-If you find this module useful, consider supporting me via Gratipay
-
-[![Support via Gratipay](https://cdn.rawgit.com/gratipay/gratipay-badge/2.3.0/dist/gratipay.svg)](https://gratipay.com/saz/)
-
-or send some bitcoins to ```1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9```
-
 ## REQUIREMENTS
 
 * Puppet >= 3.0
@@ -178,7 +171,7 @@ rsyslog::client::log_filters:
     remote_ruleset_relp       => true,
     enable_onefile            => false,
     relay_server              => false,
-    server_dir                => '/srv/log/',
+    server_dir                => '/srv/log',
     custom_config             => undef,
     content                   => undef,
     port                      => '514',
@@ -258,7 +251,7 @@ The following lists all the class parameters this module accepts.
     remote_ruleset_relp                 true,false          Disables the remote ruleset when the RELP listener is enabled.
     enable_onefile                      true,false          Only one logfile per remote host. Defaults to false.
     relay_server                        true,false          If the server should be able to relay the received logs to another server. The rsyslog::client must also be set up. Defaults to false.
-    server_dir                          STRING              Folder where logs will be stored on the server. Defaults to '/srv/log/'
+    server_dir                          STRING              Folder where logs will be stored on the server. Defaults to '/srv/log'
     custom_config                       STRING              Specify your own template to use for server config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb'
     content                             STRING              Specify the content of the server config, instead of using a template. Defaults to undef.
     port                                STRING/INTEGER      Port to listen on for messages via UDP and TCP. Defaults to 514
