@@ -1,11 +1,6 @@
 # File is managed by puppet
 
-<% if @rsyslog_version and @rsyslog_version.split('.')[0].to_i < 7 -%>
-# Debian, Ubuntu
-RSYSLOGD_OPTIONS="-c4"
-<% else -%>
 RSYSLOGD_OPTIONS=""
-<% end -%>
 <% if @facts['os']['family'].casecmp('redhat') == 0 -%>
 # CentOS, RedHat, Fedora
 SYSLOGD_OPTIONS="${RSYSLOGD_OPTIONS}"
