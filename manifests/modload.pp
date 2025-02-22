@@ -9,5 +9,4 @@ class rsyslog::modload (
     content => template('rsyslog/modload.erb'),
     require => Class['rsyslog::install'],
   }
-
 }

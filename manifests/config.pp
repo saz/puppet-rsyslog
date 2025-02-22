@@ -11,7 +11,6 @@
 #  class { 'rsyslog::config': }
 #
 class rsyslog::config {
-
   File {
     owner   => 'root',
     group   => $rsyslog::run_group,
@@ -42,5 +41,4 @@ class rsyslog::config {
     mode    => '0700',
     seltype => 'syslogd_var_lib_t',
   }
-
 }

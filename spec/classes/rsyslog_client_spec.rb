@@ -1,27 +1,28 @@
 require 'spec_helper'
 
 describe 'rsyslog::client', type: :class do
-  context 'Rsyslog version >= 8' do
-    let(:default_facts) do
-      {
-        rsyslog_version: '8.1.2'
-      }
-    end
+  let :node do
+    'rspec.example.com'
+  end
 
-    context 'osfamily = RedHat' do
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
       let :facts do
-        default_facts.merge!(
-          osfamily: 'RedHat',
-          operatingsystem: 'RedHat',
-          operatingsystemmajrelease: '6'
-        )
+        facts
       end
 
-      context 'default usage (osfamily = RedHat)' do
+      rsyslog_d = '/etc/rsyslog.d/'
+      case facts[:os]['family']
+      when 'FreeBSD'
+        rsyslog_d = '/usr/local/etc/rsyslog.d/'
+      end
+      client_conf = "#{rsyslog_d}00_client.conf"
+
+      context 'default usage' do
         let(:title) { 'rsyslog-client-basic' }
 
         it 'compiles' do
-          is_expected.to contain_file('/etc/rsyslog.d/00_client.conf')
+          is_expected.to contain_file(client_conf)
         end
       end
 
@@ -30,79 +31,32 @@ describe 'rsyslog::client', type: :class do
         let(:params) { { split_config: true } }
 
         it 'does not manage 00_client.conf' do
-          is_expected.not_to contain_file('/etc/rsyslog.d/00_client.conf')
+          is_expected.not_to contain_file(client_conf)
         end
 
         it 'configures client' do
-          is_expected.to contain_file('/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
+          is_expected.to contain_file("#{rsyslog_d}00_client_config.conf").with_ensure('present')
         end
 
         it 'configures client remote logging' do
-          is_expected.to contain_file('/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
+          is_expected.to contain_file("#{rsyslog_d}50_client_remote.conf").with_ensure('present')
         end
 
         it 'removes client local logging' do
-          is_expected.to contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
+          is_expected.to contain_file("#{rsyslog_d}99_client_local.conf").with_ensure('absent')
         end
       end
 
-      context 'log_filters (osfamily = RedHat)' do
+      context 'log_filters' do
         let(:title) { 'log_filters_check' }
         let(:params) { { 'log_filters' => [{ 'expression' => '$msg contains \'error0\'', 'action' => '/var/log/err.log' }] } }
 
         it 'compiles' do
-          is_expected.to contain_file('/etc/rsyslog.d/00_client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
-        end
-      end
-    end
-
-    context 'osfamily = Debian' do
-      let :facts do
-        default_facts.merge!(
-          osfamily: 'Debian',
-          operatingsystem: 'Debian'
-        )
-      end
-
-      context 'default usage (osfamily = Debian)' do
-        let(:title) { 'rsyslog-client-basic' }
-
-        it 'compiles' do
-          is_expected.to contain_file('/etc/rsyslog.d/00_client.conf')
+          is_expected.to contain_file(client_conf).with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
         end
       end
 
-      context 'split_config => true' do
-        let(:title) { 'rsyslog-client-basic' }
-        let(:params) { { split_config: true } }
-
-        it 'does not manage 00_client.conf' do
-          is_expected.not_to contain_file('/etc/rsyslog.d/00_client.conf')
-        end
-
-        it 'configures client' do
-          is_expected.to contain_file('/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
-        end
-
-        it 'configures client remote logging' do
-          is_expected.to contain_file('/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
-        end
-
-        it 'removes client local logging' do
-          is_expected.to contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
-        end
-      end
-
-      context 'log_filters (osfamily = RedHat)' do
-        let(:title) { 'log_filters_check' }
-        let(:params) { { 'log_filters' => [{ 'expression' => '$msg contains \'error0\'', 'action' => '/var/log/err.log' }] } }
-
-        it 'compiles' do
-          is_expected.to contain_file('/etc/rsyslog.d/00_client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
-        end
-      end
-
-      context 'auth_mode (osfamily = Debian)' do
+      context 'auth_mode' do
         let(:title) { 'rsyslog-client-auth_mode' }
 
         context 'without SSL' do
@@ -121,7 +75,7 @@ describe 'rsyslog::client', type: :class do
             let(:params) { ssl_params }
 
             it 'compiles' do
-              is_expected.to contain_file('/etc/rsyslog.d/00_client.conf').with_content(%r{\$ActionSendStreamDriverAuthMode anon}).without_content(%r{\$ActionSendStreamDriverPermittedPeer})
+              is_expected.to contain_file("#{rsyslog_d}00_client.conf").with_content(%r{\$ActionSendStreamDriverAuthMode anon}).without_content(%r{\$ActionSendStreamDriverPermittedPeer})
             end
           end
 
@@ -133,7 +87,7 @@ describe 'rsyslog::client', type: :class do
             end
 
             it 'contains ActionSendStreamDriverAuthMode' do
-              is_expected.to contain_file('/etc/rsyslog.d/00_client.conf').with_content(%r{\$ActionSendStreamDriverAuthMode x509\/name}).without_content(%r{\$ActionSendStreamDriverPermittedPeer})
+              is_expected.to contain_file("#{rsyslog_d}00_client.conf").with_content(%r{\$ActionSendStreamDriverAuthMode x509\/name}).without_content(%r{\$ActionSendStreamDriverPermittedPeer})
             end
           end
 
@@ -158,7 +112,7 @@ describe 'rsyslog::client', type: :class do
             end
 
             it 'contains ActionSendStreamDriverPermittedPeer' do
-              is_expected.to contain_file('/etc/rsyslog.d/00_client.conf').with_content(%r{\$ActionSendStreamDriverAuthMode x509\/name}).with_content(%r{\$ActionSendStreamDriverPermittedPeer logs.example.com})
+              is_expected.to contain_file("#{rsyslog_d}00_client.conf").with_content(%r{\$ActionSendStreamDriverAuthMode x509\/name}).with_content(%r{\$ActionSendStreamDriverPermittedPeer logs.example.com})
             end
           end
 
@@ -188,7 +142,7 @@ describe 'rsyslog::client', type: :class do
 
           context 'without SSL client cert and key' do
             it 'does not contain DefaultNetstreamDriverCertFile or DefaultNetstreamDriverKeyFile' do
-              is_expected.to contain_file('/etc/rsyslog.d/00_client.conf').without_content(%r{\$DefaultNetstreamDriverCertFile}).without_content(%r{\$DefaultNetstreamDriverKeyFile})
+              is_expected.to contain_file("#{rsyslog_d}00_client.conf").without_content(%r{\$DefaultNetstreamDriverCertFile}).without_content(%r{\$DefaultNetstreamDriverKeyFile})
             end
           end
 
@@ -201,235 +155,9 @@ describe 'rsyslog::client', type: :class do
             end
 
             it 'contains DefaultNetstreamDriverCertFile and DefaultNetstreamDriverKeyFile' do
-              is_expected.to contain_file('/etc/rsyslog.d/00_client.conf').with_content(%r{\$DefaultNetstreamDriverCertFile /tmp/cert.crt}).with_content(%r{\$DefaultNetstreamDriverKeyFile /tmp/cert.key})
+              is_expected.to contain_file("#{rsyslog_d}00_client.conf").with_content(%r{\$DefaultNetstreamDriverCertFile /tmp/cert.crt}).with_content(%r{\$DefaultNetstreamDriverKeyFile /tmp/cert.key})
             end
           end
-        end
-      end
-    end
-
-    context 'osfamily = FreeBSD' do
-      let :facts do
-        default_facts.merge!(
-          osfamily: 'FreeBSD',
-          operatingsystem: 'FreeBSD'
-        )
-      end
-
-      context 'default usage (osfamily = FreeBSD)' do
-        let(:title) { 'rsyslog-client-basic' }
-
-        it 'compiles' do
-          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_client.conf')
-        end
-      end
-
-      context 'split_config => true' do
-        let(:title) { 'rsyslog-client-basic' }
-        let(:params) { { split_config: true } }
-
-        it 'does not manage 00_client.conf' do
-          is_expected.not_to contain_file('/usr/local/etc/rsyslog.d/00_client.conf')
-        end
-
-        it 'configures client' do
-          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
-        end
-
-        it 'configures client remote logging' do
-          is_expected.to contain_file('/usr/local/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
-        end
-
-        it 'removes client local logging' do
-          is_expected.to contain_file('/usr/local/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
-        end
-      end
-    end
-  end
-
-  context 'Rsyslog version =< 8' do
-    let(:default_facts) do
-      {
-        rsyslog_version: '7.1.2'
-      }
-    end
-
-    context 'osfamily = RedHat' do
-      let :facts do
-        default_facts.merge!(
-          osfamily: 'RedHat',
-          operatingsystem: 'RedHat',
-          operatingsystemmajrelease: '6'
-        )
-      end
-
-      context 'default usage (osfamily = RedHat)' do
-        let(:title) { 'rsyslog-client-basic' }
-
-        it 'compiles' do
-          is_expected.to contain_file('/etc/rsyslog.d/00_client.conf')
-        end
-      end
-
-      context 'split_config => true' do
-        let(:title) { 'rsyslog-client-basic' }
-        let(:params) { { split_config: true } }
-
-        it 'does not manage 00_client.conf' do
-          is_expected.not_to contain_file('/etc/rsyslog.d/00_client.conf')
-        end
-
-        it 'configures client' do
-          is_expected.to contain_file('/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
-        end
-
-        it 'configures client remote logging' do
-          is_expected.to contain_file('/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
-        end
-
-        it 'removes client local logging' do
-          is_expected.to contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
-        end
-      end
-
-      context 'log_filters (osfamily = RedHat)' do
-        let(:title) { 'log_filters_check' }
-        let(:params) { { 'log_filters' => [{ 'expression' => '$msg contains \'error0\'', 'action' => '/var/log/err.log' }] } }
-
-        it 'compiles' do
-          is_expected.to contain_file('/etc/rsyslog.d/00_client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
-        end
-      end
-    end
-
-    context 'osfamily = Debian' do
-      let :facts do
-        default_facts.merge!(
-          osfamily: 'Debian',
-          operatingsystem: 'Debian'
-        )
-      end
-
-      context 'default usage (osfamily = Debian)' do
-        let(:title) { 'rsyslog-client-basic' }
-
-        it 'compiles' do
-          is_expected.to contain_file('/etc/rsyslog.d/00_client.conf')
-        end
-      end
-
-      context 'split_config => true' do
-        let(:title) { 'rsyslog-client-basic' }
-        let(:params) { { split_config: true } }
-
-        it 'does not manage 00_client.conf' do
-          is_expected.not_to contain_file('/etc/rsyslog.d/00_client.conf')
-        end
-
-        it 'configures client' do
-          is_expected.to contain_file('/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
-        end
-
-        it 'configures client remote logging' do
-          is_expected.to contain_file('/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
-        end
-
-        it 'removes client local logging' do
-          is_expected.to contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
-        end
-      end
-
-      context 'log_filters (osfamily = RedHat)' do
-        let(:title) { 'log_filters_check' }
-        let(:params) { { 'log_filters' => [{ 'expression' => '$msg contains \'error0\'', 'action' => '/var/log/err.log' }] } }
-
-        it 'compiles' do
-          is_expected.to contain_file('/etc/rsyslog.d/00_client.conf').with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
-        end
-      end
-    end
-
-    context 'osfamily = FreeBSD' do
-      let :facts do
-        default_facts.merge!(
-          osfamily: 'FreeBSD',
-          operatingsystem: 'FreeBSD'
-        )
-      end
-
-      context 'default usage (osfamily = FreeBSD)' do
-        let(:title) { 'rsyslog-client-basic' }
-
-        it 'compiles' do
-          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_client.conf')
-        end
-      end
-
-      context 'split_config => true' do
-        let(:title) { 'rsyslog-client-basic' }
-        let(:params) { { split_config: true } }
-
-        it 'does not manage 00_client.conf' do
-          is_expected.not_to contain_file('/usr/local/etc/rsyslog.d/00_client.conf')
-        end
-
-        it 'configures client' do
-          is_expected.to contain_file('/usr/local/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
-        end
-
-        it 'configures client remote logging' do
-          is_expected.to contain_file('/usr/local/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
-        end
-
-        it 'removes client local logging' do
-          is_expected.to contain_file('/usr/local/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
-        end
-      end
-    end
-  end
-
-  context 'Rsyslog version = nil' do
-    let(:default_facts) do
-      {
-        rsyslog_version: nil
-      }
-    end
-
-    context 'osfamily = RedHat' do
-      let :facts do
-        default_facts.merge!(
-          osfamily: 'RedHat',
-          operatingsystem: 'RedHat',
-          operatingsystemmajrelease: '6'
-        )
-      end
-
-      context 'default usage (osfamily = RedHat)' do
-        let(:title) { 'rsyslog-client-basic' }
-
-        it 'compiles' do
-          is_expected.to contain_file('/etc/rsyslog.d/00_client.conf')
-        end
-      end
-
-      context 'split_config => true' do
-        let(:title) { 'rsyslog-client-basic' }
-        let(:params) { { split_config: true } }
-
-        it 'does not manage 00_client.conf' do
-          is_expected.not_to contain_file('/etc/rsyslog.d/00_client.conf')
-        end
-
-        it 'configures client' do
-          is_expected.to contain_file('/etc/rsyslog.d/00_client_config.conf').with_ensure('present')
-        end
-
-        it 'configures client remote logging' do
-          is_expected.to contain_file('/etc/rsyslog.d/50_client_remote.conf').with_ensure('present')
-        end
-
-        it 'removes client local logging' do
-          is_expected.to contain_file('/etc/rsyslog.d/99_client_local.conf').with_ensure('absent')
         end
       end
     end

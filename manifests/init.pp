@@ -52,7 +52,6 @@ class rsyslog (
   $im_journal_ratelimit_burst          = $rsyslog::params::im_journal_ratelimit_burst,
   $im_journal_ignore_previous_messages = $rsyslog::params::im_journal_ignore_previous_messages
 ) inherits rsyslog::params {
-
   contain rsyslog::install
   contain rsyslog::config
   contain rsyslog::service
@@ -62,6 +61,4 @@ class rsyslog (
   }
 
   Class['rsyslog::install'] -> Class['rsyslog::config'] ~> Class['rsyslog::service']
-
 }
-

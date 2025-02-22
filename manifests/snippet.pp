@@ -17,12 +17,12 @@
 #    content => '<Some rsyslog directive>',
 #  }
 #
-define rsyslog::snippet(
-  $content    = '',
-  $ensure     = 'present',
-  $file_mode  = 'undef'
+define rsyslog::snippet (
+  $content   = '',
+  $ensure    = 'present',
+  $file_mode = 'undef',
 ) {
-  include ::rsyslog
+  include rsyslog
 
   if $file_mode == 'undef' {
     $file_mode_real = $rsyslog::perm_file
@@ -40,5 +40,4 @@ define rsyslog::snippet(
     require => Class['rsyslog::config'],
     notify  => Class['rsyslog::service'],
   }
-
 }

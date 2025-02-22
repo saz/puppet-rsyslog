@@ -31,5 +31,4 @@ class rsyslog::install {
       notify => Class['rsyslog::service'],
     }
   }
-
 }

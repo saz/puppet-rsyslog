@@ -68,7 +68,7 @@ class rsyslog::client (
   $high_precision_timestamps = false,
   $imfiles                   = undef
 ) inherits rsyslog::params {
-  include ::rsyslog
+  include rsyslog
 
   if $custom_config {
     $content_real = template($custom_config)
@@ -144,5 +144,4 @@ class rsyslog::client (
   if $imfiles {
     create_resources(rsyslog::imfile, $imfiles)
   }
-
 }

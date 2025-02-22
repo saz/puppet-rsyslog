@@ -24,7 +24,7 @@
 #    file_facility => 'myfacility',
 #  }
 #
-define rsyslog::imfile(
+define rsyslog::imfile (
   $file_name,
   $file_tag,
   $file_facility,
@@ -36,8 +36,7 @@ define rsyslog::imfile(
   $persist_state_interval = 0,
   $imfile_template = 'rsyslog/imfile.erb',
 ) {
-
-  include ::rsyslog
+  include rsyslog
   $extra_modules = $rsyslog::extra_modules
 
   # This mode should defined when having multiline messages.
@@ -54,5 +53,4 @@ define rsyslog::imfile(
     ensure  => $ensure,
     content => template($imfile_template),
   }
-
 }

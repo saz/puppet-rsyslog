@@ -29,7 +29,7 @@ class rsyslog::database (
   $username,
   $password
 ) {
-  include ::rsyslog
+  include rsyslog
 
   case $backend {
     'mysql': { $db_package = $rsyslog::mysql_package_name }
@@ -37,15 +37,16 @@ class rsyslog::database (
     default: { fail("Unsupported backend: ${backend}. Only MySQL (mysql) and PostgreSQL (pgsql) are supported.") }
   }
 
-  package { $db_package:
-    ensure => $rsyslog::package_status,
+  if $db_package {
+    package { $db_package:
+      ensure => $rsyslog::package_status,
+      before => Rsyslog::Snippet[$backend],
+    }
   }
 
   rsyslog::snippet { $backend:
     ensure    => present,
     file_mode => '0600',
     content   => template("${module_name}/database.conf.erb"),
-    require   => Package[$db_package],
   }
-
 }

@@ -1,126 +1,32 @@
 require 'spec_helper'
 
 describe 'rsyslog::database', type: :class do
-  context 'Rsyslog version >= 8' do
-    let(:default_facts) do
-      {
-        rsyslog_version: '8.1.2'
-      }
-    end
-
-    context 'osfamily = RedHat' do
-      let :facts do
-        default_facts.merge!(
-          osfamily: 'RedHat',
-          operatingsystem: 'RedHat',
-          operatingsystemmajrelease: '6'
-        )
-      end
-
-      context 'default usage mysql (osfamily = RedHat)' do
-        let(:title) { 'rsyslog-database-mysql' }
-
-        let(:params) do
-          {
-            'backend'  => 'mysql',
-            'server'   => 'localhost',
-            'database' => 'rsyslog',
-            'username' => 'us3rname',
-            'password' => 'passw0rd'
-          }
-        end
-
-        it 'compiles' do
-          is_expected.to contain_package('rsyslog-mysql')
-          is_expected.to contain_file('/etc/rsyslog.d/mysql.conf')
-        end
-      end
-
-      context 'default usage pgsql (osfamily = RedHat)' do
-        let(:title) { 'rsyslog-database-pgsql' }
-
-        let(:params) do
-          {
-            'backend'  => 'pgsql',
-            'server'   => 'localhost',
-            'database' => 'rsyslog',
-            'username' => 'us3rname',
-            'password' => 'passw0rd'
-          }
-        end
-
-        it 'compiles' do
-          is_expected.to contain_package('rsyslog-pgsql')
-          is_expected.to contain_file('/etc/rsyslog.d/pgsql.conf')
-        end
-      end
-    end
-
-    context 'osfamily = Debian' do
-      let :facts do
-        default_facts.merge!(
-          osfamily: 'Debian',
-          operatingsystem: 'Debian'
-        )
-      end
-
-      context 'default usage mysql (osfamily = Debian)' do
-        let(:title) { 'rsyslog-database-mysql' }
-
-        let(:params) do
-          {
-            'backend'  => 'mysql',
-            'server'   => 'localhost',
-            'database' => 'rsyslog',
-            'username' => 'us3rname',
-            'password' => 'passw0rd'
-          }
-        end
-
-        it 'compiles' do
-          is_expected.to contain_package('rsyslog-mysql')
-          is_expected.to contain_file('/etc/rsyslog.d/mysql.conf')
-        end
-      end
-
-      context 'default usage pgsql (osfamily = Debian)' do
-        let(:title) { 'rsyslog-database-pgsql' }
-
-        let(:params) do
-          {
-            'backend'  => 'pgsql',
-            'server'   => 'localhost',
-            'database' => 'rsyslog',
-            'username' => 'us3rname',
-            'password' => 'passw0rd'
-          }
-        end
-
-        it 'compiles' do
-          is_expected.to contain_package('rsyslog-pgsql')
-          is_expected.to contain_file('/etc/rsyslog.d/pgsql.conf')
-        end
-      end
-    end
+  let :node do
+    'rspec.example.com'
   end
 
-  context 'Rsyslog version =< 8' do
-    let(:default_facts) do
-      {
-        rsyslog_version: '7.1.2'
-      }
-    end
-
-    context 'osfamily = RedHat' do
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
       let :facts do
-        default_facts.merge!(
-          osfamily: 'RedHat',
-          operatingsystem: 'RedHat',
-          operatingsystemmajrelease: '6'
-        )
+        facts
       end
 
-      context 'default usage mysql (osfamily = RedHat)' do
+      case facts[:os]['family']
+      when 'Suse'
+        mysql_package = false
+        pgsql_package = false
+        rsyslog_d = '/etc/rsyslog.d/'
+      when 'FreeBSD'
+        mysql_package = false
+        pgsql_package = false
+        rsyslog_d = '/usr/local/etc/rsyslog.d/'
+      else
+        mysql_package = true
+        pgsql_package = true
+        rsyslog_d = '/etc/rsyslog.d/'
+      end
+
+      context 'default usage mysql' do
         let(:title) { 'rsyslog-database-mysql' }
 
         let(:params) do
@@ -134,12 +40,14 @@ describe 'rsyslog::database', type: :class do
         end
 
         it 'compiles' do
-          is_expected.to contain_package('rsyslog-mysql')
-          is_expected.to contain_file('/etc/rsyslog.d/mysql.conf')
+          if mysql_package
+            is_expected.to contain_package('rsyslog-mysql')
+          end
+          is_expected.to contain_file("#{rsyslog_d}mysql.conf")
         end
       end
 
-      context 'default usage pgsql (osfamily = RedHat)' do
+      context 'default usage pgsql' do
         let(:title) { 'rsyslog-database-pgsql' }
 
         let(:params) do
@@ -153,55 +61,10 @@ describe 'rsyslog::database', type: :class do
         end
 
         it 'compiles' do
-          is_expected.to contain_package('rsyslog-pgsql')
-          is_expected.to contain_file('/etc/rsyslog.d/pgsql.conf')
-        end
-      end
-    end
-
-    context 'osfamily = Debian' do
-      let :facts do
-        default_facts.merge!(
-          osfamily: 'Debian',
-          operatingsystem: 'Debian'
-        )
-      end
-
-      context 'default usage mysql (osfamily = Debian)' do
-        let(:title) { 'rsyslog-database-mysql' }
-
-        let(:params) do
-          {
-            'backend'  => 'mysql',
-            'server'   => 'localhost',
-            'database' => 'rsyslog',
-            'username' => 'us3rname',
-            'password' => 'passw0rd'
-          }
-        end
-
-        it 'compiles' do
-          is_expected.to contain_package('rsyslog-mysql')
-          is_expected.to contain_file('/etc/rsyslog.d/mysql.conf')
-        end
-      end
-
-      context 'default usage pgsql (osfamily = Debian)' do
-        let(:title) { 'rsyslog-database-pgsql' }
-
-        let(:params) do
-          {
-            'backend'  => 'pgsql',
-            'server'   => 'localhost',
-            'database' => 'rsyslog',
-            'username' => 'us3rname',
-            'password' => 'passw0rd'
-          }
-        end
-
-        it 'compiles' do
-          is_expected.to contain_package('rsyslog-pgsql')
-          is_expected.to contain_file('/etc/rsyslog.d/pgsql.conf')
+          if pgsql_package
+            is_expected.to contain_package('rsyslog-pgsql')
+          end
+          is_expected.to contain_file("#{rsyslog_d}pgsql.conf")
         end
       end
     end
