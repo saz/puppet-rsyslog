@@ -1,4 +1,4 @@
-class { '::rsyslog::server':
+class { 'rsyslog::server':
   rules => [
     {
       selector => 'auth,authpriv.*',

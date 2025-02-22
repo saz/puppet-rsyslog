@@ -1,4 +1,4 @@
-class { '::rsyslog::client':
+class { 'rsyslog::client':
   log_templates      => [
     {
       name     => 'RFC3164fmt',

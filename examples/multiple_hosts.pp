@@ -1,4 +1,4 @@
-class { '::rsyslog::client':
+class { 'rsyslog::client':
   remote_servers => [
     {
       host => 'logs.example.org',
