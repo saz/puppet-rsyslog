@@ -34,9 +34,6 @@
       "operatingsystem": "OracleLinux"
     },
     {
-      "operatingsystem": "Scientific"
-    },
-    {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
         "11",
@@ -69,6 +66,9 @@
   ],
   "description": "Manage rsyslog client and server via Puppet",
   "dependencies": [
-
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 9.0.0 < 10.0.0"
+    }
   ]
 }

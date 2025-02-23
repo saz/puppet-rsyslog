@@ -1,16 +1,11 @@
-# == Class: rsyslog::config
+# @summary
+#   Manages rsyslog configuration
 #
-# Full description of class role here.
-#
-# === Parameters
-#
-# === Variables
-#
-# === Examples
-#
-#  class { 'rsyslog::config': }
+# @api private
 #
 class rsyslog::config {
+  assert_private()
+
   File {
     owner   => 'root',
     group   => $rsyslog::run_group,

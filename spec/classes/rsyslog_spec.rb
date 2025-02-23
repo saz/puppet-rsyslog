@@ -19,6 +19,8 @@ describe 'rsyslog', type: :class do
       service_name = 'rsyslog'
       rsyslog_conf = '/etc/rsyslog.conf'
       im_journal_ratelimit_burst = nil
+      rsyslog_default = '/etc/default/rsyslog'
+      spool_dir = '/var/spool/rsyslog'
 
       case facts[:os]['family']
       when 'FreeBSD'
@@ -27,13 +29,18 @@ describe 'rsyslog', type: :class do
         rsyslog_d = '/usr/local/etc/rsyslog.d'
         service_name = 'rsyslogd'
         rsyslog_conf = '/usr/local/etc/rsyslog.conf'
+        rsyslog_default = '/etc/defaults/syslogd'
       when 'Gentoo'
         rsyslog_package = 'app-admin/rsyslog'
         relp_package = nil
+        rsyslog_default = '/etc/conf.d/rsyslog'
       when 'Suse'
         relp_package = nil
         service_name = 'syslog'
+        rsyslog_default = '/etc/sysconfig/syslog'
       when 'RedHat'
+        rsyslog_default = '/etc/sysconfig/rsyslog'
+        spool_dir = '/var/lib/rsyslog'
         case facts[:os]['name']
         when 'Amazon'
           relp_package = nil
@@ -51,13 +58,15 @@ describe 'rsyslog', type: :class do
           is_expected.to contain_class('rsyslog::service').that_subscribes_to('Class[rsyslog::config]')
           is_expected.to contain_package(rsyslog_package)
           is_expected.to contain_package(relp_package) if relp_package
-          is_expected.to contain_file(rsyslog_d)
+          is_expected.to contain_file(rsyslog_d).with_ensure('directory')
           is_expected.to contain_service(service_name)
           if im_journal_ratelimit_burst
             is_expected.to contain_file(rsyslog_conf).with_content(%r{\$imjournalRatelimitBurst #{im_journal_ratelimit_burst}})
           else
             is_expected.to contain_file(rsyslog_conf).without_content(%r{\$imjournalRatelimitBurst})
           end
+          is_expected.to contain_file(rsyslog_default).with_ensure('file')
+          is_expected.to contain_file(spool_dir).with_ensure('directory')
         end
       end
 
