@@ -172,7 +172,11 @@ class rsyslog (
   contain rsyslog::service
 
   if $extra_modules != [] {
-    include rsyslog::modload
+    rsyslog::snippet { '10-modload':
+      ensure  => present,
+      content => template("${module_name}/modload.erb"),
+      require => Class['rsyslog::install'],
+    }
   }
 
   Class['rsyslog::install'] -> Class['rsyslog::config'] ~> Class['rsyslog::service']

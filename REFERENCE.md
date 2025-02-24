@@ -12,7 +12,6 @@
 You propably want rsyslog::client or rsyslog::server
 * [`rsyslog::client`](#rsyslog--client): This class manages rsyslog as client
 * [`rsyslog::database`](#rsyslog--database): This class manages rsyslog database connection
-* [`rsyslog::modload`](#rsyslog--modload): This class manages extra rsyslog modules
 * [`rsyslog::params`](#rsyslog--params): Manages default configuration values for this module.
 * [`rsyslog::server`](#rsyslog--server): This class manages rsyslog as server
 * [`rsyslog::service`](#rsyslog--service): == Class: rsyslog::service  This class enforces running of the rsyslog service.  === Parameters  === Variables  === Examples   class { 'rsysl
@@ -724,32 +723,6 @@ The database username to use.
 Data type: `Variant[String[1], Sensitive[String[1]]]`
 
 The database password to use.
-
-### <a name="rsyslog--modload"></a>`rsyslog::modload`
-
-This class manages extra rsyslog modules
-
-#### Examples
-
-##### Puppet usage
-
-```puppet
-class { 'rsyslog::modload': }
-```
-
-#### Parameters
-
-The following parameters are available in the `rsyslog::modload` class:
-
-* [`modload_filename`](#-rsyslog--modload--modload_filename)
-
-##### <a name="-rsyslog--modload--modload_filename"></a>`modload_filename`
-
-Data type: `String[1]`
-
-Snippet filename to use
-
-Default value: `'10-modload'`
 
 ### <a name="rsyslog--params"></a>`rsyslog::params`
 
