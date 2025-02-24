@@ -22,7 +22,7 @@ class rsyslog::config {
 
   file { $rsyslog::rsyslog_conf:
     ensure  => file,
-    content => template("${module_name}/rsyslog.conf.erb"),
+    content => template($rsyslog::rsyslog_conf_template_file),
   }
 
   file { $rsyslog::rsyslog_default:

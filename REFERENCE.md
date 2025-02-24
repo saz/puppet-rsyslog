@@ -55,6 +55,7 @@ The following parameters are available in the `rsyslog` class:
 * [`rsyslog_d`](#-rsyslog--rsyslog_d)
 * [`purge_rsyslog_d`](#-rsyslog--purge_rsyslog_d)
 * [`rsyslog_conf`](#-rsyslog--rsyslog_conf)
+* [`rsyslog_conf_template_file`](#-rsyslog--rsyslog_conf_template_file)
 * [`rsyslog_default`](#-rsyslog--rsyslog_default)
 * [`rsyslog_default_file`](#-rsyslog--rsyslog_default_file)
 * [`run_user`](#-rsyslog--run_user)
@@ -157,6 +158,14 @@ Data type: `Stdlib::Absolutepath`
 Path to rsyslog main configuration file
 
 Default value: `$rsyslog::params::rsyslog_conf`
+
+##### <a name="-rsyslog--rsyslog_conf_template_file"></a>`rsyslog_conf_template_file`
+
+Data type: `String[1]`
+
+Name of the rsyslog.conf template file to use
+
+Default value: `"${module_name}/rsyslog.conf.erb"`
 
 ##### <a name="-rsyslog--rsyslog_default"></a>`rsyslog_default`
 

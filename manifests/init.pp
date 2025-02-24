@@ -32,6 +32,9 @@
 # @param rsyslog_conf
 #   Path to rsyslog main configuration file
 #
+# @param rsyslog_conf_template_file
+#   Name of the rsyslog.conf template file to use
+#
 # @param rsyslog_default
 #   rsyslog default file path
 #
@@ -132,6 +135,7 @@ class rsyslog (
   Stdlib::Absolutepath $rsyslog_d = $rsyslog::params::rsyslog_d,
   Boolean $purge_rsyslog_d = $rsyslog::params::purge_rsyslog_d,
   Stdlib::Absolutepath $rsyslog_conf = $rsyslog::params::rsyslog_conf,
+  String[1] $rsyslog_conf_template_file = "${module_name}/rsyslog.conf.erb",
   Stdlib::Absolutepath $rsyslog_default = $rsyslog::params::rsyslog_default,
   String[1] $rsyslog_default_file = $rsyslog::params::default_config_file,
   String[1] $run_user = $rsyslog::params::run_user,
