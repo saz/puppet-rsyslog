@@ -1,10 +1,14 @@
-# file is managed by puppet
+#
+# File is managed by puppet
+#
+$MaxMessageSize <%= scope.lookupvar('rsyslog::max_message_size') %>
 <% if scope.lookupvar('rsyslog::preserve_fqdn') -%>
 $PreserveFQDN on
 <% end -%>
 <% if scope.lookupvar('rsyslog::local_host_name') and scope.lookupvar('rsyslog::local_host_name') != :undef -%>
 $LocalHostName <%= scope.lookupvar('rsyslog::local_host_name') %>
 <% end -%>
+
 #################
 #### MODULES ####
 #################
@@ -21,11 +25,6 @@ $KLogPermitNonKernelFacility on
 ###########################
 #### GLOBAL DIRECTIVES ####
 ###########################
-#
-# Set max message size for sending and receiving
-#
-$MaxMessageSize <%= scope.lookupvar('rsyslog::max_message_size') %>
-
 #
 # Set rate limit for messages received.
 #
