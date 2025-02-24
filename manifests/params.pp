@@ -76,49 +76,13 @@ class rsyslog::params {
         $im_journal_ignore_previous_messages = undef
         $im_journal_statefile                = undef
       }
-      elsif versioncmp($facts['os']['release']['major'], '5') == 0 {
-        $rsyslog_package_name                = 'rsyslog'
-        $mysql_package_name                  = 'rsyslog-mysql'
-        $pgsql_package_name                  = 'rsyslog-pgsql'
-        $gnutls_package_name                 = 'rsyslog-gnutls'
-        $relp_package_name                   = false
-        $default_config_file                 = 'rsyslog_default'
-        $modules                             = [
-          '$ModLoad imuxsock # provides support for local system logging',
-          '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-          '#$ModLoad immark  # provides --MARK-- message capability',
-        ]
-        $omit_local_logging                  = false
-        $im_journal_ratelimit_interval       = undef
-        $im_journal_ratelimit_burst          = undef
-        $im_journal_ignore_previous_messages = undef
-        $im_journal_statefile                = undef
-      }
-      elsif versioncmp($facts['os']['release']['major'], '6') == 0 {
+      else {
         $rsyslog_package_name                = 'rsyslog'
         $mysql_package_name                  = 'rsyslog-mysql'
         $pgsql_package_name                  = 'rsyslog-pgsql'
         $gnutls_package_name                 = 'rsyslog-gnutls'
         $relp_package_name                   = 'rsyslog-relp'
         $default_config_file                 = 'rsyslog_default'
-        $modules                             = [
-          '$ModLoad imuxsock # provides support for local system logging',
-          '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-          '#$ModLoad immark  # provides --MARK-- message capability',
-        ]
-        $omit_local_logging                  = false
-        $im_journal_ratelimit_interval       = undef
-        $im_journal_ratelimit_burst          = undef
-        $im_journal_ignore_previous_messages = undef
-        $im_journal_statefile                = undef
-      }
-      elsif versioncmp($facts['os']['release']['major'], '7') >= 0 {
-        $rsyslog_package_name                = 'rsyslog'
-        $mysql_package_name                  = 'rsyslog-mysql'
-        $pgsql_package_name                  = 'rsyslog-pgsql'
-        $gnutls_package_name                 = 'rsyslog-gnutls'
-        $relp_package_name                   = 'rsyslog-relp'
-        $default_config_file                 = 'rsyslog_default_rhel7'
         $modules                             = [
           '$ModLoad imuxsock # provides support for local system logging',
           '$ModLoad imjournal # provides access to the systemd journal',
@@ -130,23 +94,6 @@ class rsyslog::params {
         $im_journal_ratelimit_burst          = '20000'
         $im_journal_ignore_previous_messages = 'off'
         $im_journal_statefile                = 'imjournal.state'
-      } else {
-        $rsyslog_package_name                = 'rsyslog5'
-        $mysql_package_name                  = 'rsyslog5-mysql'
-        $pgsql_package_name                  = 'rsyslog5-pgsql'
-        $gnutls_package_name                 = 'rsyslog5-gnutls'
-        $relp_package_name                   = 'librelp'
-        $default_config_file                 = 'rsyslog_default'
-        $modules                             = [
-          '$ModLoad imuxsock # provides support for local system logging',
-          '$ModLoad imklog   # provides kernel logging support (previously done by rklogd)',
-          '#$ModLoad immark  # provides --MARK-- message capability',
-        ]
-        $omit_local_logging                  = false
-        $im_journal_ratelimit_interval       = undef
-        $im_journal_ratelimit_burst          = undef
-        $im_journal_ignore_previous_messages = undef
-        $im_journal_statefile                = undef
       }
       $package_status         = 'present'
       $rsyslog_d              = '/etc/rsyslog.d'

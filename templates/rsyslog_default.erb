@@ -1,7 +1,7 @@
 # File is managed by puppet
 
 RSYSLOGD_OPTIONS=""
-<% if @facts['os']['family'].casecmp('redhat') == 0 -%>
+<% if @facts['os']['family'] == 'RedHat' -%>
 # CentOS, RedHat, Fedora
 SYSLOGD_OPTIONS="${RSYSLOGD_OPTIONS}"
 <% end -%>
