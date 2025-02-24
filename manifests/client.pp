@@ -1,72 +1,118 @@
-# == Class: rsyslog::client
+# @summary
+#   This class manages rsyslog as client
 #
-# Manages rsyslog as client
+# @example Puppet usage
+#   class { 'rsyslog::client': }
 #
-# === Parameters
+# @param log_remote
+#   Log remotely
 #
-# [*log_remote*]
-# [*spool_size*]
-# [*spool_timeoutenqueue*]
-# [*remote_type*]
-# [*remote_forward_format*]
-# [*log_local*]
-# [*log_local_custom*]
-# [*log_auth_local*]
-# [*listen_localhost*]
-# [*split_config*]
-# [*custom_config*]
-# [*custom_params*]
-# [*server*]
-# [*port*]
-# [*remote_servers*]
-# [*ssl*]
-# [*ssl_ca*]
-# [*ssl_cert*]
-# [*ssl_key*]
-# [*ssl_permitted_peer*]
-# [*ssl_auth_mode*]
-# [*log_templates*]
-# [*log_filters*]
-# [*actionfiletemplate_cust*]
-# [*actionfiletemplate*]
-# [*high_precision_timestamps*]
-# [*imfiles*]
+# @param spool_size
+#   Max size for disk queue if remote server fails
 #
-# === Variables
+# @param spool_timeoutenqueue
+#   Time to wait before discarding on full spool
 #
-# === Examples
+# @param remote_type
+#   Which protocol to use for remote logging
 #
-#  class { 'rsyslog::client': }
+# @param remote_forward_format
+#   Which forward format for remote servers should be used
+#
+# @param log_local
+#   Log locally
+#
+# @param disable_xconsole
+#   Disable messages to /dev/xconsole
+#
+# @param log_local_custom
+#   Define custom local config entries
+#
+# @param log_auth_local
+#   Just log auth facility locally
+#
+# @param listen_localhost
+#   Start a UDP listener on 127.0.0.1:514
+#
+# @param split_config
+#   Splits the client config into 00_client_config.conf, 50_client_remote.conf and 99_client_local.conf
+#
+# @param custom_config
+#   Specify your own template to use for client config
+#
+# @param server
+#   Rsyslog server to log to
+#
+# @param port
+#   Remote server port
+#
+# @param remote_servers
+#   Array of hashes with remote servers
+#
+# @param ssl
+#   Enable SSL support
+#
+# @param ssl_ca
+#   SSL CA file location
+#
+# @param ssl_cert
+#   Path to SSL certificate
+#
+# @param ssl_key
+#   Path to SSL private key
+#
+# @param ssl_permitted_peer
+#   List of permitted peers
+#
+# @param ssl_auth_mode
+#   SSL auth mode
+#
+# @param log_templates
+#   Array of hashes defining custom logging templates using the `$template` configuration parameter
+#
+# @param log_filters
+#   Array of hashes defining custom logging filters using the `if/then` configuration parameter
+#
+# @param actionfiletemplate_cust
+#   If set, this defines the `ActionFileDefaultTemplate custom formatting` which sets customisations over the default log format for remote and local logging. Must be used with actionfiletemplate to take effect
+#
+# @param actionfiletemplate
+#   If set, this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging
+#
+# @param high_precision_timestamps
+#   Whether or not to use high precision timestamps
+#
+# @param imfiles
+#   Specify imfile resources to create
 #
 class rsyslog::client (
-  $log_remote                = true,
-  $spool_size                = '1g',
-  $spool_timeoutenqueue      = false,
-  $remote_type               = 'tcp',
-  $remote_forward_format     = 'RSYSLOG_ForwardFormat',
-  $log_local                 = false,
-  $disable_xconsole          = false,
-  $log_local_custom          = undef,
-  $log_auth_local            = false,
-  $listen_localhost          = false,
-  $split_config              = false,
-  $custom_config             = undef,
-  $custom_params             = undef,
-  $server                    = 'log',
-  $port                      = '514',
-  $remote_servers            = false,
-  $ssl                       = false,
-  $ssl_ca                    = undef,
-  $ssl_cert                  = undef,
-  $ssl_key                   = undef,
-  $ssl_permitted_peer        = undef,
-  $ssl_auth_mode             = 'anon',
-  $log_templates             = false,
-  $log_filters               = false,
-  $actionfiletemplate_cust   = false,
-  $actionfiletemplate        = false,
-  $high_precision_timestamps = false,
-  $imfiles                   = undef
+  Boolean $log_remote = true,
+  String[1] $spool_size = '1g',
+  Optional[Integer[0]] $spool_timeoutenqueue = undef,
+  Enum['tcp', 'udp', 'relp'] $remote_type = 'tcp',
+  String[1] $remote_forward_format = 'RSYSLOG_ForwardFormat',
+  Boolean $log_local = false,
+  Boolean $disable_xconsole = false,
+  Optional[Variant[Array[String[1]], String[1]]] $log_local_custom = undef,
+  Boolean $log_auth_local = false,
+  Boolean $listen_localhost = false,
+  Boolean $split_config = false,
+  Optional[String[1]] $custom_config = undef,
+  Stdlib::Host $server = 'log',
+  Variant[String[1], Stdlib::Port] $port = '514',
+  Boolean $remote_servers = false,
+  Boolean $ssl = false,
+  Optional[String[1]] $ssl_ca = undef,
+  Optional[String[1]] $ssl_cert = undef,
+  Optional[String[1]] $ssl_key = undef,
+  Optional[String[1]] $ssl_permitted_peer = undef,
+  String[1] $ssl_auth_mode = 'anon',
+  Array[Hash] $log_templates = [],
+  Array[Hash] $log_filters = [],
+  Optional[String[1]] $actionfiletemplate_cust = undef,
+  Optional[String[1]] $actionfiletemplate = undef,
+  Boolean $high_precision_timestamps = false,
+  Hash $imfiles = {},
 ) inherits rsyslog::params {
   include rsyslog
 

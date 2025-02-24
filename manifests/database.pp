@@ -1,33 +1,36 @@
-# == Class: rsyslog::database
+# @summary
+#   This class manages rsyslog database connection
 #
-# Full description of class role here.
+# @example Puppet usage
+#   class { 'rsyslog::database':
+#     backend  => 'mysql',
+#     server   => 'localhost',
+#     database => 'mydb',
+#     username => 'myuser',
+#     password => 'mypass',
+#   }
 #
-# === Parameters
+# @param backend
+#   The database backend to use.
 #
-# [*backend*]  - Which backend server to use (mysql|pgsql)
-# [*server*]   - Server hostname
-# [*database*] - Database name
-# [*username*] - Database username
-# [*password*] - Database password
+# @param server
+#   The database server to use.
 #
-# === Variables
+# @param database
+#   The database name to use.
 #
-# === Examples
+# @param username
+#   The database username to use.
 #
-#  class { 'rsyslog::database':
-#    backend  => 'mysql',
-#    server   => 'localhost',
-#    database => 'mydb',
-#    username => 'myuser',
-#    password => 'mypass',
-#  }
+# @param password
+#   The database password to use.
 #
 class rsyslog::database (
-  $backend,
-  $server,
-  $database,
-  $username,
-  $password
+  Enum['mysql', 'pgsql'] $backend,
+  Stdlib::Host $server,
+  String[1] $database,
+  String[1] $username,
+  Variant[String[1], Sensitive[String[1]]] $password,
 ) {
   include rsyslog
 

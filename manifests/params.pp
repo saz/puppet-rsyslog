@@ -1,18 +1,8 @@
-# == Class: rsyslog::params
-#
-# This defines default configuration values for rsyslog.
-# You don't want to use it directly.
-#
-# === Parameters
-#
-# === Variables
-#
-# === Examples
-#
-#  class { 'rsyslog::params': }
+# @summary
+#   Manages default configuration values for this module.
 #
 class rsyslog::params {
-  $max_message_size               = '2k'
+  $max_message_size               = '8k'
   $system_log_rate_limit_interval = '1'
   $system_log_rate_limit_burst    = '100'
   $purge_rsyslog_d                = false
@@ -49,7 +39,7 @@ class rsyslog::params {
       $default_config_file                 = 'rsyslog_default'
       $log_group                           = 'adm'
       $log_style                           = 'debian'
-      $umask                               = false
+      $umask                               = undef
       $perm_file                           = '0640'
       $perm_dir                            = '0755'
       $spool_dir                           = '/var/spool/rsyslog'
@@ -191,7 +181,7 @@ class rsyslog::params {
       $log_user                            = 'root'
       $log_group                           = 'root'
       $log_style                           = 'debian'
-      $umask                               = false
+      $umask                               = undef
       $perm_file                           = '0600'
       $perm_dir                            = '0750'
       $spool_dir                           = '/var/spool/rsyslog'
@@ -226,7 +216,7 @@ class rsyslog::params {
       $log_user                            = 'root'
       $log_group                           = 'wheel'
       $log_style                           = 'freebsd'
-      $umask                               = false
+      $umask                               = undef
       $perm_file                           = '0640'
       $perm_dir                            = '0755'
       $spool_dir                           = '/var/spool/rsyslog'
@@ -262,7 +252,7 @@ class rsyslog::params {
           $log_user                            = 'root'
           $log_group                           = 'adm'
           $log_style                           = 'debian'
-          $umask                               = false
+          $umask                               = undef
           $perm_file                           = '0640'
           $perm_dir                            = '0755'
           $spool_dir                           = '/var/spool/rsyslog'

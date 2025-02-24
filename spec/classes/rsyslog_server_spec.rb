@@ -31,7 +31,7 @@ describe 'rsyslog::server', type: :class do
 
       context 'enable_onefile' do
         let(:title) { 'rsyslog-server-onefile' }
-        let(:params) { { 'enable_onefile' => 'true' } }
+        let(:params) { { 'enable_onefile' => true } }
 
         it 'compiles' do
           is_expected.not_to contain_file(server_conf).with_content(%r{\(\[A-Za-z-\]\*\)--end%/auth.log})

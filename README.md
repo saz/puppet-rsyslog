@@ -1,18 +1,6 @@
-# puppet-rsyslog [![Build Status](https://secure.travis-ci.org/saz/puppet-rsyslog.png)](https://travis-ci.org/saz/puppet-rsyslog)
+# puppet-rsyslog
 
 Manage rsyslog client and server via Puppet
-
-## REQUIREMENTS
-
-* Puppet >= 3.0
-* Starting with release 4.0.0 Puppet < 3.0 is not tested anymore
-
-## Supported platforms
-* Debian-based distributions
-* RedHat-based distributions
-* Suse-based distributions
-* Gentoo
-* FreeBSD
 
 ## USAGE
 
@@ -23,37 +11,6 @@ Manage rsyslog client and server via Puppet
   class { 'rsyslog::client': }
 ```
 
-#### Variables and default values
-```
-  class { 'rsyslog::client':
-    log_remote                => true,
-    spool_size                => '1g',
-    spool_timeoutenqueue      => false,
-    remote_type               => 'tcp',
-    remote_forward_format     => 'RSYSLOG_ForwardFormat',
-    log_local                 => false,
-    disable_xconsole          => false,
-    log_local_custom          => undef,
-    log_auth_local            => false,
-    listen_localhost          => false,
-    split_config              => false,
-    custom_config             => undef,
-    custom_params             => undef,
-    server                    => 'log',
-    port                      => '514',
-    remote_servers            => false,
-    ssl                       => false,
-    ssl_ca                    => undef,
-    ssl_permitted_peer        => undef,
-    ssl_auth_mode             => 'anon',
-    log_templates             => false,
-    log_filters               => false,
-    actionfiletemplate_cust   => false,
-    actionfiletemplate        => false,
-    high_precision_timestamps => false,
-    imfiles                   => undef
-  }
-```
 #### imfile entries
 Gathers log information from a file
 ```
@@ -160,40 +117,7 @@ rsyslog::client::log_filters:
     action: /var/log/foo.log
 ```
 
-#### Variables and default values
-```
-  class { 'rsyslog::server':
-    enable_tcp                => true,
-    enable_udp                => true,
-    enable_relp               => true,
-    remote_ruleset_tcp        => true,
-    remote_ruleset_udp        => true,
-    remote_ruleset_relp       => true,
-    enable_onefile            => false,
-    relay_server              => false,
-    server_dir                => '/srv/log',
-    custom_config             => undef,
-    content                   => undef,
-    port                      => '514',
-    relp_port                 => '20514',
-    address                   => '*',
-    high_precision_timestamps => false,
-    ssl                       => false,
-    ssl_ca                    => undef,
-    ssl_cert                  => undef,
-    ssl_key                   => undef,
-    ssl_permitted_peer        => undef,
-    ssl_auth_mode             => 'anon',
-    log_templates             => false,
-    log_filters               => false,
-    actionfiletemplate_cust   => false,
-    actionfiletemplate        => false,
-    rotate                    => undef,
-    rules                     => undef
-  }
-```
-
-Both can be installed at the same time.
+Both, client and server, can be installed at the same time.
 
 #### Defining custom rules
 
@@ -225,85 +149,6 @@ class { '::rsyslog::server':
 Each rule has the following parameters:
 * *selector*: Sets the selector field of the rule. Defaults to `undef`
 * *action*: Sets the action field of the rule. Defaults to `undef`
-
-## PARAMETERS
-
-The following lists all the class parameters this module accepts.
-
-    RSYSLOG CLASS PARAMETERS            VALUES              DESCRIPTION
-    -------------------------------------------------------------------
-    msg_reduction                       true,false          Reduce repeated messages. Defaults to false.
-    non_kernel_facility                 true,false          Permit non-kernel facility messages in the kernel log. Defaults to false.
-    omit_local_logging                  true,false          Turn off message reception via local log socket. Defaults to true only for RedHat 7+ and false elsewhere.
-    preserve_fqdn                       true,false          Use full name of host even if sender and receiver are in the same domain. Defaults to false.
-    local_host_name                     STRING              Use a custom local host name, instead of clients actual host name. Defaults to undef.
-    package_status                      STRING              Manages rsyslog package installation. Defaults to 'present'.
-    system_log_rate_limit_interval      INTEGER             Specifies the number of seconds per rate limit interval. Defaults to 1.
-    system_log_rate_limit_burst         INTEGER             Specifies the number of messages before limiting begins. Defaults to 100.
-
-    RSYSLOG::SERVER CLASS PARAMETERS    VALUES              DESCRIPTION
-    -------------------------------------------------------------------
-    enable_tcp                          true,false          Enable TCP listener. Defaults to true.
-    enable_udp                          true,false          Enable UDP listener. Defaults to true.
-    enable_relp                         true,false          Enable RELP listener. Defaults to true (v6.3.6+).
-    remote_ruleset_tcp                  true,false          Disables the remote ruleset when the TCP listener is enabled.
-    remote_ruleset_udp                  true,false          Disables the remote ruleset when the UDP listener is enabled.
-    remote_ruleset_relp                 true,false          Disables the remote ruleset when the RELP listener is enabled.
-    enable_onefile                      true,false          Only one logfile per remote host. Defaults to false.
-    relay_server                        true,false          If the server should be able to relay the received logs to another server. The rsyslog::client must also be set up. Defaults to false.
-    server_dir                          STRING              Folder where logs will be stored on the server. Defaults to '/srv/log'
-    custom_config                       STRING              Specify your own template to use for server config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb'
-    content                             STRING              Specify the content of the server config, instead of using a template. Defaults to undef.
-    port                                STRING/INTEGER      Port to listen on for messages via UDP and TCP. Defaults to 514
-    relp_port                           STRING/INTEGER      Port to listen on for messages via RELP. Defaults to 20514
-    address                             STRING              The IP address to bind to. Applies to UDP listener only. Defaults to '*'.
-    high_precision_timestamps           true,false          Whether or not to use high precision timestamps. Defaults to false.
-    ssl                                 true,false          Enable SSL support. Defaults to false.
-    ssl_ca                              STRING              Path to SSL CA certificate. Defaults to undef.
-    ssl_cert                            STRING              Path to SSL certificate. Defaults to undef.
-    ssl_key                             STRING              Path to SSL private key. Defaults to undef.
-    ssl_permitted_peer                  STRING              List of permitted peers. Defaults to undef.
-    ssl_auth_mode                       STRING              SSL auth mode. Defaults to anon.
-    log_templates                       HASH                Provides a hash defining custom logging templates using the `$template` configuration parameter. Defaults to false.
-    log_filters                         HASH                Provides a hash defining custom logging filters using the `if/then` configurations parameter. Defaults to false.
-    actionfiletemplate_cust             STRING              If set this defines the `ActionFileDefaultTemplate custom formatting` which sets customisations over the default log format for remote and local logging. Must be used with actionfiletemplate to take effect. Defaults to false.
-    actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging. Defaults to false.
-    rotate                              STRING              Enables rotation of logfiles. Valid values: year, month, day. Defaults to undef.
-    rules                               Array of hashes     Array of hashes for configuring custom rules for the server. If set, this replaces the default rules. See documentation above. Defaults to undef.
-
-    RSYSLOG::CLIENT CLASS PARAMETERS    VALUES              DESCRIPTION
-    -------------------------------------------------------------------
-    log_remote                          true,false          Log Remotely. Defaults to true.
-    spool_size                          STRING              Max size for disk queue if remote server failed. Defaults to '1g'.
-    remote_type                         'tcp','udp','relp'  Which protocol to use when logging remotely. Defaults to 'tcp'.
-    remote_forward_format               STRING              Which forward format for remote servers should be used. Only used if remote_servers is false.
-    log_local                           true,false          Log locally. Defaults to false.
-    log_auth_local                      true,false          Just log auth facility locally. Defaults to false.
-    split_config                        true,false          Splits the client config into 00_client_config.conf, 50_client_remote.conf and 99_client_local.conf. Defaults to false.
-    custom_config                       STRING              Specify your own template to use for client config. Defaults to undef. Example usage: custom_config => 'rsyslog/my_config.erb'
-    custom_params                       TODO                TODO
-    server                              STRING              Rsyslog server to log to. Will be used in the client configuration file. Only used, if remote_servers is false.
-    port                                '514'               Remote server port. Only used if remote_servers is false.
-    remote_servers                      Array of hashes     Array of hashes with remote servers. See documentation above. Defaults to false.
-    ssl                                 true,false          Enable SSL support. Defaults to false.
-    ssl_ca                              STRING              SSL CA file location. Defaults to undef.
-    ssl_cert                            STRING              Path to SSL certificate. Defaults to undef.
-    ssl_key                             STRING              Path to SSL private key. Defaults to undef.
-    ssl_permitted_peer                  STRING              List of permitted peers. Defaults to undef.
-    ssl_auth_mode                       STRING              SSL auth mode. Defaults to anon.
-    log_templates                       HASH                Provides a hash defining custom logging templates using the `$template` configuration parameter.
-    log_filters                         HASH                Provides a hash defining custom logging filters using the `if/then` configurations parameter.
-    actionfiletemplate_cust             STRING              If set this defines the `ActionFileDefaultTemplate custom formatting` which sets customisations over the default log format for remote and local logging. Must be used with actionfiletemplate to take effect. Defaults to false.
-    actionfiletemplate                  STRING              If set this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging.
-    high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
-
-    RSYSLOG::DATABASE CLASS PARAMETERS  VALUES              DESCRIPTION
-    -------------------------------------------------------------------
-    backend                             'mysql','pgsql'     Database backend (MySQL or PostgreSQL).
-    server                              STRING              Database server.
-    database                            STRING              Database name.
-    username                            STRING              Database username.
-    password                            STRING              Database password.
 
 ### Other notes
 

@@ -1,77 +1,124 @@
-# == Class: rsyslog::server
+# @summary
+#   This class manages rsyslog as server
 #
-# This class configures rsyslog for a server role.
+# @example Puppet usage
+#   Default usage:
+#     class { 'rsyslog::server': }
 #
-# === Parameters
+#   Create seperate directory per host
+#     class { 'rsyslog::server':
+#       custom_config => 'rsyslog/server-hostname.conf.erb'
+#     }
 #
-# [*enable_tcp*]
-# [*enable_udp*]
-# [*enable_relp*]
-# [*remote_ruleset_tcp*]
-# [*remote_ruleset_udp*]
-# [*remote_ruleset_relp*]
-# [*enable_onefile*]
-# [*relay_server*]
-# [*server_dir*]
-# [*custom_config*]
-# [*content*]
-# [*port*]
-# [*relp_port*]
-# [*address*]
-# [*high_precision_timestamps*]
-# [*ssl_ca*]
-# [*ssl_cert*]
-# [*ssl_key*]
-# [*ssl_permitted_peer*]
-# [*ssl_auth_mode*]
-# [*log_templates*]
-# [*log_filters*]
-# [*actionfiletemplate_cust*]
-# [*actionfiletemplate*]
-# [*rotate*]
+# @param enable_tcp
+#   Enable TCP listener
 #
-# === Variables
+# @param enable_udp
+#   Enable UDP listener
 #
-# === Examples
+# @param enable_relp
+#   Enable RELP listener
 #
-#  Defaults
+# @param remote_ruleset_tcp
+#   Whether or not the `remote` ruleset should be used for TCP listener
 #
-#  class { 'rsyslog::server': }
+# @param remote_ruleset_udp
+#   Whether or not the `remote` ruleset should be used for UDP listener
 #
-#  Create seperate directory per host
+# @param remote_ruleset_relp
+#   Whether or not the `remote` ruleset should be used for RELP listener
 #
-#  class { 'rsyslog::server':
-#    custom_config => 'rsyslog/server-hostname.conf.erb'
-#  }
+# @param enable_onefile
+#   Only one logfile per remote host
+#
+# @param relay_server
+#   If the server should be able to relay the received logs to another server. The rsyslog::client must also be set up
+#
+# @param server_dir
+#   Folder where logs will be stored on the server
+#
+# @param custom_config
+#   Specify your own template to use for rsyslog.conf
+#
+# @param content
+#   Instead of using a template to generate rsyslog.conf, use the specified content
+#
+# @param port
+#   Port to listen on for messages via TCP and UDP
+#
+# @param relp_port
+#   Port to listen on for messages via RELP
+#
+# @param address
+#   The IP address to bind to. Applies to UDP listener only
+#
+# @param high_precision_timestamps
+#   Whether or not to use high precision timestamps
+#
+# @param ssl
+#   Enable SSL support
+#
+# @param ssl_ca
+#   SSL CA file location
+#
+# @param ssl_cert
+#   Path to SSL certificate
+#
+# @param ssl_key
+#   Path to SSL private key
+#
+# @param ssl_permitted_peer
+#   List of permitted peers
+#
+# @param ssl_auth_mode
+#   SSL auth mode
+#
+# @param log_templates
+#   Array of hashes defining custom logging templates using the `$template` configuration parameter
+#
+# @param log_filters
+#   Array of hashes defining custom logging filters using the `if/then` configuration parameter
+#
+# @param actionfiletemplate_cust
+#   If set, this defines the `ActionFileDefaultTemplate custom formatting` which sets customisations over the default log format for remote and local logging. Must be used with actionfiletemplate to take effect
+#
+# @param actionfiletemplate
+#   If set, this defines the `ActionFileDefaultTemplate` which sets the default logging format for remote and local logging
+#
+# @param rotate
+#   Enables rotation of logfiles
+#
+# @param rules
+#   Array of hashes for configuring custom rules for the server. If set, this replaces the default rules
 #
 class rsyslog::server (
-  $enable_tcp                = true,
-  $enable_udp                = true,
-  $enable_relp               = true,
-  $remote_ruleset_tcp        = true,
-  $remote_ruleset_udp        = true,
-  $remote_ruleset_relp       = true,
-  $enable_onefile            = false,
-  $relay_server              = false,
-  $server_dir                = '/srv/log',
-  $custom_config             = undef,
-  $content                   = undef,
-  $port                      = '514',
-  $relp_port                 = '20514',
-  $address                   = '*',
-  $high_precision_timestamps = false,
-  $ssl                       = false,
-  $ssl_ca                    = undef,
-  $ssl_cert                  = undef,
-  $ssl_key                   = undef,
-  $ssl_permitted_peer        = undef,
-  $ssl_auth_mode             = 'anon',
-  $log_templates             = false,
-  $log_filters               = false,
-  $actionfiletemplate_cust   = false,
-  $actionfiletemplate        = false,
-  $rotate                    = undef,
-  $rules                     = undef
+  Boolean $enable_tcp = true,
+  Boolean $enable_udp = true,
+  Boolean $enable_relp = true,
+  Boolean $remote_ruleset_tcp = true,
+  Boolean $remote_ruleset_udp = true,
+  Boolean $remote_ruleset_relp = true,
+  Boolean $enable_onefile = false,
+  Boolean $relay_server = false,
+  Stdlib::Absolutepath $server_dir = '/srv/log',
+  Optional[String[1]] $custom_config = undef,
+  Optional[String[1]] $content = undef,
+  Variant[String[1], Stdlib::Port] $port = '514',
+  Variant[String[1], Stdlib::Port] $relp_port = '20514',
+  String[1] $address = '*',
+  Boolean $high_precision_timestamps = false,
+  Boolean $ssl = false,
+  Optional[String[1]] $ssl_ca = undef,
+  Optional[String[1]] $ssl_cert = undef,
+  Optional[String[1]] $ssl_key = undef,
+  Optional[String[1]] $ssl_permitted_peer = undef,
+  String[1] $ssl_auth_mode = 'anon',
+  Array[Hash] $log_templates = [],
+  Array[Hash] $log_filters = [],
+  Optional[String[1]] $actionfiletemplate_cust = undef,
+  Optional[String[1]] $actionfiletemplate = undef,
+  Optional[Enum['year', 'YEAR', 'month', 'MONTH', 'day', 'DAY']] $rotate = undef,
+  Optional[Array[Hash]] $rules = undef,
 ) inherits rsyslog::params {
   include rsyslog
 

@@ -1,40 +1,50 @@
-# == Define: rsyslog::imfile
+# @summary
+#   This class manages rsyslog file imports
 #
-# Full description of class role here.
+# @example Puppet usage
+#   rsyslog::imfile { 'my-imfile':
+#     file_name     => '/some/file',
+#     file_tag      => 'mytag',
+#     file_facility => 'local0',
+#   }
 #
-# === Parameters
+# @param file_name
+#   The file being monitored.
 #
-# [*file_name*]
-# [*file_tag*]
-# [*file_facility*]
-# [*file_readmode*]
-# [*ensure*]
-# [*polling_interval*]
-# [*file_severity*]
-# [*run_file_monitor*]
-# [*persist_state_interval]
+# @param file_tag
+#   The tag to be assigned to messages read from this file.
 #
-# === Variables
+# @param file_facility
+#   The syslog facility to be assigned to messages read from this file.
 #
-# === Examples
+# @param file_readmode
+#   This provides support for processing some standard types of multiline messages.
 #
-#  rsyslog::imfile { 'my-imfile':
-#    file_name     => '/some/file',
-#    file_tag      => 'mytag',
-#    file_facility => 'myfacility',
-#  }
+# @param ensure
+#   Set ensure on resource
+#
+# @param polling_interval
+#   This setting specifies how often files are to be polled for new data.
+#
+# @param file_severity
+#   The syslog severity to be assigned to lines read.
+#
+# @param persist_state_interval
+#   Specifies how often the state file shall be written when processing the input file.
+#
+# @param imfile_template
+#   Config file template to use.
 #
 define rsyslog::imfile (
-  $file_name,
-  $file_tag,
-  $file_facility,
-  $file_readmode = undef,
-  $ensure = 'present',
-  $polling_interval = 10,
-  $file_severity = 'notice',
-  $run_file_monitor = true,
-  $persist_state_interval = 0,
-  $imfile_template = 'rsyslog/imfile.erb',
+  Stdlib::Absolutepath $file_name,
+  String[1] $file_tag,
+  Stdlib::Syslogfacility $file_facility,
+  Optional[Integer[0,2]] $file_readmode = undef,
+  Enum['present', 'absent'] $ensure = 'present',
+  Integer[0] $polling_interval = 10,
+  Variant[Integer[0,23], String[1]] $file_severity = 'notice',
+  Integer[0] $persist_state_interval = 0,
+  String[1] $imfile_template = 'rsyslog/imfile.erb',
 ) {
   include rsyslog
   $extra_modules = $rsyslog::extra_modules

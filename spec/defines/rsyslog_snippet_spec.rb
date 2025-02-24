@@ -15,9 +15,9 @@ describe 'rsyslog::snippet', type: :define do
 
       rsyslog_d = case facts[:os]['family']
                   when 'FreeBSD'
-                    '/usr/local/etc/rsyslog.d/'
+                    '/usr/local/etc/rsyslog.d'
                   else
-                    '/etc/rsyslog.d/'
+                    '/etc/rsyslog.d'
                   end
 
       context 'default usage' do
@@ -25,7 +25,7 @@ describe 'rsyslog::snippet', type: :define do
         let(:params) { { 'content' => 'Random Content' } }
 
         it 'compiles' do
-          is_expected.to contain_file("#{rsyslog_d}rsyslog-snippet-basic.conf").with_content("# This file is managed by Puppet, changes may be overwritten\nRandom Content\n")
+          is_expected.to contain_file("#{rsyslog_d}/rsyslog-snippet-basic.conf").with_content("# This file is managed by Puppet, changes may be overwritten\nRandom Content\n")
         end
       end
     end
