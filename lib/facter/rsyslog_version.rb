@@ -16,7 +16,7 @@ Facter.add(:rsyslog_version) do
     when 'RedHat', 'Suse'
       if File.exist? '/sbin/rsyslogd'
         # Query rsyslogd binary for the version
-        Facter::Util::Resolution.exec("rsyslogd -v | head -n 1 | awk '{print $2}' | sed 's/,//g'")
+        Facter::Util::Resolution.exec("rsyslogd -v | sed -n '2q; s/^[^ ]* \([0-9][^ ]*\).*/\1/; s/,//g;p'")
       else
         # Fall back to rpm to determine version
         command = 'rpm -q --qf "%{VERSION}" "rsyslog"'
