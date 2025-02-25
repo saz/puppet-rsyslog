@@ -13,6 +13,11 @@ $ModLoad imtcp
 $ModLoad imrelp
 <% end -%>
 
+<% if @relay_server == false -%>
+# Switch to remote ruleset
+$RuleSet remote
+<% end -%>
+
 <% if @log_templates and ! @log_templates.empty?-%>
 
 # Define custom logging templates
@@ -60,9 +65,4 @@ $InputTCPServerStreamDriverAuthMode <%= @ssl_auth_mode %>
 <% if @ssl_permitted_peer -%>
 $ActionSendStreamDriverPermittedPeer <%= @ssl_permitted_peer %>
 <% end -%>
-<% end -%>
-
-<% if @relay_server == false -%>
-# Switch to remote ruleset
-$RuleSet remote
 <% end -%>
