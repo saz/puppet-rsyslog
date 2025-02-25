@@ -1,55 +1,55 @@
 <% if @remote_servers and @remote_servers.any? -%>
-  <% @remote_servers.flatten.compact.each do |server| -%>
-    <% if server['pattern'] and server['pattern'] != ''-%>
-      <% pattern = server['pattern'] -%>
-    <% else -%>
-      <% pattern = '*.*' -%>
-    <% end -%>
-    <% if server['protocol'].downcase == 'tcp' -%>
-      <% protocol = '@@' -%>
-    <% elsif server['protocol'].downcase == 'relp'-%>
-      <% protocol = ':omrelp:' -%>
-    <% else -%>
-      <% protocol = '@' -%>
-    <% end -%>
-    <% if server['host'] and server['host'] != ''-%>
-      <% host = server['host'] -%>
-    <% else -%>
-      <% host = 'localhost' -%>
-    <% end -%>
-    <% if server['port'] and server['port'] != ''-%>
-      <% port = server['port'] -%>
-    <% else -%>
-      <% if server['protocol'].downcase == 'relp' -%>
-        <% port = '20514' -%>
-      <% else -%>
-        <% port = '514' -%>
-      <% end -%>
-    <% end -%>
-    <% if server['format'] -%>
-      <% format = ";#{server['format']}" -%>
-      <% format_type = server['format'] -%>
-    <% else -%>
-      <% format = '' -%>
-      <% format_type = 'the default' -%>
-    <% end -%>
-    <% if server['thendrop'] -%>
-      <% dropaction = '& ~' -%>
-    <% else -%>
-      <% dropaction = '' -%>
-    <% end -%>
-    # Sending logs that match <%= pattern %> to <%= host %> via <%= server['protocol'].downcase %> on <%= port %> using <%=format_type %> format.
-    <%= pattern %> <%= protocol %><%= host %>:<%= port %><%= format %>
-    <%= dropaction %>
-  <% end -%>
+<% @remote_servers.flatten.compact.each do |server| -%>
+<% if server['pattern'] and server['pattern'] != ''-%>
+<% pattern = server['pattern'] -%>
+<% else -%>
+<% pattern = '*.*' -%>
+<% end -%>
+<% if server['protocol'].downcase == 'tcp' -%>
+<% protocol = '@@' -%>
+<% elsif server['protocol'].downcase == 'relp'-%>
+<% protocol = ':omrelp:' -%>
+<% else -%>
+<% protocol = '@' -%>
+<% end -%>
+<% if server['host'] and server['host'] != ''-%>
+<% host = server['host'] -%>
+<% else -%>
+<% host = 'localhost' -%>
+<% end -%>
+<% if server['port'] and server['port'] != ''-%>
+<% port = server['port'] -%>
+<% else -%>
+<% if server['protocol'].downcase == 'relp' -%>
+<% port = '20514' -%>
+<% else -%>
+<% port = '514' -%>
+<% end -%>
+<% end -%>
+<% if server['format'] -%>
+<% format = ";#{server['format']}" -%>
+<% format_type = server['format'] -%>
+<% else -%>
+<% format = '' -%>
+<% format_type = 'the default' -%>
+<% end -%>
+<% if server['thendrop'] -%>
+<% dropaction = '& ~' -%>
+<% else -%>
+<% dropaction = '' -%>
+<% end -%>
+<%= pattern %> to <%= host %> via <%= server['protocol'].downcase %> on <%= port %> using <%=format_type %> format.
+<%= pattern %> <%= protocol %><%= host %>:<%= port %><%= format %>
+<%= dropaction %>
+<% end -%>
 <% elsif @log_remote -%>
-  <% if @remote_type == 'tcp' -%>
-    <% protocol = '@@' -%>
-  <% elsif @remote_type == 'relp' -%>
-    <% protocol = ':omrelp:' -%>
-  <% else -%>
-    <% protocol = '@' -%>
-  <% end -%>
+<% if @remote_type == 'tcp' -%>
+<% protocol = '@@' -%>
+<% elsif @remote_type == 'relp' -%>
+<% protocol = ':omrelp:' -%>
+<% else -%>
+<% protocol = '@' -%>
+<% end -%>
 # Log to remote syslog server using <%= @remote_type %>
 *.* <%= protocol -%><%= @server -%>:<%= @port -%>;<%= @remote_forward_format -%>
 <% end -%>

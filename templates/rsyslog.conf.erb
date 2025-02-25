@@ -1,6 +1,7 @@
 #
 # File is managed by puppet
 #
+
 $MaxMessageSize <%= @max_message_size %>
 <% if @preserve_fqdn -%>
 $PreserveFQDN on
@@ -12,11 +13,9 @@ $LocalHostName <%= @local_host_name %>
 #################
 #### MODULES ####
 #################
-
 <% @modules.each do |module_row| -%>
 <%= module_row %>
 <% end -%>
-
 <% @extra_modules.each do |mod| -%>
 $ModLoad <%= mod %>
 <% end -%>
