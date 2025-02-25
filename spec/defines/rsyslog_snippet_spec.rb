@@ -43,13 +43,15 @@ describe 'rsyslog::snippet', type: :define do
 
       context 'content and source provided' do
         let(:title) { 'rsyslog-snippet-basic' }
-        let(:params) { {
-          'source'  => 'puppet:///files/rsyslog.snippet',
-          'content' => 'Random Content'
-        } }
+        let(:params) do
+          {
+            'source' => 'puppet:///files/rsyslog.snippet',
+            'content' => 'Random Content'
+          }
+        end
 
         it 'compiles' do
-          is_expected.to compile.and_raise_error(/Can't set 'content' and 'source' at the same time/)
+          is_expected.to compile.and_raise_error(%r{Can't set 'content' and 'source' at the same time})
         end
       end
 
