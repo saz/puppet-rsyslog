@@ -12,6 +12,9 @@ describe 'rsyslog::snippet', type: :define do
       let :facts do
         facts
       end
+      let :pre_condition do
+        'include rsyslog'
+      end
 
       rsyslog_d = case facts[:os]['family']
                   when 'FreeBSD'
