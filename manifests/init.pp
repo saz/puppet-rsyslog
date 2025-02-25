@@ -131,6 +131,9 @@
 # @param rsyslog_d_mode
 #   Force a specific mode on the rsyslog.d directory
 #
+# @param purge_ignore
+#   Files to exclude from purging in rsyslog.d directory
+#
 # @param usrmsg_users
 #   Array of user names that will receive emergency messages when logged
 #
@@ -177,6 +180,7 @@ class rsyslog (
   Optional[Enum['on', 'off']] $im_journal_ignore_previous_messages = $rsyslog::params::im_journal_ignore_previous_messages,
   Optional[Stdlib::Filemode] $rsyslog_conf_mode = undef,
   Optional[Stdlib::Filemode] $rsyslog_d_mode = undef,
+  Optional[Variant[String[1], Array[String[1]]]] $purge_ignore = undef,
   Array[String[1]] $usrmsg_users = ['*'],
 ) inherits rsyslog::params {
   require rsyslog::install
@@ -187,6 +191,7 @@ class rsyslog (
     group   => $run_group,
     mode    => $rsyslog_d_mode,
     purge   => $purge_rsyslog_d,
+    ignore  => $purge_ignore,
     recurse => true,
     force   => true,
     notify  => Service[$service_name],

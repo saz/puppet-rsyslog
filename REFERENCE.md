@@ -85,6 +85,7 @@ The following parameters are available in the `rsyslog` class:
 * [`im_journal_ignore_previous_messages`](#-rsyslog--im_journal_ignore_previous_messages)
 * [`rsyslog_conf_mode`](#-rsyslog--rsyslog_conf_mode)
 * [`rsyslog_d_mode`](#-rsyslog--rsyslog_d_mode)
+* [`purge_ignore`](#-rsyslog--purge_ignore)
 * [`usrmsg_users`](#-rsyslog--usrmsg_users)
 
 ##### <a name="-rsyslog--rsyslog_package_name"></a>`rsyslog_package_name`
@@ -420,6 +421,14 @@ Default value: `undef`
 Data type: `Optional[Stdlib::Filemode]`
 
 Force a specific mode on the rsyslog.d directory
+
+Default value: `undef`
+
+##### <a name="-rsyslog--purge_ignore"></a>`purge_ignore`
+
+Data type: `Optional[Variant[String[1], Array[String[1]]]]`
+
+Files to exclude from purging in rsyslog.d directory
 
 Default value: `undef`
 
