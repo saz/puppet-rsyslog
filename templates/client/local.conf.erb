@@ -4,12 +4,15 @@
 <% if scope['rsyslog::log_style'] == 'debian' -%>
 # Log auth messages locally
 auth,authpriv.*                 /var/log/auth.log
+&~
 <% elsif scope['rsyslog::log_style'] == 'redhat' -%>
 # Log auth messages locally
 auth,authpriv.*                 /var/log/secure
+&~
 <% elsif scope['rsyslog::log_style'] == 'freebsd' -%>
 # Log auth messages locally
 auth.info;authpriv.info		/var/log/auth.log
+&~
 <% end -%>
 <% end -%>
 <% if @log_local -%>
