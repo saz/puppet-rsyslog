@@ -8,14 +8,14 @@ $ActionQueueTimeoutEnqueue <%= @spool_timeoutenqueue -%>   # time to wait before
 <% end -%>
 $ActionQueueType LinkedList     # run asynchronously
 $ActionResumeRetryCount -1      # infinety retries if host is down
-<% if @log_templates and ! @log_templates.empty? -%>
+<% if @log_templates and @log_templates.any? -%>
 
 # Define custom logging templates
 <% @log_templates.flatten.compact.each do |log_template| -%>
 $template <%= log_template['name'] %>,"<%= log_template['template'] %>"
 <% end -%>
 <% end -%>
-<% if @log_filters and ! @log_filters.empty? -%>
+<% if @log_filters and @log_filters.any? -%>
 
 # Define custom if/then log conditions
 <% @log_filters.each do |log_filter| -%>

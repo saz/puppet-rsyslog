@@ -18,7 +18,7 @@ $ModLoad imrelp
 $RuleSet remote
 <% end -%>
 
-<% if @log_templates and ! @log_templates.empty?-%>
+<% if @log_templates and @log_templates.any?-%>
 
 # Define custom logging templates
 <% @log_templates.flatten.compact.each do |log_template| -%>
