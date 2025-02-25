@@ -20,8 +20,6 @@ define rsyslog::snippet (
   Enum['present', 'file', 'absent'] $ensure = 'present',
   Optional[Stdlib::Filemode] $file_mode = undef,
 ) {
-  require rsyslog
-
   if $file_mode {
     $file_mode_real = $file_mode
   } else {

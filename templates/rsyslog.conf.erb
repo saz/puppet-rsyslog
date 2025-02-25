@@ -97,7 +97,7 @@ $imjournalRatelimitBurst <%=@im_journal_ratelimit_burst %>
 #
 # Include all config files in <%= @rsyslog_d %>
 #
-$IncludeConfig <%= @rsyslog_d -%>*.conf
+$IncludeConfig <%= @rsyslog_d -%>/*.conf
 
 #
 # Emergencies are sent to everybody logged in.
