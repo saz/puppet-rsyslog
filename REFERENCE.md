@@ -1111,6 +1111,7 @@ The following parameters are available in the `rsyslog::snippet` defined type:
 * [`content`](#-rsyslog--snippet--content)
 * [`ensure`](#-rsyslog--snippet--ensure)
 * [`file_mode`](#-rsyslog--snippet--file_mode)
+* [`source`](#-rsyslog--snippet--source)
 
 ##### <a name="-rsyslog--snippet--content"></a>`content`
 
@@ -1133,6 +1134,14 @@ Default value: `'present'`
 Data type: `Optional[Stdlib::Filemode]`
 
 The mode of the file snippet
+
+Default value: `undef`
+
+##### <a name="-rsyslog--snippet--source"></a>`source`
+
+Data type: `Optional[String[1]]`
+
+
 
 Default value: `undef`
 

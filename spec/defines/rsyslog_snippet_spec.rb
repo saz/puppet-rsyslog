@@ -31,6 +31,35 @@ describe 'rsyslog::snippet', type: :define do
           is_expected.to contain_file("#{rsyslog_d}/rsyslog-snippet-basic.conf").with_content("# This file is managed by Puppet, changes may be overwritten\nRandom Content\n")
         end
       end
+
+      context 'source provided' do
+        let(:title) { 'rsyslog-snippet-basic' }
+        let(:params) { { 'source' => 'puppet:///files/rsyslog.snippet' } }
+
+        it 'compiles' do
+          is_expected.to contain_file("#{rsyslog_d}/rsyslog-snippet-basic.conf").with_source('puppet:///files/rsyslog.snippet')
+        end
+      end
+
+      context 'content and source provided' do
+        let(:title) { 'rsyslog-snippet-basic' }
+        let(:params) { {
+          'source'  => 'puppet:///files/rsyslog.snippet',
+          'content' => 'Random Content'
+        } }
+
+        it 'compiles' do
+          is_expected.to compile.and_raise_error(/Can't set 'content' and 'source' at the same time/)
+        end
+      end
+
+      context 'content and source not provided' do
+        let(:title) { 'rsyslog-snippet-basic' }
+
+        it 'compiles' do
+          is_expected.to contain_file("#{rsyslog_d}/rsyslog-snippet-basic.conf").with_source(nil).with_content(nil)
+        end
+      end
     end
   end
 end
