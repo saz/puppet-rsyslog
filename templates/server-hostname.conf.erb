@@ -19,7 +19,7 @@ $Template dynDebug,"<%= @server_dir -%>/%hostname%<%= @logpath -%>debug"
 $Template dynMessages,"<%= @server_dir -%>/%hostname%<%= @logpath -%>messages"
 
 # Rules
-<% if @rules and @rules != :undef -%>
+<% if @rules -%>
 <% @rules.flatten.compact.each do |rules| -%>
 <% if rules['selector'] and rules['selector'] != '' and rules['action'] and rules['action'] != '' -%>
 <%= rules['selector'] %> <%= rules['action'] %>

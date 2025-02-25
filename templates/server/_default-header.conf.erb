@@ -33,16 +33,16 @@ if <%= log_filter['expression'] %> then <%= log_filter['action'] %>
 $ActionFileDefaultTemplate <%= @actionfiletemplate %>
 <% else -%>
 
-<% if @high_precision_timestamps == false -%>
-#
-# Use traditional timestamp format.
-#
-$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
-<% else -%>
+<% if @high_precision_timestamps -%>
 #
 # Use high precision timestamp format.
 #
 $ActionFileDefaultTemplate RSYSLOG_FileFormat
+<% else -%>
+#
+# Use traditional timestamp format.
+#
+$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
 <% end -%>
 <% end -%>
 

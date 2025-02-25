@@ -5,7 +5,7 @@ $MaxMessageSize <%= @max_message_size %>
 <% if @preserve_fqdn -%>
 $PreserveFQDN on
 <% end -%>
-<% if @local_host_name and @local_host_name != :undef -%>
+<% if @local_host_name -%>
 $LocalHostName <%= @local_host_name %>
 <% end -%>
 
@@ -32,21 +32,21 @@ $KLogPermitNonKernelFacility on
 #
 # Set rate limit for messages received.
 #
-<%- if @system_log_rate_limit_interval and @system_log_rate_limit_interval != :undef-%>
+<%- if @system_log_rate_limit_interval -%>
 $SystemLogRateLimitInterval <%= @system_log_rate_limit_interval %>
 <%- end -%>
-<%- if @system_log_rate_limit_burst and @system_log_rate_limit_burst != :undef -%>
+<%- if @system_log_rate_limit_burst -%>
 $SystemLogRateLimitBurst <%= @system_log_rate_limit_burst %>
 <%- end -%>
 
-<% if @default_template and @default_template != :undef and @default_template_customisation and @default_template_customisation != :undef -%>
+<% if @default_template and @default_template_customisation -%>
 #
 # Custom setting for ActionFileDefaultTemplate
 #
 $template <%= @default_template %>,<%= @default_template_customisation %>
 
 <% end -%>
-<% if @default_template  and @default_template != :undef -%>
+<% if @default_template -%>
 #
 # Sets a default template for file action
 #
@@ -81,16 +81,16 @@ $OmitLocalLogging on
 <% end -%>
 
 # Settings for imjournal (If supported)
-<% if @im_journal_statefile and @im_journal_statefile != :undef -%>
+<% if @im_journal_statefile -%>
 $imjournalStateFile <%=@im_journal_statefile %>
 <% end -%>
-<% if @im_journal_ignore_previous_messages and @im_journal_ignore_previous_messages != :undef -%>
+<% if @im_journal_ignore_previous_messages -%>
 $imjournalIgnorePreviousMessages <%=@im_journal_ignore_previous_messages %>
 <% end -%>
-<% if @im_journal_ratelimit_interval and @im_journal_ratelimit_interval != :undef -%>
+<% if @im_journal_ratelimit_interval -%>
 $imjournalRatelimitInterval <%=@im_journal_ratelimit_interval %>
 <% end -%>
-<% if @im_journal_ratelimit_burst and @im_journal_ratelimit_burst != :undef -%>
+<% if @im_journal_ratelimit_burst -%>
 $imjournalRatelimitBurst <%=@im_journal_ratelimit_burst %>
 <% end -%>
 

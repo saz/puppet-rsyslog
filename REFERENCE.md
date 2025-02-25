@@ -986,11 +986,11 @@ Default value: `undef`
 
 ##### <a name="-rsyslog--server--rules"></a>`rules`
 
-Data type: `Optional[Array[Hash]]`
+Data type: `Array[Hash]`
 
 Array of hashes for configuring custom rules for the server. If set, this replaces the default rules
 
-Default value: `undef`
+Default value: `[]`
 
 ## Defined types
 

@@ -118,7 +118,7 @@ class rsyslog::server (
   Optional[String[1]] $actionfiletemplate_cust = undef,
   Optional[String[1]] $actionfiletemplate = undef,
   Optional[Enum['year', 'YEAR', 'month', 'MONTH', 'day', 'DAY']] $rotate = undef,
-  Optional[Array[Hash]] $rules = undef,
+  Array[Hash] $rules = [],
 ) inherits rsyslog::params {
   include rsyslog
 

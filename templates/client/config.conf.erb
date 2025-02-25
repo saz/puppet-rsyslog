@@ -33,12 +33,12 @@ $template <%= @actionfiletemplate %>, <%= @actionfiletemplate_cust %>
 $ActionFileDefaultTemplate <%= @actionfiletemplate %>
 <% else -%>
 
-<% if @high_precision_timestamps == false -%>
-# Use default format
-$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
-<% else -%>
+<% if @high_precision_timestamps -%>
 # Use high precision timestamp format.
 $ActionFileDefaultTemplate RSYSLOG_FileFormat
+<% else -%>
+# Use default format
+$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
 <% end -%>
 <% end -%>
 
