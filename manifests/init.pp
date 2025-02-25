@@ -125,6 +125,12 @@
 # @param im_journal_ignore_previous_messages
 #   This option specifies whether imjournal should ignore messages currently in journal and read only new messages
 #
+# @param rsyslog_conf_mode
+#   Force a specific mode on the main rsyslog.conf file
+#
+# @param rsyslog_d_mode
+#   Force a specific mode on the rsyslog.d directory
+#
 class rsyslog (
   Variant[Boolean[false], String[1]] $rsyslog_package_name = $rsyslog::params::rsyslog_package_name,
   Variant[Boolean[false], String[1]] $relp_package_name = $rsyslog::params::relp_package_name,
@@ -165,7 +171,9 @@ class rsyslog (
   Optional[Variant[String[1], Integer[0]]] $im_journal_ratelimit_interval = $rsyslog::params::im_journal_ratelimit_interval,
   Optional[Variant[Stdlib::Absolutepath, String[1]]] $im_journal_statefile = $rsyslog::params::im_journal_statefile,
   Optional[Variant[String[1], Integer[0]]] $im_journal_ratelimit_burst = $rsyslog::params::im_journal_ratelimit_burst,
-  Optional[Enum['on', 'off']] $im_journal_ignore_previous_messages = $rsyslog::params::im_journal_ignore_previous_messages
+  Optional[Enum['on', 'off']] $im_journal_ignore_previous_messages = $rsyslog::params::im_journal_ignore_previous_messages,
+  Optional[Stdlib::Filemode] $rsyslog_conf_mode = undef,
+  Optional[Stdlib::Filemode] $rsyslog_d_mode = undef,
 ) inherits rsyslog::params {
   require rsyslog::install
 
@@ -173,6 +181,7 @@ class rsyslog (
     ensure  => directory,
     owner   => 'root',
     group   => $run_group,
+    mode    => $rsyslog_d_mode,
     purge   => $purge_rsyslog_d,
     recurse => true,
     force   => true,
@@ -184,6 +193,7 @@ class rsyslog (
     ensure  => file,
     owner   => 'root',
     group   => $run_group,
+    mode    => $rsyslog_conf_mode,
     content => template($rsyslog_conf_template_file),
     notify  => Service[$service_name],
     require => File[$rsyslog_d],

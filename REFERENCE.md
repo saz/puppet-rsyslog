@@ -83,6 +83,8 @@ The following parameters are available in the `rsyslog` class:
 * [`im_journal_statefile`](#-rsyslog--im_journal_statefile)
 * [`im_journal_ratelimit_burst`](#-rsyslog--im_journal_ratelimit_burst)
 * [`im_journal_ignore_previous_messages`](#-rsyslog--im_journal_ignore_previous_messages)
+* [`rsyslog_conf_mode`](#-rsyslog--rsyslog_conf_mode)
+* [`rsyslog_d_mode`](#-rsyslog--rsyslog_d_mode)
 
 ##### <a name="-rsyslog--rsyslog_package_name"></a>`rsyslog_package_name`
 
@@ -403,6 +405,22 @@ Data type: `Optional[Enum['on', 'off']]`
 This option specifies whether imjournal should ignore messages currently in journal and read only new messages
 
 Default value: `$rsyslog::params::im_journal_ignore_previous_messages`
+
+##### <a name="-rsyslog--rsyslog_conf_mode"></a>`rsyslog_conf_mode`
+
+Data type: `Optional[Stdlib::Filemode]`
+
+Force a specific mode on the main rsyslog.conf file
+
+Default value: `undef`
+
+##### <a name="-rsyslog--rsyslog_d_mode"></a>`rsyslog_d_mode`
+
+Data type: `Optional[Stdlib::Filemode]`
+
+Force a specific mode on the rsyslog.d directory
+
+Default value: `undef`
 
 ### <a name="rsyslog--client"></a>`rsyslog::client`
 
