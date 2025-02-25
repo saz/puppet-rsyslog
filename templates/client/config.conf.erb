@@ -70,5 +70,12 @@ $ActionSendStreamDriverPermittedPeer <%= @ssl_permitted_peer %>
 <% if @remote_type == 'relp' -%>
 # Load RELP module.
 $ModLoad omrelp
+<% elsif $remote_servers -%>
+  <% @remote_servers.flatten.compact.each do |server| -%>
+    <% if server['protocol'].downcase == 'relp' %>
+$ModLoad omrelp
+      <% break -%>
+    <% end -%>
+  <% end -%>
 <% end -%>
 

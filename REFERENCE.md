@@ -580,11 +580,11 @@ Default value: `'514'`
 
 ##### <a name="-rsyslog--client--remote_servers"></a>`remote_servers`
 
-Data type: `Boolean`
+Data type: `Array[Hash]`
 
 Array of hashes with remote servers
 
-Default value: `false`
+Default value: `[]`
 
 ##### <a name="-rsyslog--client--ssl"></a>`ssl`
 

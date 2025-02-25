@@ -100,7 +100,7 @@ class rsyslog::client (
   Optional[String[1]] $custom_config = undef,
   Stdlib::Host $server = 'log',
   Variant[String[1], Stdlib::Port] $port = '514',
-  Boolean $remote_servers = false,
+  Array[Hash] $remote_servers = [],
   Boolean $ssl = false,
   Optional[String[1]] $ssl_ca = undef,
   Optional[String[1]] $ssl_cert = undef,
