@@ -54,11 +54,10 @@ describe 'rsyslog', type: :class do
 
         it 'compiles' do
           is_expected.to contain_class('rsyslog::install')
-          is_expected.to contain_class('rsyslog::config').that_requires('Class[rsyslog::install]')
-          is_expected.to contain_class('rsyslog::service').that_subscribes_to('Class[rsyslog::config]')
           is_expected.to contain_package(rsyslog_package)
           is_expected.to contain_package(relp_package) if relp_package
-          is_expected.to contain_file(rsyslog_d).with_ensure('directory')
+          is_expected.to contain_file(rsyslog_d).with_ensure('directory').that_requires('Class[rsyslog::install]')
+          is_expected.to contain_file(rsyslog_conf).with_ensure('file').that_requires("File[#{rsyslog_d}]")
           is_expected.to contain_service(service_name)
           if im_journal_ratelimit_burst
             is_expected.to contain_file(rsyslog_conf).with_content(%r{\$imjournalRatelimitBurst #{im_journal_ratelimit_burst}})
@@ -67,6 +66,15 @@ describe 'rsyslog', type: :class do
           end
           is_expected.to contain_file(rsyslog_default).with_ensure('file')
           is_expected.to contain_file(spool_dir).with_ensure('directory')
+        end
+      end
+
+      context 'extra_modules set' do
+        let(:title) { 'rsyslog-extra-modules-set' }
+
+        let(:params) { { extra_modules: ['modA'] } }
+        it 'compiles' do
+          is_expected.to contain_file(rsyslog_conf).with_content(%r{\$ModLoad modA})
         end
       end
 

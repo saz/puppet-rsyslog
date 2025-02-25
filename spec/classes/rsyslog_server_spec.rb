@@ -26,6 +26,9 @@ describe 'rsyslog::server', type: :class do
         it 'compiles' do
           is_expected.to contain_file(server_conf).with_content(%r{\(\[A-Za-z-\]\*\)--end%/auth.log})
           is_expected.to contain_file(server_conf).with_content(%r{\(\[A-Za-z-\]\*\)--end%/messages})
+          is_expected.to contain_file(server_conf).with_content(%r{\$UDPServerRun 514})
+          is_expected.to contain_file(server_conf).with_content(%r{\$InputTCPServerRun 514})
+          is_expected.to contain_file(server_conf).with_content(%r{\$InputRELPServerRun 20514})
         end
       end
 
@@ -55,6 +58,33 @@ describe 'rsyslog::server', type: :class do
 
         it 'compiles' do
           is_expected.to contain_file(server_conf).with_content(%r{if \$msg contains 'error0' then /var/log/err.log})
+        end
+      end
+
+      context 'enable_tcp = false' do
+        let(:title) { 'tcp-listener-disabled' }
+        let(:params) { { 'enable_tcp' => false } }
+
+        it 'compiles' do
+          is_expected.to contain_file(server_conf).without_content(%r{\$InputTCPServerRun})
+        end
+      end
+
+      context 'enable_udp = false' do
+        let(:title) { 'udp-listener-disabled' }
+        let(:params) { { 'enable_udp' => false } }
+
+        it 'compiles' do
+          is_expected.to contain_file(server_conf).without_content(%r{\$UDPServerRun})
+        end
+      end
+
+      context 'enable_relp = false' do
+        let(:title) { 'relp-listener-disabled' }
+        let(:params) { { 'enable_relp' => false } }
+
+        it 'compiles' do
+          is_expected.to contain_file(server_conf).without_content(%r{\$InputRELPServerRun})
         end
       end
     end

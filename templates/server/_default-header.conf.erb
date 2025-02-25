@@ -1,39 +1,39 @@
-<% if scope.lookupvar('rsyslog::server::enable_udp') -%>
+<% if @enable_udp -%>
 # Load UDP module
 $ModLoad imudp
 <% end -%>
 
-<% if scope.lookupvar('rsyslog::server::enable_tcp') -%>
+<% if @enable_tcp -%>
 # Load TCP module
 $ModLoad imtcp
 <% end -%>
 
-<% if scope.lookupvar('rsyslog::server::enable_relp') -%>
+<% if @enable_relp -%>
 # Load RELP module
 $ModLoad imrelp
 <% end -%>
 
-<% if scope.lookupvar('rsyslog::server::log_templates') and ! scope.lookupvar('rsyslog::server::log_templates').empty?-%>
+<% if @log_templates and ! @log_templates.empty?-%>
 
 # Define custom logging templates
-<% scope.lookupvar('rsyslog::server::log_templates').flatten.compact.each do |log_template| -%>
+<% @log_templates.flatten.compact.each do |log_template| -%>
 $template <%= log_template['name'] %>,"<%= log_template['template'] %>"
 <% end -%>
 <% end -%>
-<% if scope.lookupvar('rsyslog::server::log_filters') -%>
+<% if @log_filters -%>
 
 # Define custom if/then log conditions
-<% scope.lookupvar('rsyslog::server::log_filters').each do |log_filter| -%>
+<% @log_filters.each do |log_filter| -%>
 if <%= log_filter['expression'] %> then <%= log_filter['action'] %>
 <% end -%>
 <% end -%>
-<% if scope.lookupvar('rsyslog::server::actionfiletemplate') -%>
+<% if @actionfiletemplate -%>
 
 # Using specified format for default logging format:
-$ActionFileDefaultTemplate <%= scope.lookupvar('rsyslog::server::actionfiletemplate') %>
+$ActionFileDefaultTemplate <%= @actionfiletemplate %>
 <% else -%>
 
-<% if scope.lookupvar('rsyslog::server::high_precision_timestamps') == false -%>
+<% if @high_precision_timestamps == false -%>
 #
 # Use traditional timestamp format.
 #
@@ -46,23 +46,23 @@ $ActionFileDefaultTemplate RSYSLOG_FileFormat
 <% end -%>
 <% end -%>
 
-<% if scope.lookupvar('rsyslog::server::ssl') -%>
+<% if @ssl -%>
 # Server side SSL.
 $DefaultNetstreamDriver gtls
 
 # Cert files.
-$DefaultNetstreamDriverCAFile <%= scope.lookupvar('rsyslog::server::ssl_ca') %>
-$DefaultNetstreamDriverCertFile <%= scope.lookupvar('rsyslog::server::ssl_cert') %>
-$DefaultNetstreamDriverKeyFile <%= scope.lookupvar('rsyslog::server::ssl_key') %>
+$DefaultNetstreamDriverCAFile <%= @ssl_ca %>
+$DefaultNetstreamDriverCertFile <%= @ssl_cert %>
+$DefaultNetstreamDriverKeyFile <%= @ssl_key %>
 
 $InputTCPServerStreamDriverMode 1
-$InputTCPServerStreamDriverAuthMode <%= scope.lookupvar('rsyslog::server::ssl_auth_mode') %>
+$InputTCPServerStreamDriverAuthMode <%= @ssl_auth_mode %>
 <% if @ssl_permitted_peer -%>
-$ActionSendStreamDriverPermittedPeer <%= scope.lookupvar('rsyslog::server::ssl_permitted_peer') %>
+$ActionSendStreamDriverPermittedPeer <%= @ssl_permitted_peer %>
 <% end -%>
 <% end -%>
 
-<% if scope.lookupvar('rsyslog::server::relay_server') == false -%>
+<% if @relay_server == false -%>
 # Switch to remote ruleset
 $RuleSet remote
 <% end -%>

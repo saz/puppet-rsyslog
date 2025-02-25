@@ -3,26 +3,26 @@
 <% # Common header across all templates -%>
 <%= scope.function_template(['rsyslog/server/_default-header.conf.erb']) %>
 
-<% if scope.lookupvar('rsyslog::server::relay_server') == false -%>
+<% if @relay_server == false -%>
 # Log files are stored in directories matching the short hostname, excluding numbers
 # i.e. web01 web02 and web03 will all log to a the web directory
-<% if scope.lookupvar('rsyslog::server::enable_onefile') == false -%>
+<% if @enable_onefile == false -%>
 
 # Templates
-$Template dynAuditLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>audit.log"
-$Template dynAuthLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>auth.log"
-$Template dynSyslog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>syslog"
-$Template dynCronLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>cron.log"
-$Template dynDaemonLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>daemon.log"
-$Template dynKernLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>kern.log"
-$Template dynUserLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>user.log"
-$Template dynMailLog,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>mail.log"
-$Template dynDebug,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>debug"
-$Template dynMessages,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>messages"
+$Template dynAuditLog,"<%= @server_dir -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= @logpath -%>audit.log"
+$Template dynAuthLog,"<%= @server_dir -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= @logpath -%>auth.log"
+$Template dynSyslog,"<%= @server_dir -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= @logpath -%>syslog"
+$Template dynCronLog,"<%= @server_dir -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= @logpath -%>cron.log"
+$Template dynDaemonLog,"<%= @server_dir -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= @logpath -%>daemon.log"
+$Template dynKernLog,"<%= @server_dir -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= @logpath -%>kern.log"
+$Template dynUserLog,"<%= @server_dir -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= @logpath -%>user.log"
+$Template dynMailLog,"<%= @server_dir -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= @logpath -%>mail.log"
+$Template dynDebug,"<%= @server_dir -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= @logpath -%>debug"
+$Template dynMessages,"<%= @server_dir -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= @logpath -%>messages"
 
 # Rules
-<% if scope.lookupvar('rsyslog::server::rules') and scope.lookupvar('rsyslog::server::rules') != :undef -%>
-<% scope.lookupvar('rsyslog::server::rules').flatten.compact.each do |rules| -%>
+<% if @rules and @rules != :undef -%>
+<% @rules.flatten.compact.each do |rules| -%>
 <% if rules['selector'] and rules['selector'] != '' and rules['action'] and rules['action'] != '' -%>
 <%= rules['selector'] %> <%= rules['action'] %>
 <% end -%>
@@ -50,7 +50,7 @@ $Template auditFormat,"%msg%\n"
 
 <% else -%>
 # Template
-$Template dynAllMessages,"<%= scope.lookupvar('rsyslog::server::server_dir') -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= scope.lookupvar('rsyslog::server::logpath') -%>messages"
+$Template dynAllMessages,"<%= @server_dir -%>/%source:R,ERE,1,DFLT:([A-Za-z-]*)--end%<%= @logpath -%>messages"
 
 # Rules
 *.*                 -?dynAllMessages

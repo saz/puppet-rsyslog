@@ -14,11 +14,9 @@ You propably want rsyslog::client or rsyslog::server
 * [`rsyslog::database`](#rsyslog--database): This class manages rsyslog database connection
 * [`rsyslog::params`](#rsyslog--params): Manages default configuration values for this module.
 * [`rsyslog::server`](#rsyslog--server): This class manages rsyslog as server
-* [`rsyslog::service`](#rsyslog--service): == Class: rsyslog::service  This class enforces running of the rsyslog service.  === Parameters  === Variables  === Examples   class { 'rsysl
 
 #### Private Classes
 
-* `rsyslog::config`: Manages rsyslog configuration
 * `rsyslog::install`: Manages rsyslog packages
 
 ### Defined types
@@ -993,20 +991,6 @@ Data type: `Optional[Array[Hash]]`
 Array of hashes for configuring custom rules for the server. If set, this replaces the default rules
 
 Default value: `undef`
-
-### <a name="rsyslog--service"></a>`rsyslog::service`
-
-== Class: rsyslog::service
-
-This class enforces running of the rsyslog service.
-
-=== Parameters
-
-=== Variables
-
-=== Examples
-
- class { 'rsyslog::service': }
 
 ## Defined types
 

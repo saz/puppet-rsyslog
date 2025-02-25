@@ -20,7 +20,7 @@ define rsyslog::snippet (
   Enum['present', 'file', 'absent'] $ensure = 'present',
   Optional[Stdlib::Filemode] $file_mode = undef,
 ) {
-  include rsyslog
+  require rsyslog
 
   if $file_mode {
     $file_mode_real = $file_mode
@@ -41,7 +41,7 @@ define rsyslog::snippet (
     group   => $rsyslog::run_group,
     mode    => $file_mode_real,
     content => $content_real,
-    require => Class['rsyslog::config'],
-    notify  => Class['rsyslog::service'],
+    notify  => Service[$rsyslog::service_name],
+    require => File[$rsyslog::rsyslog_d],
   }
 }

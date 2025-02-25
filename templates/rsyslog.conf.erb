@@ -1,23 +1,27 @@
 #
 # File is managed by puppet
 #
-$MaxMessageSize <%= scope.lookupvar('rsyslog::max_message_size') %>
-<% if scope.lookupvar('rsyslog::preserve_fqdn') -%>
+$MaxMessageSize <%= @max_message_size %>
+<% if @preserve_fqdn -%>
 $PreserveFQDN on
 <% end -%>
-<% if scope.lookupvar('rsyslog::local_host_name') and scope.lookupvar('rsyslog::local_host_name') != :undef -%>
-$LocalHostName <%= scope.lookupvar('rsyslog::local_host_name') %>
+<% if @local_host_name and @local_host_name != :undef -%>
+$LocalHostName <%= @local_host_name %>
 <% end -%>
 
 #################
 #### MODULES ####
 #################
 
-<% scope.lookupvar('rsyslog::modules').each do |module_row| -%>
+<% @modules.each do |module_row| -%>
 <%= module_row %>
 <% end -%>
 
-<% if scope.lookupvar('rsyslog::non_kernel_facility') -%>
+<% @extra_modules.each do |mod| -%>
+$ModLoad <%= mod %>
+<% end -%>
+
+<% if @non_kernel_facility -%>
 # Enable non-kernel facility klog messages
 $KLogPermitNonKernelFacility on
 
@@ -28,28 +32,28 @@ $KLogPermitNonKernelFacility on
 #
 # Set rate limit for messages received.
 #
-<%- if scope.lookupvar('rsyslog::system_log_rate_limit_interval') and scope.lookupvar('rsyslog::system_log_rate_limit_interval') != :undef-%>
-$SystemLogRateLimitInterval <%= scope.lookupvar('rsyslog::system_log_rate_limit_interval') %>
+<%- if @system_log_rate_limit_interval and @system_log_rate_limit_interval != :undef-%>
+$SystemLogRateLimitInterval <%= @system_log_rate_limit_interval %>
 <%- end -%>
-<%- if scope.lookupvar('rsyslog::system_log_rate_limit_burst') and scope.lookupvar('rsyslog::system_log_rate_limit_burst') != :undef -%>
-$SystemLogRateLimitBurst <%= scope.lookupvar('rsyslog::system_log_rate_limit_burst') %>
+<%- if @system_log_rate_limit_burst and @system_log_rate_limit_burst != :undef -%>
+$SystemLogRateLimitBurst <%= @system_log_rate_limit_burst %>
 <%- end -%>
 
-<% if scope.lookupvar('rsyslog::default_template') and scope.lookupvar('rsyslog::default_template') != :undef and scope.lookupvar('rsyslog::default_template_customisation') and scope.lookupvar('rsyslog::default_template_customisation') != :undef -%>
+<% if @default_template and @default_template != :undef and @default_template_customisation and @default_template_customisation != :undef -%>
 #
 # Custom setting for ActionFileDefaultTemplate
 #
-$template <%= scope.lookupvar('rsyslog::default_template') %>,<%= scope.lookupvar('rsyslog::default_template_customisation') %>
+$template <%= @default_template %>,<%= @default_template_customisation %>
 
 <% end -%>
-<% if scope.lookupvar('rsyslog::default_template')  and scope.lookupvar('rsyslog::default_template') != :undef -%>
+<% if @default_template  and @default_template != :undef -%>
 #
 # Sets a default template for file action
 #
-$ActionFileDefaultTemplate <%= scope.lookupvar('rsyslog::default_template') %>
+$ActionFileDefaultTemplate <%= @default_template %>
 
 <% end -%>
-<% if scope.lookupvar('rsyslog::msg_reduction') -%>
+<% if @msg_reduction -%>
 # Filter duplicated messages
 $RepeatedMsgReduction on
 
@@ -57,43 +61,43 @@ $RepeatedMsgReduction on
 #
 # Set the default permissions for all log files.
 #
-$FileOwner <%= scope.lookupvar('rsyslog::log_user') %>
-$FileGroup <%= scope.lookupvar('rsyslog::log_group') %>
-$FileCreateMode <%= scope.lookupvar('rsyslog::perm_file') %>
-$DirOwner <%= scope.lookupvar('rsyslog::log_user') %>
-$DirGroup <%= scope.lookupvar('rsyslog::log_group') %>
-$DirCreateMode <%= scope.lookupvar('rsyslog::perm_dir') %>
-$PrivDropToUser <%= scope.lookupvar('rsyslog::run_user') %>
-$PrivDropToGroup <%= scope.lookupvar('rsyslog::run_group') %>
-$WorkDirectory <%= scope.lookupvar('rsyslog::spool_dir') %>
-<% if scope.lookupvar('rsyslog::umask') -%>
-$Umask <%= scope.lookupvar('rsyslog::umask') %>
+$FileOwner <%= @log_user %>
+$FileGroup <%= @log_group %>
+$FileCreateMode <%= @perm_file %>
+$DirOwner <%= @log_user %>
+$DirGroup <%= @log_group %>
+$DirCreateMode <%= @perm_dir %>
+$PrivDropToUser <%= @run_user %>
+$PrivDropToGroup <%= @run_group %>
+$WorkDirectory <%= @spool_dir %>
+<% if @umask -%>
+$Umask <%= @umask %>
 <% end -%>
 
-<% if scope.lookupvar('rsyslog::omit_local_logging') -%>
+<% if @omit_local_logging -%>
 # Turn off message reception via local log socket;
 # local messages are retrieved through imjournal now.
 $OmitLocalLogging on
 <% end -%>
 
 # Settings for imjournal (If supported)
-<% if scope.lookupvar('rsyslog::im_journal_statefile') and scope.lookupvar('rsyslog::im_journal_statefile') != :undef -%>
-$imjournalStateFile <%=scope.lookupvar('rsyslog::im_journal_statefile') %>
+<% if @im_journal_statefile and @im_journal_statefile != :undef -%>
+$imjournalStateFile <%=@im_journal_statefile %>
 <% end -%>
-<% if scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') and scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') != :undef -%>
-$imjournalIgnorePreviousMessages <%=scope.lookupvar('rsyslog::im_journal_ignore_previous_messages') %>
+<% if @im_journal_ignore_previous_messages and @im_journal_ignore_previous_messages != :undef -%>
+$imjournalIgnorePreviousMessages <%=@im_journal_ignore_previous_messages %>
 <% end -%>
-<% if scope.lookupvar('rsyslog::im_journal_ratelimit_interval') and scope.lookupvar('rsyslog::im_journal_ratelimit_interval') != :undef -%>
-$imjournalRatelimitInterval <%=scope.lookupvar('rsyslog::im_journal_ratelimit_interval') %>
+<% if @im_journal_ratelimit_interval and @im_journal_ratelimit_interval != :undef -%>
+$imjournalRatelimitInterval <%=@im_journal_ratelimit_interval %>
 <% end -%>
-<% if scope.lookupvar('rsyslog::im_journal_ratelimit_burst') and scope.lookupvar('rsyslog::im_journal_ratelimit_burst') != :undef -%>
-$imjournalRatelimitBurst <%=scope.lookupvar('rsyslog::im_journal_ratelimit_burst') %>
+<% if @im_journal_ratelimit_burst and @im_journal_ratelimit_burst != :undef -%>
+$imjournalRatelimitBurst <%=@im_journal_ratelimit_burst %>
 <% end -%>
 
 #
-# Include all config files in <%= scope.lookupvar('rsyslog::rsyslog_d') %>
+# Include all config files in <%= @rsyslog_d %>
 #
-$IncludeConfig <%= scope.lookupvar('rsyslog::rsyslog_d') -%>*.conf
+$IncludeConfig <%= @rsyslog_d -%>*.conf
 
 #
 # Emergencies are sent to everybody logged in.

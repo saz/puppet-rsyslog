@@ -167,17 +167,52 @@ class rsyslog (
   Optional[Variant[String[1], Integer[0]]] $im_journal_ratelimit_burst = $rsyslog::params::im_journal_ratelimit_burst,
   Optional[Enum['on', 'off']] $im_journal_ignore_previous_messages = $rsyslog::params::im_journal_ignore_previous_messages
 ) inherits rsyslog::params {
-  contain rsyslog::install
-  contain rsyslog::config
-  contain rsyslog::service
+  require rsyslog::install
 
-  if $extra_modules != [] {
-    rsyslog::snippet { '10-modload':
-      ensure  => present,
-      content => template("${module_name}/modload.erb"),
-      require => Class['rsyslog::install'],
-    }
+  file { $rsyslog_d:
+    ensure  => directory,
+    owner   => 'root',
+    group   => $run_group,
+    purge   => $purge_rsyslog_d,
+    recurse => true,
+    force   => true,
+    notify  => Service[$service_name],
+    require => Class['rsyslog::install'],
   }
 
-  Class['rsyslog::install'] -> Class['rsyslog::config'] ~> Class['rsyslog::service']
+  file { $rsyslog_conf:
+    ensure  => file,
+    owner   => 'root',
+    group   => $run_group,
+    content => template($rsyslog_conf_template_file),
+    notify  => Service[$service_name],
+    require => File[$rsyslog_d],
+  }
+
+  file { $rsyslog_default:
+    ensure  => file,
+    owner   => 'root',
+    group   => $run_group,
+    content => template("${module_name}/${rsyslog_default_file}.erb"),
+    notify  => Service[$service_name],
+    require => File[$rsyslog_conf],
+  }
+
+  file { $spool_dir:
+    ensure  => directory,
+    owner   => $run_user,
+    group   => $run_group,
+    mode    => '0700',
+    seltype => 'syslogd_var_lib_t',
+    notify  => Service[$service_name],
+    require => File[$rsyslog_default],
+  }
+
+  service { $service_name:
+    ensure     => running,
+    enable     => true,
+    hasstatus  => $service_hasstatus,
+    hasrestart => $service_hasrestart,
+    require    => File[$spool_dir],
+  }
 }

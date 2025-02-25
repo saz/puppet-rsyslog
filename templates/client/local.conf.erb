@@ -1,19 +1,19 @@
 <%- if @log_auth_local or @log_local -%>
 # Logging locally.
 
-<% if scope.lookupvar('rsyslog::log_style') == 'debian' -%>
+<% if scope['rsyslog::log_style'] == 'debian' -%>
 # Log auth messages locally
 auth,authpriv.*                 /var/log/auth.log
-<% elsif scope.lookupvar('rsyslog::log_style') == 'redhat' -%>
+<% elsif scope['rsyslog::log_style'] == 'redhat' -%>
 # Log auth messages locally
 auth,authpriv.*                 /var/log/secure
-<% elsif scope.lookupvar('rsyslog::log_style') == 'freebsd' -%>
+<% elsif scope['rsyslog::log_style'] == 'freebsd' -%>
 # Log auth messages locally
 auth.info;authpriv.info		/var/log/auth.log
 <% end -%>
 <% end -%>
 <% if @log_local -%>
-<% if scope.lookupvar('rsyslog::log_style') == 'debian' -%>
+<% if scope['rsyslog::log_style'] == 'debian' -%>
 # First some standard log files.  Log by facility.
 #
 *.*;auth,authpriv.none         -/var/log/syslog
@@ -73,7 +73,7 @@ daemon.*;mail.*;\
         *.=debug;*.=info;\
         *.=notice;*.=warn       |/dev/xconsole
 <% end -%>
-<% elsif scope.lookupvar('rsyslog::log_style') == 'redhat' -%>
+<% elsif scope['rsyslog::log_style'] == 'redhat' -%>
 # Log all kernel messages to the console.
 # Logging much else clutters up the screen.
 #kern.*                                                 /dev/console
@@ -90,7 +90,7 @@ mail.*                         -/var/log/maillog
 cron.*                         /var/log/cron
 
 # Everybody gets emergency messages
-<% elsif scope.lookupvar('rsyslog::log_style') == 'freebsd' -%>
+<% elsif scope['rsyslog::log_style'] == 'freebsd' -%>
 *.err;kern.warning;auth.notice;mail.crit                /dev/console
 *.notice;authpriv.none;kern.debug;lpr.info;mail.crit;news.err   /var/log/messages
 security.*                                      /var/log/security
