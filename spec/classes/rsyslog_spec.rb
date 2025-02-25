@@ -73,6 +73,7 @@ describe 'rsyslog', type: :class do
         let(:title) { 'rsyslog-extra-modules-set' }
 
         let(:params) { { extra_modules: ['modA'] } }
+
         it 'compiles' do
           is_expected.to contain_file(rsyslog_conf).with_content(%r{\$ModLoad modA})
         end
