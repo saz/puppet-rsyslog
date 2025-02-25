@@ -131,6 +131,9 @@
 # @param rsyslog_d_mode
 #   Force a specific mode on the rsyslog.d directory
 #
+# @param usrmsg_users
+#   Array of user names that will receive emergency messages when logged
+#
 class rsyslog (
   Variant[Boolean[false], String[1]] $rsyslog_package_name = $rsyslog::params::rsyslog_package_name,
   Variant[Boolean[false], String[1]] $relp_package_name = $rsyslog::params::relp_package_name,
@@ -174,6 +177,7 @@ class rsyslog (
   Optional[Enum['on', 'off']] $im_journal_ignore_previous_messages = $rsyslog::params::im_journal_ignore_previous_messages,
   Optional[Stdlib::Filemode] $rsyslog_conf_mode = undef,
   Optional[Stdlib::Filemode] $rsyslog_d_mode = undef,
+  Array[String[1]] $usrmsg_users = ['*'],
 ) inherits rsyslog::params {
   require rsyslog::install
 

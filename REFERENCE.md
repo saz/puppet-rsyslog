@@ -85,6 +85,7 @@ The following parameters are available in the `rsyslog` class:
 * [`im_journal_ignore_previous_messages`](#-rsyslog--im_journal_ignore_previous_messages)
 * [`rsyslog_conf_mode`](#-rsyslog--rsyslog_conf_mode)
 * [`rsyslog_d_mode`](#-rsyslog--rsyslog_d_mode)
+* [`usrmsg_users`](#-rsyslog--usrmsg_users)
 
 ##### <a name="-rsyslog--rsyslog_package_name"></a>`rsyslog_package_name`
 
@@ -421,6 +422,14 @@ Data type: `Optional[Stdlib::Filemode]`
 Force a specific mode on the rsyslog.d directory
 
 Default value: `undef`
+
+##### <a name="-rsyslog--usrmsg_users"></a>`usrmsg_users`
+
+Data type: `Array[String[1]]`
+
+Array of user names that will receive emergency messages when logged
+
+Default value: `['*']`
 
 ### <a name="rsyslog--client"></a>`rsyslog::client`
 

@@ -91,8 +91,6 @@ mail.*                         -/var/log/maillog
 
 # Log cron stuff
 cron.*                         /var/log/cron
-
-# Everybody gets emergency messages
 <% elsif scope['rsyslog::log_style'] == 'freebsd' -%>
 *.err;kern.warning;auth.notice;mail.crit                /dev/console
 *.notice;authpriv.none;kern.debug;lpr.info;mail.crit;news.err   /var/log/messages
