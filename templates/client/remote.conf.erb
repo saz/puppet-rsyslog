@@ -38,7 +38,7 @@
 <% else -%>
 <% dropaction = '' -%>
 <% end -%>
-<%= pattern %> to <%= host %> via <%= server['protocol'].downcase %> on <%= port %> using <%=format_type %> format.
+# Sending logs that match <%= pattern %> to <%= host %> via <%= server['protocol'].downcase %> on <%= port %> using <%=format_type %> format.
 <%= pattern %> <%= protocol %><%= host %>:<%= port %><%= format %>
 <%= dropaction %>
 <% end -%>

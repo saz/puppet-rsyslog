@@ -41,6 +41,9 @@
 # @param rsyslog_default_file
 #   `rsyslog_d` file template to use
 #
+# @param rsyslog_default_file_absolute_path
+#   `rsyslog_d` Use rsyslog_default_file as the absolute template path
+#
 # @param run_user
 #   Which user rsyslog should run as
 #
@@ -150,6 +153,7 @@ class rsyslog (
   String[1] $rsyslog_conf_template_file = "${module_name}/rsyslog.conf.erb",
   Stdlib::Absolutepath $rsyslog_default = $rsyslog::params::rsyslog_default,
   String[1] $rsyslog_default_file = $rsyslog::params::default_config_file,
+  Boolean $rsyslog_default_file_absolute_path = false,
   String[1] $run_user = $rsyslog::params::run_user,
   String[1] $run_group = $rsyslog::params::run_group,
   String[1] $log_user = $rsyslog::params::log_user,
@@ -208,13 +212,24 @@ class rsyslog (
     require => File[$rsyslog_d],
   }
 
-  file { $rsyslog_default:
-    ensure  => file,
-    owner   => 'root',
-    group   => $run_group,
-    content => template("${module_name}/${rsyslog_default_file}.erb"),
-    notify  => Service[$service_name],
-    require => File[$rsyslog_conf],
+  if($rsyslog_default_file_absolute_path == false ) {
+    file { $rsyslog_default:
+      ensure  => file,
+      owner   => 'root',
+      group   => $run_group,
+      content => template("${rsyslog_default_file}.erb"),
+      notify  => Service[$service_name],
+      require => File[$rsyslog_conf],
+    }
+  } else {
+    file { $rsyslog_default:
+      ensure  => file,
+      owner   => 'root',
+      group   => $run_group,
+      content => template("${module_name}/${rsyslog_default_file}.erb"),
+      notify  => Service[$service_name],
+      require => File[$rsyslog_conf],
+    }
   }
 
   file { $spool_dir:
