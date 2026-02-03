@@ -1,18 +1,14 @@
-#
-# File is managed by puppet
-#
-
-$MaxMessageSize <%= @max_message_size %>
+# file is managed by puppet
 <% if @preserve_fqdn -%>
 $PreserveFQDN on
 <% end -%>
 <% if @local_host_name -%>
 $LocalHostName <%= @local_host_name %>
 <% end -%>
-
 #################
 #### MODULES ####
 #################
+
 <% @modules.each do |module_row| -%>
 <%= module_row %>
 <% end -%>
@@ -28,6 +24,11 @@ $KLogPermitNonKernelFacility on
 ###########################
 #### GLOBAL DIRECTIVES ####
 ###########################
+#
+# Set max message size for sending and receiving
+#
+$MaxMessageSize <%= @max_message_size %>
+
 #
 # Set rate limit for messages received.
 #
@@ -94,11 +95,11 @@ $imjournalRatelimitBurst <%=@im_journal_ratelimit_burst %>
 <% end -%>
 
 #
-# Include all config files in <%= @rsyslog_d %>
+# Include all config files in <%= @rsyslog_d %>/
 #
 $IncludeConfig <%= @rsyslog_d -%>/*.conf
 
 #
-# Emergencies are sent to <%= @usrmsg_users.join(',') -%> logged in.
+# Emergencies are sent to everybody logged in.
 #
 *.emerg	:omusrmsg:<%= @usrmsg_users.join(',') %>
